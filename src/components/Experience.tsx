@@ -1,5 +1,6 @@
 
 import { Briefcase, Calendar } from "lucide-react";
+import CompanyLogos from "./CompanyLogos";
 
 type ExperienceItem = {
   id: string;
@@ -128,6 +129,11 @@ export default function Experience() {
         <h2 className="section-title">
           My <span className="text-gradient">Journey</span>
         </h2>
+        
+        {/* Add the CompanyLogos component at the top of the Experience section */}
+        <div className="mb-12">
+          <CompanyLogos />
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Work Experience */}
