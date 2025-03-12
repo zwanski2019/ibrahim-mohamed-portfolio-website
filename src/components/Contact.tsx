@@ -2,6 +2,7 @@
 import { Github, LinkedinIcon, Mail, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 export default function Contact() {
   const { toast } = useToast();
@@ -182,16 +183,24 @@ export default function Contact() {
                 <p className="text-sm text-muted-foreground mb-4">
                   I'm currently available for freelance work. Let's collaborate on your next project!
                 </p>
-                <a 
-                  href="#contact" 
-                  className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80"
-                >
-                  Hire me for your project
-                  <svg className="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"/>
-                    <polyline points="12 5 19 12 12 19"/>
-                  </svg>
-                </a>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Link 
+                    to="/services" 
+                    className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors"
+                  >
+                    Browse My Services
+                  </Link>
+                  <a 
+                    href="#contact" 
+                    className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80"
+                  >
+                    Contact Me
+                    <svg className="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"/>
+                      <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
