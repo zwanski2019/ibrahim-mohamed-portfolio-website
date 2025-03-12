@@ -3,10 +3,13 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { SearchBar } from "./SearchBar";
+import { LanguageSelector } from "./LanguageSelector";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { t } = useLanguage();
 
   // Handle scroll effect
   useEffect(() => {
@@ -26,11 +29,11 @@ export default function Navbar() {
   }, []);
 
   const navigation = [
-    { name: "About", href: "#about" },
-    { name: "Skills", href: "#skills" },
-    { name: "Projects", href: "#projects" },
-    { name: "Experience", href: "#experience" },
-    { name: "Contact", href: "#contact" },
+    { name: t('nav.about'), href: "#about" },
+    { name: t('nav.skills'), href: "#skills" },
+    { name: t('nav.projects'), href: "#projects" },
+    { name: t('nav.experience'), href: "#experience" },
+    { name: t('nav.contact'), href: "#contact" },
   ];
 
   const scrollToSection = (href: string) => {
@@ -81,11 +84,13 @@ export default function Navbar() {
               </a>
             ))}
             
+            <LanguageSelector />
             <ThemeToggle />
           </nav>
 
           {/* Mobile Navigation Toggle */}
           <div className="flex items-center md:hidden">
+            <LanguageSelector />
             <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}

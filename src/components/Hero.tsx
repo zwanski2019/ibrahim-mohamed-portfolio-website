@@ -1,7 +1,10 @@
 
 import { ArrowRight, ExternalLink, Github, Mail, MapPin, Phone } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Hero() {
+  const { t } = useLanguage();
+  
   return (
     <section id="about" className="relative pt-32 pb-20 overflow-hidden">
       {/* Gradient background effect */}
@@ -16,17 +19,16 @@ export default function Hero() {
           <div className="order-2 lg:order-1">
             <div className="max-w-2xl">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in">
-                <span>Hi, I'm </span>
+                <span>{t('hero.title')} </span>
                 <span className="text-gradient">Ibrahim Mohamed</span>
               </h1>
               
               <h2 className="text-xl md:text-2xl font-semibold text-muted-foreground mb-6 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-                Web Developer & IT Support Specialist
+                {t('hero.subtitle')}
               </h2>
               
               <p className="text-lg text-muted-foreground mb-8 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-                I build responsive websites, develop web applications, and provide comprehensive IT support. 
-                With expertise in WordPress, PHP, and various web technologies, I create efficient digital solutions for businesses.
+                {t('hero.description')}
               </p>
               
               <div className="flex flex-wrap gap-4 mb-8 animate-fade-in" style={{ animationDelay: "0.3s" }}>
@@ -55,7 +57,7 @@ export default function Hero() {
                   }}
                   className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-xl transition-all hover:scale-105"
                 >
-                  View My Work
+                  {t('hero.viewWork')}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
                 
@@ -67,7 +69,7 @@ export default function Hero() {
                   }}
                   className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-border bg-background text-foreground font-medium hover:bg-muted/50 transition-all"
                 >
-                  Contact Me
+                  {t('hero.contactMe')}
                 </a>
               </div>
               

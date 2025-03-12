@@ -1,7 +1,10 @@
 
 import { ArrowUp } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Footer() {
+  const { t } = useLanguage();
+  
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -15,7 +18,7 @@ export default function Footer() {
               IBRAHIM
             </a>
             <p className="text-sm text-muted-foreground mt-2">
-              Web Developer & IT Support Specialist
+              {t('hero.subtitle')}
             </p>
           </div>
           
@@ -29,7 +32,7 @@ export default function Footer() {
             </button>
             
             <p className="text-sm text-muted-foreground">
-              &copy; {new Date().getFullYear()} Ibrahim Mohamed. All rights reserved.
+              &copy; {new Date().getFullYear()} Ibrahim Mohamed. {t('footer.rights')}
             </p>
           </div>
         </div>

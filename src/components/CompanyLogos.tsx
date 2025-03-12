@@ -1,6 +1,7 @@
 
 import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
 // Company logo data with name and icon/image
 const companyLogos = [
@@ -38,6 +39,7 @@ const companyLogos = [
 
 const CompanyLogos = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const container = containerRef.current;
@@ -64,7 +66,7 @@ const CompanyLogos = () => {
 
   return (
     <div className="py-12 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl overflow-hidden">
-      <h3 className="text-center text-xl font-bold mb-8">Companies & Organizations</h3>
+      <h3 className="text-center text-xl font-bold mb-8">{t('companies.title')}</h3>
       
       <div 
         ref={containerRef}
