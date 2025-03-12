@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 // Define available languages
@@ -34,6 +33,10 @@ export const translations: Record<Language, Record<string, string>> = {
     'footer.rights': 'All rights reserved.',
     'companies.title': 'Companies & Organizations',
     'services.title': 'My Services',
+    'youtube.title': 'My YouTube Videos',
+    'youtube.subtitle': 'Watch my tutorials and tech demonstrations to learn about web development, IT support, and more.',
+    'youtube.watchAll': 'View All Videos',
+    'youtube.watch': 'Watch on YouTube',
   },
   fr: {
     // French translations
@@ -63,6 +66,10 @@ export const translations: Record<Language, Record<string, string>> = {
     'footer.rights': 'Tous droits réservés.',
     'companies.title': 'Entreprises et Organisations',
     'services.title': 'Mes services',
+    'youtube.title': 'Mes Vidéos YouTube',
+    'youtube.subtitle': 'Regardez mes tutoriels et démonstrations techniques pour en savoir plus sur le développement web, le support informatique, et plus.',
+    'youtube.watchAll': 'Voir Toutes les Vidéos',
+    'youtube.watch': 'Regarder sur YouTube',
   },
   ar: {
     // Arabic translations
@@ -92,6 +99,10 @@ export const translations: Record<Language, Record<string, string>> = {
     'footer.rights': 'جميع الحقوق محفوظة.',
     'companies.title': 'الشركات والمنظمات',
     'services.title': 'خدماتي',
+    'youtube.title': 'فيديوهاتي على يوتيوب',
+    'youtube.subtitle': 'شاهد دروسي وعروضي التقنية لتتعلم عن تطوير الويب، والدعم التقني، والمزيد.',
+    'youtube.watchAll': 'مشاهدة جميع الفيديوهات',
+    'youtube.watch': 'مشاهدة على يوتيوب',
   },
   ha: {
     // Hausa translations
@@ -121,6 +132,10 @@ export const translations: Record<Language, Record<string, string>> = {
     'footer.rights': 'Duk haƙƙoƙi a ajiye.',
     'companies.title': 'Kamfanoni da Ma\'aikatai',
     'services.title': 'Ayyukana',
+    'youtube.title': 'Bidiyon YouTube Na',
+    'youtube.subtitle': 'Kalla koyawa na da nuna fasaha don koyo game da haɓaka yanar gizo, tallafi na IT, da sauransu.',
+    'youtube.watchAll': 'Duba Duk Bidiyo',
+    'youtube.watch': 'Kalla akan YouTube',
   },
   ber: {
     // Berber translations
@@ -150,6 +165,10 @@ export const translations: Record<Language, Record<string, string>> = {
     'footer.rights': 'Akk izerfan ttwaḥerzen.',
     'companies.title': 'Tikebbaniyin d Tuddsiwin',
     'services.title': 'Tanfawin-iw',
+    'youtube.title': 'Tividuten-iw n YouTube',
+    'youtube.subtitle': 'Ẓer isalmaden-iw d uskan n tektiknologiyin i lemmer ɣef uneflay web, tallelt n IT, d wiyaḍ.',
+    'youtube.watchAll': 'Wali Akk Tividuten',
+    'youtube.watch': 'Ẓer ɣef YouTube',
   }
 };
 
