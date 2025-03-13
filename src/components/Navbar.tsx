@@ -58,9 +58,9 @@ export default function Navbar() {
             <a
               href="#"
               className="text-xl font-bold text-gradient"
-              aria-label="Ibrahim Mohamed - Web Developer"
+              aria-label="Zwanski - Web Developer"
             >
-              IBRAHIM
+              ZWANSKI
             </a>
           </div>
 

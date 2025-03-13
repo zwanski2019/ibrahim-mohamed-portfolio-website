@@ -15,7 +15,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
             <a href="#" className="text-xl font-bold text-gradient">
-              IBRAHIM
+              ZWANSKI
             </a>
             <p className="text-sm text-muted-foreground mt-2">
               {t('hero.subtitle')}
@@ -32,7 +32,7 @@ export default function Footer() {
             </button>
             
             <p className="text-sm text-muted-foreground">
-              &copy; {new Date().getFullYear()} Ibrahim Mohamed. {t('footer.rights')}
+              &copy; {new Date().getFullYear()} Zwanski. {t('footer.rights')}
             </p>
           </div>
         </div>
