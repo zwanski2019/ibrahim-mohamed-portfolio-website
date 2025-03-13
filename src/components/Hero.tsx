@@ -20,7 +20,7 @@ export default function Hero() {
             <div className="max-w-2xl">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in">
                 <span>{t('hero.title')} </span>
-                <span className="text-gradient">Ibrahim Mohamed</span>
+                <span className="text-gradient">Mohamed Ibrahim (Zwanski)</span>
               </h1>
               
               <h2 className="text-xl md:text-2xl font-semibold text-muted-foreground mb-6 animate-fade-in" style={{ animationDelay: "0.1s" }}>
@@ -106,11 +106,11 @@ export default function Hero() {
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
                   <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-muted overflow-hidden border-4 border-background mb-4">
                     <div className="w-full h-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-xl md:text-3xl text-white font-bold">
-                      IM
+                      MZ
                     </div>
                   </div>
                   
-                  <h3 className="text-lg md:text-xl font-bold text-center">Ibrahim Mohamed</h3>
+                  <h3 className="text-lg md:text-xl font-bold text-center">Mohamed Ibrahim</h3>
                   <p className="text-sm text-muted-foreground text-center mt-1">Web Developer</p>
                   
                   <div className="mt-4 pt-4 border-t border-border w-full">
