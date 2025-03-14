@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
+import FloatingTechIcons from "./FloatingTechIcons";
 
 export default function Hero() {
   const { t } = useLanguage();
@@ -176,8 +177,11 @@ export default function Hero() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
+              {/* Floating tech icons */}
+              <FloatingTechIcons />
+              
               {/* 3D profile card with improved design */}
-              <Card className="w-full h-full overflow-hidden rounded-xl shadow-3d card-transform-3d bg-card relative">
+              <Card className="w-full h-full overflow-hidden rounded-xl shadow-3d card-transform-3d bg-card relative z-10">
                 <div className="absolute inset-0 bg-card-gradient"></div>
                 <div className="h-1/2 bg-gradient-to-r from-primary/80 to-primary/40"></div>
                 <CardContent className="absolute inset-0 flex flex-col items-center justify-center p-6">
