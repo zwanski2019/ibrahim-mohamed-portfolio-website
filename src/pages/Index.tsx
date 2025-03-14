@@ -72,6 +72,28 @@ const Index = () => {
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main>
+          {/* Added structured data for improved SEO */}
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Mohamed Ibrahim",
+              "alternateName": "Zwanski",
+              "description": "Web Developer & Full-Stack Engineer based in Tunis, Tunisia",
+              "email": "mohaaibb4@proton.me",
+              "telephone": "+21694934141",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Tunis",
+                "addressCountry": "Tunisia"
+              },
+              "url": "https://zwanski2019.github.io/zwanski-store/",
+              "sameAs": [
+                "https://github.com/zwanski2019"
+              ]
+            })}
+          </script>
+          
           <Hero />
           <Skills />
           <Projects />
