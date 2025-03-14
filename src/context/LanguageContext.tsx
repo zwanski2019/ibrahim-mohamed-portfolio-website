@@ -30,13 +30,15 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
 
   const translations = useMemo(() => ({
     en: {
-      navbar: {
+      nav: {
         about: "About",
         skills: "Skills",
         projects: "Projects",
         experience: "Experience",
         youtube: "YouTube",
         contact: "Contact",
+        more: "More",
+        services: "Services"
       },
       hero: {
         title: "Hi, I'm ",
@@ -96,13 +98,15 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
       },
     },
     fr: {
-      navbar: {
+      nav: {
         about: "À Propos",
         skills: "Compétences",
         projects: "Projets",
         experience: "Expérience",
         youtube: "YouTube",
         contact: "Contact",
+        more: "Plus",
+        services: "Services"
       },
       hero: {
         title: "Salut, je suis ",
@@ -162,13 +166,15 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
       },
     },
     ar: {
-      navbar: {
+      nav: {
         about: "حول",
         skills: "مهارات",
         projects: "مشاريع",
         experience: "خبرة",
         youtube: "يوتيوب",
         contact: "اتصل",
+        more: "المزيد",
+        services: "خدمات"
       },
       hero: {
         title: "مرحبا، أنا ",
@@ -190,7 +196,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
       },
       experience: {
         title: "خبرتي",
-        subtitle: "تسلسل زمني لرحلتي كمطور ويب، يسلط الضوء على الخبرات والإنجازات الرئيسية.",
+        subtitle: "تسلسل زمني لرحلتي كمطور ويب، يسلط الضو�� على الخبرات والإنجازات الرئيسية.",
       },
       youtube: {
         title: "قناة يوتيوب",
@@ -228,13 +234,15 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
       },
     },
     ha: {
-      navbar: {
+      nav: {
         about: "Game da",
         skills: "Ƙwarewa",
         projects: "Ayyuka",
         experience: "Ƙware-ƙware",
         youtube: "YouTube",
         contact: "Tuntuɓi",
+        more: "Ƙari",
+        services: "Ayyuka"
       },
       hero: {
         title: "Sannu, ni ne ",
@@ -262,13 +270,15 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
       },
     },
     ber: {
-      navbar: {
+      nav: {
         about: "Ɣef",
         skills: "Tizmmar",
         projects: "Isenfaren",
         experience: "Tarmit",
         youtube: "YouTube",
         contact: "Nermes",
+        more: "Uggar",
+        services: "Tinfiwin"
       },
       hero: {
         title: "Azul, nekki d ",
