@@ -1,69 +1,144 @@
-# Welcome to your Lovable project
+# 🌟 Zwanski Portfolio - Clone & Customize Your Own 🌟
 
-## Project info
+Welcome to my personal portfolio repository! This project is designed to be cloned and customized by developers looking to create a professional and modern online presence. Explore my skills, projects, and experiences, and feel free to modify this template for your own portfolio.
 
-**URL**: https://lovable.dev/projects/36d3624d-d6b8-44c2-aa3d-5e74376284c4
+## 📌 About This Portfolio
 
-## How can I edit this code?
+This portfolio showcases my work as a **Web Developer & Cybersecurity Enthusiast**. The main goals of this portfolio are:
 
-There are several ways of editing your application.
+- **Showcase** my skills and past projects.
+- Provide a point of contact for potential clients and employers.
+- Serve as an inspiration for other developers creating their own portfolio websites.
 
-**Use Lovable**
+## ✨ Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/36d3624d-d6b8-44c2-aa3d-5e74376284c4) and start prompting.
+✅ Responsive Design (Works on Desktop, Tablet & Mobile)
+✅ Modern & Minimalistic UI
+✅ Project Showcase with Details
+✅ Skills and Experience Sections
+✅ Contact Form & Social Media Links
+✅ Dark & Light Mode Support
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🔧 Tech Stack
 
-**Use your preferred IDE**
+This portfolio is built using the following technologies:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **Frontend:** HTML, CSS (Tailwind), JavaScript, React
+- **Frameworks:** Bootstrap, React.js
+- **Backend:** PHP
+- **Database:** MySQL (optional, for dynamic content)
+- **Other:** WordPress (for certain sections)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🚀 Getting Started
 
-Follow these steps:
+To get a local copy up and running, follow these simple steps:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Prerequisites
+- **[Node.js](https://nodejs.org/) v14+** (for development server & dependencies)
+- **[Git](https://git-scm.com/)** (optional but recommended)
+- A text editor (VS Code, PHPStorm, etc.)
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### 🔧 Installation
 
-# Step 3: Install the necessary dependencies.
-npm i
+```bash
+# Clone the repository
+git clone https://github.com/zwanski2019/portfolio.git
+cd portfolio
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Install dependencies
+npm install
+
+# Run the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Your local version of the portfolio should now be available at `http://localhost:3000/`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🛠️ Customization
 
-**Use GitHub Codespaces**
+1. Update the profile information in `src/data/profile.js`.
+2. Add or modify skills in the `skills.js` file.
+3. Modify the `projects` section in `src/data/projects.js` to showcase your own work.
+4. Customize styles in the `styles/` directory to match your personal brand.
+5. Once done, deploy your portfolio to Vercel, Netlify, or your preferred hosting provider.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📌 My Skills
 
-## What technologies are used for this project?
+💻 **Frontend**: HTML, CSS, JavaScript, React, jQuery, Bootstrap  
+⚙️ **Backend:** PHP
+📊 **CMS:** WordPress, WooCommerce, Magento 2
+🌍 **Languages:** Arabic, French, Hausa, Berber, English
 
-This project is built with .
+## 🏆 Featured Projects
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Here are some of the exciting projects I've worked on:
 
-## How can I deploy this project?
+### 🚀 [ISHT Group](https://github.com/ihstgroup/ihs-website)
+A business-oriented website for ISHT Group, featuring eCommerce functionality and stock management.
 
-Simply open [Lovable](https://lovable.dev/projects/36d3624d-d6b8-44c2-aa3d-5e74376284c4) and click on Share -> Publish.
+**Tech Stack:** PHP, Magento 2, Docker, WordPress, Laravel
 
-## I want to use a custom domain - is that possible?
+### 🛠️ [Zwansave - WordPress Theme Tracker](https://github.com/zwanski2019/wordpressthemetracker)
+A powerful tool for tracking WordPress themes and updates to efficiently manage multiple WordPress installations.
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+### 🏪 [Pet House Website](#)
+An online platform for selling pets, pet food, and related products with secure transactions and an intuitive UI.
+
+## 🔧 Technologies Used
+Here are some of the tools and technologies I work with:
+
+- **Frontend:** HTML, CSS, JavaScript, React, jQuery, Bootstrap
+- **Backend:** PHP
+- **CMS:** WordPress
+- **Languages:** English, French, Arabic, Hausa, Berber
+- **Additional Skills:** Cybersecurity, WordPress Development, Creative Coding
+
+## 📬 Contact Me
+If you're interested in working together or have any questions, feel free to reach out:
+
+📧 Email: [mohaaibb4@proton.me](mailto:mohaaibb4@proton.me)  
+📞 Phone: +216 94934141  
+📍 Location: Tunis, Tunisia  
+🌍 Portfolio: [View My Work](#)  
+🔗 Connect: [Linktree](https://linktr.ee/zwanski)  
+
+## 🤝 Want to Customize & Use This Portfolio?
+
+1. **Clone the Repository:**
+```bash
+git clone https://github.com/zwanski2019/portfolio.git
+cd portfolio
+```
+
+2. **Install dependencies:**
+```bash
+npm install
+```
+
+3. **Run the local server:**
+```bash
+npm run dev
+```
+
+4. **Customize Your Portfolio:**
+- Update `src/config.js` with your personal information.
+- Modify styles in the `styles/` directory to suit your personal brand.
+- Edit existing projects or add new ones in the `projects/` folder.
+- Update social media links and contact details in `src/config.js`.
+
+5. **Deploy to Netlify, Vercel, or your preferred hosting provider.**
+
+## 🚀 Let's Connect
+- 🌍 [Portfolio Website](#)
+- 🔗 [GitHub](https://github.com/zwanski2019)
+- 📷 [Instagram](https://www.instagram.com/mohamed_zwanski)
+- 🎥 [TikTok](https://www.tiktok.com/@zwanski.m)
+- 🌍 [Linktree](https://linktr.ee/your_profile)
+
+### ⭐ Show your support!
+If you like my work and would like to support me, consider buying me a coffee ☕
+
+[![ko-fi](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?style=flat&logo=ko-fi&logoColor=black)](https://ko-fi.com/zwanski)
+
+## 📜 License
+This project is licensed under the MIT License. You are free to use and modify it as needed.
