@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 
-type Language = 'en' | 'fr' | 'ar';
+export type Language = 'en' | 'fr' | 'ar' | 'ha' | 'ber';
 
 interface LanguageContextProps {
   language: Language;
@@ -224,6 +224,74 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
         item3: {
           title: "البرمجة الإبداعية",
           description: "شاهد أمثلة لمشاريع البرمجة الإبداعية التي تمزج الفن بالتكنولوجيا."
+        }
+      },
+    },
+    ha: {
+      navbar: {
+        about: "Game da",
+        skills: "Ƙwarewa",
+        projects: "Ayyuka",
+        experience: "Ƙware-ƙware",
+        youtube: "YouTube",
+        contact: "Tuntuɓi",
+      },
+      hero: {
+        title: "Sannu, ni ne ",
+        subtitle: "Ƙirƙirar Abubuwa na Dijital da Lamba",
+        description: "Mai haɓaka yanar gizo mai ƙauna wanda ke ƙaddamar da sabbin hanyoyin samar da yanar gizo masu sauƙi. Duba ayyukana don ganin yadda nake rayar da ra'ayoyi.",
+        viewWork: "Duba Ayyukana",
+        contactMe: "Tuntuɓe Ni",
+      },
+      playground: {
+        title: "Filin Wasa",
+        subtitle: "Bincika ayyukana da kayayyakin da ke nuna ƙirƙirawa da sabuntawa.",
+        featured: "Aiki na Musamman",
+        item1: {
+          title: "Nuna Abubuwa na Haɗawa",
+          description: "Bincika nunin abubuwa masu haɗawa na sabbin ayyukana da kayayyakin gwaji."
+        },
+        item2: {
+          title: "Gwaje-Gwaje na AI",
+          description: "Bincika ayyukana tare da ilimin haƙƙin kai da manhajojin koyon na'ura."
+        },
+        item3: {
+          title: "Ƙirƙirar Lamba",
+          description: "Duba misalai na ayyukan ƙirƙirar lamba da suke haɗa fasaha da fasaha."
+        }
+      },
+    },
+    ber: {
+      navbar: {
+        about: "Ɣef",
+        skills: "Tizmmar",
+        projects: "Isenfaren",
+        experience: "Tarmit",
+        youtube: "YouTube",
+        contact: "Nermes",
+      },
+      hero: {
+        title: "Azul, nekki d ",
+        subtitle: "Asekker n Tedyanin Timḍanin s Tengalt",
+        description: "Amsedger web yeεjben, yettwasekker i tmerna n tifrayin web timeγranin d tisehlanin. Sken asebter-inu akken ad teẓreḍ amek i ttarra tiktiwin d tudert.",
+        viewWork: "Ẓer Amahil-inu",
+        contactMe: "Nermes-iyi",
+      },
+      playground: {
+        title: "Annar n Urar",
+        subtitle: "Sken isenfaren-inu d ifecka yellan deg umagrad i d-yemmalen taẓuri d usnulfu.",
+        featured: "Asenfar Yettwafren",
+        item1: {
+          title: "Iskan Imyigawanen",
+          description: "Sken isalmaden imyigawanen n isenfaren-inu ineggura d ifecka iminigen."
+        },
+        item2: {
+          title: "Tirmitanin n Tussna Taramagant",
+          description: "Af-d amahil-inu s tussna taramagant d isnasen n ulmad n tmacinin."
+        },
+        item3: {
+          title: "Asihel Aseklan",
+          description: "Ẓer imedyaten n isenfaren n usihel aseklan i yesdukklen taẓuri d tetiknulujit."
         }
       },
     },
