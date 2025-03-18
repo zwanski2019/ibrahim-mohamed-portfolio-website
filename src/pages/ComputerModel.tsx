@@ -26,7 +26,7 @@ const ComputerModel = () => {
         <meta property="og:type" content="website" />
       </Helmet>
       
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen dark:bg-background bg-background">
         <Navbar />
         <main className="flex-grow">
           <div className="container mx-auto px-4 py-12">

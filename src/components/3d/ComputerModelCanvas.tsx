@@ -4,10 +4,9 @@ import {
   OrbitControls, 
   ContactShadows, 
   Environment, 
-  useGLTF, 
   Sparkles
 } from "@react-three/drei";
-import { Suspense, useRef, useState } from "react";
+import { Suspense } from "react";
 import Computer from "./Computer";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -20,6 +19,7 @@ const ComputerModelCanvas = () => {
       shadows
       dpr={[1, 2]}
       gl={{ antialias: true }}
+      className="w-full h-full"
     >
       <color attach="background" args={['#0a0a0a']} />
       
