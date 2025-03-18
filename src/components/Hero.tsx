@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
 import FloatingTechIcons from "./FloatingTechIcons";
+import ZwanskiLogo from "./ZwanskiLogo";
 
 export default function Hero() {
   const { t } = useLanguage();
@@ -37,10 +38,41 @@ export default function Hero() {
     <section 
       id="about" 
       className="relative pt-32 pb-20 overflow-hidden"
-      aria-label="About Mohamed Ibrahim"
+      aria-label="About Mohamed Ibrahim (Zwanski)"
     >
-      {/* SEO-optimized heading with better semantic structure */}
-      <h1 className="sr-only">Mohamed Ibrahim (Zwanski) - Web Developer from Tunisia</h1>
+      {/* Enhanced SEO - structured data and semantic markup */}
+      <h1 className="sr-only">Mohamed Ibrahim (Zwanski) - Web Developer & Full-Stack Engineer from Tunisia</h1>
+      
+      {/* Structured data for improved SEO */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Mohamed Ibrahim",
+        "alternateName": "Zwanski",
+        "description": "Web Developer & Full-Stack Engineer based in Tunis, Tunisia",
+        "image": "https://zwanski2019.github.io/zwanski-store/profile.jpg",
+        "jobTitle": "Web Developer",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Freelance"
+        },
+        "url": "https://zwanski2019.github.io/zwanski-store/",
+        "sameAs": [
+          "https://github.com/zwanski2019",
+          "https://www.instagram.com/mohamed_zwanski",
+          "https://www.tiktok.com/@zwanski.m",
+          "https://linktr.ee/zwanski"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Tunis",
+          "addressCountry": "Tunisia"
+        },
+        "email": "mohaaibb4@proton.me",
+        "telephone": "+21694934141",
+        "knowsLanguage": ["Arabic", "French", "Hausa", "Berber", "English"],
+        "skills": ["Web Development", "WordPress", "PHP", "React", "UI/UX Design"]
+      }) }} />
       
       {/* Background effects */}
       <div className="absolute inset-0 bg-gradient-radial from-primary/5 to-transparent -z-10"></div>
@@ -56,13 +88,19 @@ export default function Hero() {
         >
           <div className="order-2 lg:order-1">
             <div className="max-w-2xl">
-              <motion.h2 
-                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+              <motion.div 
+                className="flex items-center mb-6"
                 variants={itemVariants}
               >
-                <span>{t('hero.title')} </span>
-                <span className="text-gradient">Mohamed Ibrahim (Zwanski)</span>
-              </motion.h2>
+                <ZwanskiLogo className="w-16 h-16 mr-4" />
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold">
+                  <span className="block">
+                    <span>{t('hero.title')} </span>
+                    <span className="text-gradient">Mohamed</span>
+                  </span>
+                  <span className="block mt-1 text-primary">a.k.a <span className="underline decoration-wavy decoration-secondary underline-offset-8">Zwanski</span></span>
+                </h2>
+              </motion.div>
               
               <motion.div 
                 className="flex flex-wrap gap-2 mb-6"
@@ -90,7 +128,7 @@ export default function Hero() {
                 className="text-lg text-muted-foreground mb-8"
                 variants={itemVariants}
               >
-                {t('hero.description')}
+                Known online as <strong className="text-primary">Zwanski</strong>, I'm a passionate developer specializing in creating beautiful, functional websites and applications. With over 5 years of experience, I've helped businesses in Tunisia and beyond transform their digital presence.
               </motion.p>
               
               <motion.div 
@@ -185,13 +223,19 @@ export default function Hero() {
                 <div className="absolute inset-0 bg-card-gradient"></div>
                 <div className="h-1/2 bg-gradient-to-r from-primary/80 to-primary/40"></div>
                 <CardContent className="absolute inset-0 flex flex-col items-center justify-center p-6">
+                  <div className="absolute top-4 right-4 bg-secondary/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium">
+                    Zwanski
+                  </div>
+                  
                   <Avatar className="w-28 h-28 md:w-36 md:h-36 border-4 border-background mb-4 shadow-lg">
                     <AvatarFallback className="bg-gradient-to-br from-primary to-secondary text-2xl md:text-4xl text-white font-bold">
-                      MZ
+                      ZW
                     </AvatarFallback>
                   </Avatar>
                   
-                  <h3 className="text-xl md:text-2xl font-bold text-center">Mohamed Ibrahim</h3>
+                  <h3 className="text-xl md:text-2xl font-bold text-center">
+                    Mohamed Ibrahim
+                  </h3>
                   <p className="text-md text-muted-foreground text-center mt-1">Web Developer</p>
                   
                   <Separator className="my-4 w-full opacity-30" />
