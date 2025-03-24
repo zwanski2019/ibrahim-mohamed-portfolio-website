@@ -1,11 +1,18 @@
 
 import { useState } from "react";
+import { 
+  Accordion, 
+  AccordionContent, 
+  AccordionItem, 
+  AccordionTrigger 
+} from "@/components/ui/accordion";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 type Skill = {
   name: string;
   level: number;
   category: "frontend" | "backend" | "tools" | "languages";
-  icon: string; // Using emojis as simple icons
+  icon: string;
 };
 
 const skills: Skill[] = [
@@ -47,6 +54,24 @@ export default function Skills() {
     { value: "languages", label: "Languages" },
   ];
 
+  // Group skills by category for the accordion view
+  const skillsByCategory = filteredSkills.reduce((acc, skill) => {
+    const category = skill.category;
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+    acc[category].push(skill);
+    return acc;
+  }, {} as Record<string, Skill[]>);
+
+  // Create category display names
+  const categoryNames: Record<string, string> = {
+    frontend: "Frontend Development",
+    backend: "Backend Development",
+    tools: "Tools & CMS",
+    languages: "Programming & Human Languages"
+  };
+
   return (
     <section id="skills" className="py-20 bg-muted/30">
       <div className="section-container">
@@ -60,52 +85,59 @@ export default function Skills() {
         </p>
         
         {/* Category Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {categories.map((category) => (
-            <button
-              key={category.value}
-              onClick={() => setActiveCategory(category.value)}
-              className={`px-4 py-2 rounded-full text-sm transition-all ${
-                activeCategory === category.value
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-background hover:bg-muted"
-              }`}
-            >
-              {category.label}
-            </button>
-          ))}
+        <div className="flex justify-center mb-12">
+          <ToggleGroup type="single" value={activeCategory} onValueChange={(value) => value && setActiveCategory(value as CategoryTab)}>
+            {categories.map((category) => (
+              <ToggleGroupItem 
+                key={category.value} 
+                value={category.value}
+                className="px-4 py-2 rounded-full text-sm"
+              >
+                {category.label}
+              </ToggleGroupItem>
+            ))}
+          </ToggleGroup>
         </div>
         
-        {/* Skills Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredSkills.map((skill, index) => (
-            <div
-              key={skill.name}
-              className="card-3d glass-card rounded-xl overflow-hidden transform-gpu"
-              style={{ animationDelay: `${index * 0.05}s` }}
-            >
-              <div className="p-6">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 flex items-center justify-center text-2xl bg-muted rounded-xl">
-                    {skill.icon}
+        {/* Skills Accordion */}
+        <div className="max-w-3xl mx-auto">
+          <Accordion type="single" collapsible className="w-full">
+            {Object.keys(skillsByCategory).map((category) => (
+              <AccordionItem key={category} value={category} className="border-b border-border">
+                <AccordionTrigger className="py-4 text-lg font-medium hover:no-underline">
+                  <div className="flex items-center gap-2">
+                    {skillsByCategory[category][0].icon && (
+                      <span className="text-xl">{skillsByCategory[category][0].icon}</span>
+                    )}
+                    <span>{categoryNames[category] || category}</span>
                   </div>
-                  <div>
-                    <h3 className="font-semibold">{skill.name}</h3>
-                    <p className="text-xs text-muted-foreground capitalize">{skill.category}</p>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="space-y-4 py-2">
+                    {skillsByCategory[category].map((skill) => (
+                      <div key={skill.name} className="bg-card rounded-lg p-4 shadow-sm">
+                        <div className="flex items-center gap-4 mb-3">
+                          <div className="w-10 h-10 flex items-center justify-center text-xl bg-muted rounded-lg">
+                            {skill.icon}
+                          </div>
+                          <h3 className="font-medium">{skill.name}</h3>
+                        </div>
+                        
+                        <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-gradient-to-r from-primary to-secondary"
+                            style={{ width: `${skill.level}%` }}
+                          ></div>
+                        </div>
+                        
+                        <div className="mt-2 text-right text-sm">{skill.level}%</div>
+                      </div>
+                    ))}
                   </div>
-                </div>
-                
-                <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-primary to-secondary"
-                    style={{ width: `${skill.level}%` }}
-                  ></div>
-                </div>
-                
-                <div className="mt-2 text-right text-sm">{skill.level}%</div>
-              </div>
-            </div>
-          ))}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </div>
     </section>
