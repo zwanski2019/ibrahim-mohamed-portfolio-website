@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Sparkles } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { SearchBar } from "./SearchBar";
 import { LanguageSelector } from "./LanguageSelector";
@@ -119,6 +119,19 @@ export default function Navbar() {
                       </li>
                       <li>
                         <NavigationMenuLink asChild>
+                          <Link
+                            to="/newsletter"
+                            className="block p-2 hover:bg-muted rounded-md"
+                          >
+                            <div className="flex items-center gap-1">
+                              <Sparkles className="h-3 w-3" />
+                              Newsletter
+                            </div>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
                           <a
                             href="#playground"
                             onClick={(e) => {
@@ -202,6 +215,17 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
             >
               {t('nav.services')}
+            </Link>
+
+            <Link
+              to="/newsletter"
+              className="block px-3 py-2 text-base font-medium hover:text-primary transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-4 w-4" />
+                Newsletter
+              </div>
             </Link>
             
             <a
