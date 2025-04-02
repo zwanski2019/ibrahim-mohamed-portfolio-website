@@ -9,9 +9,11 @@ import Index from "./pages/Index";
 import Services from "./pages/Services";
 import ComputerModel from "./pages/ComputerModel";
 import Newsletter from "./pages/Newsletter";
+import Chat from "./pages/Chat";
 import NotFound from "./pages/NotFound";
 import { LanguageProvider } from "./context/LanguageContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import { AuthProvider } from "./context/AuthContext";
 
 const queryClient = new QueryClient();
 
@@ -19,22 +21,25 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <LanguageProvider>
       <ThemeProvider>
-        <HelmetProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/3d-computer" element={<ComputerModel />} />
-                <Route path="/newsletter" element={<Newsletter />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
-        </HelmetProvider>
+        <AuthProvider>
+          <HelmetProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/services" element={<Services />} />
+                  <Route path="/3d-computer" element={<ComputerModel />} />
+                  <Route path="/newsletter" element={<Newsletter />} />
+                  <Route path="/chat" element={<Chat />} />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </TooltipProvider>
+          </HelmetProvider>
+        </AuthProvider>
       </ThemeProvider>
     </LanguageProvider>
   </QueryClientProvider>
