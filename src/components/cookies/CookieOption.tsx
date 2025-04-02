@@ -25,23 +25,24 @@ export function CookieOption({
   const { t } = useLanguage();
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1.5">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Icon className={`h-4 w-4 ${iconColor}`} />
-          <h3 className="font-medium">{t(`cookie.${type}`) || type.charAt(0).toUpperCase() + type.slice(1)}</h3>
+        <div className="flex items-center gap-1.5">
+          <Icon className={`h-3.5 w-3.5 ${iconColor}`} />
+          <h3 className="text-sm font-medium">{t(`cookie.${type}`) || type.charAt(0).toUpperCase() + type.slice(1)}</h3>
         </div>
         <Switch 
           checked={checked}
           onCheckedChange={onToggle}
           disabled={disabled}
+          className="scale-90"
         />
       </div>
-      <p className="text-xs text-muted-foreground pl-6">
+      <p className="text-xs text-muted-foreground pl-5">
         {t(`cookie.${type}Description`) || 
           `Cookie preference for ${type}`}
       </p>
-      <Separator />
+      <Separator className="my-1" />
     </div>
   );
 }

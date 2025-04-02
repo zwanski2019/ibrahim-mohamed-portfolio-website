@@ -75,6 +75,16 @@ export const useCookieConsent = () => {
     return cookiePreferences[type] === true;
   };
 
+  const handleAcceptAll = () => {
+    const allAccepted = {
+      necessary: true,
+      analytics: true,
+      marketing: true,
+      preferences: true,
+    };
+    saveCookiePreferences(allAccepted);
+  };
+
   return {
     cookiePreferences,
     hasConsented,
@@ -83,5 +93,6 @@ export const useCookieConsent = () => {
     saveCookiePreferences,
     resetConsent,
     isAllowed,
+    handleAcceptAll,
   };
 };

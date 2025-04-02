@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { DialogFooter } from "@/components/ui/dialog";
+import { SheetFooter } from "@/components/ui/sheet";
 import { useLanguage } from "@/context/LanguageContext";
 import { useCookiePreferences } from "@/context/CookiePreferencesContext";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -12,7 +12,7 @@ export function CookieActions() {
   const { handleAcceptAll, handleAcceptSelected, handleRejectAll } = useCookiePreferences();
 
   return (
-    <DialogFooter className={`flex ${isMobile ? 'flex-col gap-2' : 'sm:justify-between'} pt-2`}>
+    <SheetFooter className={`flex ${isMobile ? 'flex-col gap-2' : 'sm:justify-between'} pt-2`}>
       <Button 
         variant="outline" 
         onClick={handleRejectAll}
@@ -35,6 +35,6 @@ export function CookieActions() {
           {t('cookie.acceptAll') || "Accept All"}
         </Button>
       </div>
-    </DialogFooter>
+    </SheetFooter>
   );
 }
