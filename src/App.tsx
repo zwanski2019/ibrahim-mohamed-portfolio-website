@@ -11,28 +11,31 @@ import ComputerModel from "./pages/ComputerModel";
 import Newsletter from "./pages/Newsletter";
 import NotFound from "./pages/NotFound";
 import { LanguageProvider } from "./context/LanguageContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <LanguageProvider>
-      <HelmetProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/3d-computer" element={<ComputerModel />} />
-              <Route path="/newsletter" element={<Newsletter />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </HelmetProvider>
+      <ThemeProvider>
+        <HelmetProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/3d-computer" element={<ComputerModel />} />
+                <Route path="/newsletter" element={<Newsletter />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </HelmetProvider>
+      </ThemeProvider>
     </LanguageProvider>
   </QueryClientProvider>
 );
