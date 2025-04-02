@@ -1,23 +1,30 @@
+
+/* Base App styling with improved responsiveness */
 #root {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
   text-align: center;
+  width: 100%;
 }
 
+/* Logo styling */
 .logo {
-  height: 6em;
-  padding: 1.5em;
+  height: 3em;
+  padding: 1em;
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+/* Animation for logo */
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -33,10 +40,47 @@
   }
 }
 
+/* General card styling */
 .card {
-  padding: 2em;
+  padding: 1em;
+  border-radius: var(--radius);
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
 }
 
-.read-the-docs {
-  color: #888;
+/* Make card padding more compact on mobile */
+@media (max-width: 640px) {
+  .card {
+    padding: 0.75em;
+  }
+}
+
+/* Responsive container padding */
+.container-padding {
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-padding {
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-padding {
+    padding: 2rem;
+  }
+}
+
+/* Make touch targets bigger on mobile */
+@media (max-width: 640px) {
+  button, .button, a.button, input[type="button"] {
+    min-height: 44px;
+  }
+}
+
+/* Improved a11y focus states */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
 }

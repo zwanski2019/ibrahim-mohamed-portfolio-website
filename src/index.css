@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -57,11 +58,31 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+  
+  /* Improved responsive typography */
+  h1 {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold;
+  }
+  h2 {
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold;
+  }
+  h3 {
+    @apply text-xl md:text-2xl lg:text-3xl font-semibold;
+  }
+  h4 {
+    @apply text-lg md:text-xl font-semibold;
+  }
+  
+  /* Improved form input for better mobile experience */
+  input, select, textarea {
+    @apply text-base md:text-sm w-full focus:outline-none;
+  }
 }
 
 @layer components {
+  /* Keep existing component classes */
   .section-container {
-    @apply container mx-auto px-4;
+    @apply container mx-auto px-4 md:px-8;
   }
   
   .section-title {
@@ -130,4 +151,56 @@
   .youtube-card.fade-in {
     @apply opacity-100 translate-y-0;
   }
+  
+  /* Enhanced responsive grid layouts */
+  .responsive-grid {
+    @apply grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+  }
+  
+  .responsive-grid-sm {
+    @apply grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
+  }
+  
+  /* Enhanced mobile nav menu */
+  .mobile-nav-item {
+    @apply block w-full py-3 px-4 font-medium transition-colors;
+  }
+  
+  /* Improved buttons for touch targets */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
+  
+  /* Cookie consent animations */
+  .cookie-enter {
+    @apply transform translate-y-full opacity-0;
+  }
+  
+  .cookie-enter-active {
+    @apply transform translate-y-0 opacity-100 transition-all duration-500;
+  }
+  
+  .cookie-exit {
+    @apply transform translate-y-0 opacity-100;
+  }
+  
+  .cookie-exit-active {
+    @apply transform translate-y-full opacity-0 transition-all duration-500;
+  }
+}
+
+/* Media queries for improved responsiveness */
+@media (max-width: 640px) {
+  .container {
+    @apply px-4;
+  }
+  
+  button, .button {
+    @apply text-sm py-2;
+  }
+}
+
+/* Prevent content shift when scrollbar appears/disappears */
+html {
+  @apply overflow-y-scroll;
 }
