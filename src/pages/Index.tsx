@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
@@ -8,7 +9,6 @@ import YouTubeVideos from "@/components/YouTubeVideos";
 import Playground from "@/components/Playground";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import { ThemeProvider } from "@/context/ThemeContext";
 import { Helmet } from "react-helmet-async";
 
 const Index = () => {
@@ -68,7 +68,7 @@ const Index = () => {
   }, []);
 
   return (
-    <ThemeProvider>
+    <>
       <Helmet>
         <title>Mohamed Ibrahim (Zwanski) | Web Developer & Full-Stack Engineer</title>
         <meta 
@@ -109,7 +109,7 @@ const Index = () => {
         </main>
         <Footer />
       </div>
-    </ThemeProvider>
+    </>
   );
 };
 

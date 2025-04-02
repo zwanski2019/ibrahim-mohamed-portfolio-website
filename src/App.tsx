@@ -20,8 +20,8 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <LanguageProvider>
-      <ThemeProvider>
+    <ThemeProvider>
+      <LanguageProvider>
         <AuthProvider>
           <HelmetProvider>
             <TooltipProvider>
@@ -42,8 +42,8 @@ const App = () => (
             </TooltipProvider>
           </HelmetProvider>
         </AuthProvider>
-      </ThemeProvider>
-    </LanguageProvider>
+      </LanguageProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 

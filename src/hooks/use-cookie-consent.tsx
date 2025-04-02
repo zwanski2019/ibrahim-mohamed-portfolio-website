@@ -17,6 +17,7 @@ export const useCookieConsent = () => {
   });
 
   const [hasConsented, setHasConsented] = useState<boolean>(false);
+  const [showBanner, setShowBanner] = useState<boolean>(false);
 
   useEffect(() => {
     const consentCookie = getCookie("cookie-consent");
@@ -27,7 +28,11 @@ export const useCookieConsent = () => {
         setHasConsented(true);
       } catch (e) {
         console.error("Error parsing cookie consent:", e);
+        setShowBanner(true);
       }
+    } else {
+      // No consent cookie found, show the banner
+      setShowBanner(true);
     }
   }, []);
 
@@ -41,6 +46,7 @@ export const useCookieConsent = () => {
     
     setCookiePreferences(preferences);
     setHasConsented(true);
+    setShowBanner(false);
     
     // Return the new preferences
     return preferences;
@@ -49,6 +55,7 @@ export const useCookieConsent = () => {
   const resetConsent = () => {
     document.cookie = "cookie-consent=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     setHasConsented(false);
+    setShowBanner(true);
     setCookiePreferences({
       necessary: true,
       analytics: false,
@@ -71,6 +78,8 @@ export const useCookieConsent = () => {
   return {
     cookiePreferences,
     hasConsented,
+    showBanner,
+    setShowBanner,
     saveCookiePreferences,
     resetConsent,
     isAllowed,

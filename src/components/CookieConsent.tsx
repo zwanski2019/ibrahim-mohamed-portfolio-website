@@ -1,6 +1,6 @@
 
-import React, { useState, useEffect } from "react";
-import { Shield, CheckCircle2, Info, X, ChevronDown, ChevronUp } from "lucide-react";
+import React from "react";
+import { Shield, CheckCircle2, Info, ChevronDown, ChevronUp } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -14,43 +14,19 @@ import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { useLanguage } from "@/context/LanguageContext";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-type CookiePreferences = {
-  necessary: boolean;
-  analytics: boolean;
-  marketing: boolean;
-  preferences: boolean;
-};
+import { useCookieConsent } from "@/hooks/use-cookie-consent";
 
 export const CookieConsent: React.FC = () => {
-  const [open, setOpen] = useState(false);
-  const [showDetails, setShowDetails] = useState(false);
+  const [showDetails, setShowDetails] = React.useState(false);
   const { t } = useLanguage();
   const isMobile = useIsMobile();
   
-  const [cookiePreferences, setCookiePreferences] = useState<CookiePreferences>({
-    necessary: true, // Always required
-    analytics: false,
-    marketing: false,
-    preferences: false,
-  });
-
-  // Check if cookie preferences are already set
-  useEffect(() => {
-    const consentCookie = getCookie("cookie-consent");
-    if (!consentCookie) {
-      // If no cookie is set, show the dialog
-      setOpen(true);
-    } else {
-      // Parse the cookie and set preferences
-      try {
-        const savedPreferences = JSON.parse(consentCookie);
-        setCookiePreferences(savedPreferences);
-      } catch (e) {
-        console.error("Error parsing cookie consent:", e);
-      }
-    }
-  }, []);
+  const {
+    cookiePreferences,
+    showBanner, 
+    setShowBanner,
+    saveCookiePreferences
+  } = useCookieConsent();
 
   const handleAcceptAll = () => {
     const allAccepted = {
@@ -59,14 +35,11 @@ export const CookieConsent: React.FC = () => {
       marketing: true,
       preferences: true,
     };
-    setCookiePreferences(allAccepted);
     saveCookiePreferences(allAccepted);
-    setOpen(false);
   };
 
   const handleAcceptSelected = () => {
     saveCookiePreferences(cookiePreferences);
-    setOpen(false);
   };
 
   const handleRejectAll = () => {
@@ -76,42 +49,21 @@ export const CookieConsent: React.FC = () => {
       marketing: false,
       preferences: false,
     };
-    setCookiePreferences(onlyNecessary);
     saveCookiePreferences(onlyNecessary);
-    setOpen(false);
   };
 
-  const handleTogglePreference = (key: keyof CookiePreferences) => {
+  const handleTogglePreference = (key: keyof typeof cookiePreferences) => {
     if (key === "necessary") return; // Cannot toggle necessary cookies
-    setCookiePreferences((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-  };
-
-  const saveCookiePreferences = (preferences: CookiePreferences) => {
-    // Set cookie for 6 months
-    const expiryDate = new Date();
-    expiryDate.setMonth(expiryDate.getMonth() + 6);
-    document.cookie = `cookie-consent=${JSON.stringify(
-      preferences
-    )}; expires=${expiryDate.toUTCString()}; path=/; SameSite=Lax`;
-    
-    // Here you would typically initialize your analytics/marketing tools
-    // based on the user's preferences
-    console.log("Cookie preferences saved:", preferences);
-  };
-
-  const getCookie = (name: string): string | null => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(";").shift() || null;
-    return null;
+    const newPreferences = {
+      ...cookiePreferences,
+      [key]: !cookiePreferences[key],
+    };
+    saveCookiePreferences(newPreferences);
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className={`sm:max-w-md ${isMobile ? 'p-4' : 'p-6'} rounded-xl`}>
+    <Dialog open={showBanner} onOpenChange={setShowBanner}>
+      <DialogContent className={`sm:max-w-md ${isMobile ? 'p-4' : 'p-6'} rounded-xl bg-card border-border`}>
         <DialogHeader className="space-y-3">
           <DialogTitle className="flex items-center gap-2 text-xl">
             <Shield className="h-5 w-5 text-primary" />
@@ -225,7 +177,7 @@ export const CookieConsent: React.FC = () => {
             </Button>
             <Button 
               onClick={handleAcceptAll}
-              className={`${isMobile ? 'flex-1' : ''}`}
+              className={`${isMobile ? 'flex-1' : ''} bg-primary text-primary-foreground hover:bg-primary/90`}
             >
               {t('cookie.acceptAll') || "Accept All"}
             </Button>
