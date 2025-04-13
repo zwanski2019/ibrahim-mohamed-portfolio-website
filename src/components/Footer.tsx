@@ -20,6 +20,25 @@ export default function Footer() {
             <p className="text-sm text-muted-foreground mt-2">
               {t('hero.subtitle')}
             </p>
+            
+            <div className="mt-4 border-t border-border pt-4">
+              <h3 className="text-sm font-medium mb-2">Text Link to this Page</h3>
+              <div className="text-sm text-muted-foreground">
+                <p className="mb-1">Store ID: <span className="font-mono">zwanskitech-20</span></p>
+                <p className="mb-1">Tracking ID: <span className="font-mono">zwanskitech-20</span></p>
+                <p className="mb-2">
+                  <a 
+                    href="https://amzn.to/429a1kO" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    https://amzn.to/429a1kO
+                  </a>
+                </p>
+                <p><span className="text-xs">Short Link</span></p>
+              </div>
+            </div>
           </div>
           
           <div className="flex flex-col items-center md:items-end">
