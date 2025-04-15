@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, Sparkles, MessageCircle } from "lucide-react";
+import { Menu, X, ChevronDown, Sparkles, MessageCircle, ShoppingCart } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { SearchBar } from "./SearchBar";
 import { LanguageSelector } from "./LanguageSelector";
@@ -59,8 +59,8 @@ export default function Navbar() {
     <header
       className={`fixed top-12 left-0 right-0 z-50 transition-all duration-200 ${
         scrolled
-          ? "py-2 bg-background/80 backdrop-blur-lg shadow-sm"
-          : "py-4 bg-transparent"
+          ? "py-2 bg-[#131921]/95 backdrop-blur-lg shadow-md border-b border-[#232f3e]/50"
+          : "py-3 bg-gradient-to-r from-[#232f3e] to-[#131921]"
       }`}
     >
       <div className="container mx-auto px-4">
@@ -68,7 +68,7 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link
               to="/"
-              className="text-xl font-bold text-gradient"
+              className="text-xl font-bold bg-gradient-to-r from-[#f90] to-[#f97316] text-transparent bg-clip-text"
               aria-label="Zwanski - Web Developer"
             >
               ZWANSKI
@@ -93,7 +93,7 @@ export default function Navbar() {
                       href={item.href}
                       className={cn(
                         navigationMenuTriggerStyle(),
-                        "bg-transparent hover:bg-background/50"
+                        "bg-transparent hover:bg-white/10 text-white"
                       )}
                     >
                       {item.name}
@@ -102,16 +102,16 @@ export default function Navbar() {
                 ))}
                 
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="bg-transparent hover:bg-background/50">
+                  <NavigationMenuTrigger className="bg-transparent hover:bg-white/10 text-white">
                     {t('nav.more')}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[200px] gap-2 p-4">
+                    <ul className="grid w-[200px] gap-2 p-4 bg-[#131921] border border-[#232f3e]/50">
                       <li>
                         <NavigationMenuLink asChild>
                           <Link
                             to="/services"
-                            className="block p-2 hover:bg-muted rounded-md"
+                            className="block p-2 hover:bg-[#232f3e] rounded-md text-white"
                           >
                             {t('nav.services')}
                           </Link>
@@ -121,10 +121,10 @@ export default function Navbar() {
                         <NavigationMenuLink asChild>
                           <Link
                             to="/newsletter"
-                            className="block p-2 hover:bg-muted rounded-md"
+                            className="block p-2 hover:bg-[#232f3e] rounded-md text-white"
                           >
                             <div className="flex items-center gap-1">
-                              <Sparkles className="h-3 w-3" />
+                              <Sparkles className="h-3 w-3 text-[#f90]" />
                               Newsletter
                             </div>
                           </Link>
@@ -134,10 +134,10 @@ export default function Navbar() {
                         <NavigationMenuLink asChild>
                           <Link
                             to="/chat"
-                            className="block p-2 hover:bg-muted rounded-md"
+                            className="block p-2 hover:bg-[#232f3e] rounded-md text-white"
                           >
                             <div className="flex items-center gap-1">
-                              <MessageCircle className="h-3 w-3" />
+                              <MessageCircle className="h-3 w-3 text-[#f90]" />
                               Live Chat
                             </div>
                           </Link>
@@ -151,7 +151,7 @@ export default function Navbar() {
                               e.preventDefault();
                               scrollToSection("#playground");
                             }}
-                            className="block p-2 hover:bg-muted rounded-md"
+                            className="block p-2 hover:bg-[#232f3e] rounded-md text-white"
                           >
                             {t('playground.title')}
                           </a>
@@ -165,7 +165,7 @@ export default function Navbar() {
                               e.preventDefault();
                               scrollToSection("#youtube");
                             }}
-                            className="block p-2 hover:bg-muted rounded-md"
+                            className="block p-2 hover:bg-[#232f3e] rounded-md text-white"
                           >
                             {t('nav.youtube')}
                           </a>
@@ -189,7 +189,7 @@ export default function Navbar() {
             <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="ml-2 p-2 rounded-md text-foreground"
+              className="ml-2 p-2 rounded-md text-white hover:bg-white/10"
               aria-label="Toggle Menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -201,7 +201,7 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 bg-background/95 backdrop-blur-lg shadow-lg border-t border-border">
+          <div className="px-2 pt-2 pb-3 space-y-1 bg-[#131921]/95 backdrop-blur-lg shadow-lg border-t border-[#232f3e]/50">
             <div className="px-3 py-2">
               <SearchBar />
             </div>
@@ -214,17 +214,17 @@ export default function Navbar() {
                   scrollToSection(item.href);
                 }}
                 href={item.href}
-                className="block px-3 py-2 text-base font-medium hover:text-primary transition-colors"
+                className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
               >
                 {item.name}
               </a>
             ))}
             
-            <hr className="border-border my-2" />
+            <hr className="border-[#232f3e]/50 my-2" />
             
             <Link
               to="/services"
-              className="block px-3 py-2 text-base font-medium hover:text-primary transition-colors"
+              className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
               onClick={() => setIsOpen(false)}
             >
               {t('nav.services')}
@@ -232,22 +232,22 @@ export default function Navbar() {
 
             <Link
               to="/newsletter"
-              className="block px-3 py-2 text-base font-medium hover:text-primary transition-colors"
+              className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
               onClick={() => setIsOpen(false)}
             >
               <div className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4" />
+                <Sparkles className="h-4 w-4 text-[#f90]" />
                 Newsletter
               </div>
             </Link>
             
             <Link
               to="/chat"
-              className="block px-3 py-2 text-base font-medium hover:text-primary transition-colors"
+              className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
               onClick={() => setIsOpen(false)}
             >
               <div className="flex items-center gap-2">
-                <MessageCircle className="h-4 w-4" />
+                <MessageCircle className="h-4 w-4 text-[#f90]" />
                 Live Chat
               </div>
             </Link>
@@ -258,7 +258,7 @@ export default function Navbar() {
                 e.preventDefault();
                 scrollToSection("#playground");
               }}
-              className="block px-3 py-2 text-base font-medium hover:text-primary transition-colors"
+              className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
             >
               {t('playground.title')}
             </a>
@@ -269,7 +269,7 @@ export default function Navbar() {
                 e.preventDefault();
                 scrollToSection("#youtube");
               }}
-              className="block px-3 py-2 text-base font-medium hover:text-primary transition-colors"
+              className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
             >
               {t('nav.youtube')}
             </a>
