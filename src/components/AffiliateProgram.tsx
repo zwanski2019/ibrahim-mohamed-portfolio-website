@@ -8,6 +8,7 @@ export default function AffiliateProgram() {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
   const affiliateLink = "https://amzn.to/429a1kO";
+  const storeId = "zwanskitech-20";
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(affiliateLink);
@@ -25,13 +26,18 @@ export default function AffiliateProgram() {
     <div className="w-full bg-gradient-to-r from-[#232f3e] to-[#131921] text-white py-1.5">
       <div className="container mx-auto px-4">
         <div className="flex flex-col sm:flex-row items-center justify-between">
-          <div className="flex items-center space-x-2 mb-2 sm:mb-0">
-            <ShoppingCart className="h-4 w-4 text-[#f90]" />
-            <span className="text-sm font-medium">Amazon Affiliate:</span>
-            <span className="text-xs px-2 py-0.5 bg-[#f90]/20 rounded-full text-[#f90] font-medium">ID: zwanskitech-20</span>
+          <div className="flex flex-col items-start space-y-1">
+            <div className="flex items-center space-x-2">
+              <ShoppingCart className="h-4 w-4 text-[#f90]" />
+              <span className="text-sm font-medium">Support us by shopping with our Amazon Affiliate Link</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className="text-sm">Shop on Amazon</span>
+              <span className="text-xs px-2 py-0.5 bg-[#f90]/20 rounded-full text-[#f90] font-medium">Store ID: {storeId}</span>
+            </div>
           </div>
           
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 mt-2 sm:mt-0">
             <div className="relative flex items-center max-w-[180px] sm:max-w-xs">
               <input 
                 type="text" 
