@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { ExternalLink, Copy, Check } from "lucide-react";
+import { ExternalLink, Copy, Check, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -22,12 +22,13 @@ export default function AffiliateProgram() {
   };
 
   return (
-    <div className="w-full bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-indigo-950/40 dark:to-blue-950/40 border-b border-border py-2">
+    <div className="w-full bg-gradient-to-r from-[#232f3e] to-[#131921] text-white py-1.5">
       <div className="container mx-auto px-4">
         <div className="flex flex-col sm:flex-row items-center justify-between">
           <div className="flex items-center space-x-2 mb-2 sm:mb-0">
-            <span className="text-sm font-medium">Join our Affiliate Program:</span>
-            <span className="text-xs px-2 py-0.5 bg-primary/10 rounded-full text-primary font-medium">ID: zwanskitech-20</span>
+            <ShoppingCart className="h-4 w-4 text-[#f90]" />
+            <span className="text-sm font-medium">Amazon Affiliate:</span>
+            <span className="text-xs px-2 py-0.5 bg-[#f90]/20 rounded-full text-[#f90] font-medium">ID: zwanskitech-20</span>
           </div>
           
           <div className="flex items-center space-x-2">
@@ -36,12 +37,12 @@ export default function AffiliateProgram() {
                 type="text" 
                 value={affiliateLink}
                 readOnly
-                className="w-full text-xs bg-background/50 border border-border rounded-l-md py-1 px-2 focus:outline-none focus:ring-1 focus:ring-primary"
+                className="w-full text-xs bg-white/10 border border-white/20 text-white rounded-l-md py-1 px-2 focus:outline-none focus:ring-1 focus:ring-[#f90]"
               />
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="rounded-l-none h-[28px] border-l-0"
+                className="rounded-l-none h-[28px] border-l-0 bg-white/10 border-white/20 hover:bg-white/20 text-white"
                 onClick={copyToClipboard}
               >
                 {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
@@ -50,12 +51,11 @@ export default function AffiliateProgram() {
             
             <Button 
               size="sm" 
-              variant="secondary"
-              className="h-[28px] text-xs"
+              className="h-[28px] text-xs bg-[#f90] hover:bg-[#f90]/80 text-black"
               asChild
             >
               <a href={affiliateLink} target="_blank" rel="noopener noreferrer" className="flex items-center">
-                Visit <ExternalLink className="ml-1 h-3 w-3" />
+                Shop Now <ExternalLink className="ml-1 h-3 w-3" />
               </a>
             </Button>
           </div>
