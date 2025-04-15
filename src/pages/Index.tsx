@@ -9,6 +9,7 @@ import YouTubeVideos from "@/components/YouTubeVideos";
 import Playground from "@/components/Playground";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import AffiliateProgram from "@/components/AffiliateProgram";
 import { Helmet } from "react-helmet-async";
 
 const Index = () => {
@@ -97,6 +98,7 @@ const Index = () => {
       </Helmet>
       
       <div className="flex flex-col min-h-screen">
+        <AffiliateProgram />
         <Navbar />
         <main>
           <Hero />
