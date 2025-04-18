@@ -1,6 +1,5 @@
-
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, Sparkles, MessageCircle, ShoppingCart } from "lucide-react";
+import { Menu, X, ChevronDown, Sparkles, MessageCircle } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { SearchBar } from "./SearchBar";
 import { LanguageSelector } from "./LanguageSelector";
@@ -22,7 +21,6 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const { t } = useLanguage();
 
-  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -57,14 +55,16 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-12 left-0 right-0 z-50 transition-all duration-200 ${
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-200",
         scrolled
           ? "py-2 bg-[#131921]/95 backdrop-blur-lg shadow-md border-b border-[#232f3e]/50"
-          : "py-3 bg-gradient-to-r from-[#232f3e] to-[#131921]"
-      }`}
+          : "py-3 bg-gradient-to-r from-[#232f3e] to-[#131921]",
+        isOpen ? "h-auto" : "h-auto"
+      )}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between">
+      <div className="container mx-auto px-4 lg:px-8">
+        <nav className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link
               to="/"
@@ -75,14 +75,13 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden lg:flex items-center space-x-6">
             <div className="mr-4">
               <SearchBar />
             </div>
             
             <NavigationMenu>
-              <NavigationMenuList>
+              <NavigationMenuList className="space-x-2">
                 {navigation.map((item) => (
                   <NavigationMenuItem key={item.name}>
                     <NavigationMenuLink
@@ -93,7 +92,7 @@ export default function Navbar() {
                       href={item.href}
                       className={cn(
                         navigationMenuTriggerStyle(),
-                        "bg-transparent hover:bg-white/10 text-white"
+                        "bg-transparent hover:bg-white/10 text-white px-3 py-2"
                       )}
                     >
                       {item.name}
@@ -106,7 +105,7 @@ export default function Navbar() {
                     {t('nav.more')}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[200px] gap-2 p-4 bg-[#131921] border border-[#232f3e]/50">
+                    <ul className="w-[200px] gap-2 p-4 bg-[#131921] border border-[#232f3e]/50">
                       <li>
                         <NavigationMenuLink asChild>
                           <Link
@@ -183,8 +182,7 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Mobile Navigation Toggle */}
-          <div className="flex items-center md:hidden">
+          <div className="flex items-center lg:hidden">
             <LanguageSelector />
             <ThemeToggle />
             <button
@@ -195,87 +193,86 @@ export default function Navbar() {
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
-        </div>
-      </div>
+        </nav>
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 bg-[#131921]/95 backdrop-blur-lg shadow-lg border-t border-[#232f3e]/50">
-            <div className="px-3 py-2">
-              <SearchBar />
-            </div>
-            
-            {navigation.map((item) => (
+        {isOpen && (
+          <div className="lg:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 bg-[#131921]/95 backdrop-blur-lg shadow-lg border-t border-[#232f3e]/50">
+              <div className="px-3 py-2">
+                <SearchBar />
+              </div>
+              
+              {navigation.map((item) => (
+                <a
+                  key={item.name}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(item.href);
+                  }}
+                  href={item.href}
+                  className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
+                >
+                  {item.name}
+                </a>
+              ))}
+              
+              <hr className="border-[#232f3e]/50 my-2" />
+              
+              <Link
+                to="/services"
+                className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                {t('nav.services')}
+              </Link>
+
+              <Link
+                to="/newsletter"
+                className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                <div className="flex items-center gap-2">
+                  <Sparkles className="h-4 w-4 text-[#f90]" />
+                  Newsletter
+                </div>
+              </Link>
+              
+              <Link
+                to="/chat"
+                className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                <div className="flex items-center gap-2">
+                  <MessageCircle className="h-4 w-4 text-[#f90]" />
+                  Live Chat
+                </div>
+              </Link>
+              
               <a
-                key={item.name}
+                href="#playground"
                 onClick={(e) => {
                   e.preventDefault();
-                  scrollToSection(item.href);
+                  scrollToSection("#playground");
                 }}
-                href={item.href}
                 className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
               >
-                {item.name}
+                {t('playground.title')}
               </a>
-            ))}
-            
-            <hr className="border-[#232f3e]/50 my-2" />
-            
-            <Link
-              to="/services"
-              className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              {t('nav.services')}
-            </Link>
-
-            <Link
-              to="/newsletter"
-              className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-[#f90]" />
-                Newsletter
-              </div>
-            </Link>
-            
-            <Link
-              to="/chat"
-              className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              <div className="flex items-center gap-2">
-                <MessageCircle className="h-4 w-4 text-[#f90]" />
-                Live Chat
-              </div>
-            </Link>
-            
-            <a
-              href="#playground"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection("#playground");
-              }}
-              className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
-            >
-              {t('playground.title')}
-            </a>
-            
-            <a
-              href="#youtube"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection("#youtube");
-              }}
-              className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
-            >
-              {t('nav.youtube')}
-            </a>
+              
+              <a
+                href="#youtube"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection("#youtube");
+                }}
+                className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
+              >
+                {t('nav.youtube')}
+              </a>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </header>
   );
 }
