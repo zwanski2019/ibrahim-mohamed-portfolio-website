@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, Sparkles, MessageCircle } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
@@ -56,7 +57,7 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-200",
+        "sticky top-0 left-0 right-0 z-50 transition-all duration-200",
         scrolled
           ? "py-2 bg-[#131921]/95 backdrop-blur-lg shadow-md border-b border-[#232f3e]/50"
           : "py-3 bg-gradient-to-r from-[#232f3e] to-[#131921]",
