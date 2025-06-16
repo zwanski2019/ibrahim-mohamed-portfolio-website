@@ -26,11 +26,12 @@ export const useWebSocket = ({ username, avatar }: UseWebSocketProps) => {
     setIsConnecting(true)
     
     try {
-      const ws = new WebSocket('wss://ceihcnfngpmrtqunhaey.functions.supabase.co/websocket-chat')
+      // Use the correct Supabase Edge Function URL format
+      const ws = new WebSocket('wss://ceihcnfngpmrtqunhaey.supabase.co/functions/v1/websocket-chat')
       wsRef.current = ws
 
       ws.onopen = () => {
-        console.log('WebSocket connected')
+        console.log('WebSocket connected successfully')
         setIsConnected(true)
         setIsConnecting(false)
         
@@ -49,14 +50,22 @@ export const useWebSocket = ({ username, avatar }: UseWebSocketProps) => {
             setMessages(prev => [...prev, parsed.data])
           }
         } catch (error) {
-          console.error('Error parsing message:', error)
+          console.error('Error parsing WebSocket message:', error)
         }
       }
 
-      ws.onclose = () => {
-        console.log('WebSocket disconnected')
+      ws.onclose = (event) => {
+        console.log('WebSocket disconnected:', event.code, event.reason)
         setIsConnected(false)
         setIsConnecting(false)
+        
+        // Attempt to reconnect after 3 seconds if it was an unexpected closure
+        if (event.code !== 1000 && username) {
+          setTimeout(() => {
+            console.log('Attempting to reconnect...')
+            connect()
+          }, 3000)
+        }
       }
 
       ws.onerror = (error) => {
@@ -65,16 +74,18 @@ export const useWebSocket = ({ username, avatar }: UseWebSocketProps) => {
         setIsConnecting(false)
       }
     } catch (error) {
-      console.error('Error creating WebSocket:', error)
+      console.error('Error creating WebSocket connection:', error)
       setIsConnecting(false)
     }
   }, [username, avatar])
 
   const disconnect = useCallback(() => {
     if (wsRef.current) {
-      wsRef.current.close()
+      wsRef.current.close(1000, 'User disconnected')
       wsRef.current = null
     }
+    setIsConnected(false)
+    setIsConnecting(false)
   }, [])
 
   const sendMessage = useCallback((message: string) => {
@@ -83,7 +94,9 @@ export const useWebSocket = ({ username, avatar }: UseWebSocketProps) => {
         type: 'message',
         message: message.trim()
       }))
+      return true
     }
+    return false
   }, [])
 
   useEffect(() => {

@@ -6,15 +6,17 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Sparkles, Send, LogOut, Wifi, WifiOff } from "lucide-react";
+import { Sparkles, Send, LogOut, Wifi, WifiOff, AlertCircle } from "lucide-react";
 import ChatMessage from "@/components/ChatMessage";
 import LoginForm from "@/components/LoginForm";
 import { useWebSocket } from "@/hooks/useWebSocket";
+import { useToast } from "@/hooks/use-toast";
 
 const Chat = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
   
   const { messages, isConnected, isConnecting, connect, disconnect, sendMessage } = useWebSocket({
     username: user?.username,
@@ -35,19 +37,60 @@ const Chat = () => {
     }
   }, [isAuthenticated, user?.username, connect, disconnect]);
 
+  // Show connection status notifications
+  useEffect(() => {
+    if (isAuthenticated && user?.username) {
+      if (isConnected) {
+        toast({
+          title: "Connected",
+          description: "You're now connected to the chat",
+        });
+      } else if (!isConnecting) {
+        toast({
+          title: "Disconnected",
+          description: "Connection to chat lost. Attempting to reconnect...",
+          variant: "destructive",
+        });
+      }
+    }
+  }, [isConnected, isConnecting, isAuthenticated, user?.username, toast]);
+
   // Send a new message
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!newMessage.trim() || !isConnected) return;
+    if (!newMessage.trim()) return;
     
-    sendMessage(newMessage);
-    setNewMessage("");
+    if (!isConnected) {
+      toast({
+        title: "Not Connected",
+        description: "Please wait for connection to be established",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    const success = sendMessage(newMessage);
+    if (success) {
+      setNewMessage("");
+    } else {
+      toast({
+        title: "Message Failed",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleLogout = () => {
     disconnect();
     logout();
+  };
+
+  const handleRetryConnection = () => {
+    if (isAuthenticated && user?.username && !isConnecting) {
+      connect();
+    }
   };
 
   return (
@@ -80,6 +123,17 @@ const Chat = () => {
                   <div className="flex items-center gap-2 text-red-500">
                     <WifiOff className="h-4 w-4" />
                     <span className="text-sm">Disconnected</span>
+                    {isAuthenticated && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleRetryConnection}
+                        className="ml-2"
+                      >
+                        <AlertCircle className="h-4 w-4 mr-1" />
+                        Retry
+                      </Button>
+                    )}
                   </div>
                 )}
               </div>
@@ -107,6 +161,11 @@ const Chat = () => {
                     <Sparkles className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>Welcome to the live chat!</p>
                     <p className="text-sm">Start a conversation with other users.</p>
+                    {!isConnected && (
+                      <p className="text-sm text-yellow-600 mt-2">
+                        Waiting for connection...
+                      </p>
+                    )}
                   </div>
                 ) : (
                   messages.map((msg) => (
@@ -132,13 +191,23 @@ const Chat = () => {
                 className="border-t border-primary/20 p-4 flex gap-2"
               >
                 <Input
-                  placeholder={isConnected ? "Type your message..." : "Connecting..."}
+                  placeholder={
+                    isConnecting 
+                      ? "Connecting..." 
+                      : isConnected 
+                        ? "Type your message..." 
+                        : "Disconnected - check connection"
+                  }
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   className="flex-1 bg-background/60"
                   disabled={!isConnected}
                 />
-                <Button type="submit" disabled={!isConnected || !newMessage.trim()}>
+                <Button 
+                  type="submit" 
+                  disabled={!isConnected || !newMessage.trim()}
+                  className="min-w-[80px]"
+                >
                   <Send className="h-4 w-4" />
                   <span className="sr-only">Send</span>
                 </Button>
