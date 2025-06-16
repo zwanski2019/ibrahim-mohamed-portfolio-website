@@ -41,7 +41,6 @@ const Computer = () => {
         color="#00ff88"
         anchorX="center"
         anchorY="middle"
-        font={undefined}
       >
         Welcome to SOS Services
       </Text>
@@ -52,7 +51,6 @@ const Computer = () => {
         color="#ffffff"
         anchorX="center"
         anchorY="middle"
-        font={undefined}
       >
         Tunisia's Premier IT Solutions
       </Text>
@@ -63,7 +61,6 @@ const Computer = () => {
         color="#cccccc"
         anchorX="center"
         anchorY="middle"
-        font={undefined}
       >
         Professional Tech Services
       </Text>
