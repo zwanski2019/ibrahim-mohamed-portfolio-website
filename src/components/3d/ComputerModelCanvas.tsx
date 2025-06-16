@@ -1,6 +1,6 @@
 
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Stars, ContactShadows } from '@react-three/drei'
+import { OrbitControls, Stars } from '@react-three/drei'
 import { Suspense } from 'react'
 import Computer from './Computer'
 
@@ -29,16 +29,6 @@ const ComputerModelCanvas = () => {
             saturation={0}
             fade
             speed={1}
-          />
-          
-          <ContactShadows
-            position={[0, -2, 0]}
-            opacity={0.4}
-            scale={10}
-            blur={1}
-            far={4}
-            resolution={256}
-            color="#000000"
           />
         </Suspense>
       </Canvas>

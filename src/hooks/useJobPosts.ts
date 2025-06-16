@@ -54,7 +54,21 @@ export const useCreateJobPost = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (jobData: Partial<JobPost>) => {
+    mutationFn: async (jobData: {
+      title: string;
+      description: string;
+      category: string;
+      location: string;
+      job_type: 'full-time' | 'part-time' | 'contract' | 'freelance';
+      salary_type: 'hourly' | 'fixed' | 'monthly';
+      salary_min: number;
+      employer_id: string;
+      benefits?: string[];
+      requirements?: string[];
+      salary_max?: number;
+      expires_at?: string;
+      urgency?: 'low' | 'medium' | 'high';
+    }) => {
       const { data, error } = await supabase
         .from('job_posts')
         .insert([jobData])
