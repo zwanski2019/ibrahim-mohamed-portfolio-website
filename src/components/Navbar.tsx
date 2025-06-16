@@ -1,6 +1,5 @@
-
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, Sparkles, MessageCircle, ShoppingCart, ExternalLink, Briefcase } from "lucide-react";
+import { Menu, X, ChevronDown, Sparkles, MessageCircle, ShoppingCart, ExternalLink } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { SearchBar } from "./SearchBar";
 import { LanguageSelector } from "./LanguageSelector";
@@ -40,7 +39,6 @@ export default function Navbar() {
   }, []);
 
   const navigation = [
-    { name: "Jobs", href: "/jobs", icon: Briefcase },
     { name: t('nav.about'), href: "#about" },
     { name: t('nav.skills'), href: "#skills" },
     { name: t('nav.projects'), href: "#projects" },
@@ -49,12 +47,10 @@ export default function Navbar() {
   ];
 
   const scrollToSection = (href: string) => {
-    if (href.startsWith('#')) {
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-        setIsOpen(false);
-      }
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      setIsOpen(false);
     }
   };
 
@@ -116,9 +112,9 @@ export default function Navbar() {
               <Link
                 to="/"
                 className="text-xl font-bold bg-gradient-to-r from-[#f90] to-[#f97316] text-transparent bg-clip-text"
-                aria-label="SOS Jobs - Job Marketplace"
+                aria-label="Zwanski Tech - Web Developer"
               >
-                SOS JOBS
+                ZWANSKI TECH
               </Link>
             </div>
 
@@ -131,34 +127,19 @@ export default function Navbar() {
                 <NavigationMenuList className="space-x-2">
                   {navigation.map((item) => (
                     <NavigationMenuItem key={item.name}>
-                      {item.href.startsWith('/') ? (
-                        <NavigationMenuLink asChild>
-                          <Link
-                            to={item.href}
-                            className={cn(
-                              navigationMenuTriggerStyle(),
-                              "bg-transparent hover:bg-white/10 text-white px-3 py-2 flex items-center gap-2"
-                            )}
-                          >
-                            {item.icon && <item.icon className="h-4 w-4" />}
-                            {item.name}
-                          </Link>
-                        </NavigationMenuLink>
-                      ) : (
-                        <NavigationMenuLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            scrollToSection(item.href);
-                          }}
-                          href={item.href}
-                          className={cn(
-                            navigationMenuTriggerStyle(),
-                            "bg-transparent hover:bg-white/10 text-white px-3 py-2"
-                          )}
-                        >
-                          {item.name}
-                        </NavigationMenuLink>
-                      )}
+                      <NavigationMenuLink
+                        onClick={(e) => {
+                          e.preventDefault();
+                          scrollToSection(item.href);
+                        }}
+                        href={item.href}
+                        className={cn(
+                          navigationMenuTriggerStyle(),
+                          "bg-transparent hover:bg-white/10 text-white px-3 py-2"
+                        )}
+                      >
+                        {item.name}
+                      </NavigationMenuLink>
                     </NavigationMenuItem>
                   ))}
                   
@@ -265,29 +246,17 @@ export default function Navbar() {
                 </div>
                 
                 {navigation.map((item) => (
-                  item.href.startsWith('/') ? (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      className="flex items-center gap-2 px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {item.icon && <item.icon className="h-4 w-4" />}
-                      {item.name}
-                    </Link>
-                  ) : (
-                    <a
-                      key={item.name}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        scrollToSection(item.href);
-                      }}
-                      href={item.href}
-                      className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
-                    >
-                      {item.name}
-                    </a>
-                  )
+                  <a
+                    key={item.name}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection(item.href);
+                    }}
+                    href={item.href}
+                    className="block px-3 py-2 text-base font-medium text-white hover:text-[#f90] transition-colors"
+                  >
+                    {item.name}
+                  </a>
                 ))}
                 
                 <hr className="border-[#232f3e]/50 my-2" />
