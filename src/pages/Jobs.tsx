@@ -3,15 +3,18 @@ import { useState } from "react";
 import { useJobPosts } from "@/hooks/useJobPosts";
 import { JobCard } from "@/components/marketplace/JobCard";
 import { JobSearchFilters } from "@/components/marketplace/JobSearchFilters";
+import { JobPostForm } from "@/components/marketplace/JobPostForm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Search, Plus, MapPin, Briefcase } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Search, Plus, MapPin, Briefcase, ArrowLeft } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
 const Jobs = () => {
   const [showFilters, setShowFilters] = useState(false);
+  const [showJobForm, setShowJobForm] = useState(false);
   const [filters, setFilters] = useState({
     search: "",
     location: "",
@@ -21,7 +24,7 @@ const Jobs = () => {
     urgency: [] as string[],
   });
 
-  const { data: jobs, isLoading, error } = useJobPosts({
+  const { data: jobs, isLoading, error, refetch } = useJobPosts({
     search: filters.search || undefined,
     location: filters.location || undefined,
     category: filters.category || undefined,
@@ -34,7 +37,7 @@ const Jobs = () => {
 
   const handleViewDetails = (job: any) => {
     console.log("View job details:", job);
-    // TODO: Navigate to job details page
+    // TODO: Navigate to job details page or show modal
   };
 
   const clearFilters = () => {
@@ -47,6 +50,42 @@ const Jobs = () => {
       urgency: [],
     });
   };
+
+  const handleJobPosted = () => {
+    setShowJobForm(false);
+    refetch(); // Refresh the jobs list
+  };
+
+  if (showJobForm) {
+    return (
+      <>
+        <Helmet>
+          <title>Post a Job - SOS Services</title>
+          <meta name="description" content="Post a job on SOS Services marketplace in Tunisia" />
+        </Helmet>
+
+        <div className="min-h-screen bg-background">
+          <div className="container mx-auto px-4 py-8">
+            <div className="mb-6">
+              <Button 
+                variant="ghost" 
+                onClick={() => setShowJobForm(false)}
+                className="mb-4"
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to Jobs
+              </Button>
+            </div>
+            
+            <JobPostForm 
+              onSuccess={handleJobPosted}
+              onCancel={() => setShowJobForm(false)}
+            />
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -132,7 +171,7 @@ const Jobs = () => {
                   >
                     Filters
                   </Button>
-                  <Button>
+                  <Button onClick={() => setShowJobForm(true)}>
                     <Plus className="h-4 w-4 mr-2" />
                     Post Job
                   </Button>
@@ -167,9 +206,12 @@ const Jobs = () => {
                     <h3 className="text-lg font-semibold mb-2">
                       Error loading jobs
                     </h3>
-                    <p className="text-muted-foreground">
+                    <p className="text-muted-foreground mb-4">
                       Please try again later
                     </p>
+                    <Button onClick={() => refetch()}>
+                      Try Again
+                    </Button>
                   </CardContent>
                 </Card>
               ) : jobs && jobs.length > 0 ? (
@@ -191,11 +233,17 @@ const Jobs = () => {
                       No jobs found
                     </h3>
                     <p className="text-muted-foreground mb-4">
-                      Try adjusting your search criteria or check back later
+                      Try adjusting your search criteria or be the first to post a job!
                     </p>
-                    <Button onClick={clearFilters}>
-                      Clear Filters
-                    </Button>
+                    <div className="flex gap-2 justify-center">
+                      <Button variant="outline" onClick={clearFilters}>
+                        Clear Filters
+                      </Button>
+                      <Button onClick={() => setShowJobForm(true)}>
+                        <Plus className="h-4 w-4 mr-2" />
+                        Post First Job
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
               )}

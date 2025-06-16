@@ -1,0 +1,363 @@
+
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { X, Plus } from "lucide-react";
+import { useCreateJobPost } from "@/hooks/useJobPosts";
+import { useCategories } from "@/hooks/useCategories";
+import { toast } from "sonner";
+
+const jobPostSchema = z.object({
+  title: z.string().min(5, "Title must be at least 5 characters"),
+  description: z.string().min(20, "Description must be at least 20 characters"),
+  category: z.string().min(1, "Please select a category"),
+  location: z.string().min(3, "Location must be at least 3 characters"),
+  job_type: z.enum(["full-time", "part-time", "contract", "freelance"]),
+  salary_type: z.enum(["hourly", "fixed", "monthly"]),
+  salary_min: z.number().min(0, "Minimum salary must be positive"),
+  salary_max: z.number().optional(),
+  urgency: z.enum(["low", "medium", "high"]).default("medium"),
+});
+
+type JobPostFormData = z.infer<typeof jobPostSchema>;
+
+interface JobPostFormProps {
+  onSuccess?: () => void;
+  onCancel?: () => void;
+}
+
+export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
+  const [requirements, setRequirements] = useState<string[]>([]);
+  const [benefits, setBenefits] = useState<string[]>([]);
+  const [newRequirement, setNewRequirement] = useState("");
+  const [newBenefit, setNewBenefit] = useState("");
+
+  const { data: categories = [] } = useCategories();
+  const createJobPost = useCreateJobPost();
+
+  const form = useForm<JobPostFormData>({
+    resolver: zodResolver(jobPostSchema),
+    defaultValues: {
+      urgency: "medium",
+    },
+  });
+
+  const onSubmit = async (data: JobPostFormData) => {
+    try {
+      // For demo purposes, we'll use a mock employer ID
+      // In a real app, this would come from the authenticated user
+      const mockEmployerId = "00000000-0000-0000-0000-000000000000";
+
+      await createJobPost.mutateAsync({
+        ...data,
+        employer_id: mockEmployerId,
+        requirements,
+        benefits,
+        salary_max: data.salary_max || undefined,
+      });
+
+      toast.success("Job posted successfully!");
+      onSuccess?.();
+    } catch (error) {
+      toast.error("Failed to post job. Please try again.");
+      console.error("Job post error:", error);
+    }
+  };
+
+  const addRequirement = () => {
+    if (newRequirement.trim() && !requirements.includes(newRequirement.trim())) {
+      setRequirements([...requirements, newRequirement.trim()]);
+      setNewRequirement("");
+    }
+  };
+
+  const addBenefit = () => {
+    if (newBenefit.trim() && !benefits.includes(newBenefit.trim())) {
+      setBenefits([...benefits, newBenefit.trim()]);
+      setNewBenefit("");
+    }
+  };
+
+  const removeRequirement = (req: string) => {
+    setRequirements(requirements.filter(r => r !== req));
+  };
+
+  const removeBenefit = (benefit: string) => {
+    setBenefits(benefits.filter(b => b !== benefit));
+  };
+
+  return (
+    <Card className="max-w-2xl mx-auto">
+      <CardHeader>
+        <CardTitle>Post a New Job</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Job Title</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g. Web Developer, Graphic Designer..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Job Description</FormLabel>
+                  <FormControl>
+                    <Textarea 
+                      placeholder="Describe the job responsibilities, requirements, and what you're looking for..."
+                      className="min-h-[120px]"
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="category"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Category</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select category" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {categories.map((category) => (
+                          <SelectItem key={category.id} value={category.name}>
+                            {category.icon} {category.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="location"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Location</FormLabel>
+                    <FormControl>
+                      <Input placeholder="e.g. Tunis, Sfax, Remote..." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <FormField
+                control={form.control}
+                name="job_type"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Job Type</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="full-time">Full Time</SelectItem>
+                        <SelectItem value="part-time">Part Time</SelectItem>
+                        <SelectItem value="contract">Contract</SelectItem>
+                        <SelectItem value="freelance">Freelance</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="salary_type"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Salary Type</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="hourly">Hourly</SelectItem>
+                        <SelectItem value="fixed">Fixed Price</SelectItem>
+                        <SelectItem value="monthly">Monthly</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="urgency"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Urgency</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select urgency" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="low">Low</SelectItem>
+                        <SelectItem value="medium">Medium</SelectItem>
+                        <SelectItem value="high">High</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="salary_min"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Minimum Salary (TND)</FormLabel>
+                    <FormControl>
+                      <Input 
+                        type="number" 
+                        placeholder="500"
+                        {...field}
+                        onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="salary_max"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Maximum Salary (TND) - Optional</FormLabel>
+                    <FormControl>
+                      <Input 
+                        type="number" 
+                        placeholder="1000"
+                        {...field}
+                        onChange={(e) => field.onChange(parseFloat(e.target.value) || undefined)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* Requirements */}
+            <div className="space-y-3">
+              <FormLabel>Requirements</FormLabel>
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Add a requirement..."
+                  value={newRequirement}
+                  onChange={(e) => setNewRequirement(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addRequirement())}
+                />
+                <Button type="button" onClick={addRequirement} size="sm">
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {requirements.map((req) => (
+                  <Badge key={req} variant="secondary" className="flex items-center gap-1">
+                    {req}
+                    <X 
+                      className="h-3 w-3 cursor-pointer" 
+                      onClick={() => removeRequirement(req)}
+                    />
+                  </Badge>
+                ))}
+              </div>
+            </div>
+
+            {/* Benefits */}
+            <div className="space-y-3">
+              <FormLabel>Benefits</FormLabel>
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Add a benefit..."
+                  value={newBenefit}
+                  onChange={(e) => setNewBenefit(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addBenefit())}
+                />
+                <Button type="button" onClick={addBenefit} size="sm">
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {benefits.map((benefit) => (
+                  <Badge key={benefit} variant="outline" className="flex items-center gap-1">
+                    {benefit}
+                    <X 
+                      className="h-3 w-3 cursor-pointer" 
+                      onClick={() => removeBenefit(benefit)}
+                    />
+                  </Badge>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex gap-4 pt-4">
+              <Button 
+                type="submit" 
+                disabled={createJobPost.isPending}
+                className="flex-1"
+              >
+                {createJobPost.isPending ? "Posting..." : "Post Job"}
+              </Button>
+              {onCancel && (
+                <Button type="button" variant="outline" onClick={onCancel}>
+                  Cancel
+                </Button>
+              )}
+            </div>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
+  );
+};

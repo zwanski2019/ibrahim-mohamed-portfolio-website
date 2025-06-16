@@ -41,8 +41,16 @@ export const useJobPosts = (filters?: {
 
       const { data, error } = await query;
       
-      if (error) throw error;
-      return data as (JobPost & { 
+      if (error) {
+        console.error('Error fetching jobs:', error);
+        throw error;
+      }
+
+      // Transform the data to handle the count properly
+      return (data || []).map(job => ({
+        ...job,
+        applications: job.applications || []
+      })) as (JobPost & { 
         employer: any;
         applications: { count: number }[];
       })[];
@@ -69,17 +77,29 @@ export const useCreateJobPost = () => {
       expires_at?: string;
       urgency?: 'low' | 'medium' | 'high';
     }) => {
+      // Set the job status to published by default
+      const jobPostData = {
+        ...jobData,
+        status: 'published' as const,
+      };
+
       const { data, error } = await supabase
         .from('job_posts')
-        .insert([jobData])
+        .insert([jobPostData])
         .select()
         .single();
       
-      if (error) throw error;
+      if (error) {
+        console.error('Error creating job post:', error);
+        throw error;
+      }
       return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['job-posts'] });
+    },
+    onError: (error) => {
+      console.error('Job post creation failed:', error);
     },
   });
 };
@@ -103,9 +123,41 @@ export const useJobApplications = (jobId: string) => {
         .eq('job_id', jobId)
         .order('created_at', { ascending: false });
       
-      if (error) throw error;
-      return data;
+      if (error) {
+        console.error('Error fetching applications:', error);
+        throw error;
+      }
+      return data || [];
     },
     enabled: !!jobId,
+  });
+};
+
+export const useApplyToJob = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (applicationData: {
+      job_id: string;
+      worker_id: string;
+      cover_letter?: string;
+      proposed_rate?: number;
+    }) => {
+      const { data, error } = await supabase
+        .from('applications')
+        .insert([applicationData])
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Error applying to job:', error);
+        throw error;
+      }
+      return data;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['job-applications', variables.job_id] });
+      queryClient.invalidateQueries({ queryKey: ['job-posts'] });
+    },
   });
 };
