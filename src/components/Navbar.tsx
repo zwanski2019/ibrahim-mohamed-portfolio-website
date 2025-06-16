@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, Sparkles, MessageCircle, ShoppingCart, ExternalLink } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
@@ -113,9 +112,9 @@ export default function Navbar() {
               <Link
                 to="/"
                 className="text-xl font-bold bg-gradient-to-r from-[#f90] to-[#f97316] text-transparent bg-clip-text"
-                aria-label="Zwanski - Web Developer"
+                aria-label="Zwanski Tech - Web Developer"
               >
-                ZWANSKI
+                ZWANSKI TECH
               </Link>
             </div>
 
