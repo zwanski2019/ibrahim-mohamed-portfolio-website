@@ -41,6 +41,7 @@ const Computer = () => {
         color="#00ff88"
         anchorX="center"
         anchorY="middle"
+        font="/fonts/helvetiker_regular.typeface.json"
       >
         Welcome to SOS Services
       </Text>
@@ -51,6 +52,7 @@ const Computer = () => {
         color="#ffffff"
         anchorX="center"
         anchorY="middle"
+        font="/fonts/helvetiker_regular.typeface.json"
       >
         Tunisia's Premier Job Marketplace
       </Text>
@@ -61,6 +63,7 @@ const Computer = () => {
         color="#cccccc"
         anchorX="center"
         anchorY="middle"
+        font="/fonts/helvetiker_regular.typeface.json"
       >
         Connecting Talent with Opportunity
       </Text>
