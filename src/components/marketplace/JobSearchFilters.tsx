@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Search, MapPin, Filter, X } from "lucide-react";
+import { useCategories } from "@/hooks/useCategories";
 
 interface JobSearchFiltersProps {
   filters: {
@@ -22,11 +23,6 @@ interface JobSearchFiltersProps {
   onClearFilters: () => void;
 }
 
-const categories = [
-  "Technology", "Healthcare", "Education", "Construction", 
-  "Hospitality", "Transportation", "Retail", "Finance"
-];
-
 const jobTypes = ["full-time", "part-time", "contract", "freelance"];
 const urgencyLevels = ["low", "medium", "high"];
 
@@ -35,6 +31,8 @@ export const JobSearchFilters = ({
   onFiltersChange, 
   onClearFilters 
 }: JobSearchFiltersProps) => {
+  const { data: categories = [] } = useCategories();
+  
   const updateFilter = (key: string, value: any) => {
     onFiltersChange({ ...filters, [key]: value });
   };
@@ -109,8 +107,8 @@ export const JobSearchFilters = ({
             <SelectContent>
               <SelectItem value="">All Categories</SelectItem>
               {categories.map((category) => (
-                <SelectItem key={category} value={category}>
-                  {category}
+                <SelectItem key={category.id} value={category.name}>
+                  {category.icon} {category.name}
                 </SelectItem>
               ))}
             </SelectContent>

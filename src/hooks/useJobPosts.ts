@@ -15,7 +15,7 @@ export const useJobPosts = (filters?: {
         .from('job_posts')
         .select(`
           *,
-          employer:users!job_posts_employer_id_fkey(
+          employer:profiles!job_posts_employer_id_fkey(
             id,
             full_name,
             avatar_url,
@@ -78,7 +78,7 @@ export const useJobApplications = (jobId: string) => {
         .from('applications')
         .select(`
           *,
-          worker:users!applications_worker_id_fkey(
+          worker:profiles!applications_worker_id_fkey(
             id,
             full_name,
             avatar_url,

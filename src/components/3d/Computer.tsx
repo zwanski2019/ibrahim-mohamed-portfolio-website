@@ -1,7 +1,7 @@
 
-import { useRef, useEffect } from 'react'
+import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Text, useGLTF, OrbitControls } from '@react-three/drei'
+import { Text } from '@react-three/drei'
 import * as THREE from 'three'
 
 const Computer = () => {
@@ -41,7 +41,6 @@ const Computer = () => {
         color="#00ff88"
         anchorX="center"
         anchorY="middle"
-        font="/fonts/JetBrainsMono-Regular.woff"
       >
         Welcome to SOS Services
       </Text>
@@ -52,7 +51,6 @@ const Computer = () => {
         color="#ffffff"
         anchorX="center"
         anchorY="middle"
-        font="/fonts/JetBrainsMono-Regular.woff"
       >
         Tunisia's Premier Job Marketplace
       </Text>
@@ -63,7 +61,6 @@ const Computer = () => {
         color="#cccccc"
         anchorX="center"
         anchorY="middle"
-        font="/fonts/JetBrainsMono-Regular.woff"
       >
         Connecting Talent with Opportunity
       </Text>
