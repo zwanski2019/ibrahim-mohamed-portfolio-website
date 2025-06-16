@@ -35,7 +35,7 @@ export const useJobPosts = (filters?: {
         query = query.ilike('location', `%${filters.location}%`);
       }
 
-      if (filters?.jobType) {
+      if (filters?.jobType && ['full-time', 'part-time', 'contract', 'freelance'].includes(filters.jobType)) {
         query = query.eq('job_type', filters.jobType);
       }
 
