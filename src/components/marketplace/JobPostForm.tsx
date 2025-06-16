@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -57,11 +56,18 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
       const mockEmployerId = "00000000-0000-0000-0000-000000000000";
 
       await createJobPost.mutateAsync({
-        ...data,
+        title: data.title,
+        description: data.description,
+        category: data.category,
+        location: data.location,
+        job_type: data.job_type,
+        salary_type: data.salary_type,
+        salary_min: data.salary_min,
         employer_id: mockEmployerId,
         requirements,
         benefits,
-        salary_max: data.salary_max || undefined,
+        salary_max: data.salary_max,
+        urgency: data.urgency,
       });
 
       toast.success("Job posted successfully!");
