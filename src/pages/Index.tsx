@@ -8,6 +8,8 @@ import YouTubeVideos from "@/components/YouTubeVideos";
 import Playground from "@/components/Playground";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import TutoringPlatform from "@/components/tutoring/TutoringPlatform";
+import InstructorDashboard from "@/components/tutoring/InstructorDashboard";
 import { Helmet } from "react-helmet-async";
 
 const Index = () => {
@@ -103,6 +105,8 @@ const Index = () => {
           <Projects />
           <Experience />
           <YouTubeVideos />
+          <TutoringPlatform />
+          <InstructorDashboard />
           <Playground />
           <Contact />
         </main>
