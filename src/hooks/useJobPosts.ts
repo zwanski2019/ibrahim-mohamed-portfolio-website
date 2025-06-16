@@ -1,14 +1,12 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import type { JobPost } from '@/types/marketplace';
+import { JobPost } from '@/types/marketplace';
 
 export const useJobPosts = (filters?: {
   category?: string;
   location?: string;
-  jobType?: string;
-  salaryMin?: number;
-  salaryMax?: number;
+  search?: string;
 }) => {
   return useQuery({
     queryKey: ['job-posts', filters],
@@ -21,8 +19,10 @@ export const useJobPosts = (filters?: {
             id,
             full_name,
             avatar_url,
-            rating
-          )
+            rating,
+            verified
+          ),
+          applications(count)
         `)
         .eq('status', 'published')
         .order('created_at', { ascending: false });
@@ -35,34 +35,29 @@ export const useJobPosts = (filters?: {
         query = query.ilike('location', `%${filters.location}%`);
       }
 
-      if (filters?.jobType && ['full-time', 'part-time', 'contract', 'freelance'].includes(filters.jobType)) {
-        query = query.eq('job_type', filters.jobType);
-      }
-
-      if (filters?.salaryMin) {
-        query = query.gte('salary_min', filters.salaryMin);
-      }
-
-      if (filters?.salaryMax) {
-        query = query.lte('salary_max', filters.salaryMax);
+      if (filters?.search) {
+        query = query.or(`title.ilike.%${filters.search}%,description.ilike.%${filters.search}%`);
       }
 
       const { data, error } = await query;
       
       if (error) throw error;
-      return data as JobPost[];
+      return data as (JobPost & { 
+        employer: any;
+        applications: { count: number }[];
+      })[];
     },
   });
 };
 
 export const useCreateJobPost = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: async (jobData: Omit<JobPost, 'id' | 'created_at' | 'updated_at'>) => {
+    mutationFn: async (jobData: Partial<JobPost>) => {
       const { data, error } = await supabase
         .from('job_posts')
-        .insert(jobData)
+        .insert([jobData])
         .select()
         .single();
       
@@ -75,41 +70,28 @@ export const useCreateJobPost = () => {
   });
 };
 
-export const useUpdateJobPost = () => {
-  const queryClient = useQueryClient();
-  
-  return useMutation({
-    mutationFn: async ({ id, ...updates }: Partial<JobPost> & { id: string }) => {
+export const useJobApplications = (jobId: string) => {
+  return useQuery({
+    queryKey: ['job-applications', jobId],
+    queryFn: async () => {
       const { data, error } = await supabase
-        .from('job_posts')
-        .update(updates)
-        .eq('id', id)
-        .select()
-        .single();
+        .from('applications')
+        .select(`
+          *,
+          worker:profiles!applications_worker_id_fkey(
+            id,
+            full_name,
+            avatar_url,
+            rating,
+            verified
+          )
+        `)
+        .eq('job_id', jobId)
+        .order('created_at', { ascending: false });
       
       if (error) throw error;
       return data;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['job-posts'] });
-    },
-  });
-};
-
-export const useDeleteJobPost = () => {
-  const queryClient = useQueryClient();
-  
-  return useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from('job_posts')
-        .delete()
-        .eq('id', id);
-      
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['job-posts'] });
-    },
+    enabled: !!jobId,
   });
 };

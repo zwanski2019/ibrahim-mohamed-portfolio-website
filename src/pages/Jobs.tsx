@@ -13,6 +13,7 @@ import { Helmet } from "react-helmet-async";
 const Jobs = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
+    search: "",
     location: "",
     category: "",
     jobType: "",
@@ -21,6 +22,7 @@ const Jobs = () => {
   });
 
   const { data: jobs, isLoading, error } = useJobPosts({
+    search: filters.search || undefined,
     location: filters.location || undefined,
     category: filters.category || undefined,
   });
@@ -37,6 +39,7 @@ const Jobs = () => {
 
   const clearFilters = () => {
     setFilters({
+      search: "",
       location: "",
       category: "",
       jobType: "",
@@ -70,6 +73,8 @@ const Jobs = () => {
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                   <Input
                     placeholder="Search jobs..."
+                    value={filters.search}
+                    onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
                     className="pl-10 h-12 bg-background text-foreground"
                   />
                 </div>
