@@ -1,16 +1,7 @@
 
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import DynamicSkills from "@/components/dynamic/DynamicSkills";
-import DynamicProjects from "@/components/dynamic/DynamicProjects";
-import DynamicExperience from "@/components/dynamic/DynamicExperience";
-import YouTubeVideos from "@/components/YouTubeVideos";
-import Playground from "@/components/Playground";
-import DynamicContact from "@/components/dynamic/DynamicContact";
-import Footer from "@/components/Footer";
-import TutoringPlatform from "@/components/tutoring/TutoringPlatform";
-import InstructorDashboard from "@/components/tutoring/InstructorDashboard";
+import Jobs from "@/pages/Jobs";
 import { Helmet } from "react-helmet-async";
 
 const Index = () => {
@@ -72,46 +63,30 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Mohamed Ibrahim (Zwanski) | Web Developer & Full-Stack Engineer</title>
+        <title>SOS Jobs - Find Work & Hire Talent in Tunisia</title>
         <meta 
           name="description" 
-          content="Official portfolio of Mohamed Ibrahim (Zwanski) - Web Developer & Full-Stack Engineer based in Tunis, Tunisia. Specialized in WordPress, PHP, React, and UI/UX Design."
+          content="SOS Jobs - The premier job marketplace in Tunisia. Find freelance work, full-time positions, and hire talented professionals across all industries."
         />
-        <meta name="author" content="Mohamed Ibrahim (Zwanski)" />
-        <meta name="keywords" content="Zwanski, Mohamed Ibrahim, Web Developer, Tunis, Tunisia, PHP, WordPress, React, Full-Stack, Portfolio" />
+        <meta name="author" content="SOS Jobs" />
+        <meta name="keywords" content="SOS Jobs, Tunisia Jobs, Freelance, Hire Talent, Job Board, Employment" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://zwanski2019.github.io/zwanski-store/" />
-        <meta property="og:title" content="Mohamed Ibrahim (Zwanski) | Web Developer & Full-Stack Engineer" />
-        <meta property="og:description" content="Official portfolio of Mohamed Ibrahim (Zwanski) - Web Developer & Full-Stack Engineer based in Tunis, Tunisia." />
-        <meta property="og:image" content="/og-image.png" />
+        <meta property="og:title" content="SOS Jobs - Find Work & Hire Talent in Tunisia" />
+        <meta property="og:description" content="The premier job marketplace in Tunisia. Find freelance work, full-time positions, and hire talented professionals." />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://zwanski2019.github.io/zwanski-store/" />
-        <meta property="twitter:title" content="Mohamed Ibrahim (Zwanski) | Web Developer & Full-Stack Engineer" />
-        <meta property="twitter:description" content="Official portfolio of Mohamed Ibrahim (Zwanski) - Web Developer & Full-Stack Engineer based in Tunis, Tunisia." />
-        <meta property="twitter:image" content="/og-image.png" />
-        
-        {/* Canonical link */}
-        <link rel="canonical" href="https://zwanski2019.github.io/zwanski-store/" />
+        <meta property="twitter:title" content="SOS Jobs - Find Work & Hire Talent in Tunisia" />
+        <meta property="twitter:description" content="The premier job marketplace in Tunisia. Find freelance work, full-time positions, and hire talented professionals." />
       </Helmet>
       
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main>
-          <Hero />
-          <DynamicSkills />
-          <DynamicProjects />
-          <DynamicExperience />
-          <YouTubeVideos />
-          <TutoringPlatform />
-          <InstructorDashboard />
-          <Playground />
-          <DynamicContact />
+          <Jobs />
         </main>
-        <Footer />
       </div>
     </>
   );
