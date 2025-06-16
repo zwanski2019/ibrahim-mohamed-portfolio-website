@@ -1,12 +1,13 @@
+
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Skills from "@/components/Skills";
-import Projects from "@/components/Projects";
-import Experience from "@/components/Experience";
+import DynamicSkills from "@/components/dynamic/DynamicSkills";
+import DynamicProjects from "@/components/dynamic/DynamicProjects";
+import DynamicExperience from "@/components/dynamic/DynamicExperience";
 import YouTubeVideos from "@/components/YouTubeVideos";
 import Playground from "@/components/Playground";
-import Contact from "@/components/Contact";
+import DynamicContact from "@/components/dynamic/DynamicContact";
 import Footer from "@/components/Footer";
 import TutoringPlatform from "@/components/tutoring/TutoringPlatform";
 import InstructorDashboard from "@/components/tutoring/InstructorDashboard";
@@ -101,14 +102,14 @@ const Index = () => {
         <Navbar />
         <main>
           <Hero />
-          <Skills />
-          <Projects />
-          <Experience />
+          <DynamicSkills />
+          <DynamicProjects />
+          <DynamicExperience />
           <YouTubeVideos />
           <TutoringPlatform />
           <InstructorDashboard />
           <Playground />
-          <Contact />
+          <DynamicContact />
         </main>
         <Footer />
       </div>
