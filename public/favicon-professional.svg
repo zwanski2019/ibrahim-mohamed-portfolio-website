@@ -5,28 +5,17 @@
       <stop offset="0%" stop-color="#3B82F6" />
       <stop offset="100%" stop-color="#8B5CF6" />
     </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="1" stdDeviation="0.5" flood-color="#000" flood-opacity="0.2"/>
-    </filter>
   </defs>
   
   <!-- Background circle with gradient -->
-  <circle cx="8" cy="8" r="7.5" fill="url(#professional-gradient)" filter="url(#shadow)" stroke="#fff" stroke-width="0.5"/>
+  <circle cx="8" cy="8" r="7.5" fill="url(#professional-gradient)" stroke="#fff" stroke-width="0.5"/>
   
-  <!-- Z-Tech Design -->
-  <g fill="white">
-    <!-- Large Z letter -->
-    <path d="M2 3h6v1.5H4.5L8 8.5H8v1.5H2V8.5h3.5L2 4.5V3z" stroke="white" stroke-width="0.1"/>
-    
-    <!-- TECH text -->
-    <g font-family="Inter, sans-serif" font-weight="600" font-size="2.5" text-anchor="start">
-      <text x="2.5" y="14" fill="white">TECH</text>
-    </g>
-    
-    <!-- Tech circuit elements -->
-    <circle cx="12" cy="4" r="0.4" fill="white" opacity="0.9"/>
-    <circle cx="12" cy="12" r="0.4" fill="white" opacity="0.9"/>
-    <line x1="9" y1="4" x2="11.6" y2="4" stroke="white" stroke-width="0.3" opacity="0.8"/>
-    <line x1="9" y1="12" x2="11.6" y2="12" stroke="white" stroke-width="0.3" opacity="0.8"/>
+  <!-- Simple, bold Z letter -->
+  <g fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round">
+    <path d="M4 4h8v2.5H7.5l4.5 5.5v2.5H4v-2.5h4.5L4 6.5V4z"/>
   </g>
+  
+  <!-- Small tech dots in corners -->
+  <circle cx="13" cy="3" r="0.8" fill="white" opacity="0.7"/>
+  <circle cx="13" cy="13" r="0.8" fill="white" opacity="0.7"/>
 </svg>
