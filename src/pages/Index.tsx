@@ -1,118 +1,30 @@
 
-import { useEffect } from "react";
-import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import DynamicSkills from "@/components/dynamic/DynamicSkills";
-import DynamicProjects from "@/components/dynamic/DynamicProjects";
-import DynamicExperience from "@/components/dynamic/DynamicExperience";
-import YouTubeVideos from "@/components/YouTubeVideos";
-import Playground from "@/components/Playground";
-import DynamicContact from "@/components/dynamic/DynamicContact";
-import Footer from "@/components/Footer";
-import TutoringPlatform from "@/components/tutoring/TutoringPlatform";
-import InstructorDashboard from "@/components/tutoring/InstructorDashboard";
 import { Helmet } from "react-helmet-async";
+import Jobs from "./Jobs";
 
 const Index = () => {
-  // Create gradient cursor effect
-  useEffect(() => {
-    const createGradientCursor = () => {
-      const cursor = document.createElement('div');
-      cursor.classList.add('gradient-cursor');
-      document.body.appendChild(cursor);
-      
-      const onMouseMove = (e: MouseEvent) => {
-        cursor.style.opacity = '1';
-        cursor.style.left = `${e.clientX}px`;
-        cursor.style.top = `${e.clientY}px`;
-      };
-      
-      const onMouseLeave = () => {
-        cursor.style.opacity = '0';
-      };
-      
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseleave', onMouseLeave);
-      
-      return () => {
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseleave', onMouseLeave);
-        document.body.removeChild(cursor);
-      };
-    };
-    
-    // Only create gradient cursor on non-touch devices
-    if (window.matchMedia('(hover: hover)').matches) {
-      return createGradientCursor();
-    }
-  }, []);
-  
-  // Add scroll animations
-  useEffect(() => {
-    const handleScroll = () => {
-      const animatedElements = document.querySelectorAll('.animate-on-scroll');
-      
-      animatedElements.forEach((element) => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
-        
-        if (elementTop < window.innerHeight - elementVisible) {
-          element.classList.add('is-visible');
-        }
-      });
-    };
-    
-    // Initial check
-    handleScroll();
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <>
       <Helmet>
-        <title>Mohamed Ibrahim (Zwanski) | Web Developer & Full-Stack Engineer</title>
+        <title>SOS Jobs - Find Work & Hire Talent in Tunisia</title>
         <meta 
           name="description" 
-          content="Official portfolio of Mohamed Ibrahim (Zwanski) - Web Developer & Full-Stack Engineer based in Tunis, Tunisia. Specialized in WordPress, PHP, React, and UI/UX Design."
+          content="SOS Jobs - Tunisia's premier job marketplace. Find work opportunities or hire talented professionals across all industries."
         />
-        <meta name="author" content="Mohamed Ibrahim (Zwanski)" />
-        <meta name="keywords" content="Zwanski, Mohamed Ibrahim, Web Developer, Tunis, Tunisia, PHP, WordPress, React, Full-Stack, Portfolio" />
+        <meta name="keywords" content="jobs, employment, hiring, Tunisia, freelance, work, careers" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://zwanski2019.github.io/zwanski-store/" />
-        <meta property="og:title" content="Mohamed Ibrahim (Zwanski) | Web Developer & Full-Stack Engineer" />
-        <meta property="og:description" content="Official portfolio of Mohamed Ibrahim (Zwanski) - Web Developer & Full-Stack Engineer based in Tunis, Tunisia." />
-        <meta property="og:image" content="/og-image.png" />
+        <meta property="og:title" content="SOS Jobs - Find Work & Hire Talent in Tunisia" />
+        <meta property="og:description" content="Tunisia's premier job marketplace. Find work opportunities or hire talented professionals." />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://zwanski2019.github.io/zwanski-store/" />
-        <meta property="twitter:title" content="Mohamed Ibrahim (Zwanski) | Web Developer & Full-Stack Engineer" />
-        <meta property="twitter:description" content="Official portfolio of Mohamed Ibrahim (Zwanski) - Web Developer & Full-Stack Engineer based in Tunis, Tunisia." />
-        <meta property="twitter:image" content="/og-image.png" />
-        
-        {/* Canonical link */}
-        <link rel="canonical" href="https://zwanski2019.github.io/zwanski-store/" />
+        <meta property="twitter:title" content="SOS Jobs - Find Work & Hire Talent in Tunisia" />
+        <meta property="twitter:description" content="Tunisia's premier job marketplace. Find work opportunities or hire talented professionals." />
       </Helmet>
       
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main>
-          <Hero />
-          <DynamicSkills />
-          <DynamicProjects />
-          <DynamicExperience />
-          <YouTubeVideos />
-          <TutoringPlatform />
-          <InstructorDashboard />
-          <Playground />
-          <DynamicContact />
-        </main>
-        <Footer />
-      </div>
+      <Jobs />
     </>
   );
 };
