@@ -7,7 +7,15 @@ import {
   Layout, 
   Search, 
   Shield, 
-  Code 
+  Code,
+  Smartphone,
+  Server,
+  Users,
+  DollarSign,
+  Lock,
+  RotateCcw,
+  Package,
+  MousePointer
 } from 'lucide-react';
 
 const services = [
@@ -58,6 +66,70 @@ const services = [
     icon: Code,
     color: 'from-indigo-500 to-blue-500',
     path: '/services#custom-tools'
+  },
+  {
+    id: 'imei-frp-remote',
+    title: 'IMEI, FRP & Remote',
+    description: 'Unlock devices, bypass FRP, and utilize remote tools with our fast, secure, and reliable delivery system.',
+    icon: Smartphone,
+    color: 'from-cyan-500 to-teal-500',
+    path: '/services#imei-frp-remote'
+  },
+  {
+    id: 'server-cards-games',
+    title: 'Server, Cards & Games',
+    description: 'Gain access to a wide array of servers, digital credits, and essential tools for various online services and gaming.',
+    icon: Server,
+    color: 'from-violet-500 to-purple-500',
+    path: '/services#server-cards-games'
+  },
+  {
+    id: 'expert-support',
+    title: 'Expert Support',
+    description: 'Our dedicated professionals provide expert support to ensure your operations run smoothly and efficiently at all times.',
+    icon: Users,
+    color: 'from-emerald-500 to-green-500',
+    path: '/services#expert-support'
+  },
+  {
+    id: 'attractive-prices',
+    title: 'Attractive Prices',
+    description: 'We offer highly competitive and affordable solutions, providing great value for distributors and resellers alike.',
+    icon: DollarSign,
+    color: 'from-yellow-500 to-orange-500',
+    path: '/services#attractive-prices'
+  },
+  {
+    id: 'trusted-secure',
+    title: 'Trusted & Secure',
+    description: 'Benefit from our advanced security measures designed to protect your data and ensure safe, reliable service delivery.',
+    icon: Lock,
+    color: 'from-red-500 to-rose-500',
+    path: '/services#trusted-secure'
+  },
+  {
+    id: 'money-back-guarantee',
+    title: 'Money Back Guarantee',
+    description: 'Your satisfaction is our priority. We offer a full refund if you are not completely satisfied with our services.',
+    icon: RotateCcw,
+    color: 'from-pink-500 to-rose-500',
+    path: '/services#money-back-guarantee'
+  },
+  {
+    id: 'distributor-tools',
+    title: 'Distributor For All Tools',
+    description: 'Your one-stop source for a comprehensive range of software tools available on the market, all under one roof.',
+    icon: Package,
+    color: 'from-slate-500 to-gray-500',
+    path: '/services#distributor-tools'
+  },
+  {
+    id: 'user-friendly-interface',
+    title: 'User-Friendly Interface',
+    description: 'Experience our platform\'s intuitive and easy-to-navigate design, making your tasks simpler and more efficient.',
+    icon: MousePointer,
+    color: 'from-indigo-500 to-purple-500',
+    path: '/services#user-friendly-interface'
   }
 ];
 
