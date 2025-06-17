@@ -29,7 +29,7 @@ const EnhancedContact = () => {
       contact: [
         { icon: MessageSquare, label: "Telegram", value: "Join for instant news", action: "telegram" },
         { icon: MessageCircle, label: "Live Chat", value: "Chat Now", action: "chat" },
-        { icon: Phone, label: "WhatsApp", value: "+216 XX XXX XXX", action: "whatsapp" },
+        { icon: Phone, label: "WhatsApp", value: "+216 94934141", action: "whatsapp" },
         { icon: Mail, label: "Email", value: "contact@zwanski.org", action: "email" },
         { icon: MapPin, label: "Location", value: "Tunis, Tunisia", action: "location" }
       ],
@@ -48,7 +48,7 @@ const EnhancedContact = () => {
       contact: [
         { icon: MessageSquare, label: "Telegram", value: "Rejoignez pour les nouvelles", action: "telegram" },
         { icon: MessageCircle, label: "Chat en Direct", value: "Chatter Maintenant", action: "chat" },
-        { icon: Phone, label: "WhatsApp", value: "+216 XX XXX XXX", action: "whatsapp" },
+        { icon: Phone, label: "WhatsApp", value: "+216 94934141", action: "whatsapp" },
         { icon: Mail, label: "Email", value: "contact@zwanski.org", action: "email" },
         { icon: MapPin, label: "Localisation", value: "Tunis, Tunisie", action: "location" }
       ],
@@ -67,7 +67,7 @@ const EnhancedContact = () => {
       contact: [
         { icon: MessageSquare, label: "تلغرام", value: "انضم للأخبار الفورية", action: "telegram" },
         { icon: MessageCircle, label: "دردشة مباشرة", value: "ابدأ المحادثة", action: "chat" },
-        { icon: Phone, label: "واتساب", value: "+216 XX XXX XXX", action: "whatsapp" },
+        { icon: Phone, label: "واتساب", value: "+216 94934141", action: "whatsapp" },
         { icon: Mail, label: "البريد الإلكتروني", value: "contact@zwanski.org", action: "email" },
         { icon: MapPin, label: "الموقع", value: "تونس، تونس", action: "location" }
       ],
@@ -92,7 +92,7 @@ const EnhancedContact = () => {
         // Open chat widget
         break;
       case 'whatsapp':
-        window.open('https://wa.me/21600000000', '_blank');
+        window.open('https://wa.me/21694934141', '_blank');
         break;
       case 'email':
         window.location.href = 'mailto:contact@zwanski.org';
