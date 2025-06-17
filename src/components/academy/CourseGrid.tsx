@@ -8,13 +8,23 @@ interface Course {
   title: string;
   description: string;
   thumbnail_url: string | null;
+  external_url: string;
+  platform: string;
   instructor_name: string;
-  duration_hours: number;
+  instructor_id: string | null;
+  category_id: string | null;
   difficulty: "beginner" | "intermediate" | "advanced";
-  price: number;
-  is_featured: boolean;
+  duration_hours: number;
+  language: string;
+  tags: string[];
+  rating: number;
+  total_ratings: number;
   enrollment_count: number;
-  external_url: string | null;
+  is_featured: boolean;
+  is_active: boolean;
+  slug: string;
+  created_at: string;
+  updated_at: string;
   categories: {
     name: string;
     icon: string;

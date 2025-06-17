@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -22,18 +21,29 @@ interface Course {
   id: string;
   title: string;
   description: string;
-  thumbnail_url: string;
+  thumbnail_url: string | null;
   external_url: string;
   platform: string;
   instructor_name: string;
-  difficulty: string;
+  instructor_id: string | null;
+  category_id: string | null;
+  difficulty: "beginner" | "intermediate" | "advanced";
   duration_hours: number;
   language: string;
   tags: string[];
   rating: number;
+  total_ratings: number;
   enrollment_count: number;
   is_featured: boolean;
-  categories: { name: string; icon: string } | null;
+  is_active: boolean;
+  slug: string;
+  created_at: string;
+  updated_at: string;
+  categories: {
+    name: string;
+    icon: string;
+  } | null;
+  course_enrollments: any[];
 }
 
 interface CourseCardProps {
