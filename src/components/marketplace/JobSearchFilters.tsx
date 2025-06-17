@@ -98,14 +98,13 @@ export const JobSearchFilters = ({
         <div className="space-y-2">
           <Label>Category</Label>
           <Select 
-            value={filters.category} 
-            onValueChange={(value) => updateFilter('category', value)}
+            value={filters.category || undefined} 
+            onValueChange={(value) => updateFilter('category', value || "")}
           >
             <SelectTrigger>
               <SelectValue placeholder="Select category" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Categories</SelectItem>
               {categories.map((category) => (
                 <SelectItem key={category.id} value={category.name}>
                   {category.icon} {category.name}
@@ -119,14 +118,13 @@ export const JobSearchFilters = ({
         <div className="space-y-2">
           <Label>Job Type</Label>
           <Select 
-            value={filters.jobType} 
-            onValueChange={(value) => updateFilter('jobType', value)}
+            value={filters.jobType || undefined} 
+            onValueChange={(value) => updateFilter('jobType', value || "")}
           >
             <SelectTrigger>
               <SelectValue placeholder="Select job type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Types</SelectItem>
               {jobTypes.map((type) => (
                 <SelectItem key={type} value={type}>
                   {type.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
