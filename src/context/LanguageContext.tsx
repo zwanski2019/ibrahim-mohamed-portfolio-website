@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { getInitialLanguage, isFirstVisit, detectBrowserLanguage } from '@/utils/languageDetection';
 
@@ -615,7 +614,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
           seo: "تحسين محركات البحث",
           seoDesc: "حسن ترتيب موقعك في محركات البحث مع تحسين محركات البحث التقني وتحسين المحتوى.",
           systemSecurity: "أمان النظام",
-          systemSecurityDesc: "تنفيذ تدابير الأمان، بما في ذلك تثبيت W azuh وعمليات تدقيق الأمان.",
+          systemSecurityDesc: "تنفيذ تدابير الأمان، بما في ذلك تثبيت Wazuh وعمليات تدقيق الأمان.",
           customTools: "تطوير أدوات مخصصة",
           customToolsDesc: "تطوير أدوات مخصصة ونصوص أتمتة لتحسين سير العمل الخاص بك."
         },
@@ -676,10 +675,10 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
         analytics: "تحليلية",
         marketing: "تسويقية",
         preferences: "التفضيلات",
-        necessaryDescription: "ملفات تعريف ارتباط أساسية مطلوبة لعمل الموقع بشكل صحيح. لا يمكن إلغاؤها.",
-        analyticsDescription: "ملفات تعريف ارتباط تساعدنا في فهم كيفية تفاعل الزوار مع موقعنا من خلال جمع وتقرير المعلومات بشكل مجهول.",
-        marketingDescription: "ملفات تعريف ارتباط تُستخدم لتقديم إعلانات مخصصة وتتبع فعالية حملاتنا التسويقية.",
-        preferencesDescription: "ملفات تعريف ارتباط تتذكر تفضيلاتك وإعداداتك لتوفير تجربة مخصصة."
+        necessaryDescription: "ملفات تعريف الارتباط الأساسية مطلوبة لعمل الموقع بشكل صحيح. لا يمكن إلغاؤها.",
+        analyticsDescription: "ملفات تعريف الارتباط تساعدنا في فهم كيفية تفاعل الزوار مع موقعنا من خلال جمع وتقرير المعلومات بشكل مجهول.",
+        marketingDescription: "ملفات تعريف الارتباط تُستخدم لتقديم إعلانات مخصصة وتتبع فعالية حملاتنا التسويقية.",
+        preferencesDescription: "ملفات تعريف الارتباط تتذكر تفضيلاتك وإعداداتك لتوفير تجربة مخصصة."
       },
       common: {
         loading: "جاري التحميل...",
@@ -898,7 +897,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
         necessaryDescription: "Cookies masu mahimmanci da ake buƙata don yanar gizon ya yi aiki da kyau. Ba za a iya kashe su ba.",
         analyticsDescription: "Cookies da ke taimaka mana mu fahimci yadda masu ziyara ke hulɗa da yanar gizonmu ta hanyar tattarawa da rahoton bayanai ba tare da bayyana sunayen mutane ba.",
         marketingDescription: "Cookies da ake amfani da su don isar da tallace-tallace na musamman da kuma bin diddigin ingancin kamfen-kamfen na tallan mu.",
-        preferencesDescription: "Cookies da ke tunawa da zaɓuɓɓukanku da saitunan ku don samar da ƙwarewar da ta dace da ku."
+        preferencesDescription: "Cookies da ke tunawa da zaɓuɓɓukanyu da saitunan ku don samar da ƙwarewar da ta dace da ku."
       },
       common: {
         loading: "Ana ɗaukar...",
@@ -1077,7 +1076,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
         error: "Azen n yizen yecceḍ. Ɛreḍ tikelt nniḍen.",
       },
       footer: {
-        rights: "Akk Izerfan Ttwammestnen",
+        rights: "Akk Izerfan Ttwamestnen",
         builtWith: "Yettwabna s",
         poweredBy: "Yessexdem",
         quickLinks: "Iseɣwan Arurad",
@@ -1106,9 +1105,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
         settings: "Iγewwaren",
         acceptAll: "Qbel Akk",
         rejectAll: "Agi Akk",
-        accept
-
-Selected: "Qbel Ifran",
+        acceptSelected: "Qbel Ifran",
         description: "Nesseqdac cookies akken ad nesnerni tarmit-ik n tunigin, ad nesleḍ tuzzya n usmel, ad nessagen agbur. Fren tifranin-ik dagi.",
         showDetails: "Sken talqayt",
         hideDetails: "Ffer talqayt",
@@ -1116,7 +1113,7 @@ Selected: "Qbel Ifran",
         analytics: "Tasleḍt",
         marketing: "Abeggez",
         preferences: "Tifranin",
-        necessaryDescription: "Cookies ilaqen i umahil ameɣtu n usmel web. Ur zmiren ara ad ttwasensen.",
+        necessaryDescription: "Cookies ilaqen i umahil ameɣtu n usmel web. Ur zmiren ara ad ttwaselsen.",
         analyticsDescription: "Cookies i ɣ-d-yettawin ad nefhem amek i tteddun yinabaḍen ɣer usmel-nneɣ s ulqqaḍ d uneqqis n telɣut s tbaḍnit.",
         marketingDescription: "Cookies yettwasqedcen i tuzzna n udellel udmawan d uḍfar n wugur n tkampayt-nneɣ n ubeggez.",
         preferencesDescription: "Cookies i d-yettcekkaṛen tifranin d iγewwaren-ik akken ad k-d-fken tarmit tudmawant."
