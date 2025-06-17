@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, Briefcase, MessageCircle, Search } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
@@ -43,6 +42,7 @@ export default function Navbar() {
     { name: "Find Jobs", href: "/jobs", icon: Briefcase },
     { name: "Find Freelancers", href: "/freelancers", icon: Search },
     { name: "Services", href: "/services", icon: null },
+    { name: "Academy", href: "/academy", icon: null },
   ];
 
   return (

@@ -12,6 +12,7 @@ import Freelancers from "./pages/Freelancers";
 import ComputerModel from "./pages/ComputerModel";
 import Newsletter from "./pages/Newsletter";
 import Chat from "./pages/Chat";
+import Academy from "./pages/Academy";
 import RSS from "./pages/RSS";
 import NotFound from "./pages/NotFound";
 import { LanguageProvider } from "./context/LanguageContext";
