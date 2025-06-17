@@ -1,4 +1,3 @@
-
 import {useState, useEffect} from "react";
 import { Menu, X, ChevronDown, Briefcase, MessageCircle, Search, MessageSquare } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
@@ -97,7 +96,7 @@ export default function Navbar() {
                   <NavigationMenuTrigger className="bg-transparent hover:bg-accent/50">
                     More
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent>
+                  <NavigationMenuContent className="left-0 top-full">
                     <div className="w-[220px] p-4 bg-background/95 backdrop-blur-lg border border-border shadow-lg rounded-md">
                       <div className="flex flex-col space-y-2">
                         <NavigationMenuLink asChild>
