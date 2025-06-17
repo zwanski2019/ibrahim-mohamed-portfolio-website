@@ -1,14 +1,10 @@
 
-import { ArrowUp, MessageSquare, Heart } from "lucide-react";
+import { MessageSquare, Heart } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Helmet } from "react-helmet-async";
 
 export default function Footer() {
   const { t } = useLanguage();
-  
-  const handleScrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   return (
     <>
@@ -80,14 +76,6 @@ export default function Footer() {
             </div>
             
             <div className="flex flex-col items-center md:items-end">
-              <button
-                onClick={handleScrollToTop}
-                className="mb-4 p-3 rounded-full bg-muted/50 hover:bg-muted transition-colors"
-                aria-label="Scroll to top"
-              >
-                <ArrowUp className="h-5 w-5" />
-              </button>
-              
               <p className="text-sm text-muted-foreground">
                 &copy; {new Date().getFullYear()} Zwanski Tech. {t('footer.rights')}
               </p>

@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,6 +9,7 @@ import { LanguageProvider } from "@/context/LanguageContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { LanguageDetectionNotice } from "@/components/LanguageDetectionNotice";
+import ScrollToTopButton from "@/components/ScrollToTopButton";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
 import Jobs from "./pages/Jobs";
@@ -52,6 +54,10 @@ function App() {
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </BrowserRouter>
+                
+                {/* Global Scroll to Top Button */}
+                <ScrollToTopButton />
+                
                 <LanguageDetectionNotice />
                 <CookieConsent />
               </TooltipProvider>
