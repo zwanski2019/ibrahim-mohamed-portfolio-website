@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -89,7 +90,7 @@ const EnhancedContact = () => {
         window.open('https://t.me/zwanski_tech', '_blank');
         break;
       case 'chat':
-        // Open chat widget
+        window.location.href = '/chat';
         break;
       case 'whatsapp':
         window.open('https://wa.me/21694934141', '_blank');
