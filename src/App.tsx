@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -24,6 +23,10 @@ import RSS from "./pages/RSS";
 import NotFound from "./pages/NotFound";
 import CookieConsent from "./components/CookieConsent";
 import Support from "./pages/Support";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import FAQ from "./pages/FAQ";
+import About from "./pages/About";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +43,7 @@ function App() {
                 <BrowserRouter>
                   <Routes>
                     <Route path="/" element={<Index />} />
+                    <Route path="/about" element={<About />} />
                     <Route path="/services" element={<Services />} />
                     <Route path="/jobs" element={<Jobs />} />
                     <Route path="/post-job" element={<PostJob />} />
@@ -50,6 +54,9 @@ function App() {
                     <Route path="/imei-check" element={<IMEICheck />} />
                     <Route path="/computer-model" element={<ComputerModel />} />
                     <Route path="/support" element={<Support />} />
+                    <Route path="/faq" element={<FAQ />} />
+                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                    <Route path="/terms-of-service" element={<TermsOfService />} />
                     <Route path="/rss" element={<RSS />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
