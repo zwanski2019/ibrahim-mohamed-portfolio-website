@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
+import { Label } from "@/components/ui/label";
 import { useFreelancerProfiles } from "@/hooks/useFreelancerProfiles";
 import { Search, Filter, MapPin, Star, Loader2 } from "lucide-react";
 
@@ -201,12 +203,3 @@ const Freelancers = () => {
 };
 
 export default Freelancers;
-
-const Label = ({ htmlFor, children }: { htmlFor: string; children: React.ReactNode }) => (
-  <label
-    htmlFor={htmlFor}
-    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-  >
-    {children}
-  </label>
-);
