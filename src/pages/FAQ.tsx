@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/accordion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { HelpCircle, BookOpen, Briefcase, Settings, CreditCard } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function FAQ() {
   const { t } = useLanguage();
@@ -121,72 +123,78 @@ export default function FAQ() {
         <meta name="description" content="Find answers to common questions about Zwanski Tech services, academy, job marketplace, and technical support." />
       </Helmet>
 
-      <div className="min-h-screen py-12">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4">
-              Frequently Asked <span className="text-gradient">Questions</span>
-            </h1>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Find answers to common questions about our services, academy, and platform. 
-              Can't find what you're looking for? Contact our support team.
-            </p>
-          </div>
-
-          <div className="space-y-8">
-            {faqSections.map((section, sectionIndex) => (
-              <Card key={sectionIndex}>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <section.icon className="h-5 w-5" />
-                    {section.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Accordion type="single" collapsible className="w-full">
-                    {section.questions.map((faq, index) => (
-                      <AccordionItem key={index} value={`item-${sectionIndex}-${index}`}>
-                        <AccordionTrigger className="text-left">
-                          {faq.question}
-                        </AccordionTrigger>
-                        <AccordionContent className="text-muted-foreground">
-                          {faq.answer}
-                        </AccordionContent>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <Card className="mt-12">
-            <CardHeader>
-              <CardTitle>Still Have Questions?</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground mb-4">
-                Can't find the answer you're looking for? Our support team is here to help.
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        
+        <main className="flex-1 py-12">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <div className="text-center mb-12">
+              <h1 className="text-4xl font-bold mb-4">
+                Frequently Asked <span className="text-gradient">Questions</span>
+              </h1>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Find answers to common questions about our services, academy, and platform. 
+                Can't find what you're looking for? Contact our support team.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a 
-                  href="mailto:support@zwanski.org"
-                  className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors"
-                >
-                  Email Support
-                </a>
-                <a 
-                  href="https://t.me/zwanski_tech" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-primary border border-primary rounded-lg hover:bg-primary/10 transition-colors"
-                >
-                  Join Telegram Community
-                </a>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+            </div>
+
+            <div className="space-y-8">
+              {faqSections.map((section, sectionIndex) => (
+                <Card key={sectionIndex}>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <section.icon className="h-5 w-5" />
+                      {section.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <Accordion type="single" collapsible className="w-full">
+                      {section.questions.map((faq, index) => (
+                        <AccordionItem key={index} value={`item-${sectionIndex}-${index}`}>
+                          <AccordionTrigger className="text-left">
+                            {faq.question}
+                          </AccordionTrigger>
+                          <AccordionContent className="text-muted-foreground">
+                            {faq.answer}
+                          </AccordionContent>
+                        </AccordionItem>
+                      ))}
+                    </Accordion>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <Card className="mt-12">
+              <CardHeader>
+                <CardTitle>Still Have Questions?</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground mb-4">
+                  Can't find the answer you're looking for? Our support team is here to help.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <a 
+                    href="mailto:support@zwanski.org"
+                    className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors"
+                  >
+                    Email Support
+                  </a>
+                  <a 
+                    href="https://t.me/zwanski_tech" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-primary border border-primary rounded-lg hover:bg-primary/10 transition-colors"
+                  >
+                    Join Telegram Community
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </main>
+
+        <Footer />
       </div>
     </>
   );
