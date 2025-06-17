@@ -1,5 +1,4 @@
-
-import { Heart, Eye, Share2, Coffee, Star, Users } from "lucide-react";
+import { Heart, Eye, Share2, Coffee, Star, Users, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
@@ -129,6 +128,28 @@ const Support = () => {
                       <a href="/services">Services</a>
                     </Button>
                   </div>
+                </CardContent>
+              </Card>
+
+              {/* Referral Link */}
+              <Card className="hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <ExternalLink className="h-8 w-8 text-purple-500 mb-2" />
+                  <CardTitle>Use Our Referral Link</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground mb-4">
+                    Support us by using our referral link when you sign up for advertising services.
+                  </p>
+                  <Button variant="outline" size="sm" asChild>
+                    <a 
+                      href="https://beta.publishers.adsterra.com/referral/W8bs5LxFKN" 
+                      rel="nofollow"
+                      target="_blank"
+                    >
+                      Referral Link
+                    </a>
+                  </Button>
                 </CardContent>
               </Card>
             </div>
