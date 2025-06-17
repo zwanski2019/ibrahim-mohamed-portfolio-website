@@ -1,6 +1,7 @@
 
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { LanguageProvider } from "@/context/LanguageContext";
@@ -24,34 +25,36 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <Router>
-      <ThemeProvider>
-        <CookiePreferencesProvider>
-          <LanguageProvider>
-            <AuthProvider>
-              <QueryClientProvider client={queryClient}>
-                <div className="min-h-screen bg-background text-foreground">
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/services" element={<Services />} />
-                    <Route path="/jobs" element={<Jobs />} />
-                    <Route path="/freelancers" element={<Freelancers />} />
-                    <Route path="/post-job" element={<PostJob />} />
-                    <Route path="/academy" element={<Academy />} />
-                    <Route path="/chat" element={<Chat />} />
-                    <Route path="/newsletter" element={<Newsletter />} />
-                    <Route path="/computer-model" element={<ComputerModel />} />
-                    <Route path="/rss" element={<RSS />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                  <Toaster />
-                </div>
-              </QueryClientProvider>
-            </AuthProvider>
-          </LanguageProvider>
-        </CookiePreferencesProvider>
-      </ThemeProvider>
-    </Router>
+    <HelmetProvider>
+      <Router>
+        <ThemeProvider>
+          <CookiePreferencesProvider>
+            <LanguageProvider>
+              <AuthProvider>
+                <QueryClientProvider client={queryClient}>
+                  <div className="min-h-screen bg-background text-foreground">
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/services" element={<Services />} />
+                      <Route path="/jobs" element={<Jobs />} />
+                      <Route path="/freelancers" element={<Freelancers />} />
+                      <Route path="/post-job" element={<PostJob />} />
+                      <Route path="/academy" element={<Academy />} />
+                      <Route path="/chat" element={<Chat />} />
+                      <Route path="/newsletter" element={<Newsletter />} />
+                      <Route path="/computer-model" element={<ComputerModel />} />
+                      <Route path="/rss" element={<RSS />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                    <Toaster />
+                  </div>
+                </QueryClientProvider>
+              </AuthProvider>
+            </LanguageProvider>
+          </CookiePreferencesProvider>
+        </ThemeProvider>
+      </Router>
+    </HelmetProvider>
   );
 }
 
