@@ -1,0 +1,183 @@
+
+@layer components {
+  /* Layout components */
+  .section-container {
+    @apply container mx-auto px-4 md:px-8;
+  }
+  
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-center mb-4;
+  }
+  
+  .section-subtitle {
+    @apply text-muted-foreground text-center max-w-3xl mx-auto mb-12;
+  }
+
+  /* Card components */
+  .card-transform-3d {
+    @apply transition-all duration-300 hover:-translate-y-2;
+  }
+  
+  .card-3d {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+  
+  .card-3d-enhanced {
+    transform-style: preserve-3d;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .card-3d-enhanced:hover {
+    transform: rotateY(10deg) rotateX(10deg) translateZ(20px);
+  }
+
+  /* Course and tutoring components */
+  .course-card {
+    @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-2;
+  }
+  
+  .course-card:hover .course-image {
+    @apply scale-105;
+  }
+  
+  .course-image {
+    @apply transition-transform duration-300;
+  }
+  
+  .instructor-card {
+    @apply transition-all duration-300 hover:shadow-xl hover:scale-105;
+  }
+
+  /* Service components */
+  .service-card-hover {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .service-card-hover:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 30px rgba(249, 115, 22, 0.2);
+  }
+
+  /* Academy components */
+  .academy-card {
+    backdrop-filter: blur(10px);
+    transition: all 0.4s ease;
+  }
+  
+  .academy-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 45px rgba(147, 51, 234, 0.2);
+  }
+
+  /* Project showcase */
+  .project-showcase {
+    perspective: 1000px;
+  }
+  
+  .project-card-3d {
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+  }
+  
+  .project-card-3d:hover {
+    transform: rotateY(-10deg) rotateX(5deg);
+  }
+
+  /* YouTube components */
+  .youtube-card {
+    @apply transition-all duration-500;
+  }
+  
+  .youtube-card.fade-in {
+    @apply opacity-100 translate-y-0;
+  }
+
+  /* Form components */
+  .form-input-enhanced {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .form-input-enhanced:focus-within {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+  }
+
+  /* Timeline components */
+  .timeline-item {
+    @apply relative pl-8 pb-12;
+  }
+  
+  .timeline-item::before {
+    content: '';
+    @apply absolute left-0 top-0 h-full w-px bg-primary/30;
+  }
+  
+  .timeline-item:last-child::before {
+    @apply h-6;
+  }
+  
+  .timeline-dot {
+    @apply absolute left-[-5px] top-6 h-2.5 w-2.5 rounded-full bg-primary;
+  }
+
+  /* Enhanced mobile nav menu */
+  .mobile-nav-item {
+    @apply block w-full py-3 px-4 font-medium transition-colors;
+  }
+
+  /* Trust indicators */
+  .trust-indicator {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .trust-indicator::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .trust-indicator:hover::before {
+    left: 100%;
+  }
+
+  /* Enhanced CTA buttons */
+  .cta-button-enhanced {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .cta-button-enhanced::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s ease;
+    z-index: -1;
+  }
+  
+  .cta-button-enhanced:hover::before {
+    left: 100%;
+  }
+
+  /* Responsive enhancements */
+  @media (max-width: 768px) {
+    .card-3d-enhanced:hover {
+      transform: translateY(-8px) scale(1.02);
+    }
+    
+    .service-card-hover:hover {
+      transform: translateY(-6px) scale(1.01);
+    }
+  }
+}
