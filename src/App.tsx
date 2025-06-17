@@ -48,6 +48,7 @@ const App = () => (
                   <Route path="/3d-computer" element={<ComputerModel />} />
                   <Route path="/newsletter" element={<Newsletter />} />
                   <Route path="/chat" element={<Chat />} />
+                  <Route path="/academy" element={<Academy />} />
                   <Route path="/rss" element={<RSS />} />
                   <Route path="/feed" element={<RSS />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
