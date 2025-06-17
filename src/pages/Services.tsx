@@ -79,35 +79,6 @@ const Services = () => {
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow">
-          {/* Hero Section */}
-          <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
-            <div className="section-container">
-              <div className="text-center mb-12 animate-on-scroll">
-                <h1 className="text-5xl font-bold mb-6">
-                  Professional <span className="text-gradient bg-gradient-to-r from-orange-400 to-orange-600 text-transparent bg-clip-text">Services</span>
-                </h1>
-                <p className="text-xl text-slate-300 max-w-3xl mx-auto mb-8">
-                  Comprehensive IT solutions from web development to advanced device repair and cybersecurity. 
-                  Your trusted partner for all technical needs.
-                </p>
-                <div className="flex flex-wrap justify-center gap-4 mb-8">
-                  <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg px-6 py-3">
-                    <div className="text-2xl font-bold text-orange-400">300+</div>
-                    <div className="text-sm text-slate-300">Devices Repaired</div>
-                  </div>
-                  <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg px-6 py-3">
-                    <div className="text-2xl font-bold text-orange-400">24/7</div>
-                    <div className="text-sm text-slate-300">Expert Support</div>
-                  </div>
-                  <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg px-6 py-3">
-                    <div className="text-2xl font-bold text-orange-400">100%</div>
-                    <div className="text-sm text-slate-300">Satisfaction</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
           {/* Services Section */}
           <section className="py-20 bg-gradient-to-b from-background to-muted/20">
             <div className="section-container">
