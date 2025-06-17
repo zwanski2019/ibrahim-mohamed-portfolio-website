@@ -1,17 +1,18 @@
 
 import { useEffect, useState } from "react";
-import { ExternalLink, Play, Loader2 } from "lucide-react";
-import { useLanguage } from "@/context/LanguageContext";
+import { ExternalLink, Play, Loader2, RefreshCw, AlertCircle, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { fetchYouTubeVideos, YouTubeVideo } from "@/services/youtubeApi";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { fetchYouTubeVideos, YouTubeVideo, FetchResult, clearVideoCache } from "@/services/youtubeService";
 
-// Fallback sample videos in case API fails
+// Enhanced fallback sample videos
 const fallbackVideos: YouTubeVideo[] = [
   {
     id: "fallback1",
     videoId: "fallback1",
     title: "WordPress Development Tutorial: Creating Custom Themes",
-    thumbnail: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
+    thumbnail: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&h=450&fit=crop&crop=entropy&auto=format",
     date: "April 15, 2024",
     duration: "18:24",
     views: "2.4K",
@@ -21,7 +22,7 @@ const fallbackVideos: YouTubeVideo[] = [
     id: "fallback2",
     videoId: "fallback2",
     title: "Computer Repair: Fixing Common Hardware Issues",
-    thumbnail: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6",
+    thumbnail: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=450&fit=crop&crop=entropy&auto=format",
     date: "March 22, 2024",
     duration: "12:06",
     views: "3.8K",
@@ -31,7 +32,7 @@ const fallbackVideos: YouTubeVideo[] = [
     id: "fallback3",
     videoId: "fallback3",
     title: "Introduction to PHP and MySQL for Beginners",
-    thumbnail: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
+    thumbnail: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&h=450&fit=crop&crop=entropy&auto=format",
     date: "February 11, 2024",
     duration: "25:17",
     views: "1.7K",
@@ -40,64 +41,57 @@ const fallbackVideos: YouTubeVideo[] = [
 ];
 
 export default function YouTubeVideos() {
-  const { t } = useLanguage();
-  const [videos, setVideos] = useState<YouTubeVideo[]>([]);
+  const [fetchResult, setFetchResult] = useState<FetchResult>({
+    videos: [],
+    isFromCache: false
+  });
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  // Fetch YouTube videos on component mount
-  useEffect(() => {
-    const loadVideos = async () => {
-      setIsLoading(true);
-      setError(null);
-      
-      try {
-        console.log('Fetching YouTube videos...');
-        const fetchedVideos = await fetchYouTubeVideos();
-        
-        if (fetchedVideos.length > 0) {
-          setVideos(fetchedVideos);
-          console.log('Successfully loaded YouTube videos:', fetchedVideos.length);
-        } else {
-          console.warn('No videos fetched, using fallback videos');
-          setVideos(fallbackVideos);
-          setError('Could not load latest videos. Showing sample content.');
-        }
-      } catch (err) {
-        console.error('Error loading YouTube videos:', err);
-        setVideos(fallbackVideos);
-        setError('Failed to load videos from YouTube. Showing sample content.');
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const loadVideos = async (forceRefresh = false) => {
+    const loading = forceRefresh ? setIsRefreshing : setIsLoading;
+    loading(true);
     
+    try {
+      console.log('Loading YouTube videos...');
+      const result = await fetchYouTubeVideos(forceRefresh);
+      
+      if (result.videos.length > 0) {
+        setFetchResult(result);
+        console.log('Successfully loaded videos:', result.videos.length, result.isFromCache ? '(cached)' : '(fresh)');
+      } else if (result.error) {
+        // If API fails and no cached data, use fallback
+        setFetchResult({
+          videos: fallbackVideos,
+          isFromCache: false,
+          error: `${result.error} (showing sample content)`
+        });
+      }
+    } catch (err) {
+      console.error('Error in loadVideos:', err);
+      setFetchResult({
+        videos: fallbackVideos,
+        isFromCache: false,
+        error: 'Unable to load videos (showing sample content)'
+      });
+    } finally {
+      loading(false);
+    }
+  };
+
+  // Load videos on component mount
+  useEffect(() => {
     loadVideos();
   }, []);
 
-  // Animation for elements to fade in when they come into view
-  useEffect(() => {
-    const videoCards = document.querySelectorAll('.youtube-card');
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('fade-in');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    
-    videoCards.forEach((card) => {
-      observer.observe(card);
-    });
-    
-    return () => {
-      videoCards.forEach((card) => {
-        observer.unobserve(card);
-      });
-    };
-  }, [videos]);
+  const handleRefresh = () => {
+    loadVideos(true);
+  };
+
+  const handleClearCache = () => {
+    clearVideoCache();
+    loadVideos(true);
+  };
 
   const handleVideoClick = (video: YouTubeVideo) => {
     window.open(video.url, '_blank', 'noopener,noreferrer');
@@ -105,6 +99,12 @@ export default function YouTubeVideos() {
 
   const handleViewAllClick = () => {
     window.open('https://www.youtube.com/@zwanski.m', '_blank', 'noopener,noreferrer');
+  };
+
+  const formatLastFetchTime = (timestamp?: number) => {
+    if (!timestamp) return '';
+    const date = new Date(timestamp);
+    return date.toLocaleString();
   };
 
   return (
@@ -118,10 +118,65 @@ export default function YouTubeVideos() {
           Watch my tutorials and tech demonstrations to learn about web development, IT support, and more.
         </p>
 
-        {error && !isLoading && (
-          <div className="mt-4 p-3 bg-yellow-100 dark:bg-yellow-900/20 border border-yellow-300 dark:border-yellow-700 rounded-md text-sm text-yellow-800 dark:text-yellow-200 text-center">
-            {error}
+        {/* Status indicators and actions */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6 mb-8">
+          {fetchResult.isFromCache && (
+            <Badge variant="outline" className="flex items-center gap-1">
+              <Clock className="h-3 w-3" />
+              Cached Content
+              {fetchResult.lastFetchTime && (
+                <span className="text-xs ml-1">
+                  ({formatLastFetchTime(fetchResult.lastFetchTime)})
+                </span>
+              )}
+            </Badge>
+          )}
+          
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleRefresh}
+              disabled={isLoading || isRefreshing}
+              className="flex items-center gap-2"
+            >
+              <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+              {isRefreshing ? 'Refreshing...' : 'Refresh'}
+            </Button>
+            
+            {fetchResult.isFromCache && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleClearCache}
+                disabled={isLoading || isRefreshing}
+              >
+                Clear Cache
+              </Button>
+            )}
           </div>
+        </div>
+
+        {/* Error alert */}
+        {fetchResult.error && !isLoading && (
+          <Alert className="mt-4 mb-6">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              {fetchResult.error}
+              {fetchResult.videos === fallbackVideos && (
+                <span className="block mt-2">
+                  <Button
+                    variant="link"
+                    size="sm"
+                    onClick={() => window.open('https://www.youtube.com/@zwanski.m', '_blank')}
+                    className="p-0 h-auto text-sm underline"
+                  >
+                    Visit my YouTube channel for the latest videos →
+                  </Button>
+                </span>
+              )}
+            </AlertDescription>
+          </Alert>
         )}
         
         {isLoading ? (
@@ -132,13 +187,12 @@ export default function YouTubeVideos() {
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-              {videos.slice(0, 6).map((video) => (
+              {fetchResult.videos.slice(0, 6).map((video) => (
                 <div 
                   key={video.id}
-                  className="youtube-card bg-card rounded-xl overflow-hidden border border-border transition-all duration-300 opacity-0 transform translate-y-4 hover:shadow-lg group cursor-pointer"
+                  className="youtube-card bg-card rounded-xl overflow-hidden border border-border transition-all duration-300 hover:shadow-lg group cursor-pointer animate-fade-in"
                   onClick={() => handleVideoClick(video)}
                 >
-                  {/* Thumbnail with play button overlay */}
                   <div className="aspect-video relative overflow-hidden">
                     <img 
                       src={video.thumbnail} 
@@ -153,7 +207,6 @@ export default function YouTubeVideos() {
                       </div>
                     </div>
                     
-                    {/* Duration badge */}
                     <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded">
                       {video.duration}
                     </div>
