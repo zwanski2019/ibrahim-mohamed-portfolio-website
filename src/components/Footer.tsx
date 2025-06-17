@@ -15,7 +15,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
             <a href="#" className="text-xl font-bold text-gradient">
-              ZWANSKI
+              ZWANSKI TECH
             </a>
             <p className="text-sm text-muted-foreground mt-2">
               {t('hero.subtitle')}
