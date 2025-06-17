@@ -2,16 +2,25 @@
 import React from "react";
 import { CheckCircle2, Info } from "lucide-react";
 import { CookieOption } from "./CookieOption";
-import { useCookiePreferences } from "@/context/CookiePreferencesContext";
+import { useCookieConsent } from "@/hooks/use-cookie-consent";
 
 interface CookieDetailsProps {
   showDetails: boolean;
 }
 
 export function CookieDetails({ showDetails }: CookieDetailsProps) {
-  const { cookiePreferences, handleTogglePreference } = useCookiePreferences();
+  const { cookiePreferences, saveCookiePreferences } = useCookieConsent();
 
   if (!showDetails) return null;
+
+  const handleTogglePreference = (key: keyof typeof cookiePreferences) => {
+    if (key === "necessary") return; // Cannot toggle necessary cookies
+    const newPreferences = {
+      ...cookiePreferences,
+      [key]: !cookiePreferences[key],
+    };
+    saveCookiePreferences(newPreferences);
+  };
 
   return (
     <div className="space-y-4 mb-4 max-h-[30vh] overflow-y-auto">

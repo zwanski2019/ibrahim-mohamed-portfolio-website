@@ -6,7 +6,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { LanguageProvider } from "@/context/LanguageContext";
-import { CookiePreferencesProvider } from "@/context/CookiePreferencesContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import Index from "./pages/Index";
@@ -31,31 +30,29 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <LanguageProvider>
-            <CookiePreferencesProvider>
-              <ThemeProvider>
-                <TooltipProvider>
-                  <Toaster />
-                  <Sonner />
-                  <BrowserRouter>
-                    <Routes>
-                      <Route path="/" element={<Index />} />
-                      <Route path="/services" element={<Services />} />
-                      <Route path="/jobs" element={<Jobs />} />
-                      <Route path="/post-job" element={<PostJob />} />
-                      <Route path="/freelancers" element={<Freelancers />} />
-                      <Route path="/academy" element={<Academy />} />
-                      <Route path="/chat" element={<Chat />} />
-                      <Route path="/newsletter" element={<Newsletter />} />
-                      <Route path="/imei-check" element={<IMEICheck />} />
-                      <Route path="/computer-model" element={<ComputerModel />} />
-                      <Route path="/rss" element={<RSS />} />
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </BrowserRouter>
-                  <CookieConsent />
-                </TooltipProvider>
-              </ThemeProvider>
-            </CookiePreferencesProvider>
+            <ThemeProvider>
+              <TooltipProvider>
+                <Toaster />
+                <Sonner />
+                <BrowserRouter>
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/services" element={<Services />} />
+                    <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/post-job" element={<PostJob />} />
+                    <Route path="/freelancers" element={<Freelancers />} />
+                    <Route path="/academy" element={<Academy />} />
+                    <Route path="/chat" element={<Chat />} />
+                    <Route path="/newsletter" element={<Newsletter />} />
+                    <Route path="/imei-check" element={<IMEICheck />} />
+                    <Route path="/computer-model" element={<ComputerModel />} />
+                    <Route path="/rss" element={<RSS />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </BrowserRouter>
+                <CookieConsent />
+              </TooltipProvider>
+            </ThemeProvider>
           </LanguageProvider>
         </AuthProvider>
       </QueryClientProvider>

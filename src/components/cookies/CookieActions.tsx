@@ -3,13 +3,44 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { SheetFooter } from "@/components/ui/sheet";
 import { useLanguage } from "@/context/LanguageContext";
-import { useCookiePreferences } from "@/context/CookiePreferencesContext";
+import { useCookieConsent } from "@/hooks/use-cookie-consent";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-export function CookieActions() {
+interface CookieActionsProps {
+  onClose: () => void;
+}
+
+export function CookieActions({ onClose }: CookieActionsProps) {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
-  const { handleAcceptAll, handleAcceptSelected, handleRejectAll } = useCookiePreferences();
+  const { cookiePreferences, saveCookiePreferences } = useCookieConsent();
+
+  const handleAcceptAll = () => {
+    const allAccepted = {
+      necessary: true,
+      analytics: true,
+      marketing: true,
+      preferences: true,
+    };
+    saveCookiePreferences(allAccepted);
+    onClose();
+  };
+
+  const handleAcceptSelected = () => {
+    saveCookiePreferences(cookiePreferences);
+    onClose();
+  };
+
+  const handleRejectAll = () => {
+    const onlyNecessary = {
+      necessary: true,
+      analytics: false,
+      marketing: false,
+      preferences: false,
+    };
+    saveCookiePreferences(onlyNecessary);
+    onClose();
+  };
 
   return (
     <SheetFooter className={`flex ${isMobile ? 'flex-col gap-2' : 'sm:justify-between'} pt-2`}>

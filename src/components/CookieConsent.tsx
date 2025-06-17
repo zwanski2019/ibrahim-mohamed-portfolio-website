@@ -7,25 +7,32 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
+  SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/context/LanguageContext";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { useCookieConsent } from "@/hooks/use-cookie-consent";
-import { CookiePreferencesProvider } from "@/context/CookiePreferencesContext";
 import { CookieDetails } from "./cookies/CookieDetails";
 import { CookieActions } from "./cookies/CookieActions";
 
 export const CookieConsent: React.FC = () => {
   const [showDetails, setShowDetails] = useState(false);
+  const [showSheet, setShowSheet] = useState(false);
   const { t } = useLanguage();
-  const isMobile = useIsMobile();
-  const { showBanner, setShowBanner } = useCookieConsent();
+  const { showBanner, handleAcceptAll } = useCookieConsent();
 
   if (!showBanner) return null;
 
+  const handleAcceptAllClick = () => {
+    handleAcceptAll();
+  };
+
+  const handleSettingsClick = () => {
+    setShowSheet(true);
+  };
+
   return (
-    <CookiePreferencesProvider>
+    <>
       <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center p-2">
         <div className="bg-card border border-border rounded-lg shadow-lg w-full max-w-md mx-auto">
           <div className="p-3 sm:p-4">
@@ -41,17 +48,7 @@ export const CookieConsent: React.FC = () => {
                   variant="ghost"
                   size="sm"
                   className="h-7 px-1.5 text-xs"
-                  onClick={() => {
-                    const sheet = document.getElementById('cookie-settings-sheet');
-                    if (sheet) {
-                      const sheetTriggerEvent = new MouseEvent('click', {
-                        bubbles: true,
-                        cancelable: true,
-                        view: window
-                      });
-                      sheet.dispatchEvent(sheetTriggerEvent);
-                    }
-                  }}
+                  onClick={handleSettingsClick}
                 >
                   {t('cookie.settings') || "Settings"}
                 </Button>
@@ -59,10 +56,7 @@ export const CookieConsent: React.FC = () => {
                   variant="default"
                   size="sm"
                   className="h-7 px-2 text-xs"
-                  onClick={() => {
-                    const { handleAcceptAll } = useCookieConsent();
-                    handleAcceptAll();
-                  }}
+                  onClick={handleAcceptAllClick}
                 >
                   {t('cookie.acceptAll') || "Accept All"}
                 </Button>
@@ -72,14 +66,10 @@ export const CookieConsent: React.FC = () => {
         </div>
       </div>
       
-      <Sheet>
-        <Button 
-          id="cookie-settings-sheet" 
-          className="hidden"
-          onClick={() => setShowBanner(true)}
-        >
-          Hidden Trigger
-        </Button>
+      <Sheet open={showSheet} onOpenChange={setShowSheet}>
+        <SheetTrigger asChild>
+          <button className="hidden" />
+        </SheetTrigger>
         <SheetContent className="sm:max-w-md">
           <SheetHeader className="space-y-3">
             <SheetTitle className="flex items-center gap-2 text-xl">
@@ -105,10 +95,10 @@ export const CookieConsent: React.FC = () => {
           </div>
 
           <CookieDetails showDetails={showDetails} />
-          <CookieActions />
+          <CookieActions onClose={() => setShowSheet(false)} />
         </SheetContent>
       </Sheet>
-    </CookiePreferencesProvider>
+    </>
   );
 };
 
