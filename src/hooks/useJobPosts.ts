@@ -11,50 +11,64 @@ export const useJobPosts = (filters?: {
   return useQuery({
     queryKey: ['job-posts', filters],
     queryFn: async () => {
-      let query = supabase
-        .from('job_posts')
-        .select(`
-          *,
-          employer:profiles!job_posts_employer_id_fkey(
-            id,
-            full_name,
-            avatar_url,
-            rating,
-            verified
-          ),
-          applications(count)
-        `)
-        .eq('status', 'published')
-        .order('created_at', { ascending: false });
+      try {
+        let query = supabase
+          .from('job_posts')
+          .select(`
+            *,
+            employer:profiles!job_posts_employer_id_fkey(
+              id,
+              full_name,
+              avatar_url,
+              rating,
+              verified
+            ),
+            applications(count)
+          `)
+          .eq('status', 'published')
+          .order('created_at', { ascending: false });
 
-      if (filters?.category) {
-        query = query.eq('category', filters.category);
-      }
+        if (filters?.category) {
+          query = query.eq('category', filters.category);
+        }
 
-      if (filters?.location) {
-        query = query.ilike('location', `%${filters.location}%`);
-      }
+        if (filters?.location) {
+          query = query.ilike('location', `%${filters.location}%`);
+        }
 
-      if (filters?.search) {
-        query = query.or(`title.ilike.%${filters.search}%,description.ilike.%${filters.search}%`);
-      }
+        if (filters?.search) {
+          query = query.or(`title.ilike.%${filters.search}%,description.ilike.%${filters.search}%`);
+        }
 
-      const { data, error } = await query;
-      
-      if (error) {
-        console.error('Error fetching jobs:', error);
+        const { data, error } = await query;
+        
+        if (error) {
+          console.error('Error fetching jobs:', error);
+          throw new Error(`Failed to fetch jobs: ${error.message}`);
+        }
+
+        // Transform the data to handle the count properly
+        return (data || []).map(job => ({
+          ...job,
+          applications: job.applications || [],
+          employer: job.employer || {
+            id: job.employer_id,
+            full_name: 'Unknown Employer',
+            avatar_url: null,
+            rating: null,
+            verified: false
+          }
+        })) as (JobPost & { 
+          employer: any;
+          applications: { count: number }[];
+        })[];
+      } catch (error) {
+        console.error('Job posts query error:', error);
         throw error;
       }
-
-      // Transform the data to handle the count properly
-      return (data || []).map(job => ({
-        ...job,
-        applications: job.applications || []
-      })) as (JobPost & { 
-        employer: any;
-        applications: { count: number }[];
-      })[];
     },
+    retry: 2,
+    staleTime: 5 * 60 * 1000, // 5 minutes
   });
 };
 
@@ -77,6 +91,15 @@ export const useCreateJobPost = () => {
       expires_at?: string;
       urgency?: 'low' | 'medium' | 'high';
     }) => {
+      // Validate required fields
+      if (!jobData.employer_id) {
+        throw new Error('Employer ID is required');
+      }
+
+      if (!jobData.title || !jobData.description) {
+        throw new Error('Title and description are required');
+      }
+
       // Set the job status to published by default
       const jobPostData = {
         ...jobData,
@@ -91,7 +114,7 @@ export const useCreateJobPost = () => {
       
       if (error) {
         console.error('Error creating job post:', error);
-        throw error;
+        throw new Error(`Failed to create job post: ${error.message}`);
       }
       return data;
     },

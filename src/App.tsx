@@ -8,6 +8,7 @@ import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
 import Jobs from "./pages/Jobs";
+import Freelancers from "./pages/Freelancers";
 import ComputerModel from "./pages/ComputerModel";
 import Newsletter from "./pages/Newsletter";
 import Chat from "./pages/Chat";
@@ -16,7 +17,15 @@ import { LanguageProvider } from "./context/LanguageContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 2,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -32,6 +41,7 @@ const App = () => (
                   <Route path="/" element={<Index />} />
                   <Route path="/services" element={<Services />} />
                   <Route path="/jobs" element={<Jobs />} />
+                  <Route path="/freelancers" element={<Freelancers />} />
                   <Route path="/3d-computer" element={<ComputerModel />} />
                   <Route path="/newsletter" element={<Newsletter />} />
                   <Route path="/chat" element={<Chat />} />

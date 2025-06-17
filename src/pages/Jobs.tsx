@@ -8,8 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Search, Plus, MapPin, Briefcase, ArrowLeft } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Search, Plus, MapPin, Briefcase, ArrowLeft, AlertCircle } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
 const Jobs = () => {
@@ -200,20 +200,20 @@ const Jobs = () => {
                   ))}
                 </div>
               ) : error ? (
-                <Card>
-                  <CardContent className="p-8 text-center">
-                    <Briefcase className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">
-                      Error loading jobs
-                    </h3>
-                    <p className="text-muted-foreground mb-4">
-                      Please try again later
-                    </p>
-                    <Button onClick={() => refetch()}>
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>
+                    {error instanceof Error ? error.message : 'An error occurred while loading jobs'}
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => refetch()}
+                      className="ml-4"
+                    >
                       Try Again
                     </Button>
-                  </CardContent>
-                </Card>
+                  </AlertDescription>
+                </Alert>
               ) : jobs && jobs.length > 0 ? (
                 <div className="grid md:grid-cols-2 gap-6">
                   {jobs.map((job) => (

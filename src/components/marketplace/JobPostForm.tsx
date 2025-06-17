@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,9 +10,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { X, Plus } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { X, Plus, AlertCircle } from "lucide-react";
 import { useCreateJobPost } from "@/hooks/useJobPosts";
 import { useCategories } from "@/hooks/useCategories";
+import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 
 const jobPostSchema = z.object({
@@ -39,7 +42,8 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
   const [newRequirement, setNewRequirement] = useState("");
   const [newBenefit, setNewBenefit] = useState("");
 
-  const { data: categories = [] } = useCategories();
+  const { user, loading: authLoading } = useAuth();
+  const { data: categories = [], isLoading: categoriesLoading, error: categoriesError } = useCategories();
   const createJobPost = useCreateJobPost();
 
   const form = useForm<JobPostFormData>({
@@ -49,12 +53,54 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
     },
   });
 
-  const onSubmit = async (data: JobPostFormData) => {
-    try {
-      // For demo purposes, we'll use a mock employer ID
-      // In a real app, this would come from the authenticated user
-      const mockEmployerId = "00000000-0000-0000-0000-000000000000";
+  if (authLoading) {
+    return (
+      <Card className="max-w-2xl mx-auto">
+        <CardContent className="p-8 text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-muted-foreground">Loading...</p>
+        </CardContent>
+      </Card>
+    );
+  }
 
+  if (!user) {
+    return (
+      <Card className="max-w-2xl mx-auto">
+        <CardContent className="p-8">
+          <Alert>
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              You must be logged in to post a job. Please sign in to continue.
+            </AlertDescription>
+          </Alert>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (categoriesError) {
+    return (
+      <Card className="max-w-2xl mx-auto">
+        <CardContent className="p-8">
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              Failed to load categories. Please try again later.
+            </AlertDescription>
+          </Alert>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const onSubmit = async (data: JobPostFormData) => {
+    if (!user?.id) {
+      toast.error("You must be logged in to post a job");
+      return;
+    }
+
+    try {
       await createJobPost.mutateAsync({
         title: data.title,
         description: data.description,
@@ -63,7 +109,7 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
         job_type: data.job_type,
         salary_type: data.salary_type,
         salary_min: data.salary_min,
-        employer_id: mockEmployerId,
+        employer_id: user.id,
         requirements,
         benefits,
         salary_max: data.salary_max,
@@ -73,7 +119,8 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
       toast.success("Job posted successfully!");
       onSuccess?.();
     } catch (error) {
-      toast.error("Failed to post job. Please try again.");
+      const errorMessage = error instanceof Error ? error.message : "Failed to post job";
+      toast.error(errorMessage);
       console.error("Job post error:", error);
     }
   };
@@ -147,10 +194,10 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Category</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select onValueChange={field.onChange} defaultValue={field.value} disabled={categoriesLoading}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select category" />
+                          <SelectValue placeholder={categoriesLoading ? "Loading..." : "Select category"} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
