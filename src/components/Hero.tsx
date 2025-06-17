@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, Shield, Globe, Zap, Users } from "lucide-react";
+import { ArrowRight, Play, Shield, Globe, Zap, Users, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/context/LanguageContext";
 import { useEffect, useState } from "react";
@@ -22,6 +22,7 @@ const Hero = () => {
       cta1: "Explore Services",
       cta2: "Watch Demo",
       cta3: "Start Project",
+      telegramNotice: "📢 Join our Telegram for instant tech news & updates!",
       stats: [
         { number: "300+", label: "Devices Repaired", icon: Zap, target: 300 },
         { number: "98%", label: "Customer Satisfaction", icon: Users, target: 98 },
@@ -36,6 +37,7 @@ const Hero = () => {
       cta1: "Découvrir les Services",
       cta2: "Voir la Démo",
       cta3: "Démarrer un Projet",
+      telegramNotice: "📢 Rejoignez notre Telegram pour les nouvelles tech instantanées!",
       stats: [
         { number: "300+", label: "Appareils Réparés", icon: Zap, target: 300 },
         { number: "98%", label: "Satisfaction Client", icon: Users, target: 98 },
@@ -50,6 +52,7 @@ const Hero = () => {
       cta1: "استكشف الخدمات",
       cta2: "شاهد العرض",
       cta3: "ابدأ مشروع",
+      telegramNotice: "📢 انضم إلى تلغرام للأخبار التقنية الفورية!",
       stats: [
         { number: "300+", label: "جهاز تم إصلاحه", icon: Zap, target: 300 },
         { number: "98%", label: "رضا العملاء", icon: Users, target: 98 },
@@ -112,6 +115,20 @@ const Hero = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-7xl mx-auto text-center">
+          {/* Telegram Notice Banner */}
+          <div className="mb-8 animate-on-scroll">
+            <a
+              href="https://t.me/zwanski_tech"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600/20 to-blue-500/20 border border-blue-500/30 rounded-full text-blue-300 hover:text-blue-200 hover:from-blue-600/30 hover:to-blue-500/30 transition-all duration-300 backdrop-blur-sm group"
+            >
+              <MessageSquare className="h-4 w-4 group-hover:scale-110 transition-transform" />
+              <span className="text-sm font-medium">{currentContent.telegramNotice}</span>
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </a>
+          </div>
+
           {/* Enhanced Main Headlines */}
           <div className="mb-12 animate-on-scroll">
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 bg-gradient-to-r from-blue-400 via-emerald-400 to-blue-400 bg-clip-text text-transparent leading-tight animate-pulse-slow">

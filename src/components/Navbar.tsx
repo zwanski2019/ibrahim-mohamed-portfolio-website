@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, Briefcase, MessageCircle, Search } from "lucide-react";
+
+import {useState, useEffect} from "react";
+import { Menu, X, ChevronDown, Briefcase, MessageCircle, Search, MessageSquare } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { SearchBar } from "./SearchBar";
 import { LanguageSelector } from "./LanguageSelector";
@@ -110,6 +111,19 @@ export default function Navbar() {
                       </li>
                       <li>
                         <NavigationMenuLink asChild>
+                          <a
+                            href="https://t.me/zwanski_tech"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 p-2 hover:bg-accent rounded-md text-blue-600 hover:text-blue-700"
+                          >
+                            <MessageSquare className="h-4 w-4" />
+                            Join Telegram
+                          </a>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
                           <Link
                             to="/chat"
                             className="block p-2 hover:bg-accent rounded-md"
@@ -187,6 +201,17 @@ export default function Navbar() {
               >
                 Newsletter
               </Link>
+              
+              <a
+                href="https://t.me/zwanski_tech"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-3 py-2 text-base font-medium hover:bg-accent rounded-md transition-colors text-blue-600"
+                onClick={() => setIsOpen(false)}
+              >
+                <MessageSquare className="h-4 w-4" />
+                Join Telegram
+              </a>
               
               <Link
                 to="/chat"

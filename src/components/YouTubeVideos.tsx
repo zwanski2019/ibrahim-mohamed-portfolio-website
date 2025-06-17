@@ -1,126 +1,99 @@
 
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { fetchYouTubeVideos, YouTubeVideo, FetchResult, clearVideoCache } from "@/services/youtubeService";
+import { useQuery } from "@tanstack/react-query";
+import { youtubeService } from "@/services/youtubeService";
 import { fallbackVideos } from "@/data/fallbackVideos";
-import VideoStatusControls from "@/components/youtube/VideoStatusControls";
-import VideoErrorAlert from "@/components/youtube/VideoErrorAlert";
-import VideoCard from "@/components/youtube/VideoCard";
-import VideoLoadingState from "@/components/youtube/VideoLoadingState";
+import VideoStatusControls from "./youtube/VideoStatusControls";
+import VideoErrorAlert from "./youtube/VideoErrorAlert";
+import VideoCard from "./youtube/VideoCard";
+import VideoLoadingState from "./youtube/VideoLoadingState";
+import { MessageSquare } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function YouTubeVideos() {
-  const [fetchResult, setFetchResult] = useState<FetchResult>({
-    videos: [],
-    isFromCache: false
+  const {
+    data: videos = fallbackVideos,
+    isLoading,
+    error,
+    refetch,
+    isRefetching,
+  } = useQuery({
+    queryKey: ['youtube-videos'],
+    queryFn: youtubeService.getVideos,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 30 * 60 * 1000, // 30 minutes
+    retry: 2,
   });
-  const [isLoading, setIsLoading] = useState(true);
-  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const loadVideos = async (forceRefresh = false) => {
-    const loading = forceRefresh ? setIsRefreshing : setIsLoading;
-    loading(true);
-    
-    try {
-      console.log('Loading YouTube videos...');
-      const result = await fetchYouTubeVideos(forceRefresh);
-      
-      if (result.videos.length > 0) {
-        setFetchResult(result);
-        console.log('Successfully loaded videos:', result.videos.length, result.isFromCache ? '(cached)' : '(fresh)');
-      } else if (result.error) {
-        // If API fails and no cached data, use fallback
-        setFetchResult({
-          videos: fallbackVideos,
-          isFromCache: false,
-          error: `${result.error} (showing sample content)`
-        });
-      }
-    } catch (err) {
-      console.error('Error in loadVideos:', err);
-      setFetchResult({
-        videos: fallbackVideos,
-        isFromCache: false,
-        error: 'Unable to load videos (showing sample content)'
-      });
-    } finally {
-      loading(false);
-    }
-  };
-
-  // Load videos on component mount
-  useEffect(() => {
-    loadVideos();
-  }, []);
+  const isFromCache = videos === fallbackVideos;
+  const lastFetchTime = youtubeService.getLastFetchTime();
 
   const handleRefresh = () => {
-    loadVideos(true);
+    refetch();
   };
 
   const handleClearCache = () => {
-    clearVideoCache();
-    loadVideos(true);
+    youtubeService.clearCache();
+    refetch();
   };
 
-  const handleVideoClick = (video: YouTubeVideo) => {
-    window.open(video.url, '_blank', 'noopener,noreferrer');
-  };
-
-  const handleViewAllClick = () => {
-    window.open('https://www.youtube.com/@zwanski.m', '_blank', 'noopener,noreferrer');
-  };
+  if (isLoading) {
+    return <VideoLoadingState />;
+  }
 
   return (
-    <section id="youtube" className="py-20 bg-muted/30">
-      <div className="section-container">
-        <h2 className="section-title">
-          My <span className="text-gradient">YouTube</span> <span className="text-red-500">Videos</span>
-        </h2>
-        
-        <p className="section-subtitle">
-          Watch my tutorials and tech demonstrations to learn about web development, IT support, and more.
-        </p>
+    <section className="py-20 bg-muted/30">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold mb-4">
+            Latest <span className="text-gradient">Tech Videos</span>
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
+            Stay updated with the latest tutorials, tech reviews, and industry insights from our YouTube channel.
+          </p>
+          
+          {/* Telegram Integration for YouTube Section */}
+          <div className="mb-8">
+            <Button 
+              variant="outline" 
+              size="sm"
+              asChild
+              className="border-blue-500/30 text-blue-600 hover:bg-blue-500/10 hover:text-blue-500"
+            >
+              <a
+                href="https://t.me/zwanski_tech"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2"
+              >
+                <MessageSquare className="h-4 w-4" />
+                Get video updates on Telegram
+              </a>
+            </Button>
+          </div>
+        </div>
+
+        {error && (
+          <VideoErrorAlert 
+            error={error.message} 
+            videos={videos} 
+            fallbackVideos={fallbackVideos} 
+          />
+        )}
 
         <VideoStatusControls
-          isFromCache={fetchResult.isFromCache}
-          lastFetchTime={fetchResult.lastFetchTime}
+          isFromCache={isFromCache}
+          lastFetchTime={lastFetchTime}
           isLoading={isLoading}
-          isRefreshing={isRefreshing}
+          isRefreshing={isRefetching}
           onRefresh={handleRefresh}
           onClearCache={handleClearCache}
         />
 
-        {fetchResult.error && !isLoading && (
-          <VideoErrorAlert
-            error={fetchResult.error}
-            videos={fetchResult.videos}
-            fallbackVideos={fallbackVideos}
-          />
-        )}
-        
-        {isLoading ? (
-          <VideoLoadingState />
-        ) : (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-              {fetchResult.videos.slice(0, 6).map((video) => (
-                <VideoCard
-                  key={video.id}
-                  video={video}
-                  onVideoClick={handleVideoClick}
-                />
-              ))}
-            </div>
-            
-            <div className="mt-12 text-center">
-              <Button 
-                className="bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800"
-                onClick={handleViewAllClick}
-              >
-                View All Videos
-              </Button>
-            </div>
-          </>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {videos.map((video) => (
+            <VideoCard key={video.id} video={video} />
+          ))}
+        </div>
       </div>
     </section>
   );

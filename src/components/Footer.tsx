@@ -1,5 +1,5 @@
 
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, MessageSquare } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Helmet } from "react-helmet-async";
 
@@ -37,14 +37,26 @@ export default function Footer() {
               <p className="text-sm text-muted-foreground mt-2">
                 {t('hero.subtitle')}
               </p>
-              <div className="mt-2">
-                <a 
-                  href="/rss" 
-                  className="text-xs text-muted-foreground hover:text-primary transition-colors"
-                  title="Subscribe to RSS Feed"
-                >
-                  RSS Feed
-                </a>
+              <div className="mt-4 space-y-2">
+                <div className="flex items-center gap-4">
+                  <a 
+                    href="/rss" 
+                    className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                    title="Subscribe to RSS Feed"
+                  >
+                    RSS Feed
+                  </a>
+                  <a 
+                    href="https://t.me/zwanski_tech" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 transition-colors font-medium"
+                    title="Join our Telegram for instant news"
+                  >
+                    <MessageSquare className="h-3 w-3" />
+                    Join Telegram for instant news
+                  </a>
+                </div>
               </div>
             </div>
             

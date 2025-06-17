@@ -28,6 +28,7 @@ const EnhancedContact = () => {
         submit: "Start Project"
       },
       contact: [
+        { icon: MessageSquare, label: "Telegram", value: "Join for instant news", action: "telegram" },
         { icon: MessageCircle, label: "Live Chat", value: "Chat Now", action: "chat" },
         { icon: Phone, label: "WhatsApp", value: "+216 XX XXX XXX", action: "whatsapp" },
         { icon: Mail, label: "Email", value: "contact@zwanski.org", action: "email" },
@@ -46,6 +47,7 @@ const EnhancedContact = () => {
         submit: "Démarrer le Projet"
       },
       contact: [
+        { icon: MessageSquare, label: "Telegram", value: "Rejoignez pour les nouvelles", action: "telegram" },
         { icon: MessageCircle, label: "Chat en Direct", value: "Chatter Maintenant", action: "chat" },
         { icon: Phone, label: "WhatsApp", value: "+216 XX XXX XXX", action: "whatsapp" },
         { icon: Mail, label: "Email", value: "contact@zwanski.org", action: "email" },
@@ -64,6 +66,7 @@ const EnhancedContact = () => {
         submit: "ابدأ المشروع"
       },
       contact: [
+        { icon: MessageSquare, label: "تلغرام", value: "انضم للأخبار الفورية", action: "telegram" },
         { icon: MessageCircle, label: "دردشة مباشرة", value: "ابدأ المحادثة", action: "chat" },
         { icon: Phone, label: "واتساب", value: "+216 XX XXX XXX", action: "whatsapp" },
         { icon: Mail, label: "البريد الإلكتروني", value: "contact@zwanski.org", action: "email" },
@@ -83,6 +86,9 @@ const EnhancedContact = () => {
 
   const handleContactAction = (action: string) => {
     switch (action) {
+      case 'telegram':
+        window.open('https://t.me/zwanski_tech', '_blank');
+        break;
       case 'chat':
         // Open chat widget
         break;
@@ -190,9 +196,17 @@ const EnhancedContact = () => {
                   <div
                     key={index}
                     onClick={() => handleContactAction(item.action)}
-                    className="flex items-center gap-4 p-4 rounded-lg bg-slate-700/30 hover:bg-slate-700/50 transition-all duration-300 cursor-pointer group"
+                    className={`flex items-center gap-4 p-4 rounded-lg transition-all duration-300 cursor-pointer group ${
+                      item.action === 'telegram' 
+                        ? 'bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30'
+                        : 'bg-slate-700/30 hover:bg-slate-700/50'
+                    }`}
                   >
-                    <div className="p-3 rounded-full bg-blue-500/20 group-hover:bg-blue-500/30 transition-colors">
+                    <div className={`p-3 rounded-full transition-colors ${
+                      item.action === 'telegram' 
+                        ? 'bg-blue-500/30 group-hover:bg-blue-500/40'
+                        : 'bg-blue-500/20 group-hover:bg-blue-500/30'
+                    }`}>
                       <item.icon className="h-5 w-5 text-blue-400" />
                     </div>
                     <div>
