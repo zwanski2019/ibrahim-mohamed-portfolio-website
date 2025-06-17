@@ -118,10 +118,10 @@ export default function Contact() {
                 <div>
                   <h4 className="font-semibold mb-1">Email</h4>
                   <a 
-                    href="mailto:mohaaibb4@proton.me"
+                    href="mailto:support@zwanski.org"
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
-                    mohaaibb4@proton.me
+                    support@zwanski.org
                   </a>
                 </div>
               </div>
@@ -161,7 +161,7 @@ export default function Contact() {
                   </a>
                   
                   <a
-                    href="mailto:mohaaibb4@proton.me"
+                    href="mailto:support@zwanski.org"
                     className="p-3 rounded-full bg-muted/50 hover:bg-muted transition-colors"
                     aria-label="Email"
                   >

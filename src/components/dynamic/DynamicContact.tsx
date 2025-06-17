@@ -140,7 +140,7 @@ const DynamicContact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold">Email me directly</h3>
-                    <p className="text-muted-foreground">zwanski2019@gmail.com</p>
+                    <p className="text-muted-foreground">support@zwanski.org</p>
                   </div>
                 </div>
               </CardContent>
