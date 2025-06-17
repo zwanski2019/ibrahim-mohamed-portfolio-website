@@ -8,6 +8,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { CookiePreferencesProvider } from "@/context/CookiePreferencesContext";
 import { AuthProvider } from "@/context/AuthContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
 import Jobs from "./pages/Jobs";
@@ -31,27 +32,29 @@ function App() {
         <AuthProvider>
           <LanguageProvider>
             <CookiePreferencesProvider>
-              <TooltipProvider>
-                <Toaster />
-                <Sonner />
-                <BrowserRouter>
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/services" element={<Services />} />
-                    <Route path="/jobs" element={<Jobs />} />
-                    <Route path="/post-job" element={<PostJob />} />
-                    <Route path="/freelancers" element={<Freelancers />} />
-                    <Route path="/academy" element={<Academy />} />
-                    <Route path="/chat" element={<Chat />} />
-                    <Route path="/newsletter" element={<Newsletter />} />
-                    <Route path="/imei-check" element={<IMEICheck />} />
-                    <Route path="/computer-model" element={<ComputerModel />} />
-                    <Route path="/rss" element={<RSS />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </BrowserRouter>
-                <CookieConsent />
-              </TooltipProvider>
+              <ThemeProvider>
+                <TooltipProvider>
+                  <Toaster />
+                  <Sonner />
+                  <BrowserRouter>
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/services" element={<Services />} />
+                      <Route path="/jobs" element={<Jobs />} />
+                      <Route path="/post-job" element={<PostJob />} />
+                      <Route path="/freelancers" element={<Freelancers />} />
+                      <Route path="/academy" element={<Academy />} />
+                      <Route path="/chat" element={<Chat />} />
+                      <Route path="/newsletter" element={<Newsletter />} />
+                      <Route path="/imei-check" element={<IMEICheck />} />
+                      <Route path="/computer-model" element={<ComputerModel />} />
+                      <Route path="/rss" element={<RSS />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </BrowserRouter>
+                  <CookieConsent />
+                </TooltipProvider>
+              </ThemeProvider>
             </CookiePreferencesProvider>
           </LanguageProvider>
         </AuthProvider>

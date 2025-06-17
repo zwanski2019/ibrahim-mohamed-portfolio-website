@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
@@ -6,7 +5,6 @@ import Footer from "@/components/Footer";
 import ServiceCard from "@/components/ServiceCard";
 import ServiceRequestForm from "@/components/ServiceRequestForm";
 import IMEIChecker from "@/components/IMEIChecker";
-import { ThemeProvider } from "@/context/ThemeContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Smartphone } from "lucide-react";
 
@@ -78,82 +76,80 @@ const Services = () => {
     : allServices.filter(service => service.category === activeCategory);
   
   return (
-    <ThemeProvider>
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow">
-          {/* Featured Free Tool Section */}
-          <section className="py-16 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-950/20 dark:to-blue-950/20">
-            <div className="section-container">
-              <div className="text-center mb-12">
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <Smartphone className="h-8 w-8 text-green-600" />
-                  <h2 className="text-3xl md:text-4xl font-bold">
-                    Free <span className="text-green-600">IMEI Checker</span>
-                  </h2>
-                </div>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  Check your device's IMEI information instantly and for free. Verify if your phone is stolen, blocked, or has any issues.
-                </p>
-              </div>
-              
-              <IMEIChecker />
-            </div>
-          </section>
-
-          {/* Services Section */}
-          <section className="py-20 bg-gradient-to-b from-background to-muted/20">
-            <div className="section-container">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                  Our <span className="text-gradient">Services</span>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <main className="flex-grow">
+        {/* Featured Free Tool Section */}
+        <section className="py-16 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-950/20 dark:to-blue-950/20">
+          <div className="section-container">
+            <div className="text-center mb-12">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <Smartphone className="h-8 w-8 text-green-600" />
+                <h2 className="text-3xl md:text-4xl font-bold">
+                  Free <span className="text-green-600">IMEI Checker</span>
                 </h2>
-                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  Professional tech services to help your business grow and succeed in the digital world.
-                </p>
               </div>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Check your device's IMEI information instantly and for free. Verify if your phone is stolen, blocked, or has any issues.
+              </p>
+            </div>
+            
+            <IMEIChecker />
+          </div>
+        </section>
 
-              {/* Category Filter */}
-              <div className="mb-12 animate-on-scroll">
-                <div className="flex flex-wrap justify-center gap-4">
-                  {categories.map((category) => (
-                    <button
-                      key={category.id}
-                      onClick={() => setActiveCategory(category.id)}
-                      className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                        activeCategory === category.id
-                          ? 'bg-primary text-primary-foreground shadow-lg'
-                          : 'bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground'
-                      }`}
-                    >
-                      {category.name} ({category.count})
-                    </button>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Services Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-                {filteredServices.map((service) => (
-                  <ServiceCard 
-                    key={service.id}
-                    id={service.id}
-                    title={service.title}
-                    description={service.description}
-                    price={service.price}
-                    icon={service.icon}
-                    onSelect={() => setSelectedService(service.title)}
-                  />
+        {/* Services Section */}
+        <section className="py-20 bg-gradient-to-b from-background to-muted/20">
+          <div className="section-container">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                Our <span className="text-gradient">Services</span>
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Professional tech services to help your business grow and succeed in the digital world.
+              </p>
+            </div>
+
+            {/* Category Filter */}
+            <div className="mb-12 animate-on-scroll">
+              <div className="flex flex-wrap justify-center gap-4">
+                {categories.map((category) => (
+                  <button
+                    key={category.id}
+                    onClick={() => setActiveCategory(category.id)}
+                    className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                      activeCategory === category.id
+                        ? 'bg-primary text-primary-foreground shadow-lg'
+                        : 'bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    {category.name} ({category.count})
+                  </button>
                 ))}
               </div>
-              
-              <ServiceRequestForm selectedService={selectedService} />
             </div>
-          </section>
-        </main>
-        <Footer />
-      </div>
-    </ThemeProvider>
+            
+            {/* Services Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+              {filteredServices.map((service) => (
+                <ServiceCard 
+                  key={service.id}
+                  id={service.id}
+                  title={service.title}
+                  description={service.description}
+                  price={service.price}
+                  icon={service.icon}
+                  onSelect={() => setSelectedService(service.title)}
+                />
+              ))}
+            </div>
+            
+            <ServiceRequestForm selectedService={selectedService} />
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
   );
 };
 

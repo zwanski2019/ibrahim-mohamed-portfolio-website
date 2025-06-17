@@ -3,11 +3,10 @@ import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import IMEIChecker from "@/components/IMEIChecker";
-import { ThemeProvider } from "@/context/ThemeContext";
 
 const IMEICheck = () => {
   return (
-    <ThemeProvider>
+    <>
       <Helmet>
         <title>Free IMEI Checker - ZWANSKI TECH</title>
         <meta name="description" content="Check your device's IMEI information instantly and for free. Verify if your phone is stolen, blocked, or has any issues." />
@@ -61,7 +60,7 @@ const IMEICheck = () => {
         </main>
         <Footer />
       </div>
-    </ThemeProvider>
+    </>
   );
 };
 
