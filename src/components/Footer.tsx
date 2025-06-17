@@ -1,4 +1,3 @@
-
 import { MessageSquare, Heart } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Helmet } from "react-helmet-async";
@@ -99,6 +98,11 @@ export default function Footer() {
                 <li>
                   <Link to="/jobs" className="text-muted-foreground hover:text-primary transition-colors">
                     Job Marketplace
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/infrastructure" className="text-muted-foreground hover:text-primary transition-colors">
+                    Infrastructure
                   </Link>
                 </li>
               </ul>
