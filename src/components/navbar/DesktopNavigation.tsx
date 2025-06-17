@@ -30,28 +30,30 @@ export function DesktopNavigation() {
         <SearchBar />
       </div>
       
-      <NavigationMenu>
-        <NavigationMenuList className="space-x-2">
-          {mainNavigation.map((item) => (
-            <NavigationMenuItem key={item.name}>
-              <NavigationMenuLink asChild>
-                <Link
-                  to={item.href}
-                  className={cn(
-                    navigationMenuTriggerStyle(),
-                    "bg-transparent hover:bg-accent/50 px-4 py-2 flex items-center gap-2"
-                  )}
-                >
-                  {item.icon && <item.icon className="h-4 w-4" />}
-                  {item.name}
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          ))}
-          
-          <MoreDropdown />
-        </NavigationMenuList>
-      </NavigationMenu>
+      <div className="flex items-center space-x-2">
+        <NavigationMenu>
+          <NavigationMenuList className="space-x-2">
+            {mainNavigation.map((item) => (
+              <NavigationMenuItem key={item.name}>
+                <NavigationMenuLink asChild>
+                  <Link
+                    to={item.href}
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      "bg-transparent hover:bg-accent/50 px-4 py-2 flex items-center gap-2"
+                    )}
+                  >
+                    {item.icon && <item.icon className="h-4 w-4" />}
+                    {item.name}
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            ))}
+          </NavigationMenuList>
+        </NavigationMenu>
+        
+        <MoreDropdown />
+      </div>
       
       <NavbarActions />
     </div>
