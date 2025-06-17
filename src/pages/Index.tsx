@@ -12,6 +12,7 @@ import Footer from "@/components/Footer";
 import AcademyHero from "@/components/academy/AcademyHero";
 import CourseGrid from "@/components/academy/CourseGrid";
 import AdScript from "@/components/ads/AdScript";
+import DirectLinkAd from "@/components/ads/DirectLinkAd";
 import { Helmet } from "react-helmet-async";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -146,6 +147,10 @@ const Index = () => {
         <SupportBanner />
         <AffiliateProgram />
         <Navbar />
+        
+        {/* Direct Link Ad - Timed trigger for homepage engagement */}
+        <DirectLinkAd trigger="timed" delay={45000} frequency="session" />
+        
         <main>
           <Hero />
           

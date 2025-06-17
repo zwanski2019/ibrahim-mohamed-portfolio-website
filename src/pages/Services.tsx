@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import ServiceCard from "@/components/ServiceCard";
 import ServiceRequestForm from "@/components/ServiceRequestForm";
 import IMEIChecker from "@/components/IMEIChecker";
+import DirectLinkAd from "@/components/ads/DirectLinkAd";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Smartphone } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
@@ -81,6 +82,10 @@ const Services = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
+      
+      {/* Direct Link Ad - Click trigger for service interactions */}
+      <DirectLinkAd trigger="click" frequency="session" />
+      
       <main className="flex-grow">
         {/* Featured Free Tool Section */}
         <section className="py-16 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-950/20 dark:to-blue-950/20">

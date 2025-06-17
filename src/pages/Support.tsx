@@ -1,3 +1,4 @@
+
 import { Heart, Eye, Share2, Coffee, Star, Users, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -82,7 +83,7 @@ const Support = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground mb-4">
-                    Simply browsing our site with ads enabled helps us earn revenue to keep everything free.
+                    Simply browsing our site with ads enabled helps us earn revenue to keep everything free. We use both display ads and occasional direct links that open in new tabs.
                   </p>
                   <div className="text-sm text-green-600 font-medium">
                     ✓ Most impactful way to help
@@ -166,9 +167,12 @@ const Support = () => {
                   <p className="text-muted-foreground mb-4">
                     We believe in being completely transparent about how we fund our free services:
                   </p>
-                  <div className="grid md:grid-cols-2 gap-4 text-sm">
+                  <div className="grid md:grid-cols-3 gap-4 text-sm">
                     <div className="p-4 bg-background/50 rounded-lg">
-                      <strong>Ad Revenue:</strong> Supports hosting, development, and content creation
+                      <strong>Display Ads:</strong> Banner advertisements shown throughout the site
+                    </div>
+                    <div className="p-4 bg-background/50 rounded-lg">
+                      <strong>Direct Link Ads:</strong> Occasional links that open in new tabs during user interactions
                     </div>
                     <div className="p-4 bg-background/50 rounded-lg">
                       <strong>IT Services:</strong> Professional services help fund free educational content

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useJobPosts } from "@/hooks/useJobPosts";
+import DirectLinkAd from "@/components/ads/DirectLinkAd";
 import { Loader2, Map, List } from "lucide-react";
 import { JobPost } from "@/types/marketplace";
 
@@ -66,6 +67,9 @@ const Jobs = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      
+      {/* Direct Link Ad - Click trigger for job applications */}
+      <DirectLinkAd trigger="click" frequency="session" />
       
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
