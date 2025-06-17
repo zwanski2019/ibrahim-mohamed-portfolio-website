@@ -1,12 +1,14 @@
 
 import { useEffect } from 'react';
+import { Heart } from 'lucide-react';
 
 interface AdScriptProps {
   className?: string;
   id?: string;
+  label?: string;
 }
 
-const AdScript = ({ className = "", id }: AdScriptProps) => {
+const AdScript = ({ className = "", id, label = "Advertisement - Supporting free education" }: AdScriptProps) => {
   useEffect(() => {
     // Create script element
     const script = document.createElement('script');
@@ -29,11 +31,22 @@ const AdScript = ({ className = "", id }: AdScriptProps) => {
   }, [id]);
 
   return (
-    <div 
-      id={id || 'ad-container'} 
-      className={`w-full flex justify-center my-8 ${className}`}
-      aria-label="Advertisement"
-    />
+    <div className={`w-full my-8 ${className}`}>
+      {/* Ad Label */}
+      <div className="flex items-center justify-center gap-2 mb-3 opacity-70">
+        <Heart className="h-3 w-3 text-red-400" />
+        <span className="text-xs text-muted-foreground font-medium">
+          {label}
+        </span>
+      </div>
+      
+      {/* Ad Container */}
+      <div 
+        id={id || 'ad-container'} 
+        className="flex justify-center"
+        aria-label="Advertisement"
+      />
+    </div>
   );
 };
 

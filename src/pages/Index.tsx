@@ -16,6 +16,7 @@ import { Helmet } from "react-helmet-async";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import SupportBanner from "@/components/SupportBanner";
 
 const Index = () => {
   const { user } = useAuth();
@@ -142,6 +143,7 @@ const Index = () => {
       </Helmet>
       
       <div className="flex flex-col min-h-screen">
+        <SupportBanner />
         <AffiliateProgram />
         <Navbar />
         <main>

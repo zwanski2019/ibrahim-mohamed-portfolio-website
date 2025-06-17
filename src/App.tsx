@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -22,6 +21,7 @@ import ComputerModel from "./pages/ComputerModel";
 import RSS from "./pages/RSS";
 import NotFound from "./pages/NotFound";
 import CookieConsent from "./components/CookieConsent";
+import Support from "./pages/Support";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +47,7 @@ function App() {
                     <Route path="/newsletter" element={<Newsletter />} />
                     <Route path="/imei-check" element={<IMEICheck />} />
                     <Route path="/computer-model" element={<ComputerModel />} />
+                    <Route path="/support" element={<Support />} />
                     <Route path="/rss" element={<RSS />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>

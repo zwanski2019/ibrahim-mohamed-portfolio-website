@@ -1,14 +1,15 @@
 
-import { MessageCircle, MessageSquare } from "lucide-react";
+import { MoreHorizontal, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useLanguage } from "@/context/LanguageContext";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function MoreDropdown() {
   const { t } = useLanguage();
@@ -16,55 +17,32 @@ export function MoreDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button 
-          variant="ghost" 
-          className="bg-transparent hover:bg-accent/50 px-4 py-2 h-10"
-        >
-          {t("nav.more")}
+        <Button variant="ghost" size="sm" className="h-9 px-3">
+          <MoreHorizontal className="h-4 w-4" />
+          <span className="sr-only">More options</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent 
-        className="w-[220px] bg-background border border-border shadow-xl z-50" 
-        align="end"
-        sideOffset={4}
-      >
+      <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuItem asChild>
-          <Link
-            to="/newsletter"
-            className="flex items-center hover:bg-accent rounded-md transition-colors text-foreground hover:text-accent-foreground cursor-pointer"
-          >
-            {t("nav.newsletter")}
+          <Link to="/newsletter" className="flex items-center">
+            📧 {t("nav.newsletter")}
           </Link>
         </DropdownMenuItem>
-        
         <DropdownMenuItem asChild>
-          <Link
-            to="/imei-check"
-            className="flex items-center hover:bg-accent rounded-md transition-colors text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300 cursor-pointer"
-          >
-            {t("nav.freeImeiCheck")}
+          <Link to="/imei-check" className="flex items-center">
+            📱 {t("nav.freeImeiCheck")}
           </Link>
         </DropdownMenuItem>
-        
         <DropdownMenuItem asChild>
-          <a
-            href="https://t.me/zwanski_tech"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 hover:bg-accent rounded-md transition-colors text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 cursor-pointer"
-          >
-            <MessageSquare className="h-4 w-4" />
-            {t("nav.joinTelegram")}
-          </a>
+          <Link to="/computer-model" className="flex items-center">
+            🖥️ Computer Model
+          </Link>
         </DropdownMenuItem>
-        
+        <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link
-            to="/chat"
-            className="flex items-center gap-2 hover:bg-accent rounded-md transition-colors text-foreground hover:text-accent-foreground cursor-pointer"
-          >
-            <MessageCircle className="h-4 w-4" />
-            {t("nav.liveChat")}
+          <Link to="/support" className="flex items-center gap-2 text-red-600 dark:text-red-400">
+            <Heart className="h-4 w-4" />
+            Support Us
           </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
