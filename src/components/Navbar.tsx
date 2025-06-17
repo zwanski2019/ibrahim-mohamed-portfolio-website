@@ -98,44 +98,49 @@ export default function Navbar() {
                     More
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="w-[200px] gap-2 p-4 bg-background border border-border">
-                      <li>
+                    <div className="w-[220px] p-4 bg-background/95 backdrop-blur-lg border border-border shadow-lg rounded-md">
+                      <div className="flex flex-col space-y-2">
                         <NavigationMenuLink asChild>
                           <Link
                             to="/newsletter"
-                            className="block p-2 hover:bg-accent rounded-md"
+                            className="flex items-center p-3 hover:bg-accent rounded-md transition-colors"
                           >
                             Newsletter
                           </Link>
                         </NavigationMenuLink>
-                      </li>
-                      <li>
+                        
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/imei-check"
+                            className="flex items-center p-3 hover:bg-accent rounded-md transition-colors text-green-600 hover:text-green-700"
+                          >
+                            Free IMEI Check
+                          </Link>
+                        </NavigationMenuLink>
+                        
                         <NavigationMenuLink asChild>
                           <a
                             href="https://t.me/zwanski_tech"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 p-2 hover:bg-accent rounded-md text-blue-600 hover:text-blue-700"
+                            className="flex items-center gap-2 p-3 hover:bg-accent rounded-md transition-colors text-blue-600 hover:text-blue-700"
                           >
                             <MessageSquare className="h-4 w-4" />
                             Join Telegram
                           </a>
                         </NavigationMenuLink>
-                      </li>
-                      <li>
+                        
                         <NavigationMenuLink asChild>
                           <Link
                             to="/chat"
-                            className="block p-2 hover:bg-accent rounded-md"
+                            className="flex items-center gap-2 p-3 hover:bg-accent rounded-md transition-colors"
                           >
-                            <div className="flex items-center gap-2">
-                              <MessageCircle className="h-4 w-4" />
-                              Live Chat
-                            </div>
+                            <MessageCircle className="h-4 w-4" />
+                            Live Chat
                           </Link>
                         </NavigationMenuLink>
-                      </li>
-                    </ul>
+                      </div>
+                    </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
               </NavigationMenuList>
@@ -200,6 +205,14 @@ export default function Navbar() {
                 onClick={() => setIsOpen(false)}
               >
                 Newsletter
+              </Link>
+              
+              <Link
+                to="/imei-check"
+                className="block px-3 py-2 text-base font-medium hover:bg-accent rounded-md transition-colors text-green-600"
+                onClick={() => setIsOpen(false)}
+              >
+                Free IMEI Check
               </Link>
               
               <a

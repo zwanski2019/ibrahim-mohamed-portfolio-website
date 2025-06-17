@@ -5,7 +5,10 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ServiceCard from "@/components/ServiceCard";
 import ServiceRequestForm from "@/components/ServiceRequestForm";
+import IMEIChecker from "@/components/IMEIChecker";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Smartphone } from "lucide-react";
 
 const Services = () => {
   const [selectedService, setSelectedService] = useState<string | null>(null);
@@ -79,9 +82,37 @@ const Services = () => {
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow">
+          {/* Featured Free Tool Section */}
+          <section className="py-16 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-950/20 dark:to-blue-950/20">
+            <div className="section-container">
+              <div className="text-center mb-12">
+                <div className="flex items-center justify-center gap-2 mb-4">
+                  <Smartphone className="h-8 w-8 text-green-600" />
+                  <h2 className="text-3xl md:text-4xl font-bold">
+                    Free <span className="text-green-600">IMEI Checker</span>
+                  </h2>
+                </div>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                  Check your device's IMEI information instantly and for free. Verify if your phone is stolen, blocked, or has any issues.
+                </p>
+              </div>
+              
+              <IMEIChecker />
+            </div>
+          </section>
+
           {/* Services Section */}
           <section className="py-20 bg-gradient-to-b from-background to-muted/20">
             <div className="section-container">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                  Our <span className="text-gradient">Services</span>
+                </h2>
+                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                  Professional tech services to help your business grow and succeed in the digital world.
+                </p>
+              </div>
+
               {/* Category Filter */}
               <div className="mb-12 animate-on-scroll">
                 <div className="flex flex-wrap justify-center gap-4">
