@@ -5,13 +5,6 @@ import { SearchBar } from "../SearchBar";
 import { NavbarActions } from "./NavbarActions";
 import { MoreDropdown } from "./MoreDropdown";
 import { useLanguage } from "@/context/LanguageContext";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 
 export function DesktopNavigation() {
@@ -25,32 +18,24 @@ export function DesktopNavigation() {
   ];
 
   return (
-    <div className="hidden lg:flex items-center space-x-6">
-      <div className="mr-4">
+    <div className="hidden lg:flex items-center space-x-8">
+      <div className="mr-6">
         <SearchBar />
       </div>
       
-      <div className="flex items-center space-x-2">
-        <NavigationMenu>
-          <NavigationMenuList className="space-x-2">
-            {mainNavigation.map((item) => (
-              <NavigationMenuItem key={item.name}>
-                <NavigationMenuLink asChild>
-                  <Link
-                    to={item.href}
-                    className={cn(
-                      navigationMenuTriggerStyle(),
-                      "bg-transparent hover:bg-accent/50 px-4 py-2 flex items-center gap-2"
-                    )}
-                  >
-                    {item.icon && <item.icon className="h-4 w-4" />}
-                    {item.name}
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
+      <div className="flex items-center space-x-1">
+        {mainNavigation.map((item) => (
+          <Link
+            key={item.name}
+            to={item.href}
+            className={cn(
+              "flex items-center gap-2 px-4 py-2 text-craft-gray-700 hover:text-craft-mint font-medium transition-all duration-200 rounded-lg hover:bg-craft-gray-50"
+            )}
+          >
+            {item.icon && <item.icon className="h-4 w-4" />}
+            {item.name}
+          </Link>
+        ))}
         
         <MoreDropdown />
       </div>

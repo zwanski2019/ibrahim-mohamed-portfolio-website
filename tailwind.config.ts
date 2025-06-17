@@ -19,6 +19,9 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'inter': ['Inter', 'system-ui', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -63,12 +66,36 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				highlight: '#8b5cf6',
+				'craft-mint': 'rgb(0 212 170)',
+				'craft-blue': 'rgb(59 130 246)',
+				'craft-gray': {
+					50: 'rgb(249 250 251)',
+					100: 'rgb(243 244 246)',
+					200: 'rgb(229 231 235)',
+					300: 'rgb(209 213 219)',
+					400: 'rgb(156 163 175)',
+					500: 'rgb(107 114 128)',
+					600: 'rgb(75 85 99)',
+					700: 'rgb(55 65 81)',
+					800: 'rgb(31 41 55)',
+					900: 'rgb(17 24 39)',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
+			},
+			spacing: {
+				'18': '4.5rem',
+				'88': '22rem',
+				'104': '26rem',
+				'112': '28rem',
+				'128': '32rem',
+			},
+			maxWidth: {
+				'8xl': '88rem',
+				'9xl': '96rem',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -132,6 +159,14 @@ export default {
 					'50%': {
 						opacity: '0.8'
 					}
+				},
+				'gentle-bounce': {
+					'0%, 100%': {
+						transform: 'translateY(0)'
+					},
+					'50%': {
+						transform: 'translateY(-8px)'
+					}
 				}
 			},
 			animation: {
@@ -142,26 +177,19 @@ export default {
 				'scale-in': 'scale-in 0.2s ease-out',
 				'float': 'float 4s ease-in-out infinite',
 				'spin-slow': 'spin-slow 8s linear infinite',
-				'pulse-slow': 'pulse-slow 3s ease-in-out infinite'
+				'pulse-slow': 'pulse-slow 3s ease-in-out infinite',
+				'gentle-bounce': 'gentle-bounce 3s ease-in-out infinite'
 			},
 			boxShadow: {
-				'3d': '5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.05)',
-				'3d-hover': '10px 10px 25px rgba(0, 0, 0, 0.4), -5px -5px 25px rgba(255, 255, 255, 0.1)',
-				'neo': '10px 10px 20px rgba(0, 0, 0, 0.2), -10px -10px 20px rgba(255, 255, 255, 0.05)',
-				'inner-neo': 'inset 5px 5px 10px rgba(0, 0, 0, 0.2), inset -5px -5px 10px rgba(255, 255, 255, 0.05)'
+				'craft': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+				'craft-lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+				'craft-xl': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+				'craft-inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-				'hero-pattern': 'linear-gradient(to right, rgba(74, 47, 189, 0.8), rgba(156, 39, 176, 0.8))',
-				'card-gradient': 'linear-gradient(135deg, rgba(76, 29, 149, 0.1) 0%, rgba(124, 58, 237, 0.2) 100%)',
-				'glass': 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.1) 100%)'
-			},
-			transformStyle: {
-				'3d': 'preserve-3d'
-			},
-			perspective: {
-				'1000': '1000px',
-				'2000': '2000px'
+				'craft-gradient': 'linear-gradient(135deg, rgba(0, 212, 170, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%)',
+				'craft-hero': 'linear-gradient(135deg, rgba(0, 212, 170, 0.08) 0%, rgba(59, 130, 246, 0.08) 100%)',
 			}
 		}
 	},

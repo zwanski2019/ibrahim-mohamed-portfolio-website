@@ -18,20 +18,20 @@ export function MoreDropdown() {
       <DropdownMenuTrigger asChild>
         <Button 
           variant="ghost" 
-          className="bg-transparent hover:bg-accent/50 px-4 py-2 h-10"
+          className="text-craft-gray-700 hover:text-craft-mint hover:bg-craft-gray-50 px-4 py-2 h-10 font-medium"
         >
           {t("nav.more")}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent 
-        className="w-[220px] bg-background border border-border shadow-xl z-50" 
+        className="w-[220px] bg-white border border-craft-gray-200 shadow-craft-lg z-50 rounded-xl p-2" 
         align="end"
-        sideOffset={4}
+        sideOffset={8}
       >
         <DropdownMenuItem asChild>
           <Link
             to="/newsletter"
-            className="flex items-center hover:bg-accent rounded-md transition-colors text-foreground hover:text-accent-foreground cursor-pointer"
+            className="flex items-center hover:bg-craft-gray-50 rounded-lg transition-colors text-craft-gray-700 hover:text-craft-gray-900 cursor-pointer p-3"
           >
             {t("nav.newsletter")}
           </Link>
@@ -40,7 +40,7 @@ export function MoreDropdown() {
         <DropdownMenuItem asChild>
           <Link
             to="/imei-check"
-            className="flex items-center hover:bg-accent rounded-md transition-colors text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300 cursor-pointer"
+            className="flex items-center hover:bg-craft-gray-50 rounded-lg transition-colors text-craft-mint hover:text-craft-mint/80 cursor-pointer p-3 font-medium"
           >
             {t("nav.freeImeiCheck")}
           </Link>
@@ -51,7 +51,7 @@ export function MoreDropdown() {
             href="https://t.me/zwanski_tech"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 hover:bg-accent rounded-md transition-colors text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 cursor-pointer"
+            className="flex items-center gap-3 hover:bg-craft-gray-50 rounded-lg transition-colors text-craft-blue hover:text-craft-blue/80 cursor-pointer p-3"
           >
             <MessageSquare className="h-4 w-4" />
             {t("nav.joinTelegram")}
@@ -61,7 +61,7 @@ export function MoreDropdown() {
         <DropdownMenuItem asChild>
           <Link
             to="/chat"
-            className="flex items-center gap-2 hover:bg-accent rounded-md transition-colors text-foreground hover:text-accent-foreground cursor-pointer"
+            className="flex items-center gap-3 hover:bg-craft-gray-50 rounded-lg transition-colors text-craft-gray-700 hover:text-craft-gray-900 cursor-pointer p-3"
           >
             <MessageCircle className="h-4 w-4" />
             {t("nav.liveChat")}

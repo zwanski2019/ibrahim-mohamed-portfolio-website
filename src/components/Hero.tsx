@@ -67,7 +67,7 @@ const Hero = () => {
   // Animated counters effect
   useEffect(() => {
     const animateCounters = () => {
-      const duration = 2000; // 2 seconds
+      const duration = 2000;
       const steps = 60;
       const stepDuration = duration / steps;
 
@@ -95,95 +95,94 @@ const Hero = () => {
       }, stepDuration);
     };
 
-    // Start animation after component mounts
     const timeout = setTimeout(animateCounters, 500);
     return () => clearTimeout(timeout);
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-      {/* Enhanced Background Elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(120,119,198,0.3),transparent_50%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(34,197,94,0.2),transparent_50%)]" />
-      <div className="absolute inset-0 bg-grid-white/[0.02] bg-grid-16" />
+    <section className="relative min-h-screen flex items-center justify-center bg-craft-hero overflow-hidden">
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,212,170,0.03),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.03),transparent_50%)]" />
       
-      {/* Floating Tech Elements */}
-      <div className="absolute top-20 left-10 w-20 h-20 bg-emerald-500/20 rounded-full blur-xl animate-pulse-slow" />
-      <div className="absolute bottom-20 right-10 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl animate-float" />
-      <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-purple-500/20 rounded-full blur-lg animate-spin-slow" />
-      <div className="absolute top-1/3 right-1/3 w-24 h-24 bg-cyan-500/10 rounded-full blur-xl animate-pulse-slow" />
+      {/* Floating elements */}
+      <div className="absolute top-20 left-10 w-20 h-20 bg-craft-mint/10 rounded-full blur-xl animate-gentle-bounce" />
+      <div className="absolute bottom-20 right-10 w-32 h-32 bg-craft-blue/10 rounded-full blur-2xl animate-float" />
+      <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-craft-mint/5 rounded-full blur-lg animate-pulse-slow" />
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-7xl mx-auto text-center">
+      <div className="craft-container relative z-10">
+        <div className="max-w-6xl mx-auto text-center">
           {/* Telegram Notice Banner */}
-          <div className="mb-8 animate-on-scroll">
+          <div className="mb-12 craft-fade-in">
             <a
               href="https://t.me/zwanski_tech"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600/20 to-blue-500/20 border border-blue-500/30 rounded-full text-blue-300 hover:text-blue-200 hover:from-blue-600/30 hover:to-blue-500/30 transition-all duration-300 backdrop-blur-sm group"
+              className="inline-flex items-center gap-3 px-6 py-3 bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-full text-gray-700 hover:text-craft-mint hover:bg-white transition-all duration-300 group shadow-craft"
             >
               <MessageSquare className="h-4 w-4 group-hover:scale-110 transition-transform" />
-              <span className="text-sm font-medium">{currentContent.telegramNotice}</span>
+              <span className="font-medium">{currentContent.telegramNotice}</span>
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
 
-          {/* Enhanced Main Headlines */}
-          <div className="mb-12 animate-on-scroll">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 bg-gradient-to-r from-blue-400 via-emerald-400 to-blue-400 bg-clip-text text-transparent leading-tight animate-pulse-slow">
-              {currentContent.headline}
+          {/* Main Headlines */}
+          <div className="mb-16 craft-spacing">
+            <h1 className="font-inter font-bold text-5xl md:text-6xl lg:text-7xl text-craft-gray-900 leading-tight mb-8 tracking-tight">
+              Your Partner in{" "}
+              <span className="craft-text-gradient">Building, Repairing</span>{" "}
+              & Securing Digital Futures
             </h1>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl text-emerald-300 mb-8 font-bold tracking-wide">
+            <h2 className="text-xl md:text-2xl lg:text-3xl text-craft-gray-600 mb-8 font-medium">
               {currentContent.subheadline}
             </h2>
           </div>
 
-          {/* Enhanced Description */}
-          <div className="mb-16 animate-on-scroll">
-            <p className="text-xl md:text-2xl text-slate-300 max-w-5xl mx-auto leading-relaxed">
+          {/* Description */}
+          <div className="mb-16">
+            <p className="text-lg md:text-xl text-craft-gray-600 max-w-4xl mx-auto leading-relaxed">
               {currentContent.description}
             </p>
           </div>
 
-          {/* Enhanced CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-20 animate-on-scroll">
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
             <Link to="/services">
-              <Button size="lg" className="group h-16 px-10 text-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 shadow-2xl shadow-blue-500/25">
+              <button className="craft-button-primary group">
                 {currentContent.cta1}
-                <ArrowRight className="ml-3 h-6 w-6 transition-transform group-hover:translate-x-1" />
-              </Button>
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </button>
             </Link>
             <Link to="/computer-model">
-              <Button variant="outline" size="lg" className="group h-16 px-10 text-xl border-emerald-500 text-emerald-400 hover:bg-emerald-500/10 shadow-2xl shadow-emerald-500/25">
-                <Play className="mr-3 h-6 w-6 transition-transform group-hover:scale-110" />
+              <button className="craft-button-secondary group">
+                <Play className="mr-2 h-5 w-5 transition-transform group-hover:scale-110" />
                 {currentContent.cta2}
-              </Button>
+              </button>
             </Link>
             <Link to="/chat">
-              <Button size="lg" className="group h-16 px-10 text-xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-700 hover:to-emerald-600 shadow-2xl shadow-emerald-500/25">
+              <button className="craft-button-primary group bg-craft-blue hover:bg-craft-blue/90">
                 {currentContent.cta3}
-                <Zap className="ml-3 h-6 w-6 transition-transform group-hover:rotate-12" />
-              </Button>
+                <Zap className="ml-2 h-5 w-5 transition-transform group-hover:rotate-12" />
+              </button>
             </Link>
           </div>
 
-          {/* Enhanced Animated Stats Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto animate-on-scroll">
+          {/* Stats Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {currentContent.stats.map((stat, index) => (
               <div 
                 key={index} 
-                className="relative group p-8 rounded-2xl bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-sm border border-slate-700/50 hover:border-emerald-500/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20"
+                className="craft-card p-8 hover-lift group"
               >
                 {/* Icon */}
                 <div className="mb-4 flex justify-center">
-                  <div className="p-4 rounded-full bg-gradient-to-br from-emerald-500/20 to-blue-500/20 group-hover:from-emerald-500/30 group-hover:to-blue-500/30 transition-all duration-300">
-                    <stat.icon className="h-8 w-8 text-emerald-400" />
+                  <div className="p-3 rounded-xl bg-craft-mint/10 group-hover:bg-craft-mint/20 transition-all duration-300">
+                    <stat.icon className="h-8 w-8 text-craft-mint" />
                   </div>
                 </div>
                 
                 {/* Animated Number */}
-                <div className="text-4xl md:text-5xl font-bold text-white mb-2 font-mono">
+                <div className="text-3xl md:text-4xl font-bold text-craft-gray-900 mb-2 font-inter">
                   {index === 0 ? `${counters.devices}+` :
                    index === 1 ? `${counters.satisfaction}%` :
                    index === 2 ? `${counters.experience}+` :
@@ -191,30 +190,27 @@ const Hero = () => {
                 </div>
                 
                 {/* Label */}
-                <div className="text-sm md:text-base text-slate-300 font-medium leading-tight">
+                <div className="text-sm md:text-base text-craft-gray-600 font-medium">
                   {stat.label}
                 </div>
-                
-                {/* Hover glow effect */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-500/0 to-blue-500/0 group-hover:from-emerald-500/5 group-hover:to-blue-500/5 transition-all duration-500" />
               </div>
             ))}
           </div>
 
           {/* Trust Indicators */}
-          <div className="mt-20 animate-on-scroll">
-            <div className="flex flex-wrap justify-center items-center gap-8 text-slate-400">
+          <div className="mt-16">
+            <div className="flex flex-wrap justify-center items-center gap-8 text-craft-gray-500">
               <div className="flex items-center gap-2">
-                <Shield className="h-5 w-5 text-emerald-400" />
-                <span className="text-sm font-medium">Certified & Secure</span>
+                <Shield className="h-5 w-5 text-craft-mint" />
+                <span className="font-medium">Certified & Secure</span>
               </div>
               <div className="flex items-center gap-2">
-                <Globe className="h-5 w-5 text-blue-400" />
-                <span className="text-sm font-medium">Global Support</span>
+                <Globe className="h-5 w-5 text-craft-blue" />
+                <span className="font-medium">Global Support</span>
               </div>
               <div className="flex items-center gap-2">
-                <Zap className="h-5 w-5 text-purple-400" />
-                <span className="text-sm font-medium">24/7 Available</span>
+                <Zap className="h-5 w-5 text-craft-mint" />
+                <span className="font-medium">24/7 Available</span>
               </div>
             </div>
           </div>
