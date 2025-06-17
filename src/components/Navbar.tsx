@@ -61,9 +61,9 @@ export default function Navbar() {
             <Link
               to="/"
               className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors"
-              aria-label="SOS Jobs - Job Marketplace"
+              aria-label="ZWANSKI TECH - Job Marketplace"
             >
-              SOS Jobs
+              ZWANSKI TECH
             </Link>
           </div>
 

@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import AffiliateProgram from "@/components/AffiliateProgram";
 import Navbar from "@/components/Navbar";
@@ -72,25 +73,25 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>SOS Jobs | Find Jobs & Freelancers - Professional Marketplace</title>
+        <title>ZWANSKI TECH | Find Jobs & Freelancers - Professional Marketplace</title>
         <meta 
           name="description" 
-          content="SOS Jobs - Professional job marketplace connecting employers with talented freelancers. Find your next job or hire skilled professionals."
+          content="ZWANSKI TECH - Professional job marketplace connecting employers with talented freelancers. Find your next job or hire skilled professionals."
         />
-        <meta name="author" content="SOS Jobs Team" />
-        <meta name="keywords" content="SOS Jobs, job marketplace, freelancers, remote work, hiring, jobs, employment" />
+        <meta name="author" content="ZWANSKI TECH Team" />
+        <meta name="keywords" content="ZWANSKI TECH, job marketplace, freelancers, remote work, hiring, jobs, employment" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://zwanski.org/" />
-        <meta property="og:title" content="SOS Jobs | Find Jobs & Freelancers - Professional Marketplace" />
+        <meta property="og:title" content="ZWANSKI TECH | Find Jobs & Freelancers - Professional Marketplace" />
         <meta property="og:description" content="Professional job marketplace connecting employers with talented freelancers." />
         <meta property="og:image" content="/og-image.png" />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://zwanski.org/" />
-        <meta property="twitter:title" content="SOS Jobs | Find Jobs & Freelancers - Professional Marketplace" />
+        <meta property="twitter:title" content="ZWANSKI TECH | Find Jobs & Freelancers - Professional Marketplace" />
         <meta property="twitter:description" content="Professional job marketplace connecting employers with talented freelancers." />
         <meta property="twitter:image" content="/og-image.png" />
         
