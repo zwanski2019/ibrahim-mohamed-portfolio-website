@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { useFeaturedProjects } from '@/hooks/useProjects';
+import { useLanguage } from '@/context/LanguageContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -9,6 +10,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const DynamicProjects = () => {
   const { data: projects, isLoading, error } = useFeaturedProjects();
+  const { t } = useLanguage();
 
   if (isLoading) {
     return (
@@ -51,7 +53,7 @@ const DynamicProjects = () => {
       <section className="py-20 bg-muted/30">
         <div className="section-container">
           <div className="text-center">
-            <h2 className="text-3xl font-bold mb-4">Featured Projects</h2>
+            <h2 className="text-3xl font-bold mb-4">{t("projects.featured")}</h2>
             <p className="text-red-600">Error loading projects. Please try again later.</p>
           </div>
         </div>
@@ -64,10 +66,10 @@ const DynamicProjects = () => {
       <div className="section-container">
         <div className="text-center mb-12 animate-on-scroll">
           <h2 className="text-4xl font-bold mb-4">
-            Featured <span className="text-gradient">Projects</span>
+            {t("projects.featured")} <span className="text-gradient">{t("projects.title")}</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Here are some of my recent projects that showcase my skills and experience in web development.
+            {t("projects.subtitle")}
           </p>
         </div>
         
@@ -84,7 +86,7 @@ const DynamicProjects = () => {
                   {project.featured && (
                     <Badge className="absolute top-3 right-3 bg-yellow-500 text-black">
                       <Star className="w-3 h-3 mr-1" />
-                      Featured
+                      {t("projects.featured")}
                     </Badge>
                   )}
                 </div>
@@ -124,7 +126,7 @@ const DynamicProjects = () => {
                     <Button size="sm" asChild>
                       <a href={project.demo_url} target="_blank" rel="noopener noreferrer">
                         <ExternalLink className="w-4 h-4 mr-2" />
-                        Demo
+                        {t("projects.demo")}
                       </a>
                     </Button>
                   )}
@@ -132,7 +134,7 @@ const DynamicProjects = () => {
                     <Button variant="outline" size="sm" asChild>
                       <a href={project.github_url} target="_blank" rel="noopener noreferrer">
                         <Github className="w-4 h-4 mr-2" />
-                        Code
+                        {t("projects.code")}
                       </a>
                     </Button>
                   )}

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { SearchBar } from "../SearchBar";
 import { NavbarActions } from "./NavbarActions";
 import { MoreDropdown } from "./MoreDropdown";
+import { useLanguage } from "@/context/LanguageContext";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -13,14 +14,16 @@ import {
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 
-const mainNavigation = [
-  { name: "Find Jobs", href: "/jobs", icon: Briefcase },
-  { name: "Find Freelancers", href: "/freelancers", icon: Search },
-  { name: "Services", href: "/services", icon: null },
-  { name: "Academy", href: "/academy", icon: null },
-];
-
 export function DesktopNavigation() {
+  const { t } = useLanguage();
+
+  const mainNavigation = [
+    { name: t("nav.findJobs"), href: "/jobs", icon: Briefcase },
+    { name: t("nav.findFreelancers"), href: "/freelancers", icon: Search },
+    { name: t("nav.services"), href: "/services", icon: null },
+    { name: t("nav.academy"), href: "/academy", icon: null },
+  ];
+
   return (
     <div className="hidden lg:flex items-center space-x-6">
       <div className="mr-4">

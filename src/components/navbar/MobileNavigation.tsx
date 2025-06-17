@@ -5,16 +5,18 @@ import { Link } from "react-router-dom";
 import { SearchBar } from "../SearchBar";
 import { LanguageSelector } from "../LanguageSelector";
 import { ThemeToggle } from "../ThemeToggle";
-
-const mainNavigation = [
-  { name: "Find Jobs", href: "/jobs", icon: Briefcase },
-  { name: "Find Freelancers", href: "/freelancers", icon: Search },
-  { name: "Services", href: "/services", icon: null },
-  { name: "Academy", href: "/academy", icon: null },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export function MobileNavigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useLanguage();
+
+  const mainNavigation = [
+    { name: t("nav.findJobs"), href: "/jobs", icon: Briefcase },
+    { name: t("nav.findFreelancers"), href: "/freelancers", icon: Search },
+    { name: t("nav.services"), href: "/services", icon: null },
+    { name: t("nav.academy"), href: "/academy", icon: null },
+  ];
 
   return (
     <>
@@ -58,7 +60,7 @@ export function MobileNavigation() {
               className="block px-3 py-2 text-base font-medium hover:bg-accent rounded-md transition-colors"
               onClick={() => setIsOpen(false)}
             >
-              Post a Job
+              {t("nav.postJob")}
             </Link>
 
             <Link
@@ -66,7 +68,7 @@ export function MobileNavigation() {
               className="block px-3 py-2 text-base font-medium hover:bg-accent rounded-md transition-colors"
               onClick={() => setIsOpen(false)}
             >
-              Newsletter
+              {t("nav.newsletter")}
             </Link>
             
             <Link
@@ -74,7 +76,7 @@ export function MobileNavigation() {
               className="block px-3 py-2 text-base font-medium hover:bg-accent rounded-md transition-colors text-green-600"
               onClick={() => setIsOpen(false)}
             >
-              Free IMEI Check
+              {t("nav.freeImeiCheck")}
             </Link>
             
             <a
@@ -85,7 +87,7 @@ export function MobileNavigation() {
               onClick={() => setIsOpen(false)}
             >
               <MessageSquare className="h-4 w-4" />
-              Join Telegram
+              {t("nav.joinTelegram")}
             </a>
             
             <Link
@@ -94,7 +96,7 @@ export function MobileNavigation() {
               onClick={() => setIsOpen(false)}
             >
               <MessageCircle className="h-4 w-4" />
-              Live Chat
+              {t("nav.liveChat")}
             </Link>
           </div>
         </div>

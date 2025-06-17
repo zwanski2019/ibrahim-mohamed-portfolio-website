@@ -1,5 +1,7 @@
+
 import React from 'react';
 import { useSkillsByCategory } from '@/hooks/useSkills';
+import { useLanguage } from '@/context/LanguageContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
@@ -15,17 +17,9 @@ const categoryIcons = {
   other: '💡'
 };
 
-const categoryNames = {
-  frontend: 'Frontend Development',
-  backend: 'Backend Development',
-  mobile: 'Mobile Development',
-  devops: 'DevOps & Tools',
-  design: 'Design & UI/UX',
-  other: 'Other Skills'
-};
-
 const DynamicSkills = () => {
   const { data: skillsByCategory, isLoading, error } = useSkillsByCategory();
+  const { t } = useLanguage();
 
   if (isLoading) {
     return (
@@ -70,7 +64,7 @@ const DynamicSkills = () => {
         <section className="py-20">
           <div className="section-container">
             <div className="text-center">
-              <h2 className="text-3xl font-bold mb-4">Skills & Expertise</h2>
+              <h2 className="text-3xl font-bold mb-4">{t("skills.title")}</h2>
               <p className="text-red-600">Error loading skills. Please try again later.</p>
             </div>
           </div>
@@ -86,10 +80,10 @@ const DynamicSkills = () => {
         <div className="section-container">
           <div className="text-center mb-12 animate-on-scroll">
             <h2 className="text-4xl font-bold mb-4">
-              Skills & <span className="text-gradient">Expertise</span>
+              {t("skills.title")} & <span className="text-gradient">{t("nav.experience")}</span>
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Here's an overview of my technical skills and expertise across different areas of development.
+              {t("skills.subtitle")}
             </p>
           </div>
           
@@ -99,7 +93,7 @@ const DynamicSkills = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <span className="text-2xl">{categoryIcons[category as keyof typeof categoryIcons]}</span>
-                    {categoryNames[category as keyof typeof categoryNames]}
+                    {t(`skills.categories.${category}`)}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">

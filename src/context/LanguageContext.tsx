@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { getInitialLanguage, isFirstVisit, detectBrowserLanguage } from '@/utils/languageDetection';
 
@@ -34,6 +35,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
   useEffect(() => {
     localStorage.setItem('language', language);
     document.documentElement.setAttribute('lang', language);
+    document.documentElement.setAttribute('dir', language === 'ar' ? 'rtl' : 'ltr');
     
     // Reset auto-detection flag when user manually changes language
     if (wasAutoDetected) {
@@ -51,7 +53,15 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
         youtube: "YouTube",
         contact: "Contact",
         more: "More",
-        services: "Services"
+        services: "Services",
+        findJobs: "Find Jobs",
+        findFreelancers: "Find Freelancers",
+        academy: "Academy",
+        postJob: "Post a Job",
+        newsletter: "Newsletter",
+        freeImeiCheck: "Free IMEI Check",
+        joinTelegram: "Join Telegram",
+        liveChat: "Live Chat"
       },
       hero: {
         title: "Hi, I'm ",
@@ -66,14 +76,48 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
         frontend: "Frontend Development",
         backend: "Backend Development",
         tools: "Tools & Technologies",
+        allSkills: "All Skills",
+        categories: {
+          frontend: "Frontend Development",
+          backend:  "Backend Development",
+          mobile: "Mobile Development",
+          devops: "DevOps & Tools",
+          design: "Design & UI/UX",
+          other: "Other Skills"
+        }
       },
       projects: {
         title: "My Projects",
         subtitle: "A selection of projects I've worked on, showcasing my skills and passion for web development.",
+        featured: "Featured Projects",
+        demo: "Demo",
+        code: "Code",
+        viewProject: "View Project",
+        sourceCode: "Source Code"
       },
       experience: {
         title: "My Experience",
         subtitle: "A timeline of my journey as a web developer, highlighting key experiences and achievements.",
+        present: "Present",
+        years: "years",
+        year: "year",
+        education: "Education",
+        work: "Work Experience",
+        certifications: "Certifications"
+      },
+      academy: {
+        title: "Zwanski Academy",
+        subtitle: "Free Learning for All - Master new skills with our comprehensive courses",
+        courses: "Courses",
+        students: "Students",
+        rating: "Rating",
+        viewAllCourses: "View All Courses",
+        becomeInstructor: "Become an Instructor",
+        enrolledStudents: "Enrolled Students",
+        duration: "Duration",
+        level: "Level",
+        enroll: "Enroll Now",
+        enrolled: "Enrolled"
       },
       youtube: {
         title: "YouTube Channel",
@@ -91,6 +135,11 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
       },
       footer: {
         rights: "All Rights Reserved",
+        builtWith: "Built with",
+        poweredBy: "Powered by",
+        quickLinks: "Quick Links",
+        services: "Services",
+        connect: "Connect"
       },
       playground: {
         title: "Playground",
@@ -137,7 +186,15 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
         youtube: "YouTube",
         contact: "Contact",
         more: "Plus",
-        services: "Services"
+        services: "Services",
+        findJobs: "Trouver des Emplois",
+        findFreelancers: "Trouver des Freelancers",
+        academy: "Académie",
+        postJob: "Publier un Emploi",
+        newsletter: "Newsletter",
+        freeImeiCheck: "Vérification IMEI Gratuite",
+        joinTelegram: "Rejoindre Telegram",
+        liveChat: "Chat en Direct"
       },
       hero: {
         title: "Salut, je suis ",
@@ -152,14 +209,48 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
         frontend: "Développement Frontend",
         backend: "Développement Backend",
         tools: "Outils & Technologies",
+        allSkills: "Toutes les Compétences",
+        categories: {
+          frontend: "Développement Frontend",
+          backend: "Développement Backend",
+          mobile: "Développement Mobile",
+          devops: "DevOps & Outils",
+          design: "Design & UI/UX",
+          other: "Autres Compétences"
+        }
       },
       projects: {
         title: "Mes Projets",
         subtitle: "Une sélection de projets sur lesquels j'ai travaillé, mettant en valeur mes compétences et ma passion pour le développement web.",
+        featured: "Projets en Vedette",
+        demo: "Démo",
+        code: "Code",
+        viewProject: "Voir le Projet",
+        sourceCode: "Code Source"
       },
       experience: {
         title: "Mon Expérience",
         subtitle: "Une chronologie de mon parcours en tant que développeur web, soulignant les expériences clés et les réalisations.",
+        present: "Présent",
+        years: "années",
+        year: "année",
+        education: "Éducation",
+        work: "Expérience Professionnelle",
+        certifications: "Certifications"
+      },
+      academy: {
+        title: "Académie Zwanski",
+        subtitle: "Apprentissage Gratuit pour Tous - Maîtrisez de nouvelles compétences avec nos cours complets",
+        courses: "Cours",
+        students: "Étudiants",
+        rating: "Note",
+        viewAllCourses: "Voir Tous les Cours",
+        becomeInstructor: "Devenir Instructeur",
+        enrolledStudents: "Étudiants Inscrits",
+        duration: "Durée",
+        level: "Niveau",
+        enroll: "S'inscrire Maintenant",
+        enrolled: "Inscrit"
       },
       youtube: {
         title: "Chaîne YouTube",
@@ -177,6 +268,11 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
       },
       footer: {
         rights: "Tous Droits Réservés",
+        builtWith: "Créé avec",
+        poweredBy: "Propulsé par",
+        quickLinks: "Liens Rapides",
+        services: "Services",
+        connect: "Se Connecter"
       },
       playground: {
         title: "Espace Ludique",
@@ -223,7 +319,15 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
         youtube: "يوتيوب",
         contact: "اتصل",
         more: "المزيد",
-        services: "خدمات"
+        services: "خدمات",
+        findJobs: "البحث عن وظائف",
+        findFreelancers: "العثور على المستقلين",
+        academy: "الأكاديمية",
+        postJob: "نشر وظيفة",
+        newsletter: "النشرة الإخبارية",
+        freeImeiCheck: "فحص IMEI مجاني",
+        joinTelegram: "انضم إلى تيليجرام",
+        liveChat: "الدردشة المباشرة"
       },
       hero: {
         title: "مرحبا، أنا ",
@@ -238,14 +342,48 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
         frontend: "تطوير الواجهة الأمامية",
         backend: "تطوير الواجهة الخلفية",
         tools: "أدوات وتقنيات",
+        allSkills: "جميع المهارات",
+        categories: {
+          frontend: "تطوير الواجهة الأمامية",
+          backend: "تطوير الواجهة الخلفية",
+          mobile: "تطوير الجوال",
+          devops: "DevOps والأدوات",
+          design: "التصميم وواجهة المستخدم",
+          other: "مهارات أخرى"
+        }
       },
       projects: {
         title: "مشاريعي",
         subtitle: "مجموعة مختارة من المشاريع التي عملت عليها، تعرض مهاراتي وشغفي بتطوير الويب.",
+        featured: "المشاريع المميزة",
+        demo: "عرض توضيحي",
+        code: "الكود",
+        viewProject: "عرض المشروع",
+        sourceCode: "الكود المصدري"
       },
       experience: {
         title: "خبرتي",
         subtitle: "تسلسل زمني لرحلتي كمطور ويب، يسلط الضوء على الخبرات والإنجازات الرئيسية.",
+        present: "الحاضر",
+        years: "سنوات",
+        year: "سنة",
+        education: "التعليم",
+        work: "الخبرة العملية",
+        certifications: "الشهادات"
+      },
+      academy: {
+        title: "أكاديمية زوانسكي",
+        subtitle: "التعلم المجاني للجميع - أتقن مهارات جديدة مع دوراتنا الشاملة",
+        courses: "دورات",
+        students: "طلاب",
+        rating: "التقييم",
+        viewAllCourses: "عرض جميع الدورات",
+        becomeInstructor: "كن مدرسًا",
+        enrolledStudents: "الطلاب المسجلين",
+        duration: "المدة",
+        level: "المستوى",
+        enroll: "سجل الآن",
+        enrolled: "مسجل"
       },
       youtube: {
         title: "قناة يوتيوب",
@@ -263,6 +401,11 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
       },
       footer: {
         rights: "جميع الحقوق محفوظة",
+        builtWith: "مبني باستخدام",
+        poweredBy: "مدعوم من",
+        quickLinks: "روابط سريعة",
+        services: "الخدمات",
+        connect: "اتصل"
       },
       playground: {
         title: "منطقة التجارب",
@@ -309,7 +452,15 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
         youtube: "YouTube",
         contact: "Tuntuɓi",
         more: "Ƙari",
-        services: "Ayyuka"
+        services: "Ayyuka",
+        findJobs: "Nemo Aiki",
+        findFreelancers: "Nemo Masu Aikin Kansu",
+        academy: "Makaranta",
+        postJob: "Buga Aiki",
+        newsletter: "Takardar Labarai",
+        freeImeiCheck: "Binciken IMEI Kyauta",
+        joinTelegram: "Shiga Telegram",
+        liveChat: "Tattaunawa Kai Tsaye"
       },
       hero: {
         title: "Sannu, ni ne ",
@@ -317,6 +468,77 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
         description: "Mai haɓaka yanar gizo mai ƙauna wanda ke ƙaddamar da sabbin hanyoyin samar da yanar gizo masu sauƙi. Duba ayyukana don ganin yadda nake rayar da ra'ayoyi.",
         viewWork: "Duba Ayyukana",
         contactMe: "Tuntuɓe Ni",
+      },
+      skills: {
+        title: "Ƙwarewar Ta",
+        subtitle: "Ina da ƙwarewa daban-daban da ke ba ni damar ƙirƙirar manhajojin yanar gizo na zamani.",
+        frontend: "Haɓaka Gaba",
+        backend: "Haɓaka Baya",
+        tools: "Kayayyaki da Fasaha",
+        allSkills: "Dukkan Ƙwarewa",
+        categories: {
+          frontend: "Haɓaka Gaba",
+          backend: "Haɓaka Baya",
+          mobile: "Haɓaka wayar hannu",
+          devops: "DevOps da Kayayyaki",
+          design: "Zane da UI/UX",
+          other: "Sauran Ƙwarewa"
+        }
+      },
+      projects: {
+        title: "Ayyukana",
+        subtitle: "Zaɓaɓɓun ayyukan da na yi, suna nuna ƙwarewar ta da sha'awar haɓaka yanar gizo.",
+        featured: "Ayyuka masu Muhimmanci",
+        demo: "Nunawa",
+        code: "Lambar",
+        viewProject: "Duba Aikin",
+        sourceCode: "Lambar Tushe"
+      },
+      experience: {
+        title: "Ƙwarewata",
+        subtitle: "Tsarin lokaci na tafiyata a matsayin mai haɓaka yanar gizo, yana nuna manyan abubuwan da na samu.",
+        present: "Yanzu",
+        years: "shekaru",
+        year: "shekara",
+        education: "Ilimi",
+        work: "Ƙwarewar Aiki",
+        certifications: "Takaddun Shaida"
+      },
+      academy: {
+        title: "Makarantar Zwanski",
+        subtitle: "Koyo Kyauta ga Kowa - Koyi sabbin ƙwarewa tare da cikakkun darussan mu",
+        courses: "Darussa",
+        students: "Ɗalibai",
+        rating: "Kimanta",
+        viewAllCourses: "Duba Dukkan Darussa",
+        becomeInstructor: "Zama Malami",
+        enrolledStudents: "Ɗaliban da suka Shiga",
+        duration: "Tsawon Lokaci",
+        level: "Matakin",
+        enroll: "Yi Rajista Yanzu",
+        enrolled: "An Yi Rajista"
+      },
+      youtube: {
+        title: "Tashar YouTube",
+        subtitle: "Duba tashara na YouTube don koyarwa, shawarwari, da fahimtar haɓaka yanar gizo.",
+      },
+      contact: {
+        title: "Tuntuɓe Ni",
+        subtitle: "Ka ji daɗin tuntuɓa don haɗin gwiwa, ayyuka ko tattaunawa mai daɗi kawai!",
+        name: "Sunanka",
+        email: "Imel ɗin ka",
+        message: "Saƙonka",
+        send: "Aika Saƙo",
+        success: "An aika saƙo cikin nasara!",
+        error: "Ba a iya aika saƙo ba. Ka sake gwadawa.",
+      },
+      footer: {
+        rights: "Dukkan Haƙƙoƙi An Kiyaye Su",
+        builtWith: "An gina shi da",
+        poweredBy: "Ana amfani da shi ta",
+        quickLinks: "Hanyoyin Sauri",
+        services: "Ayyuka",
+        connect: "Haɗa"
       },
       playground: {
         title: "Filin Wasa",
@@ -363,14 +585,93 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
         youtube: "YouTube",
         contact: "Nermes",
         more: "Uggar",
-        services: "Tinfiwin"
+        services: "Tinfiwin",
+        findJobs: "Af-d Ixeddimen",
+        findFreelancers: "Af-d Imahilen Ilelli",
+        academy: "Aɣerbaz",
+        postJob: "Sufeɣ-d Axeddim",
+        newsletter: "Taɣaṛabt",
+        freeImeiCheck: "Asekyed IMEI Baṭel",
+        joinTelegram: "Ddu ɣer Telegram",
+        liveChat: "Asawal Srid"
       },
       hero: {
         title: "Azul, nekki d ",
         subtitle: "Asekker n Tedyanin Timḍanin s Tengalt",
-        description: "Amsedger web yeεjben, yettwasekker i tmerna n tifrayin web timeγranin d tisehlanin. Sken asebter-inu akken ad teẓreḍ amek i ttarra tiktiwin d tudert.",
+        description: "Amsedger web yeεjben, yettwasekker i tmerna n tifrayin web timeγranin d tisehlanin. Sken asebtar-inu akken ad teẓreḍ amek i ttarra tiktiwin d tudert.",
         viewWork: "Ẓer Amahil-inu",
         contactMe: "Nermes-iyi",
+      },
+      skills: {
+        title: "Tizmmar-inu",
+        subtitle: "Sεiɣ tizmmar yemgaraden i yi-d-yettakin ad sekkreɣ isnasen web imaynuten d leqdic.",
+        frontend: "Asnulfu n Udem",
+        backend: "Asnulfu n Deffir",
+        tools: "Ifecka d Ttiknulujiyin",
+        allSkills: "Akk Tizmmar",
+        categories: {
+          frontend: "Asnulfu n Udem",
+          backend: "Asnulfu n Deffir",
+          mobile: "Asnulfu n Uziraz",
+          devops: "DevOps d Ifecka",
+          design: "Aγewwas d UI/UX",
+          other: "Tizmmar nniḍen"
+        }
+      },
+      projects: {
+        title: "Isenfaren-inu",
+        subtitle: "Afran n isenfaren i deg xedmeɣ, i d-yeskannen tizmmar-inu d leεnaya-w deg usnulfu n web.",
+        featured: "Isenfaren Ifranin",
+        demo: "Askan",
+        code: "Tangalt",
+        viewProject: "Ẓer Asenfar",
+        sourceCode: "Tangalt n Uẓar"
+      },
+      experience: {
+        title: "Tarmit-inu",
+        subtitle: "Azref n uməṛṛu-w am umsedger web, i d-yeskannen tirmitanin tigejdanin d yimaṛṛa.",
+        present: "Tura",
+        years: "iseggasen",
+        year: "aseggas",
+        education: "Aselmed",
+        work: "Tarmit n Uxeddim",
+        certifications: "Iselkan"
+      },
+      academy: {
+        title: "Aɣerbaz Zwanski",
+        subtitle: "Aselmed Baṭel i Yal Yiwen - Issin tizmmar timaynutin s tmellalin-nneɣ timellatin",
+        courses: "Tmellalin",
+        students: "Inelmaden",
+        rating: "Asalay",
+        viewAllCourses: "Ẓer Akk Tmellalin",
+        becomeInstructor: "Uɣal d Aselmad",
+        enrolledStudents: "Inelmaden Yettwajerrden",
+        duration: "Azref",
+        level: "Aswir",
+        enroll: "Jerred Tura",
+        enrolled: "Yettwajerred"
+      },
+      youtube: {
+        title: "Tiliγri YouTube",
+        subtitle: "Ẓer tiliγri-w YouTube i yiselmaden, iwellihen, d tiktiwin ɣef usnulfu n web.",
+      },
+      contact: {
+        title: "Nermes-iyi",
+        subtitle: "Ur tettaggad ara ad tid-nermeseḍ i umuddu, isenfaren neɣ ala i usawal amdakul!",
+        name: "Isem-ik",
+        email: "Imayl-ik",
+        message: "Izen-ik",
+        send: "Azen Izen",
+        success: "Izen yettwazen s lmendad!",
+        error: "Azen n yizen yecceḍ. Ɛreḍ tikelt nniḍen.",
+      },
+      footer: {
+        rights: "Akk Izerfan Ttwammestnen",
+        builtWith: "Yettwabna s",
+        poweredBy: "Yessexdem",
+        quickLinks: "Iseɣwan Arurad",
+        services: "Tinfiwin",
+        connect: "Qqen"
       },
       playground: {
         title: "Annar n Urar",
