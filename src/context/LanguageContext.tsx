@@ -96,6 +96,24 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
           description: "See examples of creative coding projects that blend art with technology."
         }
       },
+      cookie: {
+        title: "Cookie Preferences",
+        settings: "Settings",
+        acceptAll: "Accept All",
+        rejectAll: "Reject All",
+        acceptSelected: "Accept Selected",
+        description: "We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. Select your preferences below.",
+        showDetails: "Show details",
+        hideDetails: "Hide details",
+        necessary: "Necessary",
+        analytics: "Analytics",
+        marketing: "Marketing",
+        preferences: "Preferences",
+        necessaryDescription: "Essential cookies that are required for the website to function properly. These cannot be disabled.",
+        analyticsDescription: "Cookies that help us understand how visitors interact with our website by collecting and reporting information anonymously.",
+        marketingDescription: "Cookies used to deliver personalized advertisements and track the effectiveness of our marketing campaigns.",
+        preferencesDescription: "Cookies that remember your preferences and settings to provide a personalized experience."
+      }
     },
     fr: {
       nav: {
@@ -164,6 +182,24 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
           description: "Voyez des exemples de projets de codage créatif qui mélangent l'art et la technologie."
         }
       },
+      cookie: {
+        title: "Préférences des Cookies",
+        settings: "Paramètres",
+        acceptAll: "Accepter Tout",
+        rejectAll: "Rejeter Tout",
+        acceptSelected: "Accepter Sélection",
+        description: "Nous utilisons des cookies pour améliorer votre expérience de navigation, analyser le trafic du site et personnaliser le contenu. Sélectionnez vos préférences ci-dessous.",
+        showDetails: "Afficher les détails",
+        hideDetails: "Masquer les détails",
+        necessary: "Nécessaires",
+        analytics: "Analytiques",
+        marketing: "Marketing",
+        preferences: "Préférences",
+        necessaryDescription: "Cookies essentiels requis pour le bon fonctionnement du site web. Ils ne peuvent pas être désactivés.",
+        analyticsDescription: "Cookies qui nous aident à comprendre comment les visiteurs interagissent avec notre site web en collectant et rapportant des informations anonymement.",
+        marketingDescription: "Cookies utilisés pour diffuser des publicités personnalisées et suivre l'efficacité de nos campagnes marketing.",
+        preferencesDescription: "Cookies qui mémorisent vos préférences et paramètres pour fournir une expérience personnalisée."
+      }
     },
     ar: {
       nav: {
@@ -196,7 +232,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
       },
       experience: {
         title: "خبرتي",
-        subtitle: "تسلسل زمني لرحلتي كمطور ويب، يسلط الضو�� على الخبرات والإنجازات الرئيسية.",
+        subtitle: "تسلسل زمني لرحلتي كمطور ويب، يسلط الضوء على الخبرات والإنجازات الرئيسية.",
       },
       youtube: {
         title: "قناة يوتيوب",
@@ -232,6 +268,24 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
           description: "شاهد أمثلة لمشاريع البرمجة الإبداعية التي تمزج الفن بالتكنولوجيا."
         }
       },
+      cookie: {
+        title: "تفضيلات ملفات تعريف الارتباط",
+        settings: "الإعدادات",
+        acceptAll: "قبول الكل",
+        rejectAll: "رفض الكل",
+        acceptSelected: "قبول المحدد",
+        description: "نحن نستخدم ملفات تعريف الارتباط لتحسين تجربة التصفح وتحليل حركة المرور وتخصيص المحتوى. اختر تفضيلاتك أدناه.",
+        showDetails: "إظهار التفاصيل",
+        hideDetails: "إخفاء التفاصيل",
+        necessary: "ضرورية",
+        analytics: "تحليلية",
+        marketing: "تسويقية",
+        preferences: "التفضيلات",
+        necessaryDescription: "ملفات تعريف ارتباط أساسية مطلوبة لعمل الموقع بشكل صحيح. لا يمكن إلغاؤها.",
+        analyticsDescription: "ملفات تعريف ارتباط تساعدنا في فهم كيفية تفاعل الزوار مع موقعنا من خلال جمع وتقرير المعلومات بشكل مجهول.",
+        marketingDescription: "ملفات تعريف ارتباط تُستخدم لتقديم إعلانات مخصصة وتتبع فعالية حملاتنا التسويقية.",
+        preferencesDescription: "ملفات تعريف ارتباط تتذكر تفضيلاتك وإعداداتك لتوفير تجربة مخصصة."
+      }
     },
     ha: {
       nav: {
@@ -268,6 +322,24 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
           description: "Duba misalai na ayyukan ƙirƙirar lamba da suke haɗa fasaha da fasaha."
         }
       },
+      cookie: {
+        title: "Zaɓin Cookies",
+        settings: "Saitunan",
+        acceptAll: "Karɓi Duka",
+        rejectAll: "Ƙi Duka",
+        acceptSelected: "Karɓi Zaɓaɓɓu",
+        description: "Muna amfani da cookies don inganta kwarewar ku, nazarin zirga-zirgar yanar gizo, da keɓantaccen abun ciki. Zaɓi abubuwan da kuke so a ƙasa.",
+        showDetails: "Nuna cikakkun bayanai",
+        hideDetails: "Ɓoye cikakkun bayanai",
+        necessary: "Dole",
+        analytics: "Nazari",
+        marketing: "Tallace-tallace",
+        preferences: "Zaɓuɓɓuka",
+        necessaryDescription: "Cookies masu mahimmanci da ake buƙata don yanar gizon ya yi aiki da kyau. Ba za a iya kashe su ba.",
+        analyticsDescription: "Cookies da ke taimaka mana mu fahimci yadda masu ziyara ke hulɗa da yanar gizonmu ta hanyar tattarawa da rahoton bayanai ba tare da bayyana sunayen mutane ba.",
+        marketingDescription: "Cookies da ake amfani da su don isar da tallace-tallace na musamman da kuma bin diddigin ingancin kamfen-kamfen na tallan mu.",
+        preferencesDescription: "Cookies da ke tunawa da zaɓuɓɓukanku da saitunan ku don samar da ƙwarewar da ta dace da ku."
+      }
     },
     ber: {
       nav: {
@@ -304,6 +376,24 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
           description: "Ẓer imedyaten n isenfaren n usihel aseklan i yesdukklen taẓuri d tetiknulujit."
         }
       },
+      cookie: {
+        title: "Tifranin n Cookies",
+        settings: "Iγewwaren",
+        acceptAll: "Qbel Akk",
+        rejectAll: "Agi Akk",
+        acceptSelected: "Qbel Ifran",
+        description: "Nesseqdac cookies akken ad nesnerni tarmit-ik n tunigin, ad nesleḍ tuzzya n usmel, ad nessagen agbur. Fren tifranin-ik dagi.",
+        showDetails: "Sken talqayt",
+        hideDetails: "Ffer talqayt",
+        necessary: "Ilaqen",
+        analytics: "Tasleḍt",
+        marketing: "Abeggez",
+        preferences: "Tifranin",
+        necessaryDescription: "Cookies ilaqen i umahil ameɣtu n usmel web. Ur zmiren ara ad ttwasensen.",
+        analyticsDescription: "Cookies i ɣ-d-yettawin ad nefhem amek i tteddun yinabaḍen ɣer usmel-nneɣ s ulqqaḍ d uneqqis n telɣut s tbaḍnit.",
+        marketingDescription: "Cookies yettwasqedcen i tuzzna n udellel udmawan d uḍfar n wugur n tkampayt-nneɣ n ubeggez.",
+        preferencesDescription: "Cookies i d-yettcekkaṛen tifranin d iγewwaren-ik akken ad k-d-fken tarmit tudmawant."
+      }
     },
   }), []);
 
