@@ -32,7 +32,7 @@ export default function Footer() {
             </button>
             
             <p className="text-sm text-muted-foreground">
-              &copy; {new Date().getFullYear()} Zwanski. {t('footer.rights')}
+              &copy; {new Date().getFullYear()} Zwanski Tech. {t('footer.rights')}
             </p>
           </div>
         </div>
