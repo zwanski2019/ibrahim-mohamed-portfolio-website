@@ -1,7 +1,7 @@
 
 import { useState } from "react";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { JobCard } from "@/components/marketplace/JobCard";
 import { JobSearchFilters } from "@/components/marketplace/JobSearchFilters";
 import { JobMap } from "@/components/marketplace/JobMap";

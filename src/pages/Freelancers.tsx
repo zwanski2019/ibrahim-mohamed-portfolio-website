@@ -1,58 +1,54 @@
-
 import { useState } from "react";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { FreelancerCard } from "@/components/marketplace/FreelancerCard";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { Label } from "@/components/ui/label";
-import { useFreelancerProfiles, FreelancerProfile } from "@/hooks/useFreelancerProfiles";
-import { Search, Filter, X, Plus } from "lucide-react";
-import { Loader2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { useFreelancerProfiles } from "@/hooks/useFreelancerProfiles";
+import { Search, Filter, MapPin, Star, Loader2 } from "lucide-react";
 
 const Freelancers = () => {
-  const [filters, setFilters] = useState({
-    search: "",
-    skills: [] as string[],
-    minRate: 0,
-    maxRate: 200,
-    location: "",
+  const [searchQuery, setSearchQuery] = useState("");
+  const [locationFilter, setLocationFilter] = useState("");
+  const [minRate, setMinRate] = useState<number>(0);
+  const [maxRate, setMaxRate] = useState<number>(100);
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+
+  const { data: freelancers = [], isLoading, error } = useFreelancerProfiles({
+    skills: selectedSkills,
+    minRate: minRate,
+    maxRate: maxRate,
+    location: locationFilter,
   });
 
-  const [selectedFreelancer, setSelectedFreelancer] = useState<FreelancerProfile | null>(null);
-
-  const { data: freelancers = [], isLoading, error } = useFreelancerProfiles(filters);
-
-  const handleFiltersChange = (key: string, value: any) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
+  const handleSkillSelect = (skill: string) => {
+    setSelectedSkills((prevSkills) =>
+      prevSkills.includes(skill)
+        ? prevSkills.filter((s) => s !== skill)
+        : [...prevSkills, skill]
+    );
   };
 
-  const handleClearFilters = () => {
-    setFilters({
-      search: "",
-      skills: [],
-      minRate: 0,
-      maxRate: 200,
-      location: "",
-    });
+  const handleRateChange = (value: number[]) => {
+    setMinRate(value[0]);
+    setMaxRate(value[1]);
   };
 
-  const handleContact = (freelancerId: string) => {
-    console.log('Contact freelancer:', freelancerId);
-    // TODO: Implement messaging system
-  };
+  const availableSkills = [
+    "Web Development",
+    "Mobile Development",
+    "UI/UX Design",
+    "Digital Marketing",
+    "Content Writing",
+    "Data Analysis",
+  ];
 
-  const handleViewProfile = (freelancer: FreelancerProfile) => {
-    setSelectedFreelancer(freelancer);
-    console.log('View profile:', freelancer);
-    // TODO: Implement profile modal or navigation
-  };
-
-  const hasActiveFilters = Object.values(filters).some(value => 
-    Array.isArray(value) ? value.length > 0 : value !== "" && value !== 0 && value !== 200
+  const filteredFreelancers = freelancers.filter((freelancer) =>
+    freelancer.user.full_name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   if (error) {
@@ -76,95 +72,90 @@ const Freelancers = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      
+
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-4xl font-bold mb-4">Find Talented Freelancers</h1>
-              <p className="text-xl text-muted-foreground">
-                Connect with skilled professionals ready to bring your projects to life
-              </p>
-            </div>
-            <Button className="flex items-center gap-2">
-              <Plus className="h-4 w-4" />
-              Join as Freelancer
-            </Button>
-          </div>
+          <h1 className="text-4xl font-bold mb-4">Find Top Freelancers</h1>
+          <p className="text-xl text-muted-foreground">
+            Connect with talented freelancers in Tunisia
+          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Filters Sidebar */}
           <div className="lg:col-span-1">
             <Card>
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="flex items-center gap-2">
-                    <Filter className="h-5 w-5" />
-                    Filters
-                  </CardTitle>
-                  {hasActiveFilters && (
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      onClick={handleClearFilters}
-                      className="text-muted-foreground hover:text-foreground"
-                    >
-                      <X className="h-4 w-4 mr-1" />
-                      Clear
-                    </Button>
-                  )}
-                </div>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Filter className="h-4 w-4" />
+                  Filters
+                </CardTitle>
               </CardHeader>
-
-              <CardContent className="space-y-6">
-                {/* Search */}
-                <div className="space-y-2">
-                  <Label htmlFor="search">Search Freelancers</Label>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label htmlFor="search">Search</Label>
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <Input
+                      type="search"
                       id="search"
-                      placeholder="Name, skills, title..."
-                      value={filters.search}
-                      onChange={(e) => handleFiltersChange('search', e.target.value)}
-                      className="pl-10"
+                      placeholder="Search by name"
+                      className="pl-9"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                     />
                   </div>
                 </div>
 
-                {/* Location */}
-                <div className="space-y-2">
+                <div>
                   <Label htmlFor="location">Location</Label>
-                  <Input
-                    id="location"
-                    placeholder="City, region..."
-                    value={filters.location}
-                    onChange={(e) => handleFiltersChange('location', e.target.value)}
+                  <div className="relative">
+                    <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      type="search"
+                      id="location"
+                      placeholder="Filter by location"
+                      className="pl-9"
+                      value={locationFilter}
+                      onChange={(e) => setLocationFilter(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <Label>Hourly Rate (TND)</Label>
+                  <div className="flex items-center justify-between text-sm text-muted-foreground">
+                    <span>{minRate}</span>
+                    <span>{maxRate}</span>
+                  </div>
+                  <Slider
+                    defaultValue={[minRate, maxRate]}
+                    min={0}
+                    max={100}
+                    step={10}
+                    onValueChange={handleRateChange}
                   />
                 </div>
 
-                {/* Hourly Rate Range */}
-                <div className="space-y-3">
-                  <Label>Hourly Rate (TND)</Label>
-                  <div className="px-2">
-                    <Slider
-                      value={[filters.minRate, filters.maxRate]}
-                      onValueChange={(value) => {
-                        handleFiltersChange('minRate', value[0]);
-                        handleFiltersChange('maxRate', value[1]);
-                      }}
-                      max={200}
-                      min={0}
-                      step={5}
-                      className="w-full"
-                    />
-                    <div className="flex justify-between text-sm text-muted-foreground mt-1">
-                      <span>{filters.minRate} TND</span>
-                      <span>{filters.maxRate} TND</span>
-                    </div>
+                <div>
+                  <Label>Skills</Label>
+                  <div className="flex flex-wrap gap-2">
+                    {availableSkills.map((skill) => (
+                      <Badge
+                        key={skill}
+                        variant={selectedSkills.includes(skill) ? "default" : "outline"}
+                        onClick={() => handleSkillSelect(skill)}
+                        className="cursor-pointer"
+                      >
+                        {skill}
+                      </Badge>
+                    ))}
                   </div>
                 </div>
+
+                <Button variant="secondary" className="w-full">
+                  Clear Filters
+                </Button>
               </CardContent>
             </Card>
           </div>
@@ -173,9 +164,11 @@ const Freelancers = () => {
           <div className="lg:col-span-3">
             <Card>
               <CardHeader>
-                <CardTitle>
-                  Available Freelancers ({freelancers.length})
-                </CardTitle>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="flex items-center gap-2">
+                    Freelancers Available ({filteredFreelancers.length})
+                  </CardTitle>
+                </div>
               </CardHeader>
               <CardContent>
                 {isLoading ? (
@@ -183,7 +176,7 @@ const Freelancers = () => {
                     <Loader2 className="h-8 w-8 animate-spin" />
                     <span className="ml-2">Loading freelancers...</span>
                   </div>
-                ) : freelancers.length === 0 ? (
+                ) : filteredFreelancers.length === 0 ? (
                   <div className="text-center py-8">
                     <p className="text-muted-foreground">
                       No freelancers found matching your criteria.
@@ -191,13 +184,8 @@ const Freelancers = () => {
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {freelancers.map((freelancer) => (
-                      <FreelancerCard
-                        key={freelancer.id}
-                        freelancer={freelancer}
-                        onContact={handleContact}
-                        onViewProfile={handleViewProfile}
-                      />
+                    {filteredFreelancers.map((freelancer) => (
+                      <FreelancerCard key={freelancer.id} freelancer={freelancer} />
                     ))}
                   </div>
                 )}
@@ -213,3 +201,12 @@ const Freelancers = () => {
 };
 
 export default Freelancers;
+
+const Label = ({ htmlFor, children }: { htmlFor: string; children: React.ReactNode }) => (
+  <label
+    htmlFor={htmlFor}
+    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+  >
+    {children}
+  </label>
+);

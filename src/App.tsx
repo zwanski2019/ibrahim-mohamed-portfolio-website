@@ -1,6 +1,7 @@
+
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider } from "@/context/ThemeContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { CookiePreferencesProvider } from "@/context/CookiePreferencesContext";
