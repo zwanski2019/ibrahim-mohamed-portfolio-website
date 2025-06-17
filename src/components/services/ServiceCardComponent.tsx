@@ -19,7 +19,7 @@ interface ServiceCardProps {
 }
 
 const ServiceCardComponent = ({ service, index }: ServiceCardProps) => {
-  const { language } = useLanguage();
+  const { t } = useLanguage();
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -83,7 +83,7 @@ const ServiceCardComponent = ({ service, index }: ServiceCardProps) => {
             size="sm" 
             className="flex-1 group/btn hover:bg-orange-500/20 text-slate-300 hover:text-orange-300 border border-slate-600 hover:border-orange-500/60 transition-all duration-300"
           >
-            {language === 'en' ? 'Learn More' : language === 'fr' ? 'En Savoir Plus' : 'اعرف المزيد'}
+            {t("services.learnMore")}
             <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
           </Button>
           <Button 

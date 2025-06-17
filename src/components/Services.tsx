@@ -8,7 +8,7 @@ import ServiceCardComponent from "./services/ServiceCardComponent";
 import { getServicesData } from "@/utils/serviceData";
 
 const Services = () => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const currentServices = getServicesData(language);
 
   return (
@@ -25,7 +25,7 @@ const Services = () => {
 
         <div className="text-center mt-16 animate-on-scroll">
           <Button size="lg" className="h-14 px-8 bg-orange-500 hover:bg-orange-600 text-white">
-            {language === 'en' ? 'Get Started Today' : language === 'fr' ? 'Commencer Aujourd\'hui' : 'ابدأ اليوم'}
+            {t("services.getStartedToday")}
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
         </div>

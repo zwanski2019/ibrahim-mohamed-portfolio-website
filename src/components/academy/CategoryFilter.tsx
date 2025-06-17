@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import * as Icons from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface Category {
   id: string;
@@ -17,6 +18,8 @@ interface CategoryFilterProps {
 }
 
 const CategoryFilter = ({ categories, selectedCategory, onCategoryChange }: CategoryFilterProps) => {
+  const { t } = useLanguage();
+  
   const getIcon = (iconName: string) => {
     const IconComponent = (Icons as any)[iconName] || Icons.BookOpen;
     return IconComponent;
@@ -24,7 +27,7 @@ const CategoryFilter = ({ categories, selectedCategory, onCategoryChange }: Cate
 
   return (
     <div className="mb-12">
-      <h3 className="text-2xl font-semibold mb-6 text-center">Browse by Category</h3>
+      <h3 className="text-2xl font-semibold mb-6 text-center">{t("academy.browseByCategoryTitle")}</h3>
       <div className="flex flex-wrap gap-3 justify-center">
         <Button
           variant={selectedCategory === "all" ? "default" : "outline"}
@@ -32,7 +35,7 @@ const CategoryFilter = ({ categories, selectedCategory, onCategoryChange }: Cate
           className="flex items-center gap-2"
         >
           <Icons.Grid3X3 className="h-4 w-4" />
-          All Categories
+          {t("academy.allCategories")}
         </Button>
         
         {categories.map((category) => {

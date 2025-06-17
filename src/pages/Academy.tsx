@@ -10,12 +10,14 @@ import CourseGrid from "@/components/academy/CourseGrid";
 import CategoryFilter from "@/components/academy/CategoryFilter";
 import { SearchBar } from "@/components/SearchBar";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/context/LanguageContext";
 
 const Academy = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [difficulty, setDifficulty] = useState<string>("all");
   const { user } = useAuth();
+  const { t } = useLanguage();
 
   const { data: categories } = useQuery({
     queryKey: ['academy-categories'],
@@ -93,7 +95,7 @@ const Academy = () => {
               <div className="mb-8 space-y-4">
                 <div className="max-w-2xl mx-auto">
                   <SearchBar
-                    placeholder="Search courses, topics, or instructors..."
+                    placeholder={t("academy.searchPlaceholder")}
                     onSearch={setSearchQuery}
                   />
                 </div>
@@ -104,10 +106,10 @@ const Academy = () => {
                     onChange={(e) => setDifficulty(e.target.value)}
                     className="px-4 py-2 rounded-lg border border-border bg-background"
                   >
-                    <option value="all">All Levels</option>
-                    <option value="beginner">Beginner</option>
-                    <option value="intermediate">Intermediate</option>
-                    <option value="advanced">Advanced</option>
+                    <option value="all">{t("academy.allLevels")}</option>
+                    <option value="beginner">{t("academy.beginner")}</option>
+                    <option value="intermediate">{t("academy.intermediate")}</option>
+                    <option value="advanced">{t("academy.advanced")}</option>
                   </select>
                 </div>
               </div>

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import CourseCard from "./CourseCard";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface Course {
   id: string;
@@ -41,6 +42,7 @@ interface CourseGridProps {
 
 const CourseGrid = ({ courses, isLoading, userEnrollments, showFeaturedOnly = false }: CourseGridProps) => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const { t } = useLanguage();
 
   if (isLoading) {
     return (
@@ -59,9 +61,9 @@ const CourseGrid = ({ courses, isLoading, userEnrollments, showFeaturedOnly = fa
   if (!courses.length) {
     return (
       <div className="text-center py-12">
-        <h3 className="text-2xl font-semibold mb-4">No courses found</h3>
+        <h3 className="text-2xl font-semibold mb-4">{t("academy.noCoursesFound")}</h3>
         <p className="text-muted-foreground">
-          Try adjusting your search or filter criteria.
+          {t("academy.noCoursesDescription")}
         </p>
       </div>
     );
@@ -74,7 +76,7 @@ const CourseGrid = ({ courses, isLoading, userEnrollments, showFeaturedOnly = fa
       {!showFeaturedOnly && (
         <div className="flex justify-between items-center">
           <p className="text-sm text-muted-foreground">
-            Showing {courses.length} course{courses.length !== 1 ? 's' : ''}
+            {t("academy.showingCourses")} {courses.length} {courses.length !== 1 ? t("academy.coursePlural") : t("academy.course")}
           </p>
           
           <div className="flex gap-2">
@@ -86,7 +88,7 @@ const CourseGrid = ({ courses, isLoading, userEnrollments, showFeaturedOnly = fa
                   : "hover:bg-muted"
               }`}
             >
-              Grid
+              {t("academy.gridView")}
             </button>
             <button
               onClick={() => setViewMode("list")}
@@ -96,7 +98,7 @@ const CourseGrid = ({ courses, isLoading, userEnrollments, showFeaturedOnly = fa
                   : "hover:bg-muted"
               }`}
             >
-              List
+              {t("academy.listView")}
             </button>
           </div>
         </div>

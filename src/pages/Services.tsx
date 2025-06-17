@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
@@ -7,67 +8,69 @@ import ServiceRequestForm from "@/components/ServiceRequestForm";
 import IMEIChecker from "@/components/IMEIChecker";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Smartphone } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 const Services = () => {
   const [selectedService, setSelectedService] = useState<string | null>(null);
+  const { t } = useLanguage();
   
   const allServices = [
     {
       id: "web-development",
-      title: "Web Development",
-      description: "Custom website development using React, PHP, WordPress, or other technologies based on your needs.",
-      price: "From $500",
+      title: t("services.categories.webDevelopment"),
+      description: t("services.categories.webDevelopmentDesc"),
+      price: `${t("services.pricing.from")} $500`,
       icon: "Monitor" as const,
       category: "development"
     },
     {
       id: "it-support",
-      title: "IT Support",
-      description: "Technical support, troubleshooting, and maintenance for your computers, phones, and other devices.",
-      price: "$50/hour",
+      title: t("services.categories.itSupport"),
+      description: t("services.categories.itSupportDesc"),
+      price: `$50${t("services.pricing.perHour")}`,
       icon: "LifeBuoy" as const,
       category: "support"
     },
     {
       id: "wordpress",
-      title: "WordPress Development",
-      description: "Custom WordPress themes, plugins, and site optimization for better performance.",
-      price: "From $300",
+      title: t("services.categories.wordpress"),
+      description: t("services.categories.wordpressDesc"),
+      price: `${t("services.pricing.from")} $300`,
       icon: "Layout" as const,
       category: "development"
     },
     {
       id: "seo",
-      title: "SEO Optimization",
-      description: "Improve your website's search engine ranking with technical SEO and content optimization.",
-      price: "From $200",
+      title: t("services.categories.seo"),
+      description: t("services.categories.seoDesc"),
+      price: `${t("services.pricing.from")} $200`,
       icon: "Search" as const,
       category: "marketing"
     },
     {
       id: "system-security",
-      title: "System Security",
-      description: "Implementation of security measures, including Wazuh installation and security audits.",
-      price: "From $400",
+      title: t("services.categories.systemSecurity"),
+      description: t("services.categories.systemSecurityDesc"),
+      price: `${t("services.pricing.from")} $400`,
       icon: "Shield" as const,
       category: "security"
     },
     {
       id: "custom-tools",
-      title: "Custom Tools Development",
-      description: "Development of custom tools and automation scripts to optimize your workflow.",
-      price: "From $300",
+      title: t("services.categories.customTools"),
+      description: t("services.categories.customToolsDesc"),
+      price: `${t("services.pricing.from")} $300`,
       icon: "Code" as const,
       category: "development"
     }
   ];
 
   const categories = [
-    { id: "all", name: "All Services", count: allServices.length },
-    { id: "development", name: "Development", count: allServices.filter(s => s.category === "development").length },
-    { id: "support", name: "Support", count: allServices.filter(s => s.category === "support").length },
-    { id: "security", name: "Security", count: allServices.filter(s => s.category === "security").length },
-    { id: "marketing", name: "Marketing", count: allServices.filter(s => s.category === "marketing").length }
+    { id: "all", name: t("services.allServices"), count: allServices.length },
+    { id: "development", name: t("services.development"), count: allServices.filter(s => s.category === "development").length },
+    { id: "support", name: t("services.support"), count: allServices.filter(s => s.category === "support").length },
+    { id: "security", name: t("services.security"), count: allServices.filter(s => s.category === "security").length },
+    { id: "marketing", name: t("services.marketing"), count: allServices.filter(s => s.category === "marketing").length }
   ];
 
   const [activeCategory, setActiveCategory] = useState("all");
@@ -86,7 +89,7 @@ const Services = () => {
               <div className="flex items-center justify-center gap-2 mb-4">
                 <Smartphone className="h-8 w-8 text-green-600" />
                 <h2 className="text-3xl md:text-4xl font-bold">
-                  Free <span className="text-green-600">IMEI Checker</span>
+                  {t("nav.freeImeiCheck").split(" ")[0]} <span className="text-green-600">{t("nav.freeImeiCheck").split(" ").slice(1).join(" ")}</span>
                 </h2>
               </div>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -103,10 +106,10 @@ const Services = () => {
           <div className="section-container">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                Our <span className="text-gradient">Services</span>
+                {t("services.ourServices").split(" ")[0]} <span className="text-gradient">{t("services.ourServices").split(" ").slice(1).join(" ")}</span>
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Professional tech services to help your business grow and succeed in the digital world.
+                {t("services.ourServicesSubtitle")}
               </p>
             </div>
 
