@@ -129,7 +129,7 @@ export const useCourses = (filters?: {
       }
 
       if (filters?.difficulty && filters.difficulty !== "all") {
-        query = query.eq('difficulty', filters.difficulty);
+        query = query.eq('difficulty', filters.difficulty as "beginner" | "intermediate" | "advanced");
       }
 
       query = query.order('is_featured', { ascending: false })

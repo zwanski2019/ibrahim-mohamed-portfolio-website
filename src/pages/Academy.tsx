@@ -8,7 +8,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import AcademyHero from "@/components/academy/AcademyHero";
 import CourseGrid from "@/components/academy/CourseGrid";
 import CategoryFilter from "@/components/academy/CategoryFilter";
-import SearchBar from "@/components/SearchBar";
+import { SearchBar } from "@/components/SearchBar";
 import { useAuth } from "@/hooks/useAuth";
 
 const Academy = () => {
@@ -52,7 +52,7 @@ const Academy = () => {
       }
 
       if (difficulty !== "all") {
-        query = query.eq('difficulty', difficulty);
+        query = query.eq('difficulty', difficulty as "beginner" | "intermediate" | "advanced");
       }
 
       query = query.order('is_featured', { ascending: false })

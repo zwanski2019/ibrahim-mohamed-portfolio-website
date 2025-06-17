@@ -22,7 +22,12 @@ const searchData: SearchResult[] = [
   { title: "Tino-soft", type: "experience", link: "#experience" },
 ];
 
-export function SearchBar() {
+interface SearchBarProps {
+  placeholder?: string;
+  onSearch?: (query: string) => void;
+}
+
+export function SearchBar({ placeholder = "Search skills, projects...", onSearch }: SearchBarProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -47,6 +52,11 @@ export function SearchBar() {
     } else {
       setIsOpen(false);
     }
+    
+    // Call onSearch callback if provided
+    if (onSearch) {
+      onSearch(e.target.value);
+    }
   };
 
   const handleResultClick = (link: string) => {
@@ -66,7 +76,7 @@ export function SearchBar() {
           type="text"
           value={searchTerm}
           onChange={handleInputChange}
-          placeholder="Search skills, projects..."
+          placeholder={placeholder}
           className="w-full py-2 pl-10 pr-4 text-sm bg-muted border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
         />
         <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
