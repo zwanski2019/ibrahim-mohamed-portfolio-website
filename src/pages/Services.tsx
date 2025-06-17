@@ -117,7 +117,7 @@ const Services = () => {
               </div>
               
               {/* Features Section */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
                 <div className="text-center p-6 bg-card rounded-xl border animate-on-scroll">
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="text-2xl">💰</span>
@@ -138,13 +138,6 @@ const Services = () => {
                   </div>
                   <h3 className="font-bold mb-2">Money Back Guarantee</h3>
                   <p className="text-sm text-muted-foreground">Full refund if not completely satisfied</p>
-                </div>
-                <div className="text-center p-6 bg-card rounded-xl border animate-on-scroll">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl">🎯</span>
-                  </div>
-                  <h3 className="font-bold mb-2">User-Friendly</h3>
-                  <p className="text-sm text-muted-foreground">Intuitive interface for seamless experience</p>
                 </div>
               </div>
               
