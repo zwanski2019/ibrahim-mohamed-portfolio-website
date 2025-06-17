@@ -18,12 +18,12 @@ export function MoreDropdown() {
         {t("nav.more")}
       </NavigationMenuTrigger>
       <NavigationMenuContent className="left-0 top-full">
-        <div className="w-[220px] p-4 bg-background/95 backdrop-blur-lg border border-border shadow-lg rounded-md">
+        <div className="w-[220px] p-4 bg-background border border-border shadow-lg rounded-md">
           <div className="flex flex-col space-y-2">
             <NavigationMenuLink asChild>
               <Link
                 to="/newsletter"
-                className="flex items-center p-3 hover:bg-accent rounded-md transition-colors"
+                className="flex items-center p-3 hover:bg-accent rounded-md transition-colors text-foreground"
               >
                 {t("nav.newsletter")}
               </Link>
@@ -53,7 +53,7 @@ export function MoreDropdown() {
             <NavigationMenuLink asChild>
               <Link
                 to="/chat"
-                className="flex items-center gap-2 p-3 hover:bg-accent rounded-md transition-colors"
+                className="flex items-center gap-2 p-3 hover:bg-accent rounded-md transition-colors text-foreground"
               >
                 <MessageCircle className="h-4 w-4" />
                 {t("nav.liveChat")}
