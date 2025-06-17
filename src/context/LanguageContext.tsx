@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import { getInitialLanguage, isFirstVisit, detectBrowserLanguage } from '@/utils/languageDetection';
 
 export type Language = 'en' | 'fr' | 'ar' | 'ha' | 'ber';
 
@@ -6,6 +7,7 @@ interface LanguageContextProps {
   language: Language;
   setLanguage: (language: Language) => void;
   t: (key: string) => string;
+  wasAutoDetected: boolean;
 }
 
 const LanguageContext = createContext<LanguageContextProps | undefined>(undefined);
@@ -18,15 +20,26 @@ export const useLanguage = () => {
   return context;
 };
 
-const defaultLanguage: Language = (localStorage.getItem('language') as Language) || 'en';
-
 export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
-  const [language, setLanguage] = useState<Language>(defaultLanguage);
+  const [language, setLanguage] = useState<Language>(() => getInitialLanguage());
+  const [wasAutoDetected, setWasAutoDetected] = useState<boolean>(() => {
+    // Check if language was auto-detected (first visit + detected language matches current)
+    if (isFirstVisit()) {
+      const detected = detectBrowserLanguage();
+      return detected === getInitialLanguage();
+    }
+    return false;
+  });
 
   useEffect(() => {
     localStorage.setItem('language', language);
     document.documentElement.setAttribute('lang', language);
-  }, [language]);
+    
+    // Reset auto-detection flag when user manually changes language
+    if (wasAutoDetected) {
+      setWasAutoDetected(false);
+    }
+  }, [language, wasAutoDetected]);
 
   const translations = useMemo(() => ({
     en: {
@@ -414,6 +427,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
     language,
     setLanguage,
     t,
+    wasAutoDetected,
   };
 
   return (

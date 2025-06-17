@@ -8,6 +8,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { LanguageDetectionNotice } from "@/components/LanguageDetectionNotice";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
 import Jobs from "./pages/Jobs";
@@ -50,6 +51,7 @@ function App() {
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </BrowserRouter>
+                <LanguageDetectionNotice />
                 <CookieConsent />
               </TooltipProvider>
             </ThemeProvider>
