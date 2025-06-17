@@ -13,16 +13,20 @@
   <!-- Background circle with gradient -->
   <circle cx="8" cy="8" r="7.5" fill="url(#professional-gradient)" filter="url(#shadow)" stroke="#fff" stroke-width="0.5"/>
   
-  <!-- ZT Monogram -->
-  <g fill="white" font-family="Inter, sans-serif" font-weight="700" font-size="6" text-anchor="middle">
-    <!-- Z letter -->
-    <path d="M4 4.5h4v1H5.5l2.5 3H8v1H4v-1h2.5L4 5.5z" fill="white" stroke="white" stroke-width="0.1"/>
-    <!-- T letter -->
-    <path d="M9 4.5h4v1h-1.5v4h-1v-4H9z" fill="white" stroke="white" stroke-width="0.1"/>
+  <!-- Z-Tech Design -->
+  <g fill="white">
+    <!-- Large Z letter -->
+    <path d="M2 3h6v1.5H4.5L8 8.5H8v1.5H2V8.5h3.5L2 4.5V3z" stroke="white" stroke-width="0.1"/>
+    
+    <!-- TECH text -->
+    <g font-family="Inter, sans-serif" font-weight="600" font-size="2.5" text-anchor="start">
+      <text x="2.5" y="14" fill="white">TECH</text>
+    </g>
     
     <!-- Tech circuit elements -->
-    <circle cx="5" cy="11" r="0.5" fill="white" opacity="0.8"/>
-    <circle cx="11" cy="11" r="0.5" fill="white" opacity="0.8"/>
-    <line x1="5.5" y1="11" x2="10.5" y2="11" stroke="white" stroke-width="0.3" opacity="0.8"/>
+    <circle cx="12" cy="4" r="0.4" fill="white" opacity="0.9"/>
+    <circle cx="12" cy="12" r="0.4" fill="white" opacity="0.9"/>
+    <line x1="9" y1="4" x2="11.6" y2="4" stroke="white" stroke-width="0.3" opacity="0.8"/>
+    <line x1="9" y1="12" x2="11.6" y2="12" stroke="white" stroke-width="0.3" opacity="0.8"/>
   </g>
 </svg>
