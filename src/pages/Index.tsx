@@ -1,5 +1,5 @@
-
 import { useEffect } from "react";
+import AffiliateProgram from "@/components/AffiliateProgram";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import DynamicSkills from "@/components/dynamic/DynamicSkills";
@@ -72,33 +72,34 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Mohamed Ibrahim (Zwanski) | Web Developer & Full-Stack Engineer</title>
+        <title>SOS Jobs | Find Jobs & Freelancers - Professional Marketplace</title>
         <meta 
           name="description" 
-          content="Official portfolio of Mohamed Ibrahim (Zwanski) - Web Developer & Full-Stack Engineer based in Tunis, Tunisia. Specialized in WordPress, PHP, React, and UI/UX Design."
+          content="SOS Jobs - Professional job marketplace connecting employers with talented freelancers. Find your next job or hire skilled professionals."
         />
-        <meta name="author" content="Mohamed Ibrahim (Zwanski)" />
-        <meta name="keywords" content="Zwanski, Mohamed Ibrahim, Web Developer, Tunis, Tunisia, PHP, WordPress, React, Full-Stack, Portfolio" />
+        <meta name="author" content="SOS Jobs Team" />
+        <meta name="keywords" content="SOS Jobs, job marketplace, freelancers, remote work, hiring, jobs, employment" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://zwanski2019.github.io/zwanski-store/" />
-        <meta property="og:title" content="Mohamed Ibrahim (Zwanski) | Web Developer & Full-Stack Engineer" />
-        <meta property="og:description" content="Official portfolio of Mohamed Ibrahim (Zwanski) - Web Developer & Full-Stack Engineer based in Tunis, Tunisia." />
+        <meta property="og:url" content="https://zwanski.org/" />
+        <meta property="og:title" content="SOS Jobs | Find Jobs & Freelancers - Professional Marketplace" />
+        <meta property="og:description" content="Professional job marketplace connecting employers with talented freelancers." />
         <meta property="og:image" content="/og-image.png" />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://zwanski2019.github.io/zwanski-store/" />
-        <meta property="twitter:title" content="Mohamed Ibrahim (Zwanski) | Web Developer & Full-Stack Engineer" />
-        <meta property="twitter:description" content="Official portfolio of Mohamed Ibrahim (Zwanski) - Web Developer & Full-Stack Engineer based in Tunis, Tunisia." />
+        <meta property="twitter:url" content="https://zwanski.org/" />
+        <meta property="twitter:title" content="SOS Jobs | Find Jobs & Freelancers - Professional Marketplace" />
+        <meta property="twitter:description" content="Professional job marketplace connecting employers with talented freelancers." />
         <meta property="twitter:image" content="/og-image.png" />
         
         {/* Canonical link */}
-        <link rel="canonical" href="https://zwanski2019.github.io/zwanski-store/" />
+        <link rel="canonical" href="https://zwanski.org/" />
       </Helmet>
       
       <div className="flex flex-col min-h-screen">
+        <AffiliateProgram />
         <Navbar />
         <main>
           <Hero />
