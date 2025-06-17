@@ -4,25 +4,24 @@ import { useLanguage } from "@/context/LanguageContext";
 const ServiceStats = () => {
   const { t } = useLanguage();
 
-  const stats = [
-    { number: "300+", label: t("services.stats.devicesRepaired") },
-    { number: "24/7", label: t("services.stats.expertSupport") },
-    { number: "65%", label: t("services.stats.securityImprovement") },
-    { number: "100%", label: t("services.stats.moneyBackGuarantee") }
-  ];
-
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-      {stats.map((stat, index) => (
-        <div key={index} className="text-center">
-          <div className="text-3xl md:text-4xl font-bold craft-text-gradient mb-2">
-            {stat.number}
-          </div>
-          <div className="text-craft-gray-600 font-medium">
-            {stat.label}
-          </div>
-        </div>
-      ))}
+    <div className="flex flex-wrap justify-center gap-6 mb-12">
+      <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6 text-center">
+        <div className="text-3xl font-bold text-orange-400 mb-2">300+</div>
+        <div className="text-slate-300">{t("services.stats.devicesRepaired")}</div>
+      </div>
+      <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6 text-center">
+        <div className="text-3xl font-bold text-orange-400 mb-2">24/7</div>
+        <div className="text-slate-300">{t("services.stats.expertSupport")}</div>
+      </div>
+      <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6 text-center">
+        <div className="text-3xl font-bold text-orange-400 mb-2">65%</div>
+        <div className="text-slate-300">{t("services.stats.securityImprovement")}</div>
+      </div>
+      <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6 text-center">
+        <div className="text-3xl font-bold text-orange-400 mb-2">100%</div>
+        <div className="text-slate-300">{t("services.stats.moneyBackGuarantee")}</div>
+      </div>
     </div>
   );
 };

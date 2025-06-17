@@ -29,20 +29,20 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        "sticky top-0 left-0 right-0 z-50 transition-all duration-300",
+        "sticky top-0 left-0 right-0 z-50 transition-all duration-200 border-b",
         scrolled
-          ? "py-2 craft-nav-blur shadow-craft"
-          : "py-4 bg-white/95 backdrop-blur-sm"
+          ? "py-2 bg-background/95 backdrop-blur-lg shadow-md"
+          : "py-3 bg-background"
       )}
     >
-      <div className="craft-container">
+      <div className="container mx-auto px-4 lg:px-8">
         <nav className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
             <Link
               to="/"
-              className="text-2xl font-bold font-inter text-craft-gray-900 hover:text-craft-mint transition-colors duration-200"
-              aria-label="ZWANSKI TECH - Digital Solutions"
+              className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors"
+              aria-label="ZWANSKI TECH - Job Marketplace"
             >
               ZWANSKI TECH
             </Link>

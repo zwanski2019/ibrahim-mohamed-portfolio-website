@@ -11,9 +11,6 @@ import EnhancedContact from "@/components/EnhancedContact";
 import Footer from "@/components/Footer";
 import AcademyHero from "@/components/academy/AcademyHero";
 import CourseGrid from "@/components/academy/CourseGrid";
-import FAQ from "@/components/sections/FAQ";
-import Testimonials from "@/components/sections/Testimonials";
-import NewsletterCTA from "@/components/sections/NewsletterCTA";
 import { Helmet } from "react-helmet-async";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -207,9 +204,6 @@ const Index = () => {
             </div>
           </section>
           
-          <Testimonials />
-          <FAQ />
-          <NewsletterCTA />
           <Playground />
           <EnhancedContact />
         </main>
