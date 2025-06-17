@@ -1,6 +1,6 @@
 
 import { useQuery } from "@tanstack/react-query";
-import { youtubeService } from "@/services/youtubeService";
+import { youtubeService, YouTubeVideo } from "@/services/youtubeService";
 import { fallbackVideos } from "@/data/fallbackVideos";
 import VideoStatusControls from "./youtube/VideoStatusControls";
 import VideoErrorAlert from "./youtube/VideoErrorAlert";
@@ -34,6 +34,10 @@ export default function YouTubeVideos() {
   const handleClearCache = () => {
     youtubeService.clearCache();
     refetch();
+  };
+
+  const handleVideoClick = (video: YouTubeVideo) => {
+    window.open(video.url, '_blank', 'noopener,noreferrer');
   };
 
   if (isLoading) {
@@ -91,7 +95,11 @@ export default function YouTubeVideos() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {videos.map((video) => (
-            <VideoCard key={video.id} video={video} />
+            <VideoCard 
+              key={video.id} 
+              video={video} 
+              onVideoClick={handleVideoClick}
+            />
           ))}
         </div>
       </div>

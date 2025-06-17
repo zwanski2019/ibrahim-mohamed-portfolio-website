@@ -1,4 +1,3 @@
-
 // Enhanced YouTube API service with better error handling and caching
 const YOUTUBE_API_KEY = 'AIzaSyAWgvpdwH4pKPlakAPTp9aRY2YYbAcViE0';
 const YOUTUBE_API_BASE_URL = 'https://www.googleapis.com/youtube/v3';
@@ -257,3 +256,25 @@ export function clearVideoCache(): void {
   localStorage.removeItem(CACHE_KEY);
   console.log('YouTube videos cache cleared');
 }
+
+export const youtubeService = {
+  getVideos: async (): Promise<YouTubeVideo[]> => {
+    const result = await fetchYouTubeVideos();
+    return result.videos;
+  },
+  
+  getLastFetchTime: (): number | undefined => {
+    try {
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (!cached) return undefined;
+      const data: CachedData = JSON.parse(cached);
+      return data.timestamp;
+    } catch (error) {
+      return undefined;
+    }
+  },
+  
+  clearCache: (): void => {
+    clearVideoCache();
+  }
+};
