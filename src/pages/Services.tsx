@@ -58,30 +58,6 @@ const Services = () => {
       price: "From $300",
       icon: "Code" as const,
       category: "development"
-    },
-    {
-      id: "imei-frp-remote",
-      title: "IMEI, FRP & Remote",
-      description: "Unlock devices, bypass FRP, and utilize remote tools with our fast, secure, and reliable delivery system.",
-      price: "Contact Us",
-      icon: "Shield" as const,
-      category: "mobile"
-    },
-    {
-      id: "server-cards-games",
-      title: "Server, Cards & Games",
-      description: "Gain access to a wide array of servers, digital credits, and essential tools for various online services and gaming.",
-      price: "Variable",
-      icon: "Shield" as const,
-      category: "digital"
-    },
-    {
-      id: "expert-support",
-      title: "Expert Support",
-      description: "Our dedicated professionals provide expert support to ensure your operations run smoothly and efficiently at all times.",
-      price: "24/7 Available",
-      icon: "Shield" as const,
-      category: "support"
     }
   ];
 
@@ -90,8 +66,7 @@ const Services = () => {
     { id: "development", name: "Development", count: allServices.filter(s => s.category === "development").length },
     { id: "support", name: "Support", count: allServices.filter(s => s.category === "support").length },
     { id: "security", name: "Security", count: allServices.filter(s => s.category === "security").length },
-    { id: "mobile", name: "Mobile", count: allServices.filter(s => s.category === "mobile").length },
-    { id: "digital", name: "Digital", count: allServices.filter(s => s.category === "digital").length }
+    { id: "marketing", name: "Marketing", count: allServices.filter(s => s.category === "marketing").length }
   ];
 
   const [activeCategory, setActiveCategory] = useState("all");

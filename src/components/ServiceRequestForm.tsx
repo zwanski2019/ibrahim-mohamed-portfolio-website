@@ -133,6 +133,7 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
               <option value="$500 - $1000">$500 - $1000</option>
               <option value="$1000 - $2000">$1000 - $2000</option>
               <option value="> $2000">More than $2000</option>
+              <option value="Contact for pricing">Contact for pricing</option>
             </select>
           </div>
         </div>
@@ -156,6 +157,9 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
             <option value="SEO Optimization">SEO Optimization</option>
             <option value="System Security">System Security</option>
             <option value="Custom Tools Development">Custom Tools Development</option>
+            <option value="IMEI, FRP & Remote">IMEI, FRP & Remote</option>
+            <option value="Server, Cards & Games">Server, Cards & Games</option>
+            <option value="Expert Support">Expert Support</option>
             <option value="Other">Other (please specify in message)</option>
           </select>
         </div>
