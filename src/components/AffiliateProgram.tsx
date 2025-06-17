@@ -20,6 +20,15 @@ export default function AffiliateProgram() {
           
           <div className="flex items-center gap-3 flex-wrap justify-center">
             <a 
+              href="https://amzn.to/3YourAmazonAffiliateLink" 
+              target="_blank" 
+              rel="noopener noreferrer sponsored"
+              className="text-xs sm:text-sm px-3 py-1 bg-primary/20 text-primary rounded-md hover:bg-primary/30 transition-colors border border-primary/30 flex items-center gap-1"
+            >
+              Shop Amazon <ExternalLink size={12} />
+            </a>
+            
+            <a 
               href="https://kwork.com?ref=15601385" 
               target="_blank" 
               rel="noopener noreferrer sponsored"
