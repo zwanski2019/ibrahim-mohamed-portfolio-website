@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { useAuth } from "@/context/AuthContext";
@@ -18,7 +17,16 @@ const Chat = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   
-  const { messages, isConnected, isConnecting, connect, disconnect, sendMessage } = useWebSocket({
+  const { 
+    messages, 
+    isConnected, 
+    isConnecting, 
+    connectionError,
+    connect, 
+    disconnect, 
+    sendMessage,
+    retryConnection
+  } = useWebSocket({
     username: user?.username,
     avatar: user?.avatar
   });
@@ -45,15 +53,15 @@ const Chat = () => {
           title: "Connected",
           description: "You're now connected to the chat",
         });
-      } else if (!isConnecting) {
+      } else if (connectionError && !isConnecting) {
         toast({
-          title: "Disconnected",
-          description: "Connection to chat lost. Attempting to reconnect...",
+          title: "Connection Error",
+          description: connectionError,
           variant: "destructive",
         });
       }
     }
-  }, [isConnected, isConnecting, isAuthenticated, user?.username, toast]);
+  }, [isConnected, isConnecting, connectionError, isAuthenticated, user?.username, toast]);
 
   // Send a new message
   const handleSendMessage = (e: React.FormEvent) => {
@@ -89,7 +97,7 @@ const Chat = () => {
 
   const handleRetryConnection = () => {
     if (isAuthenticated && user?.username && !isConnecting) {
-      connect();
+      retryConnection()
     }
   };
 
@@ -122,7 +130,9 @@ const Chat = () => {
                 ) : (
                   <div className="flex items-center gap-2 text-red-500">
                     <WifiOff className="h-4 w-4" />
-                    <span className="text-sm">Disconnected</span>
+                    <span className="text-sm">
+                      {connectionError || "Disconnected"}
+                    </span>
                     {isAuthenticated && (
                       <Button
                         variant="ghost"
@@ -156,12 +166,30 @@ const Chat = () => {
           ) : (
             <div className="flex flex-col h-[600px]">
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                {connectionError && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                    <div className="flex items-center gap-2 text-red-800">
+                      <AlertCircle className="h-4 w-4" />
+                      <span className="font-medium">Connection Error</span>
+                    </div>
+                    <p className="text-red-700 text-sm mt-1">{connectionError}</p>
+                    <Button
+                      onClick={handleRetryConnection}
+                      size="sm"
+                      className="mt-2"
+                      disabled={isConnecting}
+                    >
+                      {isConnecting ? "Retrying..." : "Retry Connection"}
+                    </Button>
+                  </div>
+                )}
+                
                 {messages.length === 0 ? (
                   <div className="text-center text-muted-foreground py-8">
                     <Sparkles className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>Welcome to the live chat!</p>
                     <p className="text-sm">Start a conversation with other users.</p>
-                    {!isConnected && (
+                    {!isConnected && !connectionError && (
                       <p className="text-sm text-yellow-600 mt-2">
                         Waiting for connection...
                       </p>
@@ -196,7 +224,9 @@ const Chat = () => {
                       ? "Connecting..." 
                       : isConnected 
                         ? "Type your message..." 
-                        : "Disconnected - check connection"
+                        : connectionError
+                          ? "Connection error - check above"
+                          : "Disconnected - check connection"
                   }
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}

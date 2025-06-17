@@ -1,1 +1,5 @@
+
 project_id = "ceihcnfngpmrtqunhaey"
+
+[functions.websocket-chat]
+verify_jwt = false
