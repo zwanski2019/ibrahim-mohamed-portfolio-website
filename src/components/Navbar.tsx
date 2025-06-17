@@ -1,24 +1,12 @@
-import {useState, useEffect} from "react";
-import { Menu, X, ChevronDown, Briefcase, MessageCircle, Search, MessageSquare } from "lucide-react";
-import { ThemeToggle } from "./ThemeToggle";
-import { SearchBar } from "./SearchBar";
-import { LanguageSelector } from "./LanguageSelector";
-import { useLanguage } from "@/context/LanguageContext";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/context/LanguageContext";
+import { DesktopNavigation } from "./navbar/DesktopNavigation";
+import { MobileNavigation } from "./navbar/MobileNavigation";
+import { cn } from "@/lib/utils";
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { t } = useLanguage();
 
@@ -37,13 +25,6 @@ export default function Navbar() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  const mainNavigation = [
-    { name: "Find Jobs", href: "/jobs", icon: Briefcase },
-    { name: "Find Freelancers", href: "/freelancers", icon: Search },
-    { name: "Services", href: "/services", icon: null },
-    { name: "Academy", href: "/academy", icon: null },
-  ];
 
   return (
     <header
@@ -67,175 +48,9 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-6">
-            <div className="mr-4">
-              <SearchBar />
-            </div>
-            
-            <NavigationMenu>
-              <NavigationMenuList className="space-x-2">
-                {mainNavigation.map((item) => (
-                  <NavigationMenuItem key={item.name}>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        to={item.href}
-                        className={cn(
-                          navigationMenuTriggerStyle(),
-                          "bg-transparent hover:bg-accent/50 px-4 py-2 flex items-center gap-2"
-                        )}
-                      >
-                        {item.icon && <item.icon className="h-4 w-4" />}
-                        {item.name}
-                      </Link>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                ))}
-                
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="bg-transparent hover:bg-accent/50">
-                    More
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent className="left-0 top-full">
-                    <div className="w-[220px] p-4 bg-background/95 backdrop-blur-lg border border-border shadow-lg rounded-md">
-                      <div className="flex flex-col space-y-2">
-                        <NavigationMenuLink asChild>
-                          <Link
-                            to="/newsletter"
-                            className="flex items-center p-3 hover:bg-accent rounded-md transition-colors"
-                          >
-                            Newsletter
-                          </Link>
-                        </NavigationMenuLink>
-                        
-                        <NavigationMenuLink asChild>
-                          <Link
-                            to="/imei-check"
-                            className="flex items-center p-3 hover:bg-accent rounded-md transition-colors text-green-600 hover:text-green-700"
-                          >
-                            Free IMEI Check
-                          </Link>
-                        </NavigationMenuLink>
-                        
-                        <NavigationMenuLink asChild>
-                          <a
-                            href="https://t.me/zwanski_tech"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 p-3 hover:bg-accent rounded-md transition-colors text-blue-600 hover:text-blue-700"
-                          >
-                            <MessageSquare className="h-4 w-4" />
-                            Join Telegram
-                          </a>
-                        </NavigationMenuLink>
-                        
-                        <NavigationMenuLink asChild>
-                          <Link
-                            to="/chat"
-                            className="flex items-center gap-2 p-3 hover:bg-accent rounded-md transition-colors"
-                          >
-                            <MessageCircle className="h-4 w-4" />
-                            Live Chat
-                          </Link>
-                        </NavigationMenuLink>
-                      </div>
-                    </div>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-            
-            <div className="flex items-center space-x-2 ml-4">
-              <Button variant="outline" size="sm" asChild>
-                <Link to="/post-job">Post a Job</Link>
-              </Button>
-              <LanguageSelector />
-              <ThemeToggle />
-            </div>
-          </div>
-
-          {/* Mobile Navigation */}
-          <div className="flex items-center lg:hidden">
-            <LanguageSelector />
-            <ThemeToggle />
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="ml-2 p-2 rounded-md hover:bg-accent"
-              aria-label="Toggle Menu"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+          <DesktopNavigation />
+          <MobileNavigation />
         </nav>
-
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div className="lg:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-background/95 backdrop-blur-lg shadow-lg border-t">
-              <div className="px-3 py-2">
-                <SearchBar />
-              </div>
-              
-              {mainNavigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="flex items-center gap-2 px-3 py-2 text-base font-medium hover:bg-accent rounded-md transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.icon && <item.icon className="h-4 w-4" />}
-                  {item.name}
-                </Link>
-              ))}
-              
-              <hr className="border-border my-2" />
-              
-              <Link
-                to="/post-job"
-                className="block px-3 py-2 text-base font-medium hover:bg-accent rounded-md transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                Post a Job
-              </Link>
-
-              <Link
-                to="/newsletter"
-                className="block px-3 py-2 text-base font-medium hover:bg-accent rounded-md transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                Newsletter
-              </Link>
-              
-              <Link
-                to="/imei-check"
-                className="block px-3 py-2 text-base font-medium hover:bg-accent rounded-md transition-colors text-green-600"
-                onClick={() => setIsOpen(false)}
-              >
-                Free IMEI Check
-              </Link>
-              
-              <a
-                href="https://t.me/zwanski_tech"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-3 py-2 text-base font-medium hover:bg-accent rounded-md transition-colors text-blue-600"
-                onClick={() => setIsOpen(false)}
-              >
-                <MessageSquare className="h-4 w-4" />
-                Join Telegram
-              </a>
-              
-              <Link
-                to="/chat"
-                className="flex items-center gap-2 px-3 py-2 text-base font-medium hover:bg-accent rounded-md transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                <MessageCircle className="h-4 w-4" />
-                Live Chat
-              </Link>
-            </div>
-          </div>
-        )}
       </div>
     </header>
   );
