@@ -24,14 +24,14 @@ export function MoreDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent 
-        className="w-[220px] bg-popover border border-border shadow-xl" 
-        align="start"
+        className="w-[220px] bg-background border border-border shadow-xl z-50" 
+        align="end"
         sideOffset={4}
       >
         <DropdownMenuItem asChild>
           <Link
             to="/newsletter"
-            className="flex items-center p-3 hover:bg-accent rounded-md transition-colors text-popover-foreground hover:text-accent-foreground cursor-pointer"
+            className="flex items-center hover:bg-accent rounded-md transition-colors text-foreground hover:text-accent-foreground cursor-pointer"
           >
             {t("nav.newsletter")}
           </Link>
@@ -40,7 +40,7 @@ export function MoreDropdown() {
         <DropdownMenuItem asChild>
           <Link
             to="/imei-check"
-            className="flex items-center p-3 hover:bg-accent rounded-md transition-colors text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300 cursor-pointer"
+            className="flex items-center hover:bg-accent rounded-md transition-colors text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300 cursor-pointer"
           >
             {t("nav.freeImeiCheck")}
           </Link>
@@ -51,7 +51,7 @@ export function MoreDropdown() {
             href="https://t.me/zwanski_tech"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 p-3 hover:bg-accent rounded-md transition-colors text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 cursor-pointer"
+            className="flex items-center gap-2 hover:bg-accent rounded-md transition-colors text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 cursor-pointer"
           >
             <MessageSquare className="h-4 w-4" />
             {t("nav.joinTelegram")}
@@ -61,7 +61,7 @@ export function MoreDropdown() {
         <DropdownMenuItem asChild>
           <Link
             to="/chat"
-            className="flex items-center gap-2 p-3 hover:bg-accent rounded-md transition-colors text-popover-foreground hover:text-accent-foreground cursor-pointer"
+            className="flex items-center gap-2 hover:bg-accent rounded-md transition-colors text-foreground hover:text-accent-foreground cursor-pointer"
           >
             <MessageCircle className="h-4 w-4" />
             {t("nav.liveChat")}
