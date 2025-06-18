@@ -28,25 +28,25 @@
   }
 
   .dark {
-    --background: 15 23 42;
-    --foreground: 248 250 252;
-    --card: 30 41 59;
-    --card-foreground: 248 250 252;
-    --popover: 30 41 59;
-    --popover-foreground: 248 250 252;
-    --primary: 59 130 246;
-    --primary-foreground: 15 23 42;
-    --secondary: 51 65 85;
-    --secondary-foreground: 248 250 252;
-    --muted: 51 65 85;
-    --muted-foreground: 148 163 184;
-    --accent: 51 65 85;
-    --accent-foreground: 248 250 252;
-    --destructive: 239 68 68;
-    --destructive-foreground: 248 250 252;
-    --border: 51 65 85;
-    --input: 51 65 85;
-    --ring: 59 130 246;
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
   }
 }
 
@@ -56,127 +56,72 @@
     box-sizing: border-box;
   }
   
-  html {
-    font-feature-settings: "cv11", "ss01";
-    font-variation-settings: "opsz" 32;
-    scroll-behavior: smooth;
-  }
-  
   body {
-    @apply bg-background text-foreground font-body antialiased;
+    @apply bg-background text-foreground font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    line-height: 1.6;
   }
   
-  /* Professional Typography System */
-  .text-display-2xl {
-    @apply font-display text-display-2xl font-bold leading-tight tracking-tight;
+  /* Enhanced Typography System */
+  .text-display-1 {
+    @apply font-display text-6xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight;
   }
   
-  .text-display-xl {
-    @apply font-display text-display-xl font-bold leading-tight tracking-tight;
+  .text-display-2 {
+    @apply font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight;
   }
   
-  .text-display-lg {
-    @apply font-display text-display-lg font-bold leading-tight tracking-tight;
-  }
-  
-  .text-display-md {
-    @apply font-display text-display-md font-semibold leading-tight;
-  }
-  
-  .text-display-sm {
-    @apply font-display text-display-sm font-semibold leading-tight;
-  }
-  
-  .text-display-xs {
-    @apply font-display text-display-xs font-semibold leading-tight;
+  .text-display-3 {
+    @apply font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight;
   }
   
   .text-heading-1 {
-    @apply font-heading text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight tracking-tight;
+    @apply font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight;
   }
   
   .text-heading-2 {
-    @apply font-heading text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight tracking-tight;
+    @apply font-display text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight;
   }
   
   .text-heading-3 {
-    @apply font-heading text-xl md:text-2xl lg:text-3xl font-medium leading-snug tracking-tight;
+    @apply font-display text-xl md:text-2xl lg:text-3xl font-medium leading-snug;
   }
   
-  .text-heading-4 {
-    @apply font-heading text-lg md:text-xl lg:text-2xl font-medium leading-snug;
-  }
-  
-  .text-body-xl {
-    @apply font-body text-xl leading-relaxed;
-  }
-  
-  .text-body-lg {
-    @apply font-body text-lg leading-relaxed;
+  .text-body-large {
+    @apply text-lg md:text-xl leading-relaxed;
   }
   
   .text-body {
-    @apply font-body text-base leading-relaxed;
+    @apply text-base leading-relaxed;
   }
   
-  .text-body-sm {
-    @apply font-body text-sm leading-relaxed;
+  .text-body-small {
+    @apply text-sm leading-relaxed;
   }
   
-  .text-body-xs {
-    @apply font-body text-xs leading-relaxed;
-  }
-  
-  /* Enhanced Typography Hierarchy */
+  /* Improved responsive typography */
   h1 {
-    @apply text-display-lg text-slate-50 font-bold;
+    @apply text-display-2;
   }
-  
   h2 {
-    @apply text-heading-1 text-slate-100 font-semibold;
+    @apply text-heading-1;
   }
-  
   h3 {
-    @apply text-heading-2 text-slate-100 font-semibold;
+    @apply text-heading-2;
   }
-  
   h4 {
-    @apply text-heading-3 text-slate-200 font-medium;
-  }
-  
-  h5 {
-    @apply text-heading-4 text-slate-200 font-medium;
-  }
-  
-  h6 {
-    @apply text-lg text-slate-300 font-medium;
+    @apply text-heading-3;
   }
   
   p {
-    @apply text-body text-slate-300;
+    @apply text-body;
   }
   
-  /* Professional Link Styling */
-  a {
-    @apply transition-colors duration-200;
-  }
-  
-  a:hover {
-    @apply text-brand-400;
-  }
-  
-  /* Enhanced Form Elements */
+  /* Improved form input for better mobile experience */
   input, select, textarea {
-    @apply text-base md:text-sm w-full focus:outline-none transition-all duration-200 bg-surface-800 border-surface-700 text-slate-200 placeholder:text-slate-400;
-  }
-  
-  input:focus, select:focus, textarea:focus {
-    @apply border-brand-500 ring-2 ring-brand-500/20;
+    @apply text-base md:text-sm w-full focus:outline-none transition-all duration-200;
   }
 
   img {
@@ -184,76 +129,55 @@
     height: auto;
   }
   
-  /* Professional Scrollbar */
+  /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
   }
   
   ::-webkit-scrollbar-track {
-    @apply bg-surface-900;
+    @apply bg-muted/20;
   }
   
   ::-webkit-scrollbar-thumb {
-    @apply bg-surface-600 rounded-full;
+    @apply bg-muted-foreground/30 rounded-full;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-surface-500;
-  }
-  
-  /* Enhanced Code Styling */
-  code {
-    @apply font-mono text-sm bg-surface-800 px-1.5 py-0.5 rounded text-brand-400;
-  }
-  
-  pre {
-    @apply font-mono text-sm bg-surface-900 p-4 rounded-lg overflow-x-auto;
-  }
-  
-  pre code {
-    @apply bg-transparent p-0;
+    @apply bg-muted-foreground/50;
   }
 }
 
-/* Enhanced Responsive Typography */
+/* Enhanced responsive typography */
 @media (max-width: 640px) {
-  .text-display-2xl {
+  .text-display-1 {
     @apply text-5xl;
   }
   
-  .text-display-xl {
+  .text-display-2 {
     @apply text-4xl;
   }
   
-  .text-display-lg {
-    @apply text-3xl;
-  }
-  
   .hero-title {
-    @apply text-4xl md:text-6xl lg:text-7xl;
+    @apply text-4xl md:text-6xl lg:text-8xl;
   }
 }
 
-/* Enhanced Accessibility */
+/* Enhanced accessibility */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
-  html {
-    scroll-behavior: auto;
-  }
 }
 
-/* Professional Focus Indicators */
+/* Focus indicators */
 .focus-ring:focus-visible {
-  outline: 2px solid theme('colors.brand.500');
+  outline: 2px solid theme('colors.blue.500');
   outline-offset: 2px;
 }
 
-/* Performance Optimizations */
+/* Performance optimizations */
 .will-change-transform {
   will-change: transform;
 }
@@ -262,28 +186,11 @@
   will-change: opacity;
 }
 
-/* Professional Selection Styling */
+/* Selection styling */
 ::selection {
-  @apply bg-brand-500/30 text-brand-100;
+  @apply bg-brand-500/20 text-brand-900;
 }
 
 .dark ::selection {
-  @apply bg-brand-400/30 text-brand-50;
-}
-
-/* Enhanced Loading States */
-.loading-shimmer {
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.04),
-    transparent
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-/* Professional Button Reset */
-button {
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  @apply bg-brand-400/30 text-brand-100;
 }

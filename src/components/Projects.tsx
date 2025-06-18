@@ -50,52 +50,46 @@ const projects: Project[] = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
-      {/* Enhanced Background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(59,130,246,0.1),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(34,197,94,0.1),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px]" />
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-blue-400 via-emerald-400 to-blue-400 bg-clip-text text-transparent">
-            My <span className="text-gradient">Projects</span>
-          </h2>
-          
-          <p className="text-2xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
-            A showcase of my recent work, highlighting my skills in web development, application design, and problem-solving.
-          </p>
-        </div>
+    <section id="projects" className="py-20">
+      <div className="section-container">
+        <h2 className="section-title">
+          My <span className="text-gradient">Projects</span>
+        </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <p className="section-subtitle">
+          A showcase of my recent work, highlighting my skills in web development, application design, and problem-solving.
+        </p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
             <div
               key={project.id}
               id={project.id}
-              className="group p-8 rounded-3xl bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm border border-slate-700/50 hover:border-blue-500/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20 relative overflow-hidden"
+              className="card-transform-3d bg-card rounded-xl overflow-hidden shadow-3d border border-border relative group"
             >
-              {/* Background glow effects */}
-              <div className="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl opacity-60 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl opacity-60 group-hover:opacity-100 transition-opacity" />
+              {/* Project color accent */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/5 opacity-50"></div>
               
-              <div className="relative z-10">
-                <div className="flex justify-between items-start mb-6">
+              {/* 3D effect elements */}
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-2xl opacity-60 group-hover:opacity-100 transition-opacity"></div>
+              <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-secondary/10 rounded-full blur-2xl opacity-60 group-hover:opacity-100 transition-opacity"></div>
+              
+              <div className="p-6 relative">
+                <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
-                    <p className="text-sm text-slate-400">{project.year}</p>
+                    <h3 className="text-xl font-bold">{project.title}</h3>
+                    <p className="text-sm text-muted-foreground">{project.year}</p>
                   </div>
-                  <div className="flex gap-3">
+                  <div className="flex gap-2">
                     {project.link && (
                       <a
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-3 rounded-full bg-blue-500/20 hover:bg-blue-500/30 transition-colors"
+                        className="p-2 rounded-full hover:bg-muted transition-colors"
                         aria-label={`Visit ${project.title} website`}
                       >
-                        <ExternalLink className="h-5 w-5 text-blue-400" />
+                        <ExternalLink className="h-4 w-4" />
                       </a>
                     )}
                     {project.github && (
@@ -103,24 +97,24 @@ export default function Projects() {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-3 rounded-full bg-emerald-500/20 hover:bg-emerald-500/30 transition-colors"
+                        className="p-2 rounded-full hover:bg-muted transition-colors"
                         aria-label={`${project.title} GitHub repository`}
                       >
-                        <Github className="h-5 w-5 text-emerald-400" />
+                        <Github className="h-4 w-4" />
                       </a>
                     )}
                   </div>
                 </div>
                 
-                <div className="mb-8">
-                  <p className="text-slate-300 leading-relaxed">{project.description}</p>
+                <div className="mb-6 flex-1">
+                  <p className="text-muted-foreground">{project.description}</p>
                 </div>
                 
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-2 mt-4">
                   {project.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="px-4 py-2 rounded-full bg-gradient-to-r from-slate-700/50 to-slate-800/50 text-slate-300 text-sm border border-slate-600/30"
+                      className="text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground"
                     >
                       {tech}
                     </span>
@@ -128,8 +122,8 @@ export default function Projects() {
                 </div>
                 
                 {/* Icon display based on project type */}
-                <div className="absolute top-6 right-6 opacity-10 text-blue-400">
-                  <Monitor className="h-16 w-16" />
+                <div className="absolute top-4 right-4 opacity-10 text-primary">
+                  <Monitor className="h-24 w-24" />
                 </div>
               </div>
             </div>

@@ -1,6 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "../ThemeToggle";
 import { LanguageSelector } from "../LanguageSelector";
 
 export function NavbarActions() {
@@ -10,6 +11,7 @@ export function NavbarActions() {
         <Link to="/post-job">Post a Job</Link>
       </Button>
       <LanguageSelector />
+      <ThemeToggle />
     </div>
   );
 }
