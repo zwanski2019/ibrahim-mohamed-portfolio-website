@@ -29,21 +29,21 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             {/* Company Info */}
             <div className="md:col-span-2">
-              <a href="/" className="text-xl font-bold text-gradient">
+              <Link to="/" className="text-xl font-bold text-gradient">
                 ZWANSKI TECH
-              </a>
+              </Link>
               <p className="text-sm text-muted-foreground mt-2">
                 {t('hero.subtitle')}
               </p>
               <div className="mt-4 space-y-2">
                 <div className="flex items-center gap-4 flex-wrap">
-                  <a 
-                    href="/rss" 
+                  <Link 
+                    to="/rss" 
                     className="text-xs text-muted-foreground hover:text-primary transition-colors"
                     title="Subscribe to RSS Feed"
                   >
                     RSS Feed
-                  </a>
+                  </Link>
                   <a 
                     href="https://t.me/zwanski_tech" 
                     target="_blank"
@@ -100,17 +100,17 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <a href="mailto:support@zwanski.org" className="text-muted-foreground hover:text-primary transition-colors">
-                    Contact Support
-                  </a>
+                  <Link to="/support" className="text-muted-foreground hover:text-primary transition-colors">
+                    Support
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/privacy-policy" className="text-muted-foreground hover:text-primary transition-colors">
+                  <Link to="/privacy" className="text-muted-foreground hover:text-primary transition-colors">
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link to="/terms-of-service" className="text-muted-foreground hover:text-primary transition-colors">
+                  <Link to="/terms" className="text-muted-foreground hover:text-primary transition-colors">
                     Terms of Service
                   </Link>
                 </li>
@@ -125,13 +125,13 @@ export default function Footer() {
               </p>
               <div className="flex items-center gap-4 mt-4 md:mt-0">
                 <Link 
-                  to="/privacy-policy" 
+                  to="/privacy" 
                   className="text-xs text-muted-foreground hover:text-primary transition-colors"
                 >
                   Privacy
                 </Link>
                 <Link 
-                  to="/terms-of-service" 
+                  to="/terms" 
                   className="text-xs text-muted-foreground hover:text-primary transition-colors"
                 >
                   Terms

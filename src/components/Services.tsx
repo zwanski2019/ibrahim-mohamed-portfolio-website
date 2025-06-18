@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Star, Award, Zap, Shield } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { Link } from "react-router-dom";
 import ServiceHero from "./services/ServiceHero";
 import ServiceStats from "./services/ServiceStats";
 import ServiceCardComponent from "./services/ServiceCardComponent";
@@ -89,9 +90,11 @@ const Services = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="h-14 px-8 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white shadow-elevation-3 hover:shadow-elevation-4 transition-all duration-300 transform hover:scale-105">
-              {t("services.getStartedToday")}
-              <ArrowRight className="ml-2 h-5 w-5" />
+            <Button size="lg" className="h-14 px-8 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white shadow-elevation-3 hover:shadow-elevation-4 transition-all duration-300 transform hover:scale-105" asChild>
+              <Link to="/services">
+                {t("services.getStartedToday")}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
             </Button>
             
             <Button variant="outline" size="lg" className="h-14 px-8 border-2 border-orange-500/50 text-orange-400 hover:bg-orange-500/10 shadow-elevation-2 hover:shadow-elevation-3 transition-all duration-300 backdrop-blur-sm">

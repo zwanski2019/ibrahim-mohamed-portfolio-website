@@ -76,13 +76,19 @@ function App() {
                       <Route path="/freelancers" element={<Freelancers />} />
                       <Route path="/auth" element={<Auth />} />
                       <Route path="/community" element={<Community />} />
+                      
+                      {/* Privacy and Terms Routes - Support both formats */}
                       <Route path="/privacy" element={<PrivacyPolicy />} />
+                      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                       <Route path="/terms" element={<TermsOfService />} />
+                      <Route path="/terms-of-service" element={<TermsOfService />} />
+                      
                       <Route path="/support" element={<Support />} />
                       <Route path="/faq" element={<FAQ />} />
                       <Route path="/infrastructure" element={<Infrastructure />} />
                       <Route path="/imei-check" element={<IMEICheck />} />
                       <Route path="/rss" element={<RSS />} />
+                      <Route path="/feed" element={<RSS />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                     <CookieConsent />
