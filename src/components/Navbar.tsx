@@ -6,9 +6,9 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import ZwanskiLogo from "./ZwanskiLogo";
-import DesktopNavigation from "./navbar/DesktopNavigation";
-import MobileNavigation from "./navbar/MobileNavigation";
-import NavbarActions from "./navbar/NavbarActions";
+import { DesktopNavigation } from "./navbar/DesktopNavigation";
+import { MobileNavigation } from "./navbar/MobileNavigation";
+import { NavbarActions } from "./navbar/NavbarActions";
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
@@ -166,7 +166,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <MobileNavigation isOpen={isOpen} isAuthenticated={isAuthenticated} />
+      <MobileNavigation />
     </nav>
   );
 };

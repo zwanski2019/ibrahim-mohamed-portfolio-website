@@ -4,12 +4,14 @@ import { supabase } from '@/integrations/supabase/client';
 import { User, Session } from '@supabase/supabase-js';
 import { useToast } from '@/hooks/use-toast';
 
+type UserRole = 'student' | 'instructor' | 'job_seeker' | 'employer' | 'freelancer' | 'admin';
+
 interface EnhancedUser extends User {
   profile?: {
     id: string;
     full_name: string;
     avatar_url: string | null;
-    user_roles: string[];
+    user_roles: UserRole[];
     user_type: 'employer' | 'worker';
     onboarding_completed: boolean;
     profile_completion_percentage: number;
@@ -198,7 +200,7 @@ export const useEnhancedAuth = () => {
     avatar_url: string;
     bio: string;
     location: string;
-    user_roles: string[];
+    user_roles: UserRole[];
     academy_level: string;
     learning_goals: string[];
     preferred_learning_style: string;
