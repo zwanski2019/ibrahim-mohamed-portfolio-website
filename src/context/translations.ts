@@ -11,6 +11,7 @@ export const translations = {
     "nav.signIn": "Sign In",
     "nav.postJob": "Post Job",
     "nav.becomeFreelancer": "Become Freelancer",
+    "nav.experience": "Experience",
     
     // Hero section
     "hero.headline": "ZWANSKI TECH",
@@ -24,6 +25,66 @@ export const translations = {
     "hero.stats.customerSatisfaction": "Customer Satisfaction",
     "hero.stats.yearsExperience": "Years Experience",
     "hero.stats.securityImprovement": "Security Improvement",
+    
+    // Skills section
+    "skills.title": "Skills",
+    "skills.subtitle": "A comprehensive overview of my technical abilities and expertise gained through years of professional experience and continuous learning.",
+    "skills.categories.frontend": "Frontend Development",
+    "skills.categories.backend": "Backend Development",
+    "skills.categories.mobile": "Mobile Development",
+    "skills.categories.devops": "DevOps & Infrastructure",
+    "skills.categories.design": "Design & UI/UX",
+    "skills.categories.other": "Other Technologies",
+    
+    // Experience section
+    "experience.title": "Experience",
+    "experience.subtitle": "My professional journey and key achievements",
+    "experience.workExperience": "Work Experience",
+    "experience.education": "Education",
+    "experience.certifications": "Certifications",
+    "experience.current": "Current",
+    "experience.present": "Present",
+    
+    // Projects section
+    "projects.featured": "Featured",
+    "projects.title": "Projects",
+    "projects.subtitle": "A showcase of my recent work, highlighting my skills in web development, application design, and problem-solving.",
+    "projects.demo": "Live Demo",
+    "projects.code": "View Code",
+    "projects.viewAll": "View All Projects",
+    
+    // Academy section
+    "academy.title": "Zwanski Academy",
+    "academy.subtitle": "Free Learning for All - Master new skills with our comprehensive courses",
+    "academy.heroTitle": "Learn. Grow. Succeed.",
+    "academy.heroSubtitle": "Access world-class education for free",
+    "academy.heroDescription": "Join thousands of students learning cutting-edge skills with our comprehensive course library.",
+    "academy.startLearning": "Start Learning",
+    "academy.becomeInstructor": "Become an Instructor",
+    "academy.freeCourses": "Free Courses",
+    "academy.globalStudents": "Global Students",
+    "academy.languages": "Languages",
+    "academy.certificates": "Certificates",
+    "academy.viewAllCourses": "View All Courses",
+    "academy.featuredCourses": "Featured Courses",
+    
+    // Cookie section
+    "cookie.title": "Cookie Preferences",
+    "cookie.description": "We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. Select your preferences below.",
+    "cookie.necessary": "Necessary",
+    "cookie.necessaryDescription": "Essential cookies required for basic website functionality",
+    "cookie.analytics": "Analytics",
+    "cookie.analyticsDescription": "Help us understand how visitors interact with our website",
+    "cookie.marketing": "Marketing",
+    "cookie.marketingDescription": "Used to track visitors across websites for marketing purposes",
+    "cookie.preferences": "Preferences",
+    "cookie.preferencesDescription": "Remember your settings and preferences",
+    "cookie.acceptAll": "Accept All",
+    "cookie.acceptSelected": "Accept Selected",
+    "cookie.rejectAll": "Reject All",
+    "cookie.settings": "Settings",
+    "cookie.showDetails": "Show Details",
+    "cookie.hideDetails": "Hide Details",
     
     // IMEI section
     "imei.title": "Free IMEI Check",
@@ -78,6 +139,7 @@ export const translations = {
     "nav.signIn": "Se Connecter",
     "nav.postJob": "Publier un Emploi",
     "nav.becomeFreelancer": "Devenir Freelancer",
+    "nav.experience": "Expérience",
     
     // Hero section
     "hero.headline": "ZWANSKI TECH",
@@ -91,6 +153,66 @@ export const translations = {
     "hero.stats.customerSatisfaction": "Satisfaction Client",
     "hero.stats.yearsExperience": "Années d'Expérience",
     "hero.stats.securityImprovement": "Amélioration Sécurité",
+    
+    // Skills section
+    "skills.title": "Compétences",
+    "skills.subtitle": "Un aperçu complet de mes capacités techniques et de l'expertise acquise au cours d'années d'expérience professionnelle et d'apprentissage continu.",
+    "skills.categories.frontend": "Développement Frontend",
+    "skills.categories.backend": "Développement Backend",
+    "skills.categories.mobile": "Développement Mobile",
+    "skills.categories.devops": "DevOps et Infrastructure",
+    "skills.categories.design": "Design et UI/UX",
+    "skills.categories.other": "Autres Technologies",
+    
+    // Experience section
+    "experience.title": "Expérience",
+    "experience.subtitle": "Mon parcours professionnel et réalisations clés",
+    "experience.workExperience": "Expérience Professionnelle",
+    "experience.education": "Formation",
+    "experience.certifications": "Certifications",
+    "experience.current": "Actuel",
+    "experience.present": "Présent",
+    
+    // Projects section
+    "projects.featured": "En Vedette",
+    "projects.title": "Projets",
+    "projects.subtitle": "Une vitrine de mon travail récent, mettant en évidence mes compétences en développement web, conception d'applications et résolution de problèmes.",
+    "projects.demo": "Démo Live",
+    "projects.code": "Voir le Code",
+    "projects.viewAll": "Voir Tous les Projets",
+    
+    // Academy section
+    "academy.title": "Académie Zwanski",
+    "academy.subtitle": "Apprentissage Gratuit pour Tous - Maîtrisez de nouvelles compétences avec nos cours complets",
+    "academy.heroTitle": "Apprendre. Grandir. Réussir.",
+    "academy.heroSubtitle": "Accédez à une éducation de classe mondiale gratuitement",
+    "academy.heroDescription": "Rejoignez des milliers d'étudiants apprenant des compétences de pointe avec notre bibliothèque de cours complète.",
+    "academy.startLearning": "Commencer l'Apprentissage",
+    "academy.becomeInstructor": "Devenir Instructeur",
+    "academy.freeCourses": "Cours Gratuits",
+    "academy.globalStudents": "Étudiants Mondiaux",
+    "academy.languages": "Langues",
+    "academy.certificates": "Certificats",
+    "academy.viewAllCourses": "Voir Tous les Cours",
+    "academy.featuredCourses": "Cours en Vedette",
+    
+    // Cookie section
+    "cookie.title": "Préférences des Cookies",
+    "cookie.description": "Nous utilisons des cookies pour améliorer votre expérience de navigation, analyser le trafic du site et personnaliser le contenu. Sélectionnez vos préférences ci-dessous.",
+    "cookie.necessary": "Nécessaires",
+    "cookie.necessaryDescription": "Cookies essentiels requis pour le fonctionnement de base du site web",
+    "cookie.analytics": "Analytiques",
+    "cookie.analyticsDescription": "Nous aident à comprendre comment les visiteurs interagissent avec notre site web",
+    "cookie.marketing": "Marketing",
+    "cookie.marketingDescription": "Utilisés pour suivre les visiteurs sur les sites web à des fins marketing",
+    "cookie.preferences": "Préférences",
+    "cookie.preferencesDescription": "Se souvenir de vos paramètres et préférences",
+    "cookie.acceptAll": "Accepter Tout",
+    "cookie.acceptSelected": "Accepter Sélectionnés",
+    "cookie.rejectAll": "Rejeter Tout",
+    "cookie.settings": "Paramètres",
+    "cookie.showDetails": "Afficher les Détails",
+    "cookie.hideDetails": "Masquer les Détails",
     
     // IMEI section
     "imei.title": "Vérification IMEI Gratuite",
@@ -145,6 +267,7 @@ export const translations = {
     "nav.signIn": "تسجيل الدخول",
     "nav.postJob": "نشر وظيفة",
     "nav.becomeFreelancer": "كن مستقلاً",
+    "nav.experience": "الخبرة",
     
     // Hero section
     "hero.headline": "ZWANSKI TECH",
@@ -158,6 +281,66 @@ export const translations = {
     "hero.stats.customerSatisfaction": "رضا العملاء",
     "hero.stats.yearsExperience": "سنوات الخبرة",
     "hero.stats.securityImprovement": "تحسين الأمان",
+    
+    // Skills section
+    "skills.title": "المهارات",
+    "skills.subtitle": "نظرة شاملة على قدراتي التقنية والخبرة المكتسبة من خلال سنوات من الخبرة المهنية والتعلم المستمر.",
+    "skills.categories.frontend": "تطوير الواجهات الأمامية",
+    "skills.categories.backend": "تطوير الخلفية",
+    "skills.categories.mobile": "تطوير المحمول",
+    "skills.categories.devops": "DevOps والبنية التحتية",
+    "skills.categories.design": "التصميم و UI/UX",
+    "skills.categories.other": "تقنيات أخرى",
+    
+    // Experience section
+    "experience.title": "الخبرة",
+    "experience.subtitle": "رحلتي المهنية والإنجازات الرئيسية",
+    "experience.workExperience": "الخبرة العملية",
+    "experience.education": "التعليم",
+    "experience.certifications": "الشهادات",
+    "experience.current": "حالي",
+    "experience.present": "الحاضر",
+    
+    // Projects section
+    "projects.featured": "مميز",
+    "projects.title": "المشاريع",
+    "projects.subtitle": "عرض لأحدث أعمالي، يسلط الضوء على مهاراتي في تطوير الويب وتصميم التطبيقات وحل المشكلات.",
+    "projects.demo": "عرض مباشر",
+    "projects.code": "عرض الكود",
+    "projects.viewAll": "عرض جميع المشاريع",
+    
+    // Academy section
+    "academy.title": "أكاديمية زوانسكي",
+    "academy.subtitle": "تعلم مجاني للجميع - أتقن مهارات جديدة مع دوراتنا الشاملة",
+    "academy.heroTitle": "تعلم. انمو. انجح.",
+    "academy.heroSubtitle": "احصل على تعليم عالمي المستوى مجاناً",
+    "academy.heroDescription": "انضم إلى آلاف الطلاب الذين يتعلمون مهارات متطورة مع مكتبة دوراتنا الشاملة.",
+    "academy.startLearning": "ابدأ التعلم",
+    "academy.becomeInstructor": "كن مدرباً",
+    "academy.freeCourses": "دورات مجانية",
+    "academy.globalStudents": "طلاب عالميون",
+    "academy.languages": "لغات",
+    "academy.certificates": "شهادات",
+    "academy.viewAllCourses": "عرض جميع الدورات",
+    "academy.featuredCourses": "الدورات المميزة",
+    
+    // Cookie section
+    "cookie.title": "تفضيلات ملفات تعريف الارتباط",
+    "cookie.description": "نستخدم ملفات تعريف الارتباط لتحسين تجربة التصفح وتحليل حركة المرور على الموقع وتخصيص المحتوى. اختر تفضيلاتك أدناه.",
+    "cookie.necessary": "ضرورية",
+    "cookie.necessaryDescription": "ملفات تعريف ارتباط أساسية مطلوبة للوظائف الأساسية للموقع",
+    "cookie.analytics": "تحليلية",
+    "cookie.analyticsDescription": "تساعدنا على فهم كيفية تفاعل الزوار مع موقعنا",
+    "cookie.marketing": "تسويق",
+    "cookie.marketingDescription": "تُستخدم لتتبع الزوار عبر المواقع لأغراض التسويق",
+    "cookie.preferences": "تفضيلات",
+    "cookie.preferencesDescription": "تذكر إعداداتك وتفضيلاتك",
+    "cookie.acceptAll": "قبول الكل",
+    "cookie.acceptSelected": "قبول المحدد",
+    "cookie.rejectAll": "رفض الكل",
+    "cookie.settings": "الإعدادات",
+    "cookie.showDetails": "إظهار التفاصيل",
+    "cookie.hideDetails": "إخفاء التفاصيل",
     
     // IMEI section
     "imei.title": "فحص IMEI مجاني",
@@ -212,6 +395,7 @@ export const translations = {
     "nav.signIn": "Shiga",
     "nav.postJob": "Buga Aiki",
     "nav.becomeFreelancer": "Zama Mai Aiki",
+    "nav.experience": "Gwaninta",
     
     // Hero section
     "hero.headline": "ZWANSKI TECH",
@@ -225,6 +409,66 @@ export const translations = {
     "hero.stats.customerSatisfaction": "Gamsuwar Abokan Ciniki",
     "hero.stats.yearsExperience": "Shekarun Gwaninta",
     "hero.stats.securityImprovement": "Inganta Tsaro",
+    
+    // Skills section
+    "skills.title": "Basira",
+    "skills.subtitle": "Gabaɗaya bayani akan basiran fasaha da kwarewarta da aka samo ta shekaru na kwanakin da kuma koya mai ci gaba.",
+    "skills.categories.frontend": "Gina Fagen Gaba",
+    "skills.categories.backend": "Gina Fagen Baya",
+    "skills.categories.mobile": "Gina Wayar Hannu",
+    "skills.categories.devops": "DevOps da Ginshiƙi",
+    "skills.categories.design": "Zane da UI/UX",
+    "skills.categories.other": "Sauran Fasahohi",
+    
+    // Experience section
+    "experience.title": "Gwaninta",
+    "experience.subtitle": "Tafiyar aiki na da muhimman nasarori",
+    "experience.workExperience": "Gwaninta na Aiki",
+    "experience.education": "Ilimi",
+    "experience.certifications": "Takaddun Shaida",
+    "experience.current": "Na Yanzu",
+    "experience.present": "Yanzu",
+    
+    // Projects section
+    "projects.featured": "Muhimmi",
+    "projects.title": "Ayyuka",
+    "projects.subtitle": "Nunin ayyukan da na yi na baya-bayan nan, yana nuna basiraina a cikin gina gidajen yanar gizo, ƙirar aikace-aikace da warware matsaloli.",
+    "projects.demo": "Demo na Kai Tsaye",
+    "projects.code": "Duba Code",
+    "projects.viewAll": "Duba Dukan Ayyuka",
+    
+    // Academy section
+    "academy.title": "Makarantar Zwanski",
+    "academy.subtitle": "Koyo Kyauta ga Kowa - Koyi sabbin basirori tare da manyan darussan mu",
+    "academy.heroTitle": "Koyo. Girma. Samun Nasara.",
+    "academy.heroSubtitle": "Samun ilimi na duniya kyauta",
+    "academy.heroDescription": "Shiga dubban ɗalibai masu koyon basirori na zamani tare da ɗakin karatu na manyan darussai.",
+    "academy.startLearning": "Fara Koyo",
+    "academy.becomeInstructor": "Zama Malami",
+    "academy.freeCourses": "Darussan Kyauta",
+    "academy.globalStudents": "Ɗaliban Duniya",
+    "academy.languages": "Harsuna",
+    "academy.certificates": "Takaddun Shaida",
+    "academy.viewAllCourses": "Duba Dukan Darussan",
+    "academy.featuredCourses": "Darussan Muhimmi",
+    
+    // Cookie section
+    "cookie.title": "Zaɓin Cookie",
+    "cookie.description": "Muna amfani da cookies don inganta gogewar ku, nazarin zirga-zirgar rukunin yanar gizo da keɓance abun ciki. Zaɓi zaɓinku a ƙasa.",
+    "cookie.necessary": "Wajibi",
+    "cookie.necessaryDescription": "Cookies masu mahimmanci da ake bukata don ayyukan mahimman gidan yanar gizo",
+    "cookie.analytics": "Nazari",
+    "cookie.analyticsDescription": "Taimaka mana fahimtar yadda baƙi ke hulɗa da gidan yanar gizon mu",
+    "cookie.marketing": "Tallace-tallace",
+    "cookie.marketingDescription": "Ana amfani da su don bin baƙi a gidajen yanar gizo don dalilai na tallace-tallace",
+    "cookie.preferences": "Zaɓuɓɓuka",
+    "cookie.preferencesDescription": "Tuna da saitunan ku da zaɓuɓɓukan ku",
+    "cookie.acceptAll": "Karɓa Duka",
+    "cookie.acceptSelected": "Karɓa Waɗanda aka Zaɓa",
+    "cookie.rejectAll": "Ki Duka",
+    "cookie.settings": "Saituna",
+    "cookie.showDetails": "Nuna Cikakkun Bayanai",
+    "cookie.hideDetails": "Ɓoye Cikakkun Bayanai",
     
     // IMEI section
     "imei.title": "Binciken IMEI Kyauta",
@@ -279,6 +523,7 @@ export const translations = {
     "nav.signIn": "Kcem",
     "nav.postJob": "Suffeg Lxedma",
     "nav.becomeFreelancer": "Uɣal Amahraf",
+    "nav.experience": "Tirmit",
     
     // Hero section
     "hero.headline": "ZWANSKI TECH",
@@ -292,6 +537,66 @@ export const translations = {
     "hero.stats.customerSatisfaction": "Aṛazi n Yimsɣan",
     "hero.stats.yearsExperience": "Iseggasen n Tirmit",
     "hero.stats.securityImprovement": "Asnerni n Tɣellist",
+    
+    // Skills section
+    "skills.title": "Tezmert",
+    "skills.subtitle": "Askan amaṭṭaf ɣef tezmert n tekna d tezmert i d-usiɣ deg yiseggasen n telɣa n yimsɣan d ulɣu yezdin.",
+    "skills.categories.frontend": "Asnulfu n Udem Amezwaru",
+    "skills.categories.backend": "Asnulfu n Udem Aneggaru",
+    "skills.categories.mobile": "Asnulfu Azirig",
+    "skills.categories.devops": "DevOps d Tesɣunt",
+    "skills.categories.design": "Aɣanib d UI/UX",
+    "skills.categories.other": "Tikriyin Nniḍen",
+    
+    // Experience section
+    "experience.title": "Tirmit",
+    "experience.subtitle": "Abrid n lxedma d yineggura igejdanen",
+    "experience.workExperience": "Tirmit n Lxedma",
+    "experience.education": "Aɣmis",
+    "experience.certifications": "Iselkinen",
+    "experience.current": "Tura",
+    "experience.present": "Tura",
+    
+    // Projects section
+    "projects.featured": "Ifazen",
+    "projects.title": "Isenfaṛen",
+    "projects.subtitle": "Asken n lxedma inek tamaynut, isekned tezmert inu deg usnulfu n web, aɣanib n usnas d tifrat n uguren.",
+    "projects.demo": "Askan Usrid",
+    "projects.code": "Ẓer Tangalt",
+    "projects.viewAll": "Ẓer Akk Isenfaṛen",
+    
+    // Academy section
+    "academy.title": "Tasdawit Zwanski",
+    "academy.subtitle": "Aɣmis Balas i Kulci - Issin tikriyin timaynutin s yikasen nneɣ imaṭṭafen",
+    "academy.heroTitle": "Ɣer. Imɣur. Awad.",
+    "academy.heroSubtitle": "Kcem ɣer uɣmis n ddunit balas",
+    "academy.heroDescription": "Rnu ɣer agim n yinelmaden ara iɣren tikriyin timaynutin s temkarḍit n yikasen nneɣ tamaṭṭaft.",
+    "academy.startLearning": "Bdu Taɣuri",
+    "academy.becomeInstructor": "Uɣal Aselmad",
+    "academy.freeCourses": "Ikasen Balas",
+    "academy.globalStudents": "Inelmaden n Ddunit",
+    "academy.languages": "Tutlayin",
+    "academy.certificates": "Iselkinen",
+    "academy.viewAllCourses": "Ẓer Akk Ikasen",
+    "academy.featuredCourses": "Ikasen Ifazen",
+    
+    // Cookie section
+    "cookie.title": "Asmenyaf n Cookie",
+    "cookie.description": "Nseqdac cookies i usnerni n tirmit n tunigin, asesleḍ n usdidreg n usmel d usbadu n ugbur. Fren ism nnyak daw.",
+    "cookie.necessary": "Ilaqen",
+    "cookie.necessaryDescription": "Cookies ilaqen i twurieyin tigejdanin n usmel web",
+    "cookie.analytics": "Tasleḍt",
+    "cookie.analyticsDescription": "Aɛiwen ad nefhem amek i d-msafaren yimeddukal d usmel nneɣ",
+    "cookie.marketing": "Aseksem",
+    "cookie.marketingDescription": "Ttuseqdacen i uḍfaṛ n yimeddukal deg yismelmil i useksem",
+    "cookie.preferences": "Ismenyifen",
+    "cookie.preferencesDescription": "Cfu-d ɣef iɣewwaṛen d yismenyifen inek",
+    "cookie.acceptAll": "Qbel Akk",
+    "cookie.acceptSelected": "Qbel Yettwafren",
+    "cookie.rejectAll": "Agi Akk",
+    "cookie.settings": "Iɣewwaṛen",
+    "cookie.showDetails": "Sken Talqayt",
+    "cookie.hideDetails": "Ffer Talqayt",
     
     // IMEI section
     "imei.title": "Asenqed IMEI Balas",

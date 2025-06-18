@@ -15,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import SupportBanner from "@/components/SupportBanner";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const { user } = useAuth();
@@ -160,17 +161,17 @@ const Index = () => {
             <div className="container mx-auto px-4 relative z-10">
               <div className="text-center mb-16 animate-on-scroll">
                 <h2 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
-                  Zwanski Academy
+                  {t("academy.title")}
                 </h2>
                 <p className="text-2xl text-slate-300 max-w-4xl mx-auto mb-8">
-                  Free Learning for All - Master new skills with our comprehensive courses
+                  {t("academy.subtitle")}
                 </p>
                 <div className="flex flex-wrap justify-center gap-4 mb-12">
                   <div className="px-6 py-3 bg-purple-500/20 rounded-full border border-purple-500/30 text-purple-300 font-semibold">
-                    📚 50+ Courses
+                    📚 50+ {t("academy.freeCourses")}
                   </div>
                   <div className="px-6 py-3 bg-blue-500/20 rounded-full border border-blue-500/30 text-blue-300 font-semibold">
-                    🎓 5000+ Students
+                    🎓 5000+ {t("academy.globalStudents")}
                   </div>
                   <div className="px-6 py-3 bg-indigo-500/20 rounded-full border border-indigo-500/30 text-indigo-300 font-semibold">
                     ⭐ 4.8/5 Rating
@@ -189,18 +190,18 @@ const Index = () => {
               
               <div className="text-center">
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <a
-                    href="/academy"
+                  <Link
+                    to="/academy"
                     className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-2xl shadow-purple-500/25"
                   >
-                    View All Courses
-                  </a>
-                  <a
-                    href="/academy"
+                    {t("academy.viewAllCourses")}
+                  </Link>
+                  <Link
+                    to="/academy"
                     className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-2xl shadow-blue-500/25"
                   >
-                    Become an Instructor
-                  </a>
+                    {t("academy.becomeInstructor")}
+                  </Link>
                 </div>
               </div>
             </div>
