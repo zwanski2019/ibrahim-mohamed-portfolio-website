@@ -73,71 +73,87 @@ export default function Skills() {
   };
 
   return (
-    <section id="skills" className="py-20 bg-muted/30">
-      <div className="section-container">
-        <h2 className="section-title">
-          My <span className="text-gradient">Skills</span>
-        </h2>
-        
-        <p className="section-subtitle">
-          A comprehensive overview of my technical abilities and expertise gained through years of
-          professional experience and continuous learning.
-        </p>
+    <section id="skills" className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+      {/* Enhanced Background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(59,130,246,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(34,197,94,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px]" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="text-5xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-blue-400 via-emerald-400 to-blue-400 bg-clip-text text-transparent">
+            My <span className="text-gradient">Skills</span>
+          </h2>
+          
+          <p className="text-2xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
+            A comprehensive overview of my technical abilities and expertise gained through years of
+            professional experience and continuous learning.
+          </p>
+        </div>
         
         {/* Category Tabs */}
         <div className="flex justify-center mb-12">
-          <ToggleGroup type="single" value={activeCategory} onValueChange={(value) => value && setActiveCategory(value as CategoryTab)}>
+          <div className="flex flex-wrap gap-4 p-2 rounded-2xl bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm border border-slate-700/50">
             {categories.map((category) => (
-              <ToggleGroupItem 
-                key={category.value} 
-                value={category.value}
-                className="px-4 py-2 rounded-full text-sm"
+              <button
+                key={category.value}
+                onClick={() => setActiveCategory(category.value)}
+                className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                  activeCategory === category.value
+                    ? 'bg-gradient-to-r from-blue-600 to-emerald-600 text-white shadow-elevation-3'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                }`}
               >
                 {category.label}
-              </ToggleGroupItem>
+              </button>
             ))}
-          </ToggleGroup>
+          </div>
         </div>
         
-        {/* Skills Accordion */}
-        <div className="max-w-3xl mx-auto">
-          <Accordion type="single" collapsible className="w-full">
+        {/* Skills Grid */}
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {Object.keys(skillsByCategory).map((category) => (
-              <AccordionItem key={category} value={category} className="border-b border-border">
-                <AccordionTrigger className="py-4 text-lg font-medium hover:no-underline">
-                  <div className="flex items-center gap-2">
-                    {skillsByCategory[category][0].icon && (
-                      <span className="text-xl">{skillsByCategory[category][0].icon}</span>
-                    )}
-                    <span>{categoryNames[category] || category}</span>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="space-y-4 py-2">
+              <div
+                key={category}
+                className="group p-8 rounded-3xl bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm border border-slate-700/50 hover:border-blue-500/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20 relative overflow-hidden"
+              >
+                {/* Background glow effects */}
+                <div className="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl opacity-60 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl opacity-60 group-hover:opacity-100 transition-opacity" />
+                
+                <div className="relative z-10">
+                  <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                    <span className="text-2xl">{skillsByCategory[category][0].icon}</span>
+                    {categoryNames[category] || category}
+                  </h3>
+                  
+                  <div className="space-y-4">
                     {skillsByCategory[category].map((skill) => (
-                      <div key={skill.name} className="bg-card rounded-lg p-4 shadow-sm">
-                        <div className="flex items-center gap-4 mb-3">
-                          <div className="w-10 h-10 flex items-center justify-center text-xl bg-muted rounded-lg">
-                            {skill.icon}
+                      <div key={skill.name} className="bg-slate-700/30 rounded-xl p-4 backdrop-blur-sm">
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-3">
+                            <span className="text-lg">{skill.icon}</span>
+                            <h4 className="font-semibold text-white">{skill.name}</h4>
                           </div>
-                          <h3 className="font-medium">{skill.name}</h3>
+                          <span className="text-blue-400 font-bold">{skill.level}%</span>
                         </div>
                         
-                        <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                        <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-gradient-to-r from-primary to-secondary"
+                            className="h-full bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full transition-all duration-1000 ease-out"
                             style={{ width: `${skill.level}%` }}
-                          ></div>
+                          />
                         </div>
-                        
-                        <div className="mt-2 text-right text-sm">{skill.level}%</div>
                       </div>
                     ))}
                   </div>
-                </AccordionContent>
-              </AccordionItem>
+                </div>
+              </div>
             ))}
-          </Accordion>
+          </div>
         </div>
       </div>
     </section>
