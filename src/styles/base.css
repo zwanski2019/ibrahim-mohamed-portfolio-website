@@ -24,7 +24,7 @@
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
+    --radius: 0.75rem;
   }
 
   .dark {
@@ -57,43 +57,108 @@
   }
   
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Enhanced Typography System */
+  .text-display-1 {
+    @apply font-display text-6xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight;
+  }
+  
+  .text-display-2 {
+    @apply font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight;
+  }
+  
+  .text-display-3 {
+    @apply font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight;
+  }
+  
+  .text-heading-1 {
+    @apply font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight;
+  }
+  
+  .text-heading-2 {
+    @apply font-display text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight;
+  }
+  
+  .text-heading-3 {
+    @apply font-display text-xl md:text-2xl lg:text-3xl font-medium leading-snug;
+  }
+  
+  .text-body-large {
+    @apply text-lg md:text-xl leading-relaxed;
+  }
+  
+  .text-body {
+    @apply text-base leading-relaxed;
+  }
+  
+  .text-body-small {
+    @apply text-sm leading-relaxed;
   }
   
   /* Improved responsive typography */
   h1 {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold;
+    @apply text-display-2;
   }
   h2 {
-    @apply text-2xl md:text-3xl lg:text-4xl font-bold;
+    @apply text-heading-1;
   }
   h3 {
-    @apply text-xl md:text-2xl lg:text-3xl font-semibold;
+    @apply text-heading-2;
   }
   h4 {
-    @apply text-lg md:text-xl font-semibold;
+    @apply text-heading-3;
+  }
+  
+  p {
+    @apply text-body;
   }
   
   /* Improved form input for better mobile experience */
   input, select, textarea {
-    @apply text-base md:text-sm w-full focus:outline-none;
+    @apply text-base md:text-sm w-full focus:outline-none transition-all duration-200;
   }
 
   img {
     max-width: 100%;
     height: auto;
   }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-muted/20;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
+  }
 }
 
 /* Enhanced responsive typography */
 @media (max-width: 640px) {
-  h1 {
-    @apply text-4xl md:text-5xl lg:text-6xl;
+  .text-display-1 {
+    @apply text-5xl;
+  }
+  
+  .text-display-2 {
+    @apply text-4xl;
   }
   
   .hero-title {
-    @apply text-3xl md:text-5xl lg:text-7xl;
+    @apply text-4xl md:text-6xl lg:text-8xl;
   }
 }
 
@@ -110,4 +175,22 @@
 .focus-ring:focus-visible {
   outline: 2px solid theme('colors.blue.500');
   outline-offset: 2px;
+}
+
+/* Performance optimizations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Selection styling */
+::selection {
+  @apply bg-brand-500/20 text-brand-900;
+}
+
+.dark ::selection {
+  @apply bg-brand-400/30 text-brand-100;
 }
