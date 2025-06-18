@@ -28,9 +28,9 @@ import {
   X
 } from "lucide-react";
 import ZwanskiLogo from "./ZwanskiLogo";
-import ThemeToggle from "./ThemeToggle";
-import LanguageSelector from "./LanguageSelector";
-import MoreDropdown from "./navbar/MoreDropdown";
+import { ThemeToggle } from "./ThemeToggle";
+import { LanguageSelector } from "./LanguageSelector";
+import { MoreDropdown } from "./navbar/MoreDropdown";
 import { supabase } from "@/integrations/supabase/client";
 
 const Navbar = () => {

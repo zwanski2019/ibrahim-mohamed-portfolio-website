@@ -33,7 +33,7 @@ import Infrastructure from "./pages/Infrastructure";
 import IMEICheck from "./pages/IMEICheck";
 import RSS from "./pages/RSS";
 import CookieConsent from "./components/CookieConsent";
-import LanguageDetectionNotice from "./components/LanguageDetectionNotice";
+import { LanguageDetectionNotice } from "./components/LanguageDetectionNotice";
 
 // Styles
 import "./App.css";
@@ -49,7 +49,7 @@ function App() {
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <ThemeProvider>
             <LanguageProvider>
               <CookiePreferencesProvider>
                 <AuthProvider>

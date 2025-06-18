@@ -24,7 +24,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const LoginForm = () => {
-  const { login } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Initialize form with react-hook-form and zod validation
@@ -35,7 +35,7 @@ const LoginForm = () => {
     },
   });
 
-  // Handle form submission
+  // Handle form submission - for chat this just sets a display name
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     
@@ -43,14 +43,11 @@ const LoginForm = () => {
       // Simulating API request delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
       
-      // Login the user
-      login(data.username);
-      
       toast.success("Welcome to the chat!", {
-        description: "You've successfully signed in.",
+        description: "You've successfully joined the chat.",
       });
     } catch (error) {
-      console.error("Error during login:", error);
+      console.error("Error during chat login:", error);
       toast.error("Login failed", {
         description: "Please try again later.",
       });
@@ -59,45 +56,37 @@ const LoginForm = () => {
     }
   };
 
+  // If user is authenticated, show they're ready for chat
+  if (isAuthenticated && user) {
+    return (
+      <div className="p-8 max-w-md mx-auto text-center">
+        <div className="mb-6">
+          <h2 className="text-xl font-bold mb-2">Welcome to Chat!</h2>
+          <p className="text-muted-foreground">You're signed in and ready to chat</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="p-8 max-w-md mx-auto">
       <div className="text-center mb-6">
         <h2 className="text-xl font-bold mb-2">Join the Magical Chat</h2>
-        <p className="text-muted-foreground">Enter a username to start chatting</p>
+        <p className="text-muted-foreground">Please sign in to start chatting</p>
       </div>
       
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input 
-                    placeholder="coolwizard123" 
-                    className="bg-background/50 backdrop-blur-sm border-purple-500/30 focus:border-purple-500"
-                    {...field} 
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          
-          <Button 
-            type="submit" 
-            className="w-full group relative overflow-hidden" 
-            disabled={isSubmitting}
-          >
-            <span className="relative z-10 flex items-center justify-center gap-2">
-              <Sparkles className="h-4 w-4 transition-transform group-hover:rotate-12" />
-              {isSubmitting ? "Signing In..." : "Enter the Magic Chat"}
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 transform group-hover:scale-105 transition-transform"></div>
-          </Button>
-        </form>
-      </Form>
+      <div className="text-center">
+        <Button 
+          onClick={() => window.location.href = '/auth'}
+          className="w-full group relative overflow-hidden"
+        >
+          <span className="relative z-10 flex items-center justify-center gap-2">
+            <Sparkles className="h-4 w-4 transition-transform group-hover:rotate-12" />
+            Sign In to Chat
+          </span>
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 transform group-hover:scale-105 transition-transform"></div>
+        </Button>
+      </div>
       
       <p className="mt-6 text-center text-sm text-muted-foreground">
         This is a demo chat app. Messages are not persistent and will be lost on page refresh.
