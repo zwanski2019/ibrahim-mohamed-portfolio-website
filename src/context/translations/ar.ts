@@ -23,6 +23,24 @@ export const arTranslations = {
   "hero.getStarted": "ابدأ الآن",
   "hero.learnMore": "اعرف المزيد",
   "hero.telegramNotice": "انضم إلى تيليجرام للأخبار الفورية",
+  "hero.headline": "زوانسكي تك",
+  "hero.subheadline": "الحلول الرقمية، معاد تصورها",
+  "hero.cta1": "ابدأ الآن",
+  "hero.cta2": "نموذج الكمبيوتر",
+  "hero.cta3": "دردشة مباشرة",
+  "hero.stats.devicesRepaired": "الأجهزة المُصلحة بنجاح",
+  "hero.stats.customerSatisfaction": "معدل رضا العملاء",
+  "hero.stats.yearsExperience": "سنوات الخبرة في تقنية المعلومات",
+  "hero.stats.securityImprovement": "تقليل نقاط الضعف الأمنية",
+
+  // Services Section
+  "services.title": "خدماتنا",
+  "services.subtitle": "خدمات مهنية مصممة لتلبية احتياجات عملك. انقر على أي خدمة لمعرفة المزيد.",
+  "services.getStartedToday": "ابدأ اليوم",
+  "services.stats.devicesRepaired": "الأجهزة المُصلحة بنجاح",
+  "services.stats.expertSupport": "دعم الخبراء",
+  "services.stats.securityImprovement": "تحسين الأمان",
+  "services.stats.moneyBackGuarantee": "ضمان استرداد الأموال",
 
   // Skills Section
   "skills.title": "المهارات",

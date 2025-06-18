@@ -23,6 +23,24 @@ export const haTranslations = {
   "hero.getStarted": "Fara",
   "hero.learnMore": "Koyi Ƙari",
   "hero.telegramNotice": "Shiga Telegram don labaran nan take",
+  "hero.headline": "ZWANSKI TECH",
+  "hero.subheadline": "Hanyoyin Dijital, An sake yin su",
+  "hero.cta1": "Fara",
+  "hero.cta2": "Samfurin Kwamfuta",
+  "hero.cta3": "Hira Kai Tsaye",
+  "hero.stats.devicesRepaired": "Na'urori da aka Gyara da Nasara",
+  "hero.stats.customerSatisfaction": "Matsayin Gamsuwar Abokan Ciniki",
+  "hero.stats.yearsExperience": "Shekarun Gogewar IT",
+  "hero.stats.securityImprovement": "Rage Lahani na Tsaro",
+
+  // Services Section
+  "services.title": "Ayyukanmu",
+  "services.subtitle": "Ayyuka na ƙwararru da aka tsara don biyan bukatun kasuwancin ku. Danna kowane sabis don koyon ƙari.",
+  "services.getStartedToday": "Fara Yau",
+  "services.stats.devicesRepaired": "Na'urori da aka Gyara da Nasara",
+  "services.stats.expertSupport": "Tallafin Ƙwararru",
+  "services.stats.securityImprovement": "Ingantaccen Tsaro",
+  "services.stats.moneyBackGuarantee": "Garantin Mayar da Kuɗi",
 
   // Skills Section
   "skills.title": "Ƙwarewa",

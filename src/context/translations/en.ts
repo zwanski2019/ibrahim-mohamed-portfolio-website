@@ -23,6 +23,24 @@ export const enTranslations = {
   "hero.getStarted": "Get Started",
   "hero.learnMore": "Learn More",
   "hero.telegramNotice": "Join Telegram for instant news",
+  "hero.headline": "ZWANSKI TECH",
+  "hero.subheadline": "Digital Solutions, Reimagined",
+  "hero.cta1": "Get Started",
+  "hero.cta2": "Computer Model",
+  "hero.cta3": "Live Chat",
+  "hero.stats.devicesRepaired": "Devices Successfully Repaired",
+  "hero.stats.customerSatisfaction": "Customer Satisfaction Rate",
+  "hero.stats.yearsExperience": "Years of IT Experience",
+  "hero.stats.securityImprovement": "Security Vulnerability Reduction",
+
+  // Services Section
+  "services.title": "Our Services",
+  "services.subtitle": "Professional services tailored to meet your business needs. Click on any service to learn more.",
+  "services.getStartedToday": "Get Started Today",
+  "services.stats.devicesRepaired": "Devices Successfully Repaired",
+  "services.stats.expertSupport": "Expert Support",
+  "services.stats.securityImprovement": "Security Vulnerability Reduction",
+  "services.stats.moneyBackGuarantee": "Money Back Guarantee",
 
   // Skills Section
   "skills.title": "Skills",

@@ -23,6 +23,24 @@ export const berTranslations = {
   "hero.getStarted": "Bdu",
   "hero.learnMore": "Issin Ugar",
   "hero.telegramNotice": "Ddu ɣer Telegram i yisallen ifessan",
+  "hero.headline": "ZWANSKI TECH",
+  "hero.subheadline": "Tifrat Tumḍinin, I Yettuwennzen",
+  "hero.cta1": "Bdu",
+  "hero.cta2": "Amedya n Uselkim",
+  "hero.cta3": "Adiwenni Usrid",
+  "hero.stats.devicesRepaired": "Ibenkan Yettuseɣren s Lɣerḍ",
+  "hero.stats.customerSatisfaction": "Aswir n Ufrah n Yimɣayen",
+  "hero.stats.yearsExperience": "Iseggasen n Tarmit IT",
+  "hero.stats.securityImprovement": "Ameksa n Urǧin n Taɣellist",
+
+  // Services Section
+  "services.title": "Tanfa-nneɣ",
+  "services.subtitle": "Tanfa taqbaylit yettusbedden i yisebganen n tnekra-nwen. Sit ɣef yal tanfa akken ad tessineḍ ugar.",
+  "services.getStartedToday": "Bdu Ass-a",
+  "services.stats.devicesRepaired": "Ibenkan Yettuseɣren s Lɣerḍ",
+  "services.stats.expertSupport": "Tallalt Taqbaylit",
+  "services.stats.securityImprovement": "Asnerni n Taɣellist",
+  "services.stats.moneyBackGuarantee": "Aḍman n Tuɣalin n Idrimen",
 
   // Skills Section
   "skills.title": "Timusniwin",

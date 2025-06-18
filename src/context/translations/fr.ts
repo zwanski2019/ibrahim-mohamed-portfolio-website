@@ -23,6 +23,24 @@ export const frTranslations = {
   "hero.getStarted": "Commencer",
   "hero.learnMore": "En savoir plus",
   "hero.telegramNotice": "Rejoignez Telegram pour les actualités instantanées",
+  "hero.headline": "ZWANSKI TECH",
+  "hero.subheadline": "Solutions Numériques, Réinventées",
+  "hero.cta1": "Commencer",
+  "hero.cta2": "Modèle d'Ordinateur",
+  "hero.cta3": "Chat en Direct",
+  "hero.stats.devicesRepaired": "Appareils Réparés avec Succès",
+  "hero.stats.customerSatisfaction": "Taux de Satisfaction Client",
+  "hero.stats.yearsExperience": "Années d'Expérience IT",
+  "hero.stats.securityImprovement": "Réduction des Vulnérabilités de Sécurité",
+
+  // Services Section
+  "services.title": "Nos Services",
+  "services.subtitle": "Services professionnels adaptés à vos besoins commerciaux. Cliquez sur n'importe quel service pour en savoir plus.",
+  "services.getStartedToday": "Commencer Aujourd'hui",
+  "services.stats.devicesRepaired": "Appareils Réparés avec Succès",
+  "services.stats.expertSupport": "Support Expert",
+  "services.stats.securityImprovement": "Amélioration de la Sécurité",
+  "services.stats.moneyBackGuarantee": "Garantie de Remboursement",
 
   // Skills Section
   "skills.title": "Compétences",
