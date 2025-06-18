@@ -35,6 +35,8 @@ import RSS from "./pages/RSS";
 import CookieConsent from "./components/CookieConsent";
 import { LanguageDetectionNotice } from "./components/LanguageDetectionNotice";
 import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTopButton from "./components/ScrollToTopButton";
+import ChatWidget from "./components/ChatWidget";
 
 // Styles
 import "./App.css";
@@ -85,6 +87,8 @@ function App() {
                     </Routes>
                     <CookieConsent />
                     <LanguageDetectionNotice />
+                    <ScrollToTopButton />
+                    <ChatWidget />
                   </BrowserRouter>
                 </AuthProvider>
               </CookiePreferencesProvider>
