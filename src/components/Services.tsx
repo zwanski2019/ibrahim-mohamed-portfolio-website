@@ -16,25 +16,25 @@ const Services = () => {
       icon: Star, 
       title: "5-Star Rating", 
       description: "Consistently rated by clients",
-      color: "from-yellow-400 to-orange-400"
+      color: "from-blue-400 to-cyan-400"
     },
     { 
       icon: Award, 
       title: "Industry Recognition", 
       description: "Certified IT professionals",
-      color: "from-purple-400 to-pink-400"
+      color: "from-emerald-400 to-blue-400"
     },
     { 
       icon: Zap, 
       title: "Fast Delivery", 
       description: "24-48 hour turnaround",
-      color: "from-emerald-400 to-cyan-400"
+      color: "from-purple-400 to-indigo-400"
     },
     { 
       icon: Shield, 
       title: "Secure Solutions", 
       description: "Enterprise-grade security",
-      color: "from-blue-400 to-indigo-400"
+      color: "from-blue-400 to-emerald-400"
     }
   ];
 
@@ -42,8 +42,8 @@ const Services = () => {
     <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
       {/* Enhanced Background */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(249,115,22,0.1),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.08),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(59,130,246,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(34,197,94,0.1),transparent_50%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px]" />
       </div>
 
@@ -55,7 +55,7 @@ const Services = () => {
           {achievements.map((achievement, index) => (
             <div 
               key={index}
-              className="group p-6 rounded-2xl bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm border border-slate-700/50 hover:border-orange-500/30 transition-all duration-500 hover:scale-105 hover:shadow-elevation-3"
+              className="group p-6 rounded-2xl bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm border border-slate-700/50 hover:border-blue-500/30 transition-all duration-500 hover:scale-105 hover:shadow-elevation-3"
             >
               <div className="mb-4 flex justify-center">
                 <div className={`p-3 rounded-xl bg-gradient-to-r ${achievement.color} bg-opacity-20 group-hover:bg-opacity-30 transition-all duration-300`}>
@@ -89,12 +89,12 @@ const Services = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="h-14 px-8 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white shadow-elevation-3 hover:shadow-elevation-4 transition-all duration-300 transform hover:scale-105">
+            <Button size="lg" className="h-14 px-8 bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white shadow-elevation-3 hover:shadow-elevation-4 transition-all duration-300 transform hover:scale-105">
               {t("services.getStartedToday")}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             
-            <Button variant="outline" size="lg" className="h-14 px-8 border-2 border-orange-500/50 text-orange-400 hover:bg-orange-500/10 shadow-elevation-2 hover:shadow-elevation-3 transition-all duration-300 backdrop-blur-sm">
+            <Button variant="outline" size="lg" className="h-14 px-8 border-2 border-blue-500/50 text-blue-400 hover:bg-blue-500/10 shadow-elevation-2 hover:shadow-elevation-3 transition-all duration-300 backdrop-blur-sm">
               View Portfolio
               <Star className="ml-2 h-5 w-5" />
             </Button>
