@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -9,7 +8,6 @@ import AcademyHero from "@/components/academy/AcademyHero";
 import CourseGrid from "@/components/academy/CourseGrid";
 import CategoryFilter from "@/components/academy/CategoryFilter";
 import { SearchBar } from "@/components/SearchBar";
-import DirectLinkAd from "@/components/ads/DirectLinkAd";
 import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -87,9 +85,6 @@ const Academy = () => {
     <ThemeProvider>
       <div className="flex flex-col min-h-screen">
         <Navbar />
-        
-        {/* Direct Link Ad - Click trigger for course enrollment */}
-        <DirectLinkAd trigger="click" frequency="session" />
         
         <main className="flex-grow">
           <AcademyHero />
