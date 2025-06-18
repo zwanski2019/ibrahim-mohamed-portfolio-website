@@ -34,6 +34,7 @@ import IMEICheck from "./pages/IMEICheck";
 import RSS from "./pages/RSS";
 import CookieConsent from "./components/CookieConsent";
 import { LanguageDetectionNotice } from "./components/LanguageDetectionNotice";
+import ScrollToTop from "./components/ScrollToTop";
 
 // Styles
 import "./App.css";
@@ -55,6 +56,7 @@ function App() {
                 <AuthProvider>
                   <Toaster />
                   <BrowserRouter>
+                    <ScrollToTop />
                     <Helmet>
                       <title>Zwanski Tech - Professional Web Development & IT Support Services</title>
                       <meta name="description" content="Zwanski Tech provides professional web development, IT support, and cybersecurity services in Tunis, Tunisia. Expert solutions for businesses and individuals." />
