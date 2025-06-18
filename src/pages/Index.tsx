@@ -11,8 +11,6 @@ import EnhancedContact from "@/components/EnhancedContact";
 import Footer from "@/components/Footer";
 import AcademyHero from "@/components/academy/AcademyHero";
 import CourseGrid from "@/components/academy/CourseGrid";
-import AdScript from "@/components/ads/AdScript";
-import DirectLinkAd from "@/components/ads/DirectLinkAd";
 import { Helmet } from "react-helmet-async";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -148,21 +146,10 @@ const Index = () => {
         <AffiliateProgram />
         <Navbar />
         
-        {/* Direct Link Ad - Timed trigger for homepage engagement */}
-        <DirectLinkAd trigger="timed" delay={45000} frequency="session" />
-        
         <main>
           <Hero />
-          
-          {/* Strategic Ad Placement 1 - After Hero Section */}
-          <AdScript id="ad-after-hero" className="bg-muted/20 rounded-lg" />
-          
           <DynamicSkills />
           <DynamicProjects />
-          
-          {/* Strategic Ad Placement 2 - Between Projects and Experience */}
-          <AdScript id="ad-between-content" className="bg-gradient-to-r from-muted/10 to-muted/20 rounded-xl" />
-          
           <DynamicExperience />
           <YouTubeVideos />
           
@@ -191,9 +178,6 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-              
-              {/* Strategic Ad Placement 3 - Before Academy Content */}
-              <AdScript id="ad-before-academy" className="mb-12 bg-purple-500/5 rounded-2xl border border-purple-500/20" />
               
               <div className="mb-12">
                 <CourseGrid
@@ -224,10 +208,6 @@ const Index = () => {
           </section>
           
           <Playground />
-          
-          {/* Strategic Ad Placement 4 - Before Contact Section */}
-          <AdScript id="ad-before-contact" className="bg-gradient-to-br from-blue-500/5 to-green-500/5 rounded-2xl border border-blue-500/20" />
-          
           <EnhancedContact />
         </main>
         <Footer />

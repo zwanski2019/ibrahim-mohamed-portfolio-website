@@ -6,7 +6,6 @@ import Footer from "@/components/Footer";
 import ServiceCard from "@/components/ServiceCard";
 import ServiceRequestForm from "@/components/ServiceRequestForm";
 import IMEIChecker from "@/components/IMEIChecker";
-import DirectLinkAd from "@/components/ads/DirectLinkAd";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Smartphone } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
@@ -82,9 +81,6 @@ const Services = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      
-      {/* Direct Link Ad - Click trigger for service interactions */}
-      <DirectLinkAd trigger="click" frequency="session" />
       
       <main className="flex-grow">
         {/* Featured Free Tool Section */}
