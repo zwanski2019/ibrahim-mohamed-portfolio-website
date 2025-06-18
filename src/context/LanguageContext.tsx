@@ -8,6 +8,7 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (language: Language) => void;
   t: (key: string) => string;
+  wasAutoDetected: boolean;
 }
 
 const translations = {
@@ -911,10 +912,20 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(getInitialLanguage);
+  const [wasAutoDetected, setWasAutoDetected] = useState(false);
+
+  useEffect(() => {
+    // Check if language was auto-detected (not from localStorage)
+    const savedLanguage = localStorage.getItem('language');
+    if (!savedLanguage && language !== 'en') {
+      setWasAutoDetected(true);
+    }
+  }, []);
 
   const setLanguage = (newLanguage: Language) => {
     setLanguageState(newLanguage);
     localStorage.setItem('language', newLanguage);
+    setWasAutoDetected(false); // Reset auto-detection flag when user manually changes language
     
     // Update document direction for RTL languages
     if (newLanguage === 'ar') {
@@ -938,7 +949,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   }, [language]);
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, wasAutoDetected }}>
       {children}
     </LanguageContext.Provider>
   );
