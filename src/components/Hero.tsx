@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Play, Shield, Globe, Zap, Users, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/context/LanguageContext";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 const Hero = () => {
   const { t } = useLanguage();
@@ -14,69 +14,71 @@ const Hero = () => {
     security: 0
   });
 
-  // Animated counters effect
-  useEffect(() => {
-    const animateCounters = () => {
-      const duration = 2000; // 2 seconds
-      const steps = 60;
-      const stepDuration = duration / steps;
+  // Optimized animated counters effect with useCallback
+  const animateCounters = useCallback(() => {
+    const duration = 2000; // 2 seconds
+    const steps = 60;
+    const stepDuration = duration / steps;
 
-      let step = 0;
-      const timer = setInterval(() => {
-        step++;
-        const progress = step / steps;
-        
+    let step = 0;
+    const timer = setInterval(() => {
+      step++;
+      const progress = step / steps;
+      
+      setCounters({
+        devices: Math.floor(300 * progress),
+        satisfaction: Math.floor(98 * progress),
+        experience: Math.floor(5 * progress),
+        security: Math.floor(65 * progress)
+      });
+
+      if (step >= steps) {
+        clearInterval(timer);
         setCounters({
-          devices: Math.floor(300 * progress),
-          satisfaction: Math.floor(98 * progress),
-          experience: Math.floor(5 * progress),
-          security: Math.floor(65 * progress)
+          devices: 300,
+          satisfaction: 98,
+          experience: 5,
+          security: 65
         });
+      }
+    }, stepDuration);
 
-        if (step >= steps) {
-          clearInterval(timer);
-          setCounters({
-            devices: 300,
-            satisfaction: 98,
-            experience: 5,
-            security: 65
-          });
-        }
-      }, stepDuration);
-    };
-
-    // Start animation after component mounts
-    const timeout = setTimeout(animateCounters, 500);
-    return () => clearTimeout(timeout);
+    return timer;
   }, []);
+
+  useEffect(() => {
+    // Start animation after component mounts
+    const timeout = setTimeout(() => {
+      const timer = animateCounters();
+      return () => clearInterval(timer);
+    }, 500);
+    
+    return () => clearTimeout(timeout);
+  }, [animateCounters]);
 
   const stats = [
     { 
       number: "300+", 
       label: t("hero.stats.devicesRepaired"), 
       icon: Zap, 
-      target: 300,
       value: counters.devices
     },
     { 
       number: "98%", 
       label: t("hero.stats.customerSatisfaction"), 
       icon: Users, 
-      target: 98,
       value: counters.satisfaction
     },
     { 
       number: "5+", 
       label: t("hero.stats.yearsExperience"), 
       icon: Shield, 
-      target: 5,
       value: counters.experience
     },
     { 
       number: "65%", 
       label: t("hero.stats.securityImprovement"), 
       icon: Globe, 
-      target: 65,
       value: counters.security
     }
   ];
@@ -103,10 +105,11 @@ const Hero = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600/20 to-blue-500/20 border border-blue-500/30 rounded-full text-blue-300 hover:text-blue-200 hover:from-blue-600/30 hover:to-blue-500/30 transition-all duration-300 backdrop-blur-sm group"
+              aria-label={t("hero.telegramNotice")}
             >
-              <MessageSquare className="h-4 w-4 group-hover:scale-110 transition-transform" />
+              <MessageSquare className="h-4 w-4 group-hover:scale-110 transition-transform" aria-hidden="true" />
               <span className="text-sm font-medium">{t("hero.telegramNotice")}</span>
-              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
             </a>
           </div>
 
@@ -129,22 +132,22 @@ const Hero = () => {
 
           {/* Enhanced CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-20 animate-on-scroll">
-            <Link to="/services">
+            <Link to="/services" aria-label={t("hero.cta1")}>
               <Button size="lg" className="group h-16 px-10 text-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 shadow-2xl shadow-blue-500/25">
                 {t("hero.cta1")}
-                <ArrowRight className="ml-3 h-6 w-6 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="ml-3 h-6 w-6 transition-transform group-hover:translate-x-1" aria-hidden="true" />
               </Button>
             </Link>
-            <Link to="/computer-model">
+            <Link to="/computer-model" aria-label={t("hero.cta2")}>
               <Button variant="outline" size="lg" className="group h-16 px-10 text-xl border-emerald-500 text-emerald-400 hover:bg-emerald-500/10 shadow-2xl shadow-emerald-500/25">
-                <Play className="mr-3 h-6 w-6 transition-transform group-hover:scale-110" />
+                <Play className="mr-3 h-6 w-6 transition-transform group-hover:scale-110" aria-hidden="true" />
                 {t("hero.cta2")}
               </Button>
             </Link>
-            <Link to="/chat">
+            <Link to="/chat" aria-label={t("hero.cta3")}>
               <Button size="lg" className="group h-16 px-10 text-xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-700 hover:to-emerald-600 shadow-2xl shadow-emerald-500/25">
                 {t("hero.cta3")}
-                <Zap className="ml-3 h-6 w-6 transition-transform group-hover:rotate-12" />
+                <Zap className="ml-3 h-6 w-6 transition-transform group-hover:rotate-12" aria-hidden="true" />
               </Button>
             </Link>
           </div>
@@ -155,16 +158,21 @@ const Hero = () => {
               <div 
                 key={index} 
                 className="relative group p-8 rounded-2xl bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-sm border border-slate-700/50 hover:border-emerald-500/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20"
+                role="group"
+                aria-label={`${stat.label}: ${index === 0 ? `${stat.value}+` :
+                   index === 1 ? `${stat.value}%` :
+                   index === 2 ? `${stat.value}+` :
+                   `${stat.value}%`}`}
               >
                 {/* Icon */}
                 <div className="mb-4 flex justify-center">
                   <div className="p-4 rounded-full bg-gradient-to-br from-emerald-500/20 to-blue-500/20 group-hover:from-emerald-500/30 group-hover:to-blue-500/30 transition-all duration-300">
-                    <stat.icon className="h-8 w-8 text-emerald-400" />
+                    <stat.icon className="h-8 w-8 text-emerald-400" aria-hidden="true" />
                   </div>
                 </div>
                 
                 {/* Animated Number */}
-                <div className="text-4xl md:text-5xl font-bold text-white mb-2 font-mono">
+                <div className="text-4xl md:text-5xl font-bold text-white mb-2 font-mono" aria-live="polite">
                   {index === 0 ? `${stat.value}+` :
                    index === 1 ? `${stat.value}%` :
                    index === 2 ? `${stat.value}+` :
@@ -186,15 +194,15 @@ const Hero = () => {
           <div className="mt-20 animate-on-scroll">
             <div className="flex flex-wrap justify-center items-center gap-8 text-slate-400">
               <div className="flex items-center gap-2">
-                <Shield className="h-5 w-5 text-emerald-400" />
+                <Shield className="h-5 w-5 text-emerald-400" aria-hidden="true" />
                 <span className="text-sm font-medium">Certified & Secure</span>
               </div>
               <div className="flex items-center gap-2">
-                <Globe className="h-5 w-5 text-blue-400" />
+                <Globe className="h-5 w-5 text-blue-400" aria-hidden="true" />
                 <span className="text-sm font-medium">Global Support</span>
               </div>
               <div className="flex items-center gap-2">
-                <Zap className="h-5 w-5 text-purple-400" />
+                <Zap className="h-5 w-5 text-purple-400" aria-hidden="true" />
                 <span className="text-sm font-medium">24/7 Available</span>
               </div>
             </div>

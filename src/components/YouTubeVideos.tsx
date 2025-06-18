@@ -8,8 +8,11 @@ import VideoCard from "./youtube/VideoCard";
 import VideoLoadingState from "./youtube/VideoLoadingState";
 import { MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function YouTubeVideos() {
+  const { t } = useLanguage();
+  
   const {
     data: videos = fallbackVideos,
     isLoading,
@@ -70,7 +73,7 @@ export default function YouTubeVideos() {
                 className="flex items-center gap-2"
               >
                 <MessageSquare className="h-4 w-4" />
-                Get video updates on Telegram
+                {t("hero.telegramNotice")}
               </a>
             </Button>
           </div>

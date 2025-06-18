@@ -1,3 +1,4 @@
+
 // Enhanced YouTube API service with better error handling and caching
 const YOUTUBE_API_KEY = 'AIzaSyAWgvpdwH4pKPlakAPTp9aRY2YYbAcViE0';
 const YOUTUBE_API_BASE_URL = 'https://www.googleapis.com/youtube/v3';
@@ -116,9 +117,11 @@ async function fetchWithRetry(url: string, maxRetries = 3): Promise<any> {
       
       if (!response.ok) {
         if (response.status === 403) {
+          console.warn('YouTube API quota exceeded, using fallback data');
           throw new Error('API_QUOTA_EXCEEDED');
         }
         if (response.status === 401) {
+          console.warn('Invalid YouTube API key, using fallback data');
           throw new Error('INVALID_API_KEY');
         }
         throw new Error(`HTTP_${response.status}`);
@@ -126,7 +129,7 @@ async function fetchWithRetry(url: string, maxRetries = 3): Promise<any> {
       
       return await response.json();
     } catch (error) {
-      console.warn(`API attempt ${attempt} failed:`, error);
+      console.warn(`YouTube API attempt ${attempt} failed:`, error);
       
       if (attempt === maxRetries) {
         throw error;
@@ -139,24 +142,13 @@ async function fetchWithRetry(url: string, maxRetries = 3): Promise<any> {
   }
 }
 
-export interface FetchResult {
-  videos: YouTubeVideo[];
-  isFromCache: boolean;
-  error?: string;
-  lastFetchTime?: number;
-}
-
-export async function fetchYouTubeVideos(forceRefresh = false): Promise<FetchResult> {
+export async function fetchYouTubeVideos(forceRefresh = false): Promise<YouTubeVideo[]> {
   // Check cache first unless forcing refresh
   if (!forceRefresh) {
     const cachedVideos = getCachedVideos();
     if (cachedVideos) {
       console.log('Using cached YouTube videos');
-      return {
-        videos: cachedVideos,
-        isFromCache: true,
-        lastFetchTime: JSON.parse(localStorage.getItem(CACHE_KEY) || '{}').timestamp
-      };
+      return cachedVideos;
     }
   }
 
@@ -201,54 +193,14 @@ export async function fetchYouTubeVideos(forceRefresh = false): Promise<FetchRes
     setCachedVideos(videos);
     console.log('Successfully fetched and cached YouTube videos');
     
-    return {
-      videos,
-      isFromCache: false,
-      lastFetchTime: Date.now()
-    };
+    return videos;
     
   } catch (error) {
-    console.error('Error fetching YouTube videos:', error);
+    console.error('Error fetching YouTube videos, using fallback:', error);
     
-    let errorMessage = 'Failed to load videos';
-    if (error instanceof Error) {
-      switch (error.message) {
-        case 'API_QUOTA_EXCEEDED':
-          errorMessage = 'YouTube API quota exceeded. Please try again later.';
-          break;
-        case 'INVALID_API_KEY':
-          errorMessage = 'Invalid YouTube API key configuration.';
-          break;
-        case 'NO_VIDEOS_FOUND':
-          errorMessage = 'No videos found on this channel.';
-          break;
-        default:
-          errorMessage = `API Error: ${error.message}`;
-      }
-    }
-    
-    // Try to return cached data even if expired as fallback
-    const expiredCache = localStorage.getItem(CACHE_KEY);
-    if (expiredCache) {
-      try {
-        const data: CachedData = JSON.parse(expiredCache);
-        console.log('Using expired cache as fallback');
-        return {
-          videos: data.videos,
-          isFromCache: true,
-          error: `${errorMessage} (showing cached content)`,
-          lastFetchTime: data.timestamp
-        };
-      } catch (cacheError) {
-        console.error('Error reading expired cache:', cacheError);
-      }
-    }
-    
-    return {
-      videos: [],
-      isFromCache: false,
-      error: errorMessage
-    };
+    // Import and use fallback videos
+    const { fallbackVideos } = await import('@/data/fallbackVideos');
+    return fallbackVideos;
   }
 }
 
@@ -259,8 +211,7 @@ export function clearVideoCache(): void {
 
 export const youtubeService = {
   getVideos: async (): Promise<YouTubeVideo[]> => {
-    const result = await fetchYouTubeVideos();
-    return result.videos;
+    return await fetchYouTubeVideos();
   },
   
   getLastFetchTime: (): number | undefined => {
