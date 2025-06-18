@@ -40,7 +40,7 @@ export const CookieConsent: React.FC = () => {
               <div className="flex items-center gap-2">
                 <Shield className="h-4 w-4 text-primary" />
                 <p className="text-sm font-medium">
-                  {t('cookie.title') || "Cookie Preferences"}
+                  {t('cookie.title')}
                 </p>
               </div>
               <div className="flex items-center gap-1">
@@ -50,7 +50,7 @@ export const CookieConsent: React.FC = () => {
                   className="h-7 px-1.5 text-xs"
                   onClick={handleSettingsClick}
                 >
-                  {t('cookie.settings') || "Settings"}
+                  {t('cookie.settings')}
                 </Button>
                 <Button
                   variant="default"
@@ -58,7 +58,7 @@ export const CookieConsent: React.FC = () => {
                   className="h-7 px-2 text-xs"
                   onClick={handleAcceptAllClick}
                 >
-                  {t('cookie.acceptAll') || "Accept All"}
+                  {t('cookie.acceptAll')}
                 </Button>
               </div>
             </div>
@@ -74,11 +74,10 @@ export const CookieConsent: React.FC = () => {
           <SheetHeader className="space-y-3">
             <SheetTitle className="flex items-center gap-2 text-xl">
               <Shield className="h-5 w-5 text-primary" />
-              {t('cookie.title') || "Cookie Preferences"}
+              {t('cookie.title')}
             </SheetTitle>
             <SheetDescription className="text-sm">
-              {t('cookie.description') || 
-                "We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. Select your preferences below."}
+              {t('cookie.description')}
             </SheetDescription>
           </SheetHeader>
           
@@ -90,7 +89,7 @@ export const CookieConsent: React.FC = () => {
               onClick={() => setShowDetails(!showDetails)}
             >
               {showDetails ? <ChevronUp className="h-4 w-4 mr-1" /> : <ChevronDown className="h-4 w-4 mr-1" />}
-              {showDetails ? t('cookie.hideDetails') || "Hide details" : t('cookie.showDetails') || "Show details"}
+              {showDetails ? t('cookie.hideDetails') : t('cookie.showDetails')}
             </Button>
           </div>
 

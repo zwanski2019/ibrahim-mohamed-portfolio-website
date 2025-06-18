@@ -49,7 +49,7 @@ export function CookieActions({ onClose }: CookieActionsProps) {
         onClick={handleRejectAll}
         className={`${isMobile ? 'w-full' : ''}`}
       >
-        {t('cookie.rejectAll') || "Reject All"}
+        {t('cookie.rejectAll')}
       </Button>
       <div className={`flex gap-2 ${isMobile ? 'w-full' : ''}`}>
         <Button 
@@ -57,13 +57,13 @@ export function CookieActions({ onClose }: CookieActionsProps) {
           onClick={handleAcceptSelected}
           className={`${isMobile ? 'flex-1' : ''}`}
         >
-          {t('cookie.acceptSelected') || "Accept Selected"}
+          {t('cookie.acceptSelected')}
         </Button>
         <Button 
           onClick={handleAcceptAll}
           className={`${isMobile ? 'flex-1' : ''} bg-primary text-primary-foreground hover:bg-primary/90`}
         >
-          {t('cookie.acceptAll') || "Accept All"}
+          {t('cookie.acceptAll')}
         </Button>
       </div>
     </SheetFooter>

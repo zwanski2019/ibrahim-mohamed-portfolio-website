@@ -29,7 +29,7 @@ export function CookieOption({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1.5">
           <Icon className={`h-3.5 w-3.5 ${iconColor}`} />
-          <h3 className="text-sm font-medium">{t(`cookie.${type}`) || type.charAt(0).toUpperCase() + type.slice(1)}</h3>
+          <h3 className="text-sm font-medium">{t(`cookie.${type}`)}</h3>
         </div>
         <Switch 
           checked={checked}
@@ -39,8 +39,7 @@ export function CookieOption({
         />
       </div>
       <p className="text-xs text-muted-foreground pl-5">
-        {t(`cookie.${type}Description`) || 
-          `Cookie preference for ${type}`}
+        {t(`cookie.${type}Description`)}
       </p>
       <Separator className="my-1" />
     </div>
