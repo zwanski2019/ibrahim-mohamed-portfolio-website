@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Moon, Sun, Menu, X, Bell, User, LogOut } from "lucide-react";
-import { useTheme } from "next-themes";
+import { useTheme } from "@/context/ThemeContext";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import ZwanskiLogo from "./ZwanskiLogo";
@@ -19,7 +19,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Navbar = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const { isAuthenticated, user, signOut } = useAuth();
@@ -109,7 +109,7 @@ const Navbar = () => {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={toggleTheme}
             >
               <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
@@ -149,7 +149,7 @@ const Navbar = () => {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={toggleTheme}
             >
               <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
