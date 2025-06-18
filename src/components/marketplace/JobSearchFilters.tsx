@@ -9,6 +9,7 @@ import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Search, MapPin, Filter, X } from "lucide-react";
 import { useCategories } from "@/hooks/useCategories";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface JobSearchFiltersProps {
   filters: {
@@ -23,15 +24,26 @@ interface JobSearchFiltersProps {
   onClearFilters: () => void;
 }
 
-const jobTypes = ["full-time", "part-time", "contract", "freelance"];
-const urgencyLevels = ["low", "medium", "high"];
-
 export const JobSearchFilters = ({ 
   filters, 
   onFiltersChange, 
   onClearFilters 
 }: JobSearchFiltersProps) => {
   const { data: categories = [] } = useCategories();
+  const { t } = useLanguage();
+  
+  const jobTypes = [
+    { value: "full-time", label: t("jobs.fullTime") },
+    { value: "part-time", label: t("jobs.partTime") },
+    { value: "contract", label: t("jobs.contract") },
+    { value: "freelance", label: t("jobs.freelance") }
+  ];
+
+  const urgencyLevels = [
+    { value: "low", label: t("jobs.urgency.low") },
+    { value: "medium", label: t("jobs.urgency.medium") },
+    { value: "high", label: t("jobs.urgency.high") }
+  ];
   
   const updateFilter = (key: string, value: any) => {
     onFiltersChange({ ...filters, [key]: value });
@@ -47,7 +59,7 @@ export const JobSearchFilters = ({
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
             <Filter className="h-5 w-5" />
-            Filters
+            {t("jobs.filters")}
           </CardTitle>
           {hasActiveFilters && (
             <Button 
@@ -57,7 +69,7 @@ export const JobSearchFilters = ({
               className="text-muted-foreground hover:text-foreground"
             >
               <X className="h-4 w-4 mr-1" />
-              Clear
+              {t("jobs.clear")}
             </Button>
           )}
         </div>
@@ -66,12 +78,12 @@ export const JobSearchFilters = ({
       <CardContent className="space-y-6">
         {/* Search */}
         <div className="space-y-2">
-          <Label htmlFor="search">Search Jobs</Label>
+          <Label htmlFor="search">{t("jobs.searchJobs")}</Label>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               id="search"
-              placeholder="Job title, keywords..."
+              placeholder={t("jobs.searchPlaceholder")}
               value={filters.search}
               onChange={(e) => updateFilter('search', e.target.value)}
               className="pl-10"
@@ -81,12 +93,12 @@ export const JobSearchFilters = ({
 
         {/* Location */}
         <div className="space-y-2">
-          <Label htmlFor="location">Location</Label>
+          <Label htmlFor="location">{t("jobs.location")}</Label>
           <div className="relative">
             <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               id="location"
-              placeholder="City, region..."
+              placeholder={t("jobs.locationPlaceholder")}
               value={filters.location}
               onChange={(e) => updateFilter('location', e.target.value)}
               className="pl-10"
@@ -96,13 +108,13 @@ export const JobSearchFilters = ({
 
         {/* Category */}
         <div className="space-y-2">
-          <Label>Category</Label>
+          <Label>{t("jobs.category")}</Label>
           <Select 
             value={filters.category || undefined} 
             onValueChange={(value) => updateFilter('category', value || "")}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Select category" />
+              <SelectValue placeholder={t("jobs.selectCategory")} />
             </SelectTrigger>
             <SelectContent>
               {categories.map((category) => (
@@ -116,18 +128,18 @@ export const JobSearchFilters = ({
 
         {/* Job Type */}
         <div className="space-y-2">
-          <Label>Job Type</Label>
+          <Label>{t("jobs.jobType")}</Label>
           <Select 
             value={filters.jobType || undefined} 
             onValueChange={(value) => updateFilter('jobType', value || "")}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Select job type" />
+              <SelectValue placeholder={t("jobs.selectJobType")} />
             </SelectTrigger>
             <SelectContent>
               {jobTypes.map((type) => (
-                <SelectItem key={type} value={type}>
-                  {type.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                <SelectItem key={type.value} value={type.value}>
+                  {type.label}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -136,7 +148,7 @@ export const JobSearchFilters = ({
 
         {/* Salary Range */}
         <div className="space-y-3">
-          <Label>Salary Range (TND)</Label>
+          <Label>{t("jobs.salaryRange")}</Label>
           <div className="px-2">
             <Slider
               value={filters.salaryRange}
@@ -155,26 +167,26 @@ export const JobSearchFilters = ({
 
         {/* Urgency */}
         <div className="space-y-3">
-          <Label>Urgency Level</Label>
+          <Label>{t("jobs.urgencyLevel")}</Label>
           <div className="space-y-2">
             {urgencyLevels.map((level) => (
-              <div key={level} className="flex items-center space-x-2">
+              <div key={level.value} className="flex items-center space-x-2">
                 <Checkbox
-                  id={level}
-                  checked={filters.urgency.includes(level)}
+                  id={level.value}
+                  checked={filters.urgency.includes(level.value)}
                   onCheckedChange={(checked) => {
                     if (checked) {
-                      updateFilter('urgency', [...filters.urgency, level]);
+                      updateFilter('urgency', [...filters.urgency, level.value]);
                     } else {
-                      updateFilter('urgency', filters.urgency.filter((u: string) => u !== level));
+                      updateFilter('urgency', filters.urgency.filter((u: string) => u !== level.value));
                     }
                   }}
                 />
                 <Label 
-                  htmlFor={level} 
-                  className="capitalize cursor-pointer"
+                  htmlFor={level.value} 
+                  className="cursor-pointer"
                 >
-                  {level}
+                  {level.label}
                 </Label>
               </div>
             ))}
@@ -184,11 +196,11 @@ export const JobSearchFilters = ({
         {/* Active Filters */}
         {hasActiveFilters && (
           <div className="space-y-2">
-            <Label>Active Filters</Label>
+            <Label>{t("jobs.activeFilters")}</Label>
             <div className="flex flex-wrap gap-1">
               {filters.search && (
                 <Badge variant="secondary" className="flex items-center gap-1">
-                  Search: {filters.search}
+                  {t("common.search")}: {filters.search}
                   <X 
                     className="h-3 w-3 cursor-pointer" 
                     onClick={() => updateFilter('search', '')}
@@ -197,7 +209,7 @@ export const JobSearchFilters = ({
               )}
               {filters.location && (
                 <Badge variant="secondary" className="flex items-center gap-1">
-                  Location: {filters.location}
+                  {t("jobs.location")}: {filters.location}
                   <X 
                     className="h-3 w-3 cursor-pointer" 
                     onClick={() => updateFilter('location', '')}

@@ -3,13 +3,16 @@ import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import IMEIChecker from "@/components/IMEIChecker";
+import { useLanguage } from "@/context/LanguageContext";
 
 const IMEICheck = () => {
+  const { t } = useLanguage();
+
   return (
     <>
       <Helmet>
-        <title>Free IMEI Checker - ZWANSKI TECH</title>
-        <meta name="description" content="Check your device's IMEI information instantly and for free. Verify if your phone is stolen, blocked, or has any issues." />
+        <title>{t("imei.title")} - ZWANSKI TECH</title>
+        <meta name="description" content={t("imei.description")} />
         <meta name="keywords" content="IMEI checker, free IMEI check, phone verification, device check" />
       </Helmet>
       
@@ -20,11 +23,10 @@ const IMEICheck = () => {
             <div className="container mx-auto px-4">
               <div className="text-center mb-12">
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                  Free <span className="text-gradient">IMEI Checker</span>
+                  {t("nav.freeImeiCheck").split(" ")[0]} <span className="text-gradient">{t("nav.freeImeiCheck").split(" ").slice(1).join(" ")}</span>
                 </h1>
                 <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  Instantly verify your device's IMEI information. Check if your phone is stolen, 
-                  blocked, or has any issues before buying or selling.
+                  {t("imei.description")}
                 </p>
               </div>
               
@@ -34,23 +36,23 @@ const IMEICheck = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
                   <div className="p-6">
                     <div className="text-3xl mb-4">🔒</div>
-                    <h3 className="font-semibold mb-2">Secure & Private</h3>
+                    <h3 className="font-semibold mb-2">{t("imei.features.secure")}</h3>
                     <p className="text-sm text-muted-foreground">
-                      Your IMEI data is processed securely and not stored on our servers
+                      {t("imei.features.secureDesc")}
                     </p>
                   </div>
                   <div className="p-6">
                     <div className="text-3xl mb-4">⚡</div>
-                    <h3 className="font-semibold mb-2">Instant Results</h3>
+                    <h3 className="font-semibold mb-2">{t("imei.features.instant")}</h3>
                     <p className="text-sm text-muted-foreground">
-                      Get comprehensive IMEI information in seconds
+                      {t("imei.features.instantDesc")}
                     </p>
                   </div>
                   <div className="p-6">
                     <div className="text-3xl mb-4">💯</div>
-                    <h3 className="font-semibold mb-2">100% Free</h3>
+                    <h3 className="font-semibold mb-2">{t("imei.features.free")}</h3>
                     <p className="text-sm text-muted-foreground">
-                      No registration required, completely free to use
+                      {t("imei.features.freeDesc")}
                     </p>
                   </div>
                 </div>

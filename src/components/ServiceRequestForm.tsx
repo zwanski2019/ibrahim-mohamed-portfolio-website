@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface ServiceRequestFormProps {
   selectedService: string | null;
@@ -9,6 +10,7 @@ interface ServiceRequestFormProps {
 
 const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -46,8 +48,8 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
     setTimeout(() => {
       console.log("Service request data:", formData);
       toast({
-        title: "Service request submitted!",
-        description: "Thanks for your interest. I'll get back to you within 24 hours.",
+        title: t("form.submitted"),
+        description: t("form.submittedDesc"),
       });
       setFormData({
         name: "",
@@ -63,13 +65,13 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
 
   return (
     <div id="service-request-form" className="card-3d bg-card rounded-xl p-8 shadow-3d border border-border">
-      <h2 className="text-2xl font-bold mb-6">Request a Service</h2>
+      <h2 className="text-2xl font-bold mb-6">{t("form.requestService")}</h2>
       
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label htmlFor="name" className="block text-sm font-medium mb-2">
-              Your Name*
+              {t("form.yourName")}<span className="text-red-500">{t("form.required")}</span>
             </label>
             <input
               type="text"
@@ -85,7 +87,7 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
           
           <div>
             <label htmlFor="email" className="block text-sm font-medium mb-2">
-              Email Address*
+              {t("form.emailAddress")}<span className="text-red-500">{t("form.required")}</span>
             </label>
             <input
               type="email"
@@ -103,7 +105,7 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label htmlFor="phone" className="block text-sm font-medium mb-2">
-              Phone Number
+              {t("form.phoneNumber")}
             </label>
             <input
               type="tel"
@@ -118,7 +120,7 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
           
           <div>
             <label htmlFor="budget" className="block text-sm font-medium mb-2">
-              Your Budget
+              {t("form.yourBudget")}
             </label>
             <select
               id="budget"
@@ -127,20 +129,20 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
               onChange={handleChange}
               className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
             >
-              <option value="">Select a budget range</option>
-              <option value="< $300">Less than $300</option>
-              <option value="$300 - $500">$300 - $500</option>
-              <option value="$500 - $1000">$500 - $1000</option>
-              <option value="$1000 - $2000">$1000 - $2000</option>
-              <option value="> $2000">More than $2000</option>
-              <option value="Contact for pricing">Contact for pricing</option>
+              <option value="">{t("form.selectBudget")}</option>
+              <option value="< $300">{t("form.lessThan300")}</option>
+              <option value="$300 - $500">{t("form.budget300to500")}</option>
+              <option value="$500 - $1000">{t("form.budget500to1000")}</option>
+              <option value="$1000 - $2000">{t("form.budget1000to2000")}</option>
+              <option value="> $2000">{t("form.moreThan2000")}</option>
+              <option value="Contact for pricing">{t("form.contactForPricing")}</option>
             </select>
           </div>
         </div>
         
         <div>
           <label htmlFor="service" className="block text-sm font-medium mb-2">
-            Service You're Interested In*
+            {t("form.serviceInterested")}<span className="text-red-500">{t("form.required")}</span>
           </label>
           <select
             id="service"
@@ -150,23 +152,23 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
             required
             className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
           >
-            <option value="">Select a service</option>
-            <option value="Web Development">Web Development</option>
-            <option value="IT Support">IT Support</option>
-            <option value="WordPress Development">WordPress Development</option>
-            <option value="SEO Optimization">SEO Optimization</option>
-            <option value="System Security">System Security</option>
-            <option value="Custom Tools Development">Custom Tools Development</option>
-            <option value="IMEI, FRP & Remote">IMEI, FRP & Remote</option>
-            <option value="Server, Cards & Games">Server, Cards & Games</option>
-            <option value="Expert Support">Expert Support</option>
-            <option value="Other">Other (please specify in message)</option>
+            <option value="">{t("form.selectService")}</option>
+            <option value="Web Development">{t("form.webDevelopment")}</option>
+            <option value="IT Support">{t("form.itSupport")}</option>
+            <option value="WordPress Development">{t("form.wordpressDevelopment")}</option>
+            <option value="SEO Optimization">{t("form.seoOptimization")}</option>
+            <option value="System Security">{t("form.systemSecurity")}</option>
+            <option value="Custom Tools Development">{t("form.customToolsDevelopment")}</option>
+            <option value="IMEI, FRP & Remote">{t("form.imeiFrpRemote")}</option>
+            <option value="Server, Cards & Games">{t("form.serverCardsGames")}</option>
+            <option value="Expert Support">{t("form.expertSupport")}</option>
+            <option value="Other">{t("form.other")}</option>
           </select>
         </div>
         
         <div>
           <label htmlFor="message" className="block text-sm font-medium mb-2">
-            Project Details*
+            {t("form.projectDetails")}<span className="text-red-500">{t("form.required")}</span>
           </label>
           <textarea
             id="message"
@@ -176,7 +178,7 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
             required
             rows={5}
             className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
-            placeholder="Please describe your project or service needs in detail."
+            placeholder={t("form.projectDetailsPlaceholder")}
           ></textarea>
         </div>
         
@@ -185,7 +187,7 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
           disabled={isSubmitting}
           className="w-full py-3"
         >
-          {isSubmitting ? "Submitting..." : "Submit Service Request"}
+          {isSubmitting ? t("form.submitting") : t("form.submitRequest")}
         </Button>
       </form>
     </div>

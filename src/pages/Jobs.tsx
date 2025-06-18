@@ -12,8 +12,10 @@ import { useJobPosts } from "@/hooks/useJobPosts";
 import DirectLinkAd from "@/components/ads/DirectLinkAd";
 import { Loader2, Map, List } from "lucide-react";
 import { JobPost } from "@/types/marketplace";
+import { useLanguage } from "@/context/LanguageContext";
 
 const Jobs = () => {
+  const { t } = useLanguage();
   const [filters, setFilters] = useState({
     search: "",
     location: "",
@@ -54,7 +56,7 @@ const Jobs = () => {
           <Card>
             <CardContent className="pt-6">
               <p className="text-center text-destructive">
-                Error loading jobs. Please try again later.
+                {t("jobs.error")}
               </p>
             </CardContent>
           </Card>
@@ -73,9 +75,9 @@ const Jobs = () => {
       
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-4">Find Your Next Job</h1>
+          <h1 className="text-4xl font-bold mb-4">{t("jobs.title")}</h1>
           <p className="text-xl text-muted-foreground">
-            Discover opportunities in Tunisia's growing job market
+            {t("jobs.subtitle")}
           </p>
         </div>
 
@@ -95,7 +97,7 @@ const Jobs = () => {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center gap-2">
-                    Jobs Available ({jobs.length})
+                    {t("jobs.available")} ({jobs.length})
                   </CardTitle>
                 </div>
               </CardHeader>
@@ -104,11 +106,11 @@ const Jobs = () => {
                   <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="list" className="flex items-center gap-2">
                       <List className="h-4 w-4" />
-                      List View
+                      {t("jobs.listView")}
                     </TabsTrigger>
                     <TabsTrigger value="map" className="flex items-center gap-2">
                       <Map className="h-4 w-4" />
-                      Map View
+                      {t("jobs.mapView")}
                     </TabsTrigger>
                   </TabsList>
                   
@@ -116,12 +118,12 @@ const Jobs = () => {
                     {isLoading ? (
                       <div className="flex items-center justify-center py-8">
                         <Loader2 className="h-8 w-8 animate-spin" />
-                        <span className="ml-2">Loading jobs...</span>
+                        <span className="ml-2">{t("jobs.loading")}</span>
                       </div>
                     ) : jobs.length === 0 ? (
                       <div className="text-center py-8">
                         <p className="text-muted-foreground">
-                          No jobs found matching your criteria.
+                          {t("jobs.noJobs")}
                         </p>
                       </div>
                     ) : (

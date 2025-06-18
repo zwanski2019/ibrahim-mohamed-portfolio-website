@@ -6,19 +6,21 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Smartphone, Search, AlertCircle, CheckCircle } from 'lucide-react';
 import { useIMEIChecker } from '@/hooks/useIMEIChecker';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/context/LanguageContext';
 
 const IMEIChecker = () => {
   const [imei, setImei] = useState('');
   const { checkIMEI, isLoading, result, error, reset } = useIMEIChecker();
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!imei.trim()) {
       toast({
-        title: "Error",
-        description: "Please enter an IMEI number",
+        title: t("imei.error"),
+        description: t("imei.errorEnterImei"),
         variant: "destructive"
       });
       return;
@@ -28,8 +30,8 @@ const IMEIChecker = () => {
     const cleanImei = imei.replace(/\s+/g, '');
     if (!/^\d{15}$/.test(cleanImei)) {
       toast({
-        title: "Invalid IMEI",
-        description: "IMEI should be exactly 15 digits",
+        title: t("imei.errorInvalidImeiDesc"),
+        description: t("imei.errorInvalidImei"),
         variant: "destructive"
       });
       return;
@@ -48,10 +50,10 @@ const IMEIChecker = () => {
       <CardHeader className="text-center">
         <div className="flex items-center justify-center gap-2 mb-2">
           <Smartphone className="h-6 w-6 text-primary" />
-          <CardTitle className="text-2xl">Free IMEI Checker</CardTitle>
+          <CardTitle className="text-2xl">{t("imei.title")}</CardTitle>
         </div>
         <p className="text-muted-foreground">
-          Check your device's IMEI information instantly and for free
+          {t("imei.subtitle")}
         </p>
       </CardHeader>
       
@@ -59,19 +61,19 @@ const IMEIChecker = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="imei" className="block text-sm font-medium mb-2">
-              Enter IMEI Number
+              {t("imei.enterImei")}
             </label>
             <Input
               id="imei"
               type="text"
-              placeholder="e.g., 123456789012345"
+              placeholder={t("imei.placeholder")}
               value={imei}
               onChange={(e) => setImei(e.target.value)}
               maxLength={17} // Allow for spaces
               className="text-center text-lg font-mono"
             />
             <p className="text-xs text-muted-foreground mt-1">
-              Find your IMEI by dialing *#06# or checking Settings
+              {t("imei.findImei")}
             </p>
           </div>
           
@@ -84,12 +86,12 @@ const IMEIChecker = () => {
               {isLoading ? (
                 <>
                   <Search className="mr-2 h-4 w-4 animate-spin" />
-                  Checking...
+                  {t("imei.checking")}
                 </>
               ) : (
                 <>
                   <Search className="mr-2 h-4 w-4" />
-                  Check IMEI
+                  {t("imei.checkImei")}
                 </>
               )}
             </Button>
@@ -100,7 +102,7 @@ const IMEIChecker = () => {
                 variant="outline" 
                 onClick={handleReset}
               >
-                Reset
+                {t("imei.reset")}
               </Button>
             )}
           </div>
@@ -112,7 +114,7 @@ const IMEIChecker = () => {
             <CardContent className="pt-6">
               <div className="flex items-center gap-2 text-destructive">
                 <AlertCircle className="h-5 w-5" />
-                <span className="font-medium">Error</span>
+                <span className="font-medium">{t("imei.error")}</span>
               </div>
               <p className="mt-2 text-sm">{error}</p>
             </CardContent>
@@ -124,7 +126,7 @@ const IMEIChecker = () => {
             <CardContent className="pt-6">
               <div className="flex items-center gap-2 text-green-700 dark:text-green-400 mb-3">
                 <CheckCircle className="h-5 w-5" />
-                <span className="font-medium">IMEI Check Results</span>
+                <span className="font-medium">{t("imei.results")}</span>
               </div>
               <div className="whitespace-pre-wrap text-sm font-mono bg-background p-4 rounded border">
                 {result}
@@ -136,14 +138,37 @@ const IMEIChecker = () => {
         {/* Info Section */}
         <Card className="bg-muted/50">
           <CardContent className="pt-6">
-            <h3 className="font-medium mb-2">What is IMEI?</h3>
+            <h3 className="font-medium mb-2">{t("imei.whatIsImei")}</h3>
             <p className="text-sm text-muted-foreground">
-              IMEI (International Mobile Equipment Identity) is a unique 15-digit number 
-              that identifies your mobile device. It's useful for checking if a device is 
-              stolen, blocked, or has any issues before purchasing.
+              {t("imei.imeiDescription")}
             </p>
           </CardContent>
         </Card>
+
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+          <div className="text-center p-4">
+            <div className="text-3xl mb-2">🔒</div>
+            <h3 className="font-semibold mb-2">{t("imei.features.secure")}</h3>
+            <p className="text-sm text-muted-foreground">
+              {t("imei.features.secureDesc")}
+            </p>
+          </div>
+          <div className="text-center p-4">
+            <div className="text-3xl mb-2">⚡</div>
+            <h3 className="font-semibold mb-2">{t("imei.features.instant")}</h3>
+            <p className="text-sm text-muted-foreground">
+              {t("imei.features.instantDesc")}
+            </p>
+          </div>
+          <div className="text-center p-4">
+            <div className="text-3xl mb-2">💯</div>
+            <h3 className="font-semibold mb-2">{t("imei.features.free")}</h3>
+            <p className="text-sm text-muted-foreground">
+              {t("imei.features.freeDesc")}
+            </p>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

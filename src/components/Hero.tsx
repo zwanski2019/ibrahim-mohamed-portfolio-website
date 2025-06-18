@@ -6,63 +6,13 @@ import { useLanguage } from "@/context/LanguageContext";
 import { useEffect, useState } from "react";
 
 const Hero = () => {
-  const { language } = useLanguage();
+  const { t } = useLanguage();
   const [counters, setCounters] = useState({
     devices: 0,
     satisfaction: 0,
     experience: 0,
     security: 0
   });
-
-  const content = {
-    en: {
-      headline: "Your Partner in Building, Repairing & Securing Digital Futures",
-      subheadline: "Digital Solutions, Reimagined. Fix. Build. Secure. Empower.",
-      description: "With over five years of dedicated experience in the IT industry, we provide comprehensive solutions spanning web development, cybersecurity, and advanced technical support. From custom Chrome extensions to IMEI services and BIOS repairs, we deliver excellence in every project.",
-      cta1: "Explore Services",
-      cta2: "Watch Demo",
-      cta3: "Start Project",
-      telegramNotice: "📢 Join our Telegram for instant tech news & updates!",
-      stats: [
-        { number: "300+", label: "Devices Repaired", icon: Zap, target: 300 },
-        { number: "98%", label: "Customer Satisfaction", icon: Users, target: 98 },
-        { number: "5+", label: "Years Experience", icon: Shield, target: 5 },
-        { number: "65%", label: "Security Improvement", icon: Globe, target: 65 }
-      ]
-    },
-    fr: {
-      headline: "Votre Partenaire pour Construire, Réparer et Sécuriser l'Avenir Numérique",
-      subheadline: "Solutions Numériques, Réinventées. Réparer. Construire. Sécuriser. Autonomiser.",
-      description: "Avec plus de cinq ans d'expérience dédiée dans l'industrie IT, nous fournissons des solutions complètes couvrant le développement web, la cybersécurité et le support technique avancé.",
-      cta1: "Découvrir les Services",
-      cta2: "Voir la Démo",
-      cta3: "Démarrer un Projet",
-      telegramNotice: "📢 Rejoignez notre Telegram pour les nouvelles tech instantanées!",
-      stats: [
-        { number: "300+", label: "Appareils Réparés", icon: Zap, target: 300 },
-        { number: "98%", label: "Satisfaction Client", icon: Users, target: 98 },
-        { number: "5+", label: "Années d'Expérience", icon: Shield, target: 5 },
-        { number: "65%", label: "Amélioration Sécurité", icon: Globe, target: 65 }
-      ]
-    },
-    ar: {
-      headline: "شريكك في بناء وإصلاح وتأمين المستقبل الرقمي",
-      subheadline: "حلول رقمية مبتكرة. إصلاح. بناء. حماية. تمكين.",
-      description: "مع أكثر من خمس سنوات من الخبرة المتخصصة في صناعة تقنية المعلومات، نقدم حلولاً شاملة تشمل تطوير الويب والأمن السيبراني والدعم التقني المتقدم.",
-      cta1: "استكشف الخدمات",
-      cta2: "شاهد العرض",
-      cta3: "ابدأ مشروع",
-      telegramNotice: "📢 انضم إلى تلغرام للأخبار التقنية الفورية!",
-      stats: [
-        { number: "300+", label: "جهاز تم إصلاحه", icon: Zap, target: 300 },
-        { number: "98%", label: "رضا العملاء", icon: Users, target: 98 },
-        { number: "5+", label: "سنوات خبرة", icon: Shield, target: 5 },
-        { number: "65%", label: "تحسين الأمان", icon: Globe, target: 65 }
-      ]
-    }
-  };
-
-  const currentContent = content[language];
 
   // Animated counters effect
   useEffect(() => {
@@ -100,6 +50,37 @@ const Hero = () => {
     return () => clearTimeout(timeout);
   }, []);
 
+  const stats = [
+    { 
+      number: "300+", 
+      label: t("hero.stats.devicesRepaired"), 
+      icon: Zap, 
+      target: 300,
+      value: counters.devices
+    },
+    { 
+      number: "98%", 
+      label: t("hero.stats.customerSatisfaction"), 
+      icon: Users, 
+      target: 98,
+      value: counters.satisfaction
+    },
+    { 
+      number: "5+", 
+      label: t("hero.stats.yearsExperience"), 
+      icon: Shield, 
+      target: 5,
+      value: counters.experience
+    },
+    { 
+      number: "65%", 
+      label: t("hero.stats.securityImprovement"), 
+      icon: Globe, 
+      target: 65,
+      value: counters.security
+    }
+  ];
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
       {/* Enhanced Background Elements */}
@@ -124,7 +105,7 @@ const Hero = () => {
               className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600/20 to-blue-500/20 border border-blue-500/30 rounded-full text-blue-300 hover:text-blue-200 hover:from-blue-600/30 hover:to-blue-500/30 transition-all duration-300 backdrop-blur-sm group"
             >
               <MessageSquare className="h-4 w-4 group-hover:scale-110 transition-transform" />
-              <span className="text-sm font-medium">{currentContent.telegramNotice}</span>
+              <span className="text-sm font-medium">{t("hero.telegramNotice")}</span>
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
@@ -132,17 +113,17 @@ const Hero = () => {
           {/* Enhanced Main Headlines */}
           <div className="mb-12 animate-on-scroll">
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 bg-gradient-to-r from-blue-400 via-emerald-400 to-blue-400 bg-clip-text text-transparent leading-tight animate-pulse-slow">
-              {currentContent.headline}
+              {t("hero.headline")}
             </h1>
             <h2 className="text-2xl md:text-3xl lg:text-4xl text-emerald-300 mb-8 font-bold tracking-wide">
-              {currentContent.subheadline}
+              {t("hero.subheadline")}
             </h2>
           </div>
 
           {/* Enhanced Description */}
           <div className="mb-16 animate-on-scroll">
             <p className="text-xl md:text-2xl text-slate-300 max-w-5xl mx-auto leading-relaxed">
-              {currentContent.description}
+              {t("hero.description")}
             </p>
           </div>
 
@@ -150,19 +131,19 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-20 animate-on-scroll">
             <Link to="/services">
               <Button size="lg" className="group h-16 px-10 text-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 shadow-2xl shadow-blue-500/25">
-                {currentContent.cta1}
+                {t("hero.cta1")}
                 <ArrowRight className="ml-3 h-6 w-6 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
             <Link to="/computer-model">
               <Button variant="outline" size="lg" className="group h-16 px-10 text-xl border-emerald-500 text-emerald-400 hover:bg-emerald-500/10 shadow-2xl shadow-emerald-500/25">
                 <Play className="mr-3 h-6 w-6 transition-transform group-hover:scale-110" />
-                {currentContent.cta2}
+                {t("hero.cta2")}
               </Button>
             </Link>
             <Link to="/chat">
               <Button size="lg" className="group h-16 px-10 text-xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-700 hover:to-emerald-600 shadow-2xl shadow-emerald-500/25">
-                {currentContent.cta3}
+                {t("hero.cta3")}
                 <Zap className="ml-3 h-6 w-6 transition-transform group-hover:rotate-12" />
               </Button>
             </Link>
@@ -170,7 +151,7 @@ const Hero = () => {
 
           {/* Enhanced Animated Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto animate-on-scroll">
-            {currentContent.stats.map((stat, index) => (
+            {stats.map((stat, index) => (
               <div 
                 key={index} 
                 className="relative group p-8 rounded-2xl bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-sm border border-slate-700/50 hover:border-emerald-500/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20"
@@ -184,10 +165,10 @@ const Hero = () => {
                 
                 {/* Animated Number */}
                 <div className="text-4xl md:text-5xl font-bold text-white mb-2 font-mono">
-                  {index === 0 ? `${counters.devices}+` :
-                   index === 1 ? `${counters.satisfaction}%` :
-                   index === 2 ? `${counters.experience}+` :
-                   `${counters.security}%`}
+                  {index === 0 ? `${stat.value}+` :
+                   index === 1 ? `${stat.value}%` :
+                   index === 2 ? `${stat.value}+` :
+                   `${stat.value}%`}
                 </div>
                 
                 {/* Label */}

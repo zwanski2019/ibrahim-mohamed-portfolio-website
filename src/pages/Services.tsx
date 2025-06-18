@@ -94,7 +94,7 @@ const Services = () => {
                 </h2>
               </div>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Check your device's IMEI information instantly and for free. Verify if your phone is stolen, blocked, or has any issues.
+                {t("imei.description")}
               </p>
             </div>
             
