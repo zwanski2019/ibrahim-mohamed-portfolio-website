@@ -1,28 +1,30 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { User, Session } from "@supabase/supabase-js";
+import { supabase } from "@/integrations/supabase/client";
 
 // Define types for the user and authentication context
-type User = {
-  id: string;
-  username: string;
-  avatar?: string;
-};
-
 type AuthContextType = {
   user: User | null;
+  session: Session | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  login: (username: string) => void;
-  logout: () => void;
+  signUp: (email: string, password: string, userData?: any) => Promise<{ error: any }>;
+  signIn: (email: string, password: string) => Promise<{ error: any }>;
+  signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<{ error: any }>;
 };
 
 // Create the context with default values
 const AuthContext = createContext<AuthContextType>({
   user: null,
+  session: null,
   isLoading: true,
   isAuthenticated: false,
-  login: () => {},
-  logout: () => {},
+  signUp: async () => ({ error: null }),
+  signIn: async () => ({ error: null }),
+  signOut: async () => {},
+  resetPassword: async () => ({ error: null }),
 });
 
 // Custom hook for using the auth context
@@ -32,43 +34,80 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children 
 }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Check for existing user in localStorage on mount
+  // Set up auth state listener and check for existing session
   useEffect(() => {
-    const storedUser = localStorage.getItem("chatUser");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setIsLoading(false);
+    // Set up auth state listener FIRST
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+        setIsLoading(false);
+      }
+    );
+
+    // THEN check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      setIsLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
-  // Login function - for now, just use username (would use proper auth with Supabase later)
-  const login = (username: string) => {
-    const newUser = {
-      id: `user_${Date.now()}`, // Simple ID generation
-      username: username,
-      avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}` // Generate avatar
-    };
+  // Sign up function
+  const signUp = async (email: string, password: string, userData?: any) => {
+    const redirectUrl = `${window.location.origin}/`;
     
-    setUser(newUser);
-    localStorage.setItem("chatUser", JSON.stringify(newUser));
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: redirectUrl,
+        data: userData
+      }
+    });
+    return { error };
   };
 
-  // Logout function
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("chatUser");
+  // Sign in function
+  const signIn = async (email: string, password: string) => {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+    return { error };
+  };
+
+  // Sign out function
+  const signOut = async () => {
+    await supabase.auth.signOut();
+  };
+
+  // Reset password function
+  const resetPassword = async (email: string) => {
+    const redirectUrl = `${window.location.origin}/auth/reset-password`;
+    
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: redirectUrl
+    });
+    return { error };
   };
 
   return (
     <AuthContext.Provider
       value={{
         user,
+        session,
         isLoading,
         isAuthenticated: !!user,
-        login,
-        logout,
+        signUp,
+        signIn,
+        signOut,
+        resetPassword,
       }}
     >
       {children}

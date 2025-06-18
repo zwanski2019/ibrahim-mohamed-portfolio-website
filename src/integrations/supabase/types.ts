@@ -180,6 +180,111 @@ export type Database = {
         }
         Relationships: []
       }
+      channels: {
+        Row: {
+          color: string | null
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          icon: string | null
+          id: string
+          is_public: boolean | null
+          member_count: number | null
+          name: string
+          post_count: number | null
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          is_public?: boolean | null
+          member_count?: number | null
+          name: string
+          post_count?: number | null
+        }
+        Update: {
+          color?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          is_public?: boolean | null
+          member_count?: number | null
+          name?: string
+          post_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "channels_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      comments: {
+        Row: {
+          author_id: string
+          content: string
+          created_at: string | null
+          id: string
+          is_edited: boolean | null
+          like_count: number | null
+          parent_id: string | null
+          post_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          author_id: string
+          content: string
+          created_at?: string | null
+          id?: string
+          is_edited?: boolean | null
+          like_count?: number | null
+          parent_id?: string | null
+          post_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          author_id?: string
+          content?: string
+          created_at?: string | null
+          id?: string
+          is_edited?: boolean | null
+          like_count?: number | null
+          parent_id?: string | null
+          post_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "comments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contact_messages: {
         Row: {
           created_at: string | null
@@ -906,6 +1011,55 @@ export type Database = {
           },
         ]
       }
+      likes: {
+        Row: {
+          comment_id: string | null
+          created_at: string | null
+          id: string
+          post_id: string | null
+          reaction_type: string | null
+          user_id: string
+        }
+        Insert: {
+          comment_id?: string | null
+          created_at?: string | null
+          id?: string
+          post_id?: string | null
+          reaction_type?: string | null
+          user_id: string
+        }
+        Update: {
+          comment_id?: string | null
+          created_at?: string | null
+          id?: string
+          post_id?: string | null
+          reaction_type?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "likes_comment_id_fkey"
+            columns: ["comment_id"]
+            isOneToOne: false
+            referencedRelation: "comments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "likes_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "likes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       media: {
         Row: {
           alt_text: string | null
@@ -987,6 +1141,47 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          created_at: string | null
+          data: Json | null
+          id: string
+          message: string | null
+          read: boolean | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          data?: Json | null
+          id?: string
+          message?: string | null
+          read?: boolean | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          data?: Json | null
+          id?: string
+          message?: string | null
+          read?: boolean | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       payments: {
         Row: {
           amount: number
@@ -1045,45 +1240,141 @@ export type Database = {
           },
         ]
       }
+      posts: {
+        Row: {
+          author_id: string
+          channel_id: string
+          comment_count: number | null
+          content: string
+          content_type: string | null
+          created_at: string | null
+          id: string
+          image_urls: string[] | null
+          is_edited: boolean | null
+          is_pinned: boolean | null
+          like_count: number | null
+          title: string | null
+          updated_at: string | null
+          video_url: string | null
+          view_count: number | null
+        }
+        Insert: {
+          author_id: string
+          channel_id: string
+          comment_count?: number | null
+          content: string
+          content_type?: string | null
+          created_at?: string | null
+          id?: string
+          image_urls?: string[] | null
+          is_edited?: boolean | null
+          is_pinned?: boolean | null
+          like_count?: number | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          view_count?: number | null
+        }
+        Update: {
+          author_id?: string
+          channel_id?: string
+          comment_count?: number | null
+          content?: string
+          content_type?: string | null
+          created_at?: string | null
+          id?: string
+          image_urls?: string[] | null
+          is_edited?: boolean | null
+          is_pinned?: boolean | null
+          like_count?: number | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          view_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "posts_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "posts_channel_id_fkey"
+            columns: ["channel_id"]
+            isOneToOne: false
+            referencedRelation: "channels"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
+          bio: string | null
+          company: string | null
           created_at: string | null
           email: string
           full_name: string
+          github_url: string | null
           id: string
+          is_verified: boolean | null
+          linkedin_url: string | null
           location: string | null
           phone: string | null
           rating: number | null
+          reputation_points: number | null
+          skills: string[] | null
           updated_at: string | null
+          user_roles: Database["public"]["Enums"]["user_role"][] | null
           user_type: Database["public"]["Enums"]["user_type"]
           verified: boolean | null
+          website: string | null
         }
         Insert: {
           avatar_url?: string | null
+          bio?: string | null
+          company?: string | null
           created_at?: string | null
           email: string
           full_name: string
+          github_url?: string | null
           id: string
+          is_verified?: boolean | null
+          linkedin_url?: string | null
           location?: string | null
           phone?: string | null
           rating?: number | null
+          reputation_points?: number | null
+          skills?: string[] | null
           updated_at?: string | null
+          user_roles?: Database["public"]["Enums"]["user_role"][] | null
           user_type: Database["public"]["Enums"]["user_type"]
           verified?: boolean | null
+          website?: string | null
         }
         Update: {
           avatar_url?: string | null
+          bio?: string | null
+          company?: string | null
           created_at?: string | null
           email?: string
           full_name?: string
+          github_url?: string | null
           id?: string
+          is_verified?: boolean | null
+          linkedin_url?: string | null
           location?: string | null
           phone?: string | null
           rating?: number | null
+          reputation_points?: number | null
+          skills?: string[] | null
           updated_at?: string | null
+          user_roles?: Database["public"]["Enums"]["user_role"][] | null
           user_type?: Database["public"]["Enums"]["user_type"]
           verified?: boolean | null
+          website?: string | null
         }
         Relationships: []
       }
@@ -1277,6 +1568,45 @@ export type Database = {
         }
         Relationships: []
       }
+      user_channel_subscriptions: {
+        Row: {
+          channel_id: string
+          id: string
+          notification_level: string | null
+          subscribed_at: string | null
+          user_id: string
+        }
+        Insert: {
+          channel_id: string
+          id?: string
+          notification_level?: string | null
+          subscribed_at?: string | null
+          user_id: string
+        }
+        Update: {
+          channel_id?: string
+          id?: string
+          notification_level?: string | null
+          subscribed_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_channel_subscriptions_channel_id_fkey"
+            columns: ["channel_id"]
+            isOneToOne: false
+            referencedRelation: "channels"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_channel_subscriptions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_progress: {
         Row: {
           completed_at: string | null
@@ -1364,6 +1694,13 @@ export type Database = {
         | "design"
         | "other"
       urgency_level: "low" | "medium" | "high"
+      user_role:
+        | "student"
+        | "instructor"
+        | "job_seeker"
+        | "employer"
+        | "freelancer"
+        | "admin"
       user_type: "employer" | "worker"
     }
     CompositeTypes: {
@@ -1499,6 +1836,14 @@ export const Constants = {
         "other",
       ],
       urgency_level: ["low", "medium", "high"],
+      user_role: [
+        "student",
+        "instructor",
+        "job_seeker",
+        "employer",
+        "freelancer",
+        "admin",
+      ],
       user_type: ["employer", "worker"],
     },
   },

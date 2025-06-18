@@ -1,57 +1,297 @@
 
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useLanguage } from "@/context/LanguageContext";
-import { DesktopNavigation } from "./navbar/DesktopNavigation";
-import { MobileNavigation } from "./navbar/MobileNavigation";
-import { cn } from "@/lib/utils";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Badge } from "@/components/ui/badge";
+import { 
+  User, 
+  Settings, 
+  LogOut, 
+  Bell,
+  MessageSquare,
+  GraduationCap,
+  Briefcase,
+  Users,
+  Home,
+  Wrench,
+  Info,
+  Menu,
+  X
+} from "lucide-react";
+import ZwanskiLogo from "./ZwanskiLogo";
+import ThemeToggle from "./ThemeToggle";
+import LanguageSelector from "./LanguageSelector";
+import MoreDropdown from "./navbar/MoreDropdown";
+import { supabase } from "@/integrations/supabase/client";
 
-export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const { t } = useLanguage();
+const Navbar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user, isAuthenticated, signOut } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [unreadNotifications, setUnreadNotifications] = useState(0);
+  const [userProfile, setUserProfile] = useState<any>(null);
 
+  // Fetch user profile and notifications
   useEffect(() => {
-    const handleScroll = () => {
-      const offset = window.scrollY;
-      if (offset > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
+    if (isAuthenticated && user) {
+      fetchUserProfile();
+      fetchNotifications();
+    }
+  }, [isAuthenticated, user]);
+
+  const fetchUserProfile = async () => {
+    if (!user) return;
     
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+    try {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error("Error fetching profile:", error);
+        return;
+      }
+
+      setUserProfile(data);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
+  };
+
+  const fetchNotifications = async () => {
+    if (!user) return;
+
+    try {
+      const { count, error } = await supabase
+        .from("notifications")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", user.id)
+        .eq("read", false);
+
+      if (error) throw error;
+      setUnreadNotifications(count || 0);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
+  };
+
+  const isActivePath = (path: string) => {
+    return location.pathname === path;
+  };
+
+  const mainNavItems = [
+    { label: "Home", path: "/", icon: Home },
+    { label: "Services", path: "/services", icon: Wrench },
+    { label: "Academy", path: "/academy", icon: GraduationCap },
+    { label: "Jobs", path: "/jobs", icon: Briefcase },
+    { label: "Community", path: "/community", icon: Users, authRequired: true },
+    { label: "Chat", path: "/chat", icon: MessageSquare },
+  ];
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
-        scrolled
-          ? "py-2 bg-background/95 backdrop-blur-lg shadow-lg"
-          : "py-3 bg-background"
-      )}
-    >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <nav className="flex items-center justify-between h-16">
+    <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center flex-shrink-0">
-            <Link
-              to="/"
-              className="text-xl sm:text-2xl font-bold text-primary hover:text-primary/80 transition-colors whitespace-nowrap"
-              aria-label="ZWANSKI TECH - Job Marketplace"
-            >
-              ZWANSKI TECH
-            </Link>
+          <div className="flex items-center space-x-4">
+            <ZwanskiLogo />
           </div>
 
-          <DesktopNavigation />
-          <MobileNavigation />
-        </nav>
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center space-x-8">
+            {mainNavItems.map((item) => {
+              const Icon = item.icon;
+              const showItem = !item.authRequired || isAuthenticated;
+              
+              if (!showItem) return null;
+              
+              return (
+                <Button
+                  key={item.path}
+                  variant={isActivePath(item.path) ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => navigate(item.path)}
+                  className="flex items-center gap-2"
+                >
+                  <Icon className="h-4 w-4" />
+                  {item.label}
+                </Button>
+              );
+            })}
+            <MoreDropdown />
+          </div>
+
+          {/* Right Side */}
+          <div className="flex items-center space-x-4">
+            {/* Theme Toggle */}
+            <ThemeToggle />
+            
+            {/* Language Selector */}
+            <LanguageSelector />
+
+            {/* Authentication Section */}
+            {isAuthenticated && user ? (
+              <div className="flex items-center space-x-3">
+                {/* Notifications */}
+                <Button variant="ghost" size="sm" className="relative">
+                  <Bell className="h-4 w-4" />
+                  {unreadNotifications > 0 && (
+                    <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs">
+                      {unreadNotifications > 9 ? "9+" : unreadNotifications}
+                    </Badge>
+                  )}
+                </Button>
+
+                {/* User Menu */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-8 w-8 rounded-full p-0">
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={userProfile?.avatar_url || ""} />
+                        <AvatarFallback>
+                          {userProfile?.full_name?.split(" ").map((n: string) => n[0]).join("") || 
+                           user.email?.charAt(0).toUpperCase() || "U"}
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <div className="flex items-center justify-start gap-2 p-2">
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={userProfile?.avatar_url || ""} />
+                        <AvatarFallback>
+                          {userProfile?.full_name?.split(" ").map((n: string) => n[0]).join("") || 
+                           user.email?.charAt(0).toUpperCase() || "U"}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium">
+                          {userProfile?.full_name || user.email}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {user.email}
+                        </p>
+                      </div>
+                    </div>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => navigate("/profile")}>
+                      <User className="mr-2 h-4 w-4" />
+                      Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/settings")}>
+                      <Settings className="mr-2 h-4 w-4" />
+                      Settings
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleSignOut}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            ) : (
+              <div className="hidden lg:flex items-center space-x-2">
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => navigate("/auth?tab=signin")}
+                >
+                  Sign In
+                </Button>
+                <Button 
+                  size="sm"
+                  onClick={() => navigate("/auth?tab=signup")}
+                >
+                  Sign Up
+                </Button>
+              </div>
+            )}
+
+            {/* Mobile Menu Button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="lg:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="lg:hidden border-t border-border/50 py-4">
+            <div className="flex flex-col space-y-2">
+              {mainNavItems.map((item) => {
+                const Icon = item.icon;
+                const showItem = !item.authRequired || isAuthenticated;
+                
+                if (!showItem) return null;
+                
+                return (
+                  <Button
+                    key={item.path}
+                    variant={isActivePath(item.path) ? "default" : "ghost"}
+                    className="justify-start"
+                    onClick={() => {
+                      navigate(item.path);
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    <Icon className="mr-2 h-4 w-4" />
+                    {item.label}
+                  </Button>
+                );
+              })}
+              
+              {!isAuthenticated && (
+                <>
+                  <Button
+                    variant="ghost"
+                    className="justify-start"
+                    onClick={() => {
+                      navigate("/auth?tab=signin");
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    Sign In
+                  </Button>
+                  <Button
+                    className="justify-start"
+                    onClick={() => {
+                      navigate("/auth?tab=signup");
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    Sign Up
+                  </Button>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </div>
-    </header>
+    </nav>
   );
-}
+};
+
+export default Navbar;
