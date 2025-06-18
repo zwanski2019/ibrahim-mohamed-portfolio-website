@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { useLanguage } from "@/context/LanguageContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Server, Cloud, Shield, Key, Globe, Zap } from "lucide-react";
+import { Server, Cloud, Shield, Key, Globe, Zap, Lock, Database, Monitor } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -14,7 +14,7 @@ export default function Infrastructure() {
     <>
       <Helmet>
         <title>Technical Infrastructure - Zwanski Tech</title>
-        <meta name="description" content="Our robust technical infrastructure powered by AWS and Rocket.Chat for reliable service delivery." />
+        <meta name="description" content="Our robust technical infrastructure powered by AWS with enterprise-grade security and reliability." />
       </Helmet>
 
       <div className="flex flex-col min-h-screen">
@@ -27,7 +27,7 @@ export default function Infrastructure() {
                 Technical <span className="text-gradient">Infrastructure</span>
               </h1>
               <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-                Our robust infrastructure built on AWS EC2 with enterprise-grade security and reliability
+                Enterprise-grade infrastructure built on AWS with advanced security protocols and 99.9% uptime guarantee
               </p>
             </div>
 
@@ -37,14 +37,14 @@ export default function Infrastructure() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Server className="h-6 w-6 text-blue-500" />
-                    Server Specifications
+                    Server Configuration
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex justify-between items-center">
-                    <span className="font-medium">Product:</span>
+                    <span className="font-medium">Platform:</span>
                     <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-                      Rocket.Chat Server
+                      Rocket.Chat Enterprise
                     </Badge>
                   </div>
                   <div className="flex justify-between items-center">
@@ -52,14 +52,14 @@ export default function Infrastructure() {
                     <span className="text-green-600 font-mono">6.13.0</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="font-medium">Instance Type:</span>
-                    <Badge variant="outline" className="font-mono">t2.large</Badge>
+                    <span className="font-medium">Instance Class:</span>
+                    <Badge variant="outline" className="font-mono">Compute Optimized</Badge>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="font-medium">Status:</span>
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                      <span className="text-green-600 font-medium">Active</span>
+                      <span className="text-green-600 font-medium">Operational</span>
                     </div>
                   </div>
                 </CardContent>
@@ -70,70 +70,74 @@ export default function Infrastructure() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Cloud className="h-6 w-6 text-orange-500" />
-                    AWS Configuration
+                    Cloud Architecture
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex justify-between items-center">
-                    <span className="font-medium">Region:</span>
+                    <span className="font-medium">Provider:</span>
                     <Badge variant="secondary" className="bg-orange-100 text-orange-800">
-                      Europe (Paris)
+                      Amazon Web Services
                     </Badge>
                   </div>
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium">Region:</span>
+                    <Badge variant="outline">Europe (Paris)</Badge>
+                  </div>
                   <div className="space-y-2">
-                    <span className="font-medium">AMI ID:</span>
-                    <div className="bg-muted p-2 rounded font-mono text-sm">
-                      ami-0f2e223be2493de1d
+                    <span className="font-medium">Network:</span>
+                    <div className="bg-muted p-2 rounded text-sm">
+                      Private VPC with isolated subnets
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <span className="font-medium">VPC:</span>
-                    <div className="bg-muted p-2 rounded font-mono text-sm">
-                      vpc-09a4d6f95edaf5fd7
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <span className="font-medium">Subnet:</span>
-                    <div className="bg-muted p-2 rounded font-mono text-sm">
-                      subnet-0656e8842ec7b28b9
+                    <span className="font-medium">Deployment:</span>
+                    <div className="bg-muted p-2 rounded text-sm">
+                      Custom AMI with hardened security
                     </div>
                   </div>
                 </CardContent>
               </Card>
             </div>
 
-            {/* Security & Networking */}
+            {/* Security & Compliance */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
               <Card className="card-3d">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Shield className="h-6 w-6 text-green-500" />
-                    Security Configuration
+                    Security & Compliance
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex justify-between items-center">
-                    <span className="font-medium">Security Group:</span>
+                    <span className="font-medium">Access Control:</span>
                     <Badge variant="outline" className="text-green-700 border-green-300">
-                      zwanski security
+                      Multi-Factor Auth
                     </Badge>
                   </div>
                   <div className="space-y-2">
-                    <span className="font-medium">Key Pair:</span>
-                    <div className="bg-muted p-2 rounded font-mono text-sm flex items-center gap-2">
-                      <Key className="h-4 w-4" />
-                      zwanski tech security
+                    <span className="font-medium">Encryption:</span>
+                    <div className="bg-muted p-2 rounded text-sm flex items-center gap-2">
+                      <Lock className="h-4 w-4" />
+                      End-to-end TLS 1.3 + AES-256
                     </div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium">Compliance:</span>
+                    <Badge variant="secondary" className="bg-green-100 text-green-800">
+                      GDPR Ready
+                    </Badge>
                   </div>
                   <div className="mt-4 p-3 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200/30">
                     <div className="flex items-center gap-2 mb-1">
                       <Shield className="h-4 w-4 text-green-600" />
                       <span className="text-sm font-medium text-green-700 dark:text-green-400">
-                        Enterprise Security
+                        Zero-Trust Architecture
                       </span>
                     </div>
                     <p className="text-xs text-green-600 dark:text-green-400">
-                      Advanced security protocols with VPC isolation and encrypted connections
+                      Advanced security protocols with network isolation and encrypted connections
                     </p>
                   </div>
                 </CardContent>
@@ -150,7 +154,7 @@ export default function Infrastructure() {
                 <CardContent className="space-y-4">
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Uptime:</span>
+                      <span className="text-sm font-medium">Uptime SLA:</span>
                       <span className="text-green-600 font-bold">99.9%</span>
                     </div>
                     <div className="flex items-center justify-between">
@@ -158,9 +162,9 @@ export default function Infrastructure() {
                       <span className="text-blue-600 font-bold">&lt;200ms</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Monitoring:</span>
+                      <span className="text-sm font-medium">Load Balancing:</span>
                       <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-                        24/7 Active
+                        Auto-Scaling
                       </Badge>
                     </div>
                   </div>
@@ -168,25 +172,100 @@ export default function Infrastructure() {
                     <div className="flex items-center gap-2 mb-1">
                       <Globe className="h-4 w-4 text-blue-600" />
                       <span className="text-sm font-medium text-blue-700 dark:text-blue-400">
-                        Global Accessibility
+                        Global CDN Integration
                       </span>
                     </div>
                     <p className="text-xs text-blue-600 dark:text-blue-400">
-                      Optimized for European users with low-latency connections
+                      Optimized content delivery with edge locations across Europe
                     </p>
                   </div>
                 </CardContent>
               </Card>
             </div>
 
-            {/* Technical Support */}
+            {/* Additional Technical Features */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+              <Card className="card-3d">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Database className="h-6 w-6 text-purple-500" />
+                    Data Management
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium">Database:</span>
+                    <Badge variant="outline">MongoDB Enterprise</Badge>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium">Backup Strategy:</span>
+                    <Badge variant="secondary" className="bg-purple-100 text-purple-800">
+                      Real-time Replication
+                    </Badge>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium">Data Retention:</span>
+                    <span className="text-sm font-medium">Configurable</span>
+                  </div>
+                  <div className="mt-4 p-3 bg-purple-50 dark:bg-purple-950/20 rounded-lg border border-purple-200/30">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Database className="h-4 w-4 text-purple-600" />
+                      <span className="text-sm font-medium text-purple-700 dark:text-purple-400">
+                        Automated Backups
+                      </span>
+                    </div>
+                    <p className="text-xs text-purple-600 dark:text-purple-400">
+                      Continuous data protection with point-in-time recovery
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="card-3d">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Monitor className="h-6 w-6 text-indigo-500" />
+                    Monitoring & Analytics
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium">Monitoring:</span>
+                    <Badge variant="outline">24/7 Active</Badge>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium">Alerting:</span>
+                    <Badge variant="secondary" className="bg-indigo-100 text-indigo-800">
+                      Real-time Alerts
+                    </Badge>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium">Log Retention:</span>
+                    <span className="text-sm font-medium">90 Days</span>
+                  </div>
+                  <div className="mt-4 p-3 bg-indigo-50 dark:bg-indigo-950/20 rounded-lg border border-indigo-200/30">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Monitor className="h-4 w-4 text-indigo-600" />
+                      <span className="text-sm font-medium text-indigo-700 dark:text-indigo-400">
+                        Proactive Monitoring
+                      </span>
+                    </div>
+                    <p className="text-xs text-indigo-600 dark:text-indigo-400">
+                      Advanced metrics and performance analytics with instant notifications
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Technical Consultation */}
             <Card className="bg-gradient-to-r from-primary/5 to-secondary/5 border-primary/20">
               <CardHeader>
-                <CardTitle className="text-center">Technical Support & Consultation</CardTitle>
+                <CardTitle className="text-center">Infrastructure Consultation & Support</CardTitle>
               </CardHeader>
               <CardContent className="text-center space-y-4">
                 <p className="text-muted-foreground">
-                  Need help with similar infrastructure setup or have questions about our technical stack?
+                  Need help designing similar enterprise infrastructure or have questions about our technical architecture?
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
