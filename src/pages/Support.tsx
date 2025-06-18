@@ -1,5 +1,5 @@
 
-import { Heart, Eye, Share2, Coffee, Star, Users, ExternalLink } from "lucide-react";
+import { Heart, Share2, Coffee, Star, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
@@ -74,23 +74,7 @@ const Support = () => {
               Simple Ways to <span className="text-gradient">Support Us</span>
             </h2>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* View Ads */}
-              <Card className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <Eye className="h-8 w-8 text-green-500 mb-2" />
-                  <CardTitle>View Our Ads</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground mb-4">
-                    Simply browsing our site with ads enabled helps us earn revenue to keep everything free. We use both display ads and occasional direct links that open in new tabs.
-                  </p>
-                  <div className="text-sm text-green-600 font-medium">
-                    ✓ Most impactful way to help
-                  </div>
-                </CardContent>
-              </Card>
-
+            <div className="grid md:grid-cols-2 gap-8">
               {/* Share Content */}
               <Card className="hover:shadow-lg transition-shadow">
                 <CardHeader>
@@ -131,28 +115,6 @@ const Support = () => {
                   </div>
                 </CardContent>
               </Card>
-
-              {/* Referral Link */}
-              <Card className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <ExternalLink className="h-8 w-8 text-purple-500 mb-2" />
-                  <CardTitle>Use Our Referral Link</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground mb-4">
-                    Support us by using our referral link when you sign up for advertising services.
-                  </p>
-                  <Button variant="outline" size="sm" asChild>
-                    <a 
-                      href="https://beta.publishers.adsterra.com/referral/W8bs5LxFKN" 
-                      rel="nofollow"
-                      target="_blank"
-                    >
-                      Referral Link
-                    </a>
-                  </Button>
-                </CardContent>
-              </Card>
             </div>
           </div>
 
@@ -167,12 +129,9 @@ const Support = () => {
                   <p className="text-muted-foreground mb-4">
                     We believe in being completely transparent about how we fund our free services:
                   </p>
-                  <div className="grid md:grid-cols-3 gap-4 text-sm">
+                  <div className="grid md:grid-cols-2 gap-4 text-sm">
                     <div className="p-4 bg-background/50 rounded-lg">
-                      <strong>Display Ads:</strong> Banner advertisements shown throughout the site
-                    </div>
-                    <div className="p-4 bg-background/50 rounded-lg">
-                      <strong>Direct Link Ads:</strong> Occasional links that open in new tabs during user interactions
+                      <strong>Course Sales:</strong> Premium course certifications and advanced content
                     </div>
                     <div className="p-4 bg-background/50 rounded-lg">
                       <strong>IT Services:</strong> Professional services help fund free educational content

@@ -42,14 +42,6 @@ export function CookieDetails({ showDetails }: CookieDetailsProps) {
       />
 
       <CookieOption
-        type="marketing"
-        icon={Info}
-        iconColor="text-purple-500"
-        checked={cookiePreferences.marketing}
-        onToggle={() => handleTogglePreference("marketing")}
-      />
-
-      <CookieOption
         type="preferences"
         icon={Info}
         iconColor="text-orange-500"

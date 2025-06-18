@@ -88,7 +88,6 @@ export default function PrivacyPolicy() {
                   <ul>
                     <li><strong>Essential cookies:</strong> Required for basic site functionality</li>
                     <li><strong>Analytics cookies:</strong> Help us understand how you use our site</li>
-                    <li><strong>Advertising cookies:</strong> Support our free services through relevant ads</li>
                     <li><strong>Preference cookies:</strong> Remember your language and theme settings</li>
                   </ul>
                   <p>You can manage your cookie preferences through our cookie consent banner.</p>

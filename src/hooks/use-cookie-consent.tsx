@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 export type CookiePreferences = {
   necessary: boolean;
   analytics: boolean;
-  marketing: boolean;
   preferences: boolean;
 };
 
@@ -12,7 +11,6 @@ export const useCookieConsent = () => {
   const [cookiePreferences, setCookiePreferences] = useState<CookiePreferences>({
     necessary: true,
     analytics: false,
-    marketing: false,
     preferences: false,
   });
 
@@ -59,7 +57,6 @@ export const useCookieConsent = () => {
     setCookiePreferences({
       necessary: true,
       analytics: false,
-      marketing: false,
       preferences: false,
     });
   };
@@ -79,7 +76,6 @@ export const useCookieConsent = () => {
     const allAccepted = {
       necessary: true,
       analytics: true,
-      marketing: true,
       preferences: true,
     };
     saveCookiePreferences(allAccepted);

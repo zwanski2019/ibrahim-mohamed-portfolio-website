@@ -6,7 +6,6 @@ interface CookiePreferencesContextType {
   cookiePreferences: {
     necessary: boolean;
     analytics: boolean;
-    marketing: boolean;
     preferences: boolean;
   };
   showBanner: boolean;
@@ -14,7 +13,7 @@ interface CookiePreferencesContextType {
   handleAcceptAll: () => void;
   handleRejectAll: () => void;
   handleAcceptSelected: () => void;
-  handleTogglePreference: (key: "necessary" | "analytics" | "marketing" | "preferences") => void;
+  handleTogglePreference: (key: "necessary" | "analytics" | "preferences") => void;
 }
 
 const CookiePreferencesContext = createContext<CookiePreferencesContextType | undefined>(undefined);
@@ -31,7 +30,6 @@ export function CookiePreferencesProvider({ children }: { children: React.ReactN
     const allAccepted = {
       necessary: true,
       analytics: true,
-      marketing: true,
       preferences: true,
     };
     saveCookiePreferences(allAccepted);
@@ -45,7 +43,6 @@ export function CookiePreferencesProvider({ children }: { children: React.ReactN
     const onlyNecessary = {
       necessary: true,
       analytics: false,
-      marketing: false,
       preferences: false,
     };
     saveCookiePreferences(onlyNecessary);

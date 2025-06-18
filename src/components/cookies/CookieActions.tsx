@@ -19,7 +19,6 @@ export function CookieActions({ onClose }: CookieActionsProps) {
     const allAccepted = {
       necessary: true,
       analytics: true,
-      marketing: true,
       preferences: true,
     };
     saveCookiePreferences(allAccepted);
@@ -35,7 +34,6 @@ export function CookieActions({ onClose }: CookieActionsProps) {
     const onlyNecessary = {
       necessary: true,
       analytics: false,
-      marketing: false,
       preferences: false,
     };
     saveCookiePreferences(onlyNecessary);
