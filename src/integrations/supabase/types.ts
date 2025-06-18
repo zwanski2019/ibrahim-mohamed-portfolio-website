@@ -182,6 +182,7 @@ export type Database = {
       }
       channels: {
         Row: {
+          category: string | null
           color: string | null
           created_at: string | null
           created_by: string | null
@@ -190,10 +191,14 @@ export type Database = {
           id: string
           is_public: boolean | null
           member_count: number | null
+          moderator_ids: string[] | null
           name: string
           post_count: number | null
+          rules: string | null
+          tags: string[] | null
         }
         Insert: {
+          category?: string | null
           color?: string | null
           created_at?: string | null
           created_by?: string | null
@@ -202,10 +207,14 @@ export type Database = {
           id?: string
           is_public?: boolean | null
           member_count?: number | null
+          moderator_ids?: string[] | null
           name: string
           post_count?: number | null
+          rules?: string | null
+          tags?: string[] | null
         }
         Update: {
+          category?: string | null
           color?: string | null
           created_at?: string | null
           created_by?: string | null
@@ -214,8 +223,11 @@ export type Database = {
           id?: string
           is_public?: boolean | null
           member_count?: number | null
+          moderator_ids?: string[] | null
           name?: string
           post_count?: number | null
+          rules?: string | null
+          tags?: string[] | null
         }
         Relationships: [
           {
@@ -281,6 +293,56 @@ export type Database = {
             columns: ["post_id"]
             isOneToOne: false
             referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_user_stats: {
+        Row: {
+          comments_count: number | null
+          community_level: string | null
+          created_at: string | null
+          id: string
+          last_active_at: string | null
+          likes_given: number | null
+          likes_received: number | null
+          posts_count: number | null
+          reputation_points: number | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          comments_count?: number | null
+          community_level?: string | null
+          created_at?: string | null
+          id?: string
+          last_active_at?: string | null
+          likes_given?: number | null
+          likes_received?: number | null
+          posts_count?: number | null
+          reputation_points?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          comments_count?: number | null
+          community_level?: string | null
+          created_at?: string | null
+          id?: string
+          last_active_at?: string | null
+          likes_given?: number | null
+          likes_received?: number | null
+          posts_count?: number | null
+          reputation_points?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_user_stats_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -642,6 +704,56 @@ export type Database = {
           {
             foreignKeyName: "courses_instructor_id_fkey"
             columns: ["instructor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      enhanced_notifications: {
+        Row: {
+          action_url: string | null
+          created_at: string | null
+          expires_at: string | null
+          id: string
+          is_read: boolean | null
+          message: string | null
+          metadata: Json | null
+          priority: string | null
+          title: string
+          type: string
+          user_id: string | null
+        }
+        Insert: {
+          action_url?: string | null
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          message?: string | null
+          metadata?: Json | null
+          priority?: string | null
+          title: string
+          type: string
+          user_id?: string | null
+        }
+        Update: {
+          action_url?: string | null
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          message?: string | null
+          metadata?: Json | null
+          priority?: string | null
+          title?: string
+          type?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enhanced_notifications_user_id_fkey"
+            columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
@@ -1240,8 +1352,48 @@ export type Database = {
           },
         ]
       }
+      post_reactions: {
+        Row: {
+          created_at: string | null
+          id: string
+          post_id: string | null
+          reaction_type: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          post_id?: string | null
+          reaction_type?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          post_id?: string | null
+          reaction_type?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_reactions_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "post_reactions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       posts: {
         Row: {
+          attachment_urls: string[] | null
           author_id: string
           channel_id: string
           comment_count: number | null
@@ -1253,12 +1405,16 @@ export type Database = {
           is_edited: boolean | null
           is_pinned: boolean | null
           like_count: number | null
+          mention_user_ids: string[] | null
+          post_type: string | null
+          tags: string[] | null
           title: string | null
           updated_at: string | null
           video_url: string | null
           view_count: number | null
         }
         Insert: {
+          attachment_urls?: string[] | null
           author_id: string
           channel_id: string
           comment_count?: number | null
@@ -1270,12 +1426,16 @@ export type Database = {
           is_edited?: boolean | null
           is_pinned?: boolean | null
           like_count?: number | null
+          mention_user_ids?: string[] | null
+          post_type?: string | null
+          tags?: string[] | null
           title?: string | null
           updated_at?: string | null
           video_url?: string | null
           view_count?: number | null
         }
         Update: {
+          attachment_urls?: string[] | null
           author_id?: string
           channel_id?: string
           comment_count?: number | null
@@ -1287,6 +1447,9 @@ export type Database = {
           is_edited?: boolean | null
           is_pinned?: boolean | null
           like_count?: number | null
+          mention_user_ids?: string[] | null
+          post_type?: string | null
+          tags?: string[] | null
           title?: string | null
           updated_at?: string | null
           video_url?: string | null
@@ -1311,70 +1474,121 @@ export type Database = {
       }
       profiles: {
         Row: {
+          academy_level: string | null
+          availability_status: string | null
           avatar_url: string | null
           bio: string | null
           company: string | null
+          company_name: string | null
+          company_size: string | null
           created_at: string | null
           email: string
           full_name: string
           github_url: string | null
+          hiring_budget_range: string | null
+          hourly_rate_max: number | null
+          hourly_rate_min: number | null
           id: string
+          industry: string | null
           is_verified: boolean | null
+          job_preferences: Json | null
+          learning_goals: string[] | null
           linkedin_url: string | null
           location: string | null
+          onboarding_completed: boolean | null
           phone: string | null
+          portfolio_items: Json | null
+          preferred_learning_style: string | null
+          profile_completion_percentage: number | null
           rating: number | null
           reputation_points: number | null
+          resume_url: string | null
+          service_categories: string[] | null
           skills: string[] | null
           updated_at: string | null
           user_roles: Database["public"]["Enums"]["user_role"][] | null
           user_type: Database["public"]["Enums"]["user_type"]
           verified: boolean | null
           website: string | null
+          years_experience: number | null
         }
         Insert: {
+          academy_level?: string | null
+          availability_status?: string | null
           avatar_url?: string | null
           bio?: string | null
           company?: string | null
+          company_name?: string | null
+          company_size?: string | null
           created_at?: string | null
           email: string
           full_name: string
           github_url?: string | null
+          hiring_budget_range?: string | null
+          hourly_rate_max?: number | null
+          hourly_rate_min?: number | null
           id: string
+          industry?: string | null
           is_verified?: boolean | null
+          job_preferences?: Json | null
+          learning_goals?: string[] | null
           linkedin_url?: string | null
           location?: string | null
+          onboarding_completed?: boolean | null
           phone?: string | null
+          portfolio_items?: Json | null
+          preferred_learning_style?: string | null
+          profile_completion_percentage?: number | null
           rating?: number | null
           reputation_points?: number | null
+          resume_url?: string | null
+          service_categories?: string[] | null
           skills?: string[] | null
           updated_at?: string | null
           user_roles?: Database["public"]["Enums"]["user_role"][] | null
           user_type: Database["public"]["Enums"]["user_type"]
           verified?: boolean | null
           website?: string | null
+          years_experience?: number | null
         }
         Update: {
+          academy_level?: string | null
+          availability_status?: string | null
           avatar_url?: string | null
           bio?: string | null
           company?: string | null
+          company_name?: string | null
+          company_size?: string | null
           created_at?: string | null
           email?: string
           full_name?: string
           github_url?: string | null
+          hiring_budget_range?: string | null
+          hourly_rate_max?: number | null
+          hourly_rate_min?: number | null
           id?: string
+          industry?: string | null
           is_verified?: boolean | null
+          job_preferences?: Json | null
+          learning_goals?: string[] | null
           linkedin_url?: string | null
           location?: string | null
+          onboarding_completed?: boolean | null
           phone?: string | null
+          portfolio_items?: Json | null
+          preferred_learning_style?: string | null
+          profile_completion_percentage?: number | null
           rating?: number | null
           reputation_points?: number | null
+          resume_url?: string | null
+          service_categories?: string[] | null
           skills?: string[] | null
           updated_at?: string | null
           user_roles?: Database["public"]["Enums"]["user_role"][] | null
           user_type?: Database["public"]["Enums"]["user_type"]
           verified?: boolean | null
           website?: string | null
+          years_experience?: number | null
         }
         Relationships: []
       }
@@ -1568,6 +1782,88 @@ export type Database = {
         }
         Relationships: []
       }
+      user_achievements: {
+        Row: {
+          achievement_type: string
+          created_at: string | null
+          description: string | null
+          earned_at: string | null
+          icon_url: string | null
+          id: string
+          metadata: Json | null
+          title: string
+          user_id: string | null
+        }
+        Insert: {
+          achievement_type: string
+          created_at?: string | null
+          description?: string | null
+          earned_at?: string | null
+          icon_url?: string | null
+          id?: string
+          metadata?: Json | null
+          title: string
+          user_id?: string | null
+        }
+        Update: {
+          achievement_type?: string
+          created_at?: string | null
+          description?: string | null
+          earned_at?: string | null
+          icon_url?: string | null
+          id?: string
+          metadata?: Json | null
+          title?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_achievements_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_activity_log: {
+        Row: {
+          activity_data: Json | null
+          activity_type: string
+          created_at: string | null
+          id: string
+          ip_address: unknown | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          activity_data?: Json | null
+          activity_type: string
+          created_at?: string | null
+          id?: string
+          ip_address?: unknown | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          activity_data?: Json | null
+          activity_type?: string
+          created_at?: string | null
+          id?: string
+          ip_address?: unknown | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_activity_log_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_channel_subscriptions: {
         Row: {
           channel_id: string
@@ -1601,6 +1897,45 @@ export type Database = {
           {
             foreignKeyName: "user_channel_subscriptions_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_connections: {
+        Row: {
+          connection_type: string | null
+          created_at: string | null
+          follower_id: string | null
+          following_id: string | null
+          id: string
+        }
+        Insert: {
+          connection_type?: string | null
+          created_at?: string | null
+          follower_id?: string | null
+          following_id?: string | null
+          id?: string
+        }
+        Update: {
+          connection_type?: string | null
+          created_at?: string | null
+          follower_id?: string | null
+          following_id?: string | null
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_connections_follower_id_fkey"
+            columns: ["follower_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_connections_following_id_fkey"
+            columns: ["following_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]

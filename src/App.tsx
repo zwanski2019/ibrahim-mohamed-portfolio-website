@@ -1,96 +1,67 @@
-
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Helmet, HelmetProvider } from "react-helmet-async";
-
-// Context Providers
-import { ThemeProvider } from "@/context/ThemeContext";
-import { LanguageProvider } from "@/context/LanguageContext";
-import { CookiePreferencesProvider } from "@/context/CookiePreferencesContext";
-import { AuthProvider } from "@/context/AuthContext";
-
-// Components
-import Index from "./pages/Index";
-import Services from "./pages/Services";
-import About from "./pages/About";
-import ComputerModel from "./pages/ComputerModel";
-import Chat from "./pages/Chat";
-import Newsletter from "./pages/Newsletter";
-import Academy from "./pages/Academy";
-import Jobs from "./pages/Jobs";
-import PostJob from "./pages/PostJob";
-import Freelancers from "./pages/Freelancers";
-import Auth from "./pages/Auth";
-import Community from "./pages/Community";
-import NotFound from "./pages/NotFound";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import TermsOfService from "./pages/TermsOfService";
-import Support from "./pages/Support";
-import FAQ from "./pages/FAQ";
-import Infrastructure from "./pages/Infrastructure";
-import IMEICheck from "./pages/IMEICheck";
-import RSS from "./pages/RSS";
-import CookieConsent from "./components/CookieConsent";
-import { LanguageDetectionNotice } from "./components/LanguageDetectionNotice";
-
-// Styles
-import "./App.css";
-import "./styles/components.css";
-import "./styles/utilities.css";
-import "./styles/base.css";
-import "./styles/animations.css";
-
-const queryClient = new QueryClient();
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Blog from './pages/Blog';
+import Projects from './pages/Projects';
+import Services from './pages/Services';
+import Courses from './pages/Courses';
+import Marketplace from './pages/Marketplace';
+import CookieConsent from './components/CookieConsent';
+import Footer from './components/Footer';
+import Navbar from './components/Navbar';
+import ChatWidget from './components/ChatWidget';
+import Auth from './pages/Auth';
+import Profile from './pages/Profile';
+import NotFound from './pages/NotFound';
+import Pricing from './pages/Pricing';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
+import Support from './pages/Support';
+import Dashboard from './pages/Dashboard';
+import Settings from './pages/Settings';
+import CourseDetails from './pages/CourseDetails';
+import ProjectDetails from './pages/ProjectDetails';
+import BlogPostDetails from './pages/BlogPostDetails';
+import { AuthProvider } from '@/context/AuthContext';
 
 function App() {
   return (
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <ThemeProvider>
-            <LanguageProvider>
-              <CookiePreferencesProvider>
-                <AuthProvider>
-                  <Toaster />
-                  <BrowserRouter>
-                    <Helmet>
-                      <title>Zwanski Tech - Professional Web Development & IT Support Services</title>
-                      <meta name="description" content="Zwanski Tech provides professional web development, IT support, and cybersecurity services in Tunis, Tunisia. Expert solutions for businesses and individuals." />
-                    </Helmet>
-                    <Routes>
-                      <Route path="/" element={<Index />} />
-                      <Route path="/services" element={<Services />} />
-                      <Route path="/about" element={<About />} />
-                      <Route path="/3d" element={<ComputerModel />} />
-                      <Route path="/chat" element={<Chat />} />
-                      <Route path="/newsletter" element={<Newsletter />} />
-                      <Route path="/academy" element={<Academy />} />
-                      <Route path="/jobs" element={<Jobs />} />
-                      <Route path="/post-job" element={<PostJob />} />
-                      <Route path="/freelancers" element={<Freelancers />} />
-                      <Route path="/auth" element={<Auth />} />
-                      <Route path="/community" element={<Community />} />
-                      <Route path="/privacy" element={<PrivacyPolicy />} />
-                      <Route path="/terms" element={<TermsOfService />} />
-                      <Route path="/support" element={<Support />} />
-                      <Route path="/faq" element={<FAQ />} />
-                      <Route path="/infrastructure" element={<Infrastructure />} />
-                      <Route path="/imei-check" element={<IMEICheck />} />
-                      <Route path="/rss" element={<RSS />} />
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                    <CookieConsent />
-                    <LanguageDetectionNotice />
-                  </BrowserRouter>
-                </AuthProvider>
-              </CookiePreferencesProvider>
-            </LanguageProvider>
-          </ThemeProvider>
-        </TooltipProvider>
-      </QueryClientProvider>
-    </HelmetProvider>
+    <AuthProvider>
+      <Router>
+        <div className="min-h-screen bg-background">
+          <Navbar />
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/courses" element={<Courses />} />
+              <Route path="/marketplace" element={<Marketplace />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/support" element={<Support />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/course/:courseId" element={<CourseDetails />} />
+              <Route path="/project/:projectId" element={<ProjectDetails />} />
+              <Route path="/blog/:postId" element={<BlogPostDetails />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+          <Footer />
+          <CookieConsent />
+          <ChatWidget />
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
