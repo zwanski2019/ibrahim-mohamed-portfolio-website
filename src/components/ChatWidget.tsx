@@ -9,13 +9,55 @@ import LoginForm from "@/components/LoginForm";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
 
 const ChatWidget = () => {
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [newMessage, setNewMessage] = useState("");
+  const [userProfile, setUserProfile] = useState<any>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  
+  // Fetch user profile data when user is authenticated
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      fetchUserProfile();
+    } else {
+      setUserProfile(null);
+    }
+  }, [isAuthenticated, user]);
+
+  const fetchUserProfile = async () => {
+    if (!user) return;
+    
+    try {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("full_name, avatar_url")
+        .eq("id", user.id)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error("Error fetching profile:", error);
+        return;
+      }
+
+      setUserProfile(data);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
+  };
+
+  const getDisplayName = () => {
+    if (userProfile?.full_name) return userProfile.full_name;
+    if (user?.email) return user.email.split('@')[0];
+    return 'User';
+  };
+
+  const getAvatarUrl = () => {
+    return userProfile?.avatar_url || '';
+  };
   
   const { 
     messages, 
@@ -27,8 +69,8 @@ const ChatWidget = () => {
     sendMessage,
     retryConnection
   } = useWebSocket({
-    username: user?.username,
-    avatar: user?.avatar
+    username: getDisplayName(),
+    avatar: getAvatarUrl()
   });
 
   // Auto-scroll to bottom of messages
@@ -40,12 +82,12 @@ const ChatWidget = () => {
 
   // Connect when user is authenticated and widget is open
   useEffect(() => {
-    if (isAuthenticated && user?.username && isOpen) {
+    if (isAuthenticated && userProfile && isOpen) {
       connect();
     } else if (!isOpen) {
       disconnect();
     }
-  }, [isAuthenticated, user?.username, isOpen, connect, disconnect]);
+  }, [isAuthenticated, userProfile, isOpen, connect, disconnect]);
 
   // Send a new message
   const handleSendMessage = (e: React.FormEvent) => {
@@ -76,6 +118,11 @@ const ChatWidget = () => {
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleSignOut = async () => {
+    disconnect();
+    await signOut();
   };
 
   return (
@@ -172,13 +219,13 @@ const ChatWidget = () => {
                       key={msg.id}
                       message={{
                         id: msg.id,
-                        sender: msg.username === user?.username ? user.id : 'other',
+                        sender: msg.username === getDisplayName() ? user!.id : 'other',
                         username: msg.username,
                         avatar: msg.avatar,
                         message: msg.message,
                         timestamp: msg.timestamp
                       }}
-                      isOwnMessage={msg.username === user?.username}
+                      isOwnMessage={msg.username === getDisplayName()}
                     />
                   ))
                 )}

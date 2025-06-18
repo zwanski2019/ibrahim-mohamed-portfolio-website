@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { useAuth } from "@/context/AuthContext";
@@ -10,12 +11,54 @@ import ChatMessage from "@/components/ChatMessage";
 import LoginForm from "@/components/LoginForm";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Chat = () => {
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, signOut } = useAuth();
   const [newMessage, setNewMessage] = useState("");
+  const [userProfile, setUserProfile] = useState<any>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  
+  // Fetch user profile data when user is authenticated
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      fetchUserProfile();
+    } else {
+      setUserProfile(null);
+    }
+  }, [isAuthenticated, user]);
+
+  const fetchUserProfile = async () => {
+    if (!user) return;
+    
+    try {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("full_name, avatar_url")
+        .eq("id", user.id)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error("Error fetching profile:", error);
+        return;
+      }
+
+      setUserProfile(data);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
+  };
+
+  const getDisplayName = () => {
+    if (userProfile?.full_name) return userProfile.full_name;
+    if (user?.email) return user.email.split('@')[0];
+    return 'User';
+  };
+
+  const getAvatarUrl = () => {
+    return userProfile?.avatar_url || '';
+  };
   
   const { 
     messages, 
@@ -27,8 +70,8 @@ const Chat = () => {
     sendMessage,
     retryConnection
   } = useWebSocket({
-    username: user?.username,
-    avatar: user?.avatar
+    username: getDisplayName(),
+    avatar: getAvatarUrl()
   });
 
   // Auto-scroll to bottom of messages
@@ -38,16 +81,16 @@ const Chat = () => {
 
   // Connect when user is authenticated
   useEffect(() => {
-    if (isAuthenticated && user?.username) {
+    if (isAuthenticated && userProfile) {
       connect();
     } else {
       disconnect();
     }
-  }, [isAuthenticated, user?.username, connect, disconnect]);
+  }, [isAuthenticated, userProfile, connect, disconnect]);
 
   // Show connection status notifications
   useEffect(() => {
-    if (isAuthenticated && user?.username) {
+    if (isAuthenticated && userProfile) {
       if (isConnected) {
         toast({
           title: "Connected",
@@ -61,7 +104,7 @@ const Chat = () => {
         });
       }
     }
-  }, [isConnected, isConnecting, connectionError, isAuthenticated, user?.username, toast]);
+  }, [isConnected, isConnecting, connectionError, isAuthenticated, userProfile, toast]);
 
   // Send a new message
   const handleSendMessage = (e: React.FormEvent) => {
@@ -90,13 +133,13 @@ const Chat = () => {
     }
   };
 
-  const handleLogout = () => {
+  const handleSignOut = async () => {
     disconnect();
-    logout();
+    await signOut();
   };
 
   const handleRetryConnection = () => {
-    if (isAuthenticated && user?.username && !isConnecting) {
+    if (isAuthenticated && userProfile && !isConnecting) {
       retryConnection()
     }
   };
@@ -152,7 +195,7 @@ const Chat = () => {
               <Button 
                 variant="outline" 
                 size="sm" 
-                onClick={handleLogout}
+                onClick={handleSignOut}
                 className="gap-2"
               >
                 <LogOut className="h-4 w-4" />
@@ -201,13 +244,13 @@ const Chat = () => {
                       key={msg.id}
                       message={{
                         id: msg.id,
-                        sender: msg.username === user?.username ? user.id : 'other',
+                        sender: msg.username === getDisplayName() ? user!.id : 'other',
                         username: msg.username,
                         avatar: msg.avatar,
                         message: msg.message,
                         timestamp: msg.timestamp
                       }}
-                      isOwnMessage={msg.username === user?.username}
+                      isOwnMessage={msg.username === getDisplayName()}
                     />
                   ))
                 )}
