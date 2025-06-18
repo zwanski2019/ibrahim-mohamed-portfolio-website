@@ -14,11 +14,13 @@ import { Helmet } from "react-helmet-async";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/context/LanguageContext";
 import SupportBanner from "@/components/SupportBanner";
 import { Link } from "react-router-dom";
 
 const Index = () => {
   const { user } = useAuth();
+  const { t } = useLanguage();
 
   // Fetch courses for the home page
   const { data: courses, isLoading } = useQuery({
