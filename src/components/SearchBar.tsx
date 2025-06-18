@@ -77,13 +77,13 @@ export function SearchBar({ placeholder = "Search skills, projects...", onSearch
           value={searchTerm}
           onChange={handleInputChange}
           placeholder={placeholder}
-          className="w-full py-2 pl-10 pr-4 text-sm bg-muted border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+          className="w-full py-2 pl-10 pr-4 text-sm bg-muted border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
         />
         <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
       </div>
 
       {isOpen && searchResults.length > 0 && (
-        <div className="absolute mt-2 w-full bg-background rounded-lg shadow-lg border border-border z-20 max-h-80 overflow-y-auto">
+        <div className="absolute mt-2 w-full bg-background rounded-lg shadow-xl border border-border z-50 max-h-80 overflow-y-auto">
           <div className="p-2">
             {searchResults.map((result, index) => (
               <div

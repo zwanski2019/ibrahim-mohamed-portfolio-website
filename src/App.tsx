@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -44,33 +45,35 @@ function App() {
                 <Sonner />
                 <BrowserRouter>
                   <ScrollToTop />
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/services" element={<Services />} />
-                    <Route path="/jobs" element={<Jobs />} />
-                    <Route path="/post-job" element={<PostJob />} />
-                    <Route path="/freelancers" element={<Freelancers />} />
-                    <Route path="/academy" element={<Academy />} />
-                    <Route path="/chat" element={<Chat />} />
-                    <Route path="/newsletter" element={<Newsletter />} />
-                    <Route path="/imei-check" element={<IMEICheck />} />
-                    <Route path="/computer-model" element={<ComputerModel />} />
-                    <Route path="/infrastructure" element={<Infrastructure />} />
-                    <Route path="/support" element={<Support />} />
-                    <Route path="/faq" element={<FAQ />} />
-                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                    <Route path="/terms-of-service" element={<TermsOfService />} />
-                    <Route path="/rss" element={<RSS />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
+                  <div className="min-h-screen w-full">
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/services" element={<Services />} />
+                      <Route path="/jobs" element={<Jobs />} />
+                      <Route path="/post-job" element={<PostJob />} />
+                      <Route path="/freelancers" element={<Freelancers />} />
+                      <Route path="/academy" element={<Academy />} />
+                      <Route path="/chat" element={<Chat />} />
+                      <Route path="/newsletter" element={<Newsletter />} />
+                      <Route path="/imei-check" element={<IMEICheck />} />
+                      <Route path="/computer-model" element={<ComputerModel />} />
+                      <Route path="/infrastructure" element={<Infrastructure />} />
+                      <Route path="/support" element={<Support />} />
+                      <Route path="/faq" element={<FAQ />} />
+                      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                      <Route path="/terms-of-service" element={<TermsOfService />} />
+                      <Route path="/rss" element={<RSS />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </div>
+                  
+                  {/* Global Scroll to Top Button */}
+                  <ScrollToTopButton />
+                  
+                  <LanguageDetectionNotice />
+                  <CookieConsent />
                 </BrowserRouter>
-                
-                {/* Global Scroll to Top Button */}
-                <ScrollToTopButton />
-                
-                <LanguageDetectionNotice />
-                <CookieConsent />
               </TooltipProvider>
             </ThemeProvider>
           </LanguageProvider>

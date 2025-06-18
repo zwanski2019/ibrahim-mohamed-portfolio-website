@@ -1,5 +1,5 @@
+
 import { useEffect } from "react";
-import AffiliateProgram from "@/components/AffiliateProgram";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import DynamicSkills from "@/components/dynamic/DynamicSkills";
@@ -15,7 +15,6 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/context/LanguageContext";
-import SupportBanner from "@/components/SupportBanner";
 import { Link } from "react-router-dom";
 
 const Index = () => {
@@ -144,8 +143,6 @@ const Index = () => {
       </Helmet>
       
       <div className="flex flex-col min-h-screen">
-        <SupportBanner />
-        <AffiliateProgram />
         <Navbar />
         
         <main>

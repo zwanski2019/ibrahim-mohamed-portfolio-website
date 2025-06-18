@@ -1,4 +1,3 @@
-
 export const berTranslations = {
   // Navigation
   "nav.home": "Axxam",
@@ -15,6 +14,13 @@ export const berTranslations = {
   "nav.about": "Ɣef-nneɣ",
   "nav.faq": "Isteqsiyen",
   "nav.support": "Tallalt",
+  "nav.findJobs": "Nadi Ixeddamen",
+  "nav.findFreelancers": "Nadi Imḥadden",
+  "nav.postJob": "Sufeɣ Axeddim",
+  "nav.newsletter": "Aɣmis n Yisallen",
+  "nav.freeImeiCheck": "Asenqed IMEI Ilelelli",
+  "nav.joinTelegram": "Ddu ɣer Telegram",
+  "nav.liveChat": "Adiwenni Usrid",
 
   // Hero Section
   "hero.title": "Ameddakel-nwen di Usali, Aseɣru d Uḥraz n Ukra Umḍin",

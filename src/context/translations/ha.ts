@@ -1,4 +1,3 @@
-
 export const haTranslations = {
   // Navigation
   "nav.home": "Gida",
@@ -15,6 +14,13 @@ export const haTranslations = {
   "nav.about": "Game da mu",
   "nav.faq": "Tambayoyi",
   "nav.support": "Taimako",
+  "nav.findJobs": "Nemo Ayyukan Yi",
+  "nav.findFreelancers": "Nemo Masu Aiki da Kansu",
+  "nav.postJob": "Buga Aiki",
+  "nav.newsletter": "Wasikar Labarai",
+  "nav.freeImeiCheck": "Binciken IMEI Kyauta",
+  "nav.joinTelegram": "Shiga Telegram",
+  "nav.liveChat": "Hira Kai Tsaye",
 
   // Hero Section
   "hero.title": "Abokinku a Ginin, Gyarawa da Kare Nan gaba na Dijital",

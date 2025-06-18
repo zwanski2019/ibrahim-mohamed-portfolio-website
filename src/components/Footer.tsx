@@ -1,3 +1,4 @@
+
 import { MessageSquare, Heart } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Helmet } from "react-helmet-async";
@@ -53,25 +54,6 @@ export default function Footer() {
                     <MessageSquare className="h-3 w-3" />
                     Join Telegram for instant news
                   </a>
-                </div>
-                
-                {/* Support Section */}
-                <div className="mt-4 p-3 bg-gradient-to-r from-red-50/50 to-pink-50/50 dark:from-red-950/20 dark:to-pink-950/20 rounded-lg border border-red-200/30">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Heart className="h-4 w-4 text-red-500" />
-                    <span className="text-sm font-medium text-red-600 dark:text-red-400">
-                      Supporting Free Education
-                    </span>
-                  </div>
-                  <p className="text-xs text-muted-foreground mb-2">
-                    We use ads to keep our courses and tools completely free.
-                  </p>
-                  <Link 
-                    to="/support" 
-                    className="text-xs text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 font-medium transition-colors"
-                  >
-                    Learn how you can help →
-                  </Link>
                 </div>
               </div>
             </div>

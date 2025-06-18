@@ -1,4 +1,3 @@
-
 export const frTranslations = {
   // Navigation
   "nav.home": "Accueil",
@@ -15,6 +14,13 @@ export const frTranslations = {
   "nav.about": "À propos",
   "nav.faq": "FAQ",
   "nav.support": "Support",
+  "nav.findJobs": "Trouver des Emplois",
+  "nav.findFreelancers": "Trouver des Freelancers",
+  "nav.postJob": "Publier un Emploi",
+  "nav.newsletter": "Newsletter",
+  "nav.freeImeiCheck": "Vérif IMEI Gratuite",
+  "nav.joinTelegram": "Rejoindre Telegram",
+  "nav.liveChat": "Chat en Direct",
 
   // Hero Section
   "hero.title": "Votre Partenaire pour Construire, Réparer et Sécuriser l'Avenir Numérique",

@@ -1,4 +1,3 @@
-
 export const enTranslations = {
   // Navigation
   "nav.home": "Home",
@@ -15,6 +14,13 @@ export const enTranslations = {
   "nav.about": "About",
   "nav.faq": "FAQ",
   "nav.support": "Support",
+  "nav.findJobs": "Find Jobs",
+  "nav.findFreelancers": "Find Freelancers",
+  "nav.postJob": "Post Job",
+  "nav.newsletter": "Newsletter",
+  "nav.freeImeiCheck": "Free IMEI Check",
+  "nav.joinTelegram": "Join Telegram",
+  "nav.liveChat": "Live Chat",
 
   // Hero Section
   "hero.title": "Your Partner in Building, Repairing & Securing Digital Futures",
@@ -39,7 +45,7 @@ export const enTranslations = {
   "services.getStartedToday": "Get Started Today",
   "services.stats.devicesRepaired": "Devices Successfully Repaired",
   "services.stats.expertSupport": "Expert Support",
-  "services.stats.securityImprovement": "Security Vulnerability Reduction",
+  "services.stats.securityImprovement": "Security Improvement",
   "services.stats.moneyBackGuarantee": "Money Back Guarantee",
 
   // Skills Section

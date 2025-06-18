@@ -25,34 +25,37 @@ export function DesktopNavigation() {
   ];
 
   return (
-    <div className="hidden lg:flex items-center space-x-6">
-      <div className="mr-4">
-        <SearchBar />
-      </div>
-      
-      <div className="flex items-center space-x-2">
-        <NavigationMenu>
-          <NavigationMenuList className="space-x-2">
-            {mainNavigation.map((item) => (
-              <NavigationMenuItem key={item.name}>
-                <NavigationMenuLink asChild>
-                  <Link
-                    to={item.href}
-                    className={cn(
-                      navigationMenuTriggerStyle(),
-                      "bg-transparent hover:bg-accent/50 px-4 py-2 flex items-center gap-2"
-                    )}
-                  >
-                    {item.icon && <item.icon className="h-4 w-4" />}
-                    {item.name}
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
+    <div className="hidden lg:flex items-center space-x-6 flex-1 justify-center">
+      <div className="flex items-center space-x-6">
+        <div className="mr-2">
+          <SearchBar />
+        </div>
         
-        <MoreDropdown />
+        <div className="flex items-center space-x-2">
+          <NavigationMenu>
+            <NavigationMenuList className="space-x-2">
+              {mainNavigation.map((item) => (
+                <NavigationMenuItem key={item.name}>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      to={item.href}
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "bg-transparent hover:bg-accent/50 px-3 py-2 flex items-center gap-2 text-sm font-medium whitespace-nowrap"
+                      )}
+                    >
+                      {item.icon && <item.icon className="h-4 w-4" />}
+                      <span className="hidden xl:inline">{item.name}</span>
+                      <span className="xl:hidden">{item.name.split(' ')[0]}</span>
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
+          
+          <MoreDropdown />
+        </div>
       </div>
       
       <NavbarActions />
