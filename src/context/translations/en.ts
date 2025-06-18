@@ -1,3 +1,4 @@
+
 export const enTranslations = {
   // Navigation
   "nav.home": "Home",
@@ -42,11 +43,55 @@ export const enTranslations = {
   // Services Section
   "services.title": "Our Services",
   "services.subtitle": "Professional services tailored to meet your business needs. Click on any service to learn more.",
+  "services.ourServices": "Our Services",
+  "services.ourServicesSubtitle": "Comprehensive digital solutions to transform your business and secure your digital future",
   "services.getStartedToday": "Get Started Today",
+  "services.learnMore": "Learn More",
+  "services.allServices": "All Services",
+  "services.development": "Development",
+  "services.support": "Support",
+  "services.security": "Security",
+  "services.marketing": "Marketing",
+  "services.heroTitle": "Professional Digital Services",
+  "services.heroSubtitle": "Transform your business with our comprehensive IT solutions, from web development to cybersecurity",
   "services.stats.devicesRepaired": "Devices Successfully Repaired",
   "services.stats.expertSupport": "Expert Support",
   "services.stats.securityImprovement": "Security Improvement",
   "services.stats.moneyBackGuarantee": "Money Back Guarantee",
+  "services.stats.yearsExperience": "Years Experience",
+  "services.stats.trustedByGlobalClients": "Trusted by Global Clients",
+
+  // Service Categories
+  "services.categories.webDevelopment": "Web Development",
+  "services.categories.webDevelopmentDesc": "Custom websites and web applications built with modern technologies",
+  "services.categories.itSupport": "IT Support",
+  "services.categories.itSupportDesc": "Professional technical support and troubleshooting services",
+  "services.categories.wordpress": "WordPress Development",
+  "services.categories.wordpressDesc": "Custom WordPress websites and theme development",
+  "services.categories.seo": "SEO Optimization",
+  "services.categories.seoDesc": "Search engine optimization to improve your online visibility",
+  "services.categories.systemSecurity": "System Security",
+  "services.categories.systemSecurityDesc": "Comprehensive cybersecurity solutions and protection",
+  "services.categories.customTools": "Custom Tools",
+  "services.categories.customToolsDesc": "Tailored software solutions for your specific needs",
+
+  // Pricing
+  "services.pricing.from": "from",
+  "services.pricing.perHour": "/hour",
+
+  // Form
+  "form.requestService": "Request Service",
+  "form.yourName": "Your Name",
+  "form.required": "(required)",
+  "form.emailAddress": "Email Address",
+  "form.phoneNumber": "Phone Number",
+  "form.yourBudget": "Your Budget",
+  "form.selectBudget": "Select Budget Range",
+  "form.serviceInterested": "Service Interested",
+  "form.selectService": "Select a Service",
+  "form.projectDetails": "Project Details",
+  "form.projectDetailsPlaceholder": "Describe your project requirements...",
+  "form.submitRequest": "Submit Request",
 
   // Skills Section
   "skills.title": "Skills",
@@ -130,6 +175,7 @@ export const enTranslations = {
   // IMEI Section
   "imei.title": "IMEI Checker",
   "imei.subtitle": "Check your device's IMEI information instantly",
+  "imei.description": "Verify device authenticity, check blacklist status, and get detailed device information using our free IMEI checker tool.",
   "imei.enterImei": "Enter IMEI Number",
   "imei.placeholder": "Enter 15-digit IMEI",
   "imei.findImei": "Find IMEI: Dial *#06# or check device settings",

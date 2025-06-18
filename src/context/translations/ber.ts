@@ -42,11 +42,55 @@ export const berTranslations = {
   // Services Section
   "services.title": "Tanfa-nneɣ",
   "services.subtitle": "Tanfa taqbaylit yettusbedden i yisebganen n tnekra-nwen. Sit ɣef yal tanfa akken ad tessineḍ ugar.",
+  "services.ourServices": "Tanfa-nneɣ",
+  "services.ourServicesSubtitle": "Tifrat tumḍinin tičuṛanin i ubeddel n tnekra-nwen d uḥraz n ukra-nwen umḍin",
   "services.getStartedToday": "Bdu Ass-a",
+  "services.learnMore": "Issin Ugar",
+  "services.allServices": "Akk Tanfatin",
+  "services.development": "Asnulfu",
+  "services.support": "Tallalt",
+  "services.security": "Taɣellist",
+  "services.marketing": "Aɣewwali",
+  "services.heroTitle": "Tanfatin Tumḍinin Tiqbayliyin",
+  "services.heroSubtitle": "Beddel tnekra-k s tifrat-nneɣ IT tičuṛanin, seg usnulfu n web ar taɣellist tumḍint",
   "services.stats.devicesRepaired": "Ibenkan Yettuseɣren s Lɣerḍ",
   "services.stats.expertSupport": "Tallalt Taqbaylit",
   "services.stats.securityImprovement": "Asnerni n Taɣellist",
   "services.stats.moneyBackGuarantee": "Aḍman n Tuɣalin n Idrimen",
+  "services.stats.yearsExperience": "Iseggasen n Tarmit",
+  "services.stats.trustedByGlobalClients": "Yettwaḍman sɣur yimɣayen n ddunit",
+
+  // Service Categories
+  "services.categories.webDevelopment": "Asnulfu n Web",
+  "services.categories.webDevelopmentDesc": "Ismal web d isnasen web yuganen s titiknulujiyin timeγranin",
+  "services.categories.itSupport": "Tallalt IT",
+  "services.categories.itSupportDesc": "Tallalt tiqnit taqbaylit d tanfatin n useɣti n wuguren",
+  "services.categories.wordpress": "Asnulfu WordPress",
+  "services.categories.wordpressDesc": "Ismal WordPress yuganen d usnulfu n yiγbula",
+  "services.categories.seo": "Asleḥ SEO",
+  "services.categories.seoDesc": "Asleḥ n yimsadagen n unadi i usnerni n ubani-k deg Internet",
+  "services.categories.systemSecurity": "Taɣellist n Unagraw",
+  "services.categories.systemSecurityDesc": "Tifrat n tɣellist tumḍint tičuṛanin d ummesten",
+  "services.categories.customTools": "Ifecka Yuganen",
+  "services.categories.customToolsDesc": "Tifrat n iseɣẓanen yettwaganen i yisebganen-ik yusligen",
+
+  // Pricing
+  "services.pricing.from": "seg",
+  "services.pricing.perHour": "/asrag",
+
+  // Form
+  "form.requestService": "Suter Tanfa",
+  "form.yourName": "Isem-ik",
+  "form.required": "(ilaq)",
+  "form.emailAddress": "Tansa n Yimayl",
+  "form.phoneNumber": "Uṭṭun n Tiliγri",
+  "form.yourBudget": "Abaǧit-ik",
+  "form.selectBudget": "Fren Azrir n Ubaǧit",
+  "form.serviceInterested": "Tanfa i tḥemmleḍ",
+  "form.selectService": "Fren Tanfa",
+  "form.projectDetails": "Talqayt n Usenfar",
+  "form.projectDetailsPlaceholder": "Glem-d isebganen n usenfar-ik...",
+  "form.submitRequest": "Azen Asuter",
 
   // Skills Section
   "skills.title": "Timusniwin",
@@ -130,6 +174,7 @@ export const berTranslations = {
   // IMEI Section
   "imei.title": "Amessenqed IMEI",
   "imei.subtitle": "Senqed talɣut IMEI n yibenk-ik deg tallit",
+  "imei.description": "Senqed tidet n yibenk, senqed addad n tebdart taberkant, d usekcem n talɣut yettwafeslen n yibenk s useqdec n ufecku-nneɣ n usenqed IMEI ilelli.",
   "imei.enterImei": "Sekcem Uṭṭun IMEI",
   "imei.placeholder": "Sekcem IMEI n 15 n yizwilen",
   "imei.findImei": "Af-d IMEI: Siweḍ *#06# neɣ senqed iɣewwaṛen n yibenk",
