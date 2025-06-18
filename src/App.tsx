@@ -2,6 +2,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Index from './pages/Index';
 import About from './pages/About';
 import Contact from './components/Contact';
@@ -23,40 +24,52 @@ import { AuthProvider } from '@/context/AuthContext';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { ThemeProvider } from '@/context/ThemeContext';
 
+// Create a client instance
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes
+    },
+  },
+});
+
 function App() {
   return (
     <HelmetProvider>
-      <LanguageProvider>
-        <ThemeProvider>
-          <AuthProvider>
-            <Router>
-              <div className="min-h-screen bg-background">
-                <Navbar />
-                <main>
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/academy" element={<Academy />} />
-                    <Route path="/jobs" element={<Jobs />} />
-                    <Route path="/services" element={<Services />} />
-                    <Route path="/freelancers" element={<Freelancers />} />
-                    <Route path="/post-job" element={<PostJob />} />
-                    <Route path="/auth" element={<Auth />} />
-                    <Route path="/support" element={<Support />} />
-                    <Route path="/community" element={<Community />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </main>
-                <Footer />
-                <CookieConsent />
-                <ChatWidget />
-              </div>
-            </Router>
-          </AuthProvider>
-        </ThemeProvider>
-      </LanguageProvider>
+      <QueryClientProvider client={queryClient}>
+        <LanguageProvider>
+          <ThemeProvider>
+            <AuthProvider>
+              <Router>
+                <div className="min-h-screen bg-background">
+                  <Navbar />
+                  <main>
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/contact" element={<Contact />} />
+                      <Route path="/academy" element={<Academy />} />
+                      <Route path="/jobs" element={<Jobs />} />
+                      <Route path="/services" element={<Services />} />
+                      <Route path="/freelancers" element={<Freelancers />} />
+                      <Route path="/post-job" element={<PostJob />} />
+                      <Route path="/auth" element={<Auth />} />
+                      <Route path="/support" element={<Support />} />
+                      <Route path="/community" element={<Community />} />
+                      <Route path="/profile" element={<Profile />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </main>
+                  <Footer />
+                  <CookieConsent />
+                  <ChatWidget />
+                </div>
+              </Router>
+            </AuthProvider>
+          </ThemeProvider>
+        </LanguageProvider>
+      </QueryClientProvider>
     </HelmetProvider>
   );
 }
