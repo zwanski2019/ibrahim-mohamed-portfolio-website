@@ -32,9 +32,11 @@ interface LearningPath {
   }>;
 }
 
+type DifficultyFilter = 'all' | 'beginner' | 'intermediate' | 'advanced';
+
 export const LearningPaths: React.FC = () => {
   const { user } = useAuth();
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string>('all');
+  const [selectedDifficulty, setSelectedDifficulty] = useState<DifficultyFilter>('all');
 
   const { data: learningPaths, isLoading } = useQuery({
     queryKey: ['learning-paths', selectedDifficulty],
