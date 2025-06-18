@@ -6,7 +6,6 @@ import DynamicSkills from "@/components/dynamic/DynamicSkills";
 import DynamicProjects from "@/components/dynamic/DynamicProjects";
 import DynamicExperience from "@/components/dynamic/DynamicExperience";
 import YouTubeVideos from "@/components/YouTubeVideos";
-import Playground from "@/components/Playground";
 import EnhancedContact from "@/components/EnhancedContact";
 import Footer from "@/components/Footer";
 import AcademyHero from "@/components/academy/AcademyHero";
@@ -207,7 +206,6 @@ const Index = () => {
             </div>
           </section>
           
-          <Playground />
           <EnhancedContact />
         </main>
         <Footer />
