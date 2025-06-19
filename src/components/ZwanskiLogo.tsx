@@ -25,8 +25,7 @@ const ZwanskiLogo: React.FC<ZwanskiLogoProps> = ({
       aria-label="Navigate to home page"
     >
       <div className="text-lg sm:text-xl md:text-2xl font-bold text-gradient select-none">
-        <span className="hidden sm:inline">Zwanski Tech</span>
-        <span className="sm:hidden">ZT</span>
+        Zwanski Tech
       </div>
     </div>
   );
