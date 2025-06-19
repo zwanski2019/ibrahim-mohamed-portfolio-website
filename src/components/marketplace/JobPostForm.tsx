@@ -16,6 +16,7 @@ import { useCreateJobPost } from "@/hooks/useJobPosts";
 import { useCategories } from "@/hooks/useCategories";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import { useLanguage } from "@/context/LanguageContext";
 
 const jobPostSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters"),
@@ -37,6 +38,7 @@ interface JobPostFormProps {
 }
 
 export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
+  const { t } = useLanguage();
   const [requirements, setRequirements] = useState<string[]>([]);
   const [benefits, setBenefits] = useState<string[]>([]);
   const [newRequirement, setNewRequirement] = useState("");
@@ -58,7 +60,7 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
       <Card className="max-w-2xl mx-auto">
         <CardContent className="p-8 text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-muted-foreground">Loading...</p>
+          <p className="mt-4 text-muted-foreground">{t("jobs.loading")}</p>
         </CardContent>
       </Card>
     );
@@ -150,7 +152,7 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
   return (
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle>Post a New Job</CardTitle>
+        <CardTitle>{t("jobs.postNewJob")}</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -160,9 +162,9 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Job Title</FormLabel>
+                  <FormLabel>{t("jobs.jobTitle")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. Web Developer, Graphic Designer..." {...field} />
+                    <Input placeholder={t("jobs.jobTitlePlaceholder")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -174,10 +176,10 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Job Description</FormLabel>
+                  <FormLabel>{t("jobs.jobDescription")}</FormLabel>
                   <FormControl>
                     <Textarea 
-                      placeholder="Describe the job responsibilities, requirements, and what you're looking for..."
+                      placeholder={t("jobs.jobDescriptionPlaceholder")}
                       className="min-h-[120px]"
                       {...field} 
                     />
@@ -193,11 +195,11 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
                 name="category"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Category</FormLabel>
+                    <FormLabel>{t("jobs.category")}</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value} disabled={categoriesLoading}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={categoriesLoading ? "Loading..." : "Select category"} />
+                          <SelectValue placeholder={categoriesLoading ? t("jobs.loading") : t("jobs.selectCategory")} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -218,9 +220,9 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
                 name="location"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Location</FormLabel>
+                    <FormLabel>{t("jobs.location")}</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g. Tunis, Sfax, Remote..." {...field} />
+                      <Input placeholder={t("jobs.locationPlaceholderForm")} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -234,18 +236,18 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
                 name="job_type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Job Type</FormLabel>
+                    <FormLabel>{t("jobs.jobType")}</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select type" />
+                          <SelectValue placeholder={t("jobs.selectType")} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="full-time">Full Time</SelectItem>
-                        <SelectItem value="part-time">Part Time</SelectItem>
-                        <SelectItem value="contract">Contract</SelectItem>
-                        <SelectItem value="freelance">Freelance</SelectItem>
+                        <SelectItem value="full-time">{t("jobs.fullTime")}</SelectItem>
+                        <SelectItem value="part-time">{t("jobs.partTime")}</SelectItem>
+                        <SelectItem value="contract">{t("jobs.contract")}</SelectItem>
+                        <SelectItem value="freelance">{t("jobs.freelance")}</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -258,17 +260,17 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
                 name="salary_type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Salary Type</FormLabel>
+                    <FormLabel>{t("jobs.salaryRange")}</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select type" />
+                          <SelectValue placeholder={t("jobs.selectType")} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="hourly">Hourly</SelectItem>
-                        <SelectItem value="fixed">Fixed Price</SelectItem>
-                        <SelectItem value="monthly">Monthly</SelectItem>
+                        <SelectItem value="hourly">{t("jobs.hourly")}</SelectItem>
+                        <SelectItem value="fixed">{t("jobs.fixedPrice")}</SelectItem>
+                        <SelectItem value="monthly">{t("jobs.monthly")}</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -281,17 +283,17 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
                 name="urgency"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Urgency</FormLabel>
+                    <FormLabel>{t("jobs.urgencyLevel")}</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select urgency" />
+                          <SelectValue placeholder={t("jobs.selectUrgency")} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="low">Low</SelectItem>
-                        <SelectItem value="medium">Medium</SelectItem>
-                        <SelectItem value="high">High</SelectItem>
+                        <SelectItem value="low">{t("jobs.low")}</SelectItem>
+                        <SelectItem value="medium">{t("jobs.medium")}</SelectItem>
+                        <SelectItem value="high">{t("jobs.high")}</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -306,7 +308,7 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
                 name="salary_min"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Minimum Salary (TND)</FormLabel>
+                    <FormLabel>{t("jobs.minimumSalary")}</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -325,7 +327,7 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
                 name="salary_max"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Maximum Salary (TND) - Optional</FormLabel>
+                    <FormLabel>{t("jobs.maximumSalary")}</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -342,10 +344,10 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
 
             {/* Requirements */}
             <div className="space-y-3">
-              <FormLabel>Requirements</FormLabel>
+              <FormLabel>{t("jobs.requirements")}</FormLabel>
               <div className="flex gap-2">
                 <Input
-                  placeholder="Add a requirement..."
+                  placeholder={t("jobs.addRequirement")}
                   value={newRequirement}
                   onChange={(e) => setNewRequirement(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addRequirement())}
@@ -369,10 +371,10 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
 
             {/* Benefits */}
             <div className="space-y-3">
-              <FormLabel>Benefits</FormLabel>
+              <FormLabel>{t("jobs.benefits")}</FormLabel>
               <div className="flex gap-2">
                 <Input
-                  placeholder="Add a benefit..."
+                  placeholder={t("jobs.addBenefit")}
                   value={newBenefit}
                   onChange={(e) => setNewBenefit(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addBenefit())}
@@ -400,11 +402,11 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
                 disabled={createJobPost.isPending}
                 className="flex-1"
               >
-                {createJobPost.isPending ? "Posting..." : "Post Job"}
+                {createJobPost.isPending ? t("jobs.posting") : t("jobs.postJob")}
               </Button>
               {onCancel && (
                 <Button type="button" variant="outline" onClick={onCancel}>
-                  Cancel
+                  {t("jobs.cancel")}
                 </Button>
               )}
             </div>

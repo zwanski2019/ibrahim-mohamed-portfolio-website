@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { MapPin, Clock, DollarSign, User, Star } from "lucide-react";
 import { JobPost } from "@/types/marketplace";
 import { formatDistanceToNow } from "date-fns";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface JobCardProps {
   job: JobPost & {
@@ -23,6 +24,7 @@ interface JobCardProps {
 }
 
 export const JobCard = ({ job, onApply, onViewDetails }: JobCardProps) => {
+  const { t } = useLanguage();
   const applicationCount = job.applications?.[0]?.count || 0;
 
   const formatSalary = () => {
@@ -53,7 +55,7 @@ export const JobCard = ({ job, onApply, onViewDetails }: JobCardProps) => {
               <span>{job.employer.full_name}</span>
               {job.employer.verified && (
                 <Badge variant="secondary" className="h-5 px-1.5 text-xs">
-                  ✓
+                  {t("jobs.verified")}
                 </Badge>
               )}
               {job.employer.rating && (
@@ -68,7 +70,7 @@ export const JobCard = ({ job, onApply, onViewDetails }: JobCardProps) => {
             variant={job.urgency === 'high' ? 'destructive' : 
                    job.urgency === 'medium' ? 'default' : 'secondary'}
           >
-            {job.urgency}
+            {t(`jobs.urgency.${job.urgency}`)}
           </Badge>
         </div>
       </CardHeader>
@@ -98,13 +100,13 @@ export const JobCard = ({ job, onApply, onViewDetails }: JobCardProps) => {
 
           <div className="flex items-center gap-2 text-sm">
             <User className="h-4 w-4 text-muted-foreground" />
-            <span>{applicationCount} applications</span>
+            <span>{applicationCount} {t("jobs.applications")}</span>
           </div>
         </div>
 
         <div className="flex flex-wrap gap-1">
           <Badge variant="outline">{job.category}</Badge>
-          <Badge variant="outline">{job.job_type}</Badge>
+          <Badge variant="outline">{t(`jobs.${job.job_type.replace('-', '')}`)}</Badge>
         </div>
       </CardContent>
 
@@ -115,14 +117,14 @@ export const JobCard = ({ job, onApply, onViewDetails }: JobCardProps) => {
           onClick={() => onViewDetails?.(job)}
           className="flex-1"
         >
-          View Details
+          {t("jobs.viewDetails")}
         </Button>
         <Button 
           size="sm" 
           onClick={() => onApply?.(job.id)}
           className="flex-1"
         >
-          Apply Now
+          {t("jobs.applyNow")}
         </Button>
       </CardFooter>
     </Card>
