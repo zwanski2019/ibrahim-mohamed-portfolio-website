@@ -47,17 +47,17 @@ const IMEIChecker = () => {
 
   return (
     <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader className="text-center">
+      <CardHeader className="text-center p-4 sm:p-6">
         <div className="flex items-center justify-center gap-2 mb-2">
-          <Smartphone className="h-6 w-6 text-primary" />
-          <CardTitle className="text-2xl">{t("imei.title")}</CardTitle>
+          <Smartphone className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+          <CardTitle className="text-lg sm:text-2xl">{t("imei.title")}</CardTitle>
         </div>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground text-sm sm:text-base">
           {t("imei.subtitle")}
         </p>
       </CardHeader>
       
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6 pt-0">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="imei" className="block text-sm font-medium mb-2">
@@ -70,18 +70,18 @@ const IMEIChecker = () => {
               value={imei}
               onChange={(e) => setImei(e.target.value)}
               maxLength={17} // Allow for spaces
-              className="text-center text-lg font-mono"
+              className="text-center text-base sm:text-lg font-mono min-h-[44px]"
             />
             <p className="text-xs text-muted-foreground mt-1">
               {t("imei.findImei")}
             </p>
           </div>
           
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <Button 
               type="submit" 
               disabled={isLoading} 
-              className="flex-1"
+              className="flex-1 min-h-[44px] text-sm sm:text-base"
             >
               {isLoading ? (
                 <>
@@ -101,6 +101,7 @@ const IMEIChecker = () => {
                 type="button" 
                 variant="outline" 
                 onClick={handleReset}
+                className="sm:flex-shrink-0 min-h-[44px] text-sm sm:text-base"
               >
                 {t("imei.reset")}
               </Button>
@@ -111,24 +112,24 @@ const IMEIChecker = () => {
         {/* Results */}
         {error && (
           <Card className="border-destructive/50 bg-destructive/5">
-            <CardContent className="pt-6">
+            <CardContent className="pt-4 sm:pt-6 p-4 sm:p-6">
               <div className="flex items-center gap-2 text-destructive">
-                <AlertCircle className="h-5 w-5" />
-                <span className="font-medium">{t("imei.error")}</span>
+                <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+                <span className="font-medium text-sm sm:text-base">{t("imei.error")}</span>
               </div>
-              <p className="mt-2 text-sm">{error}</p>
+              <p className="mt-2 text-xs sm:text-sm">{error}</p>
             </CardContent>
           </Card>
         )}
 
         {result && (
           <Card className="border-green-500/50 bg-green-50 dark:bg-green-950/20">
-            <CardContent className="pt-6">
+            <CardContent className="pt-4 sm:pt-6 p-4 sm:p-6">
               <div className="flex items-center gap-2 text-green-700 dark:text-green-400 mb-3">
-                <CheckCircle className="h-5 w-5" />
-                <span className="font-medium">{t("imei.results")}</span>
+                <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+                <span className="font-medium text-sm sm:text-base">{t("imei.results")}</span>
               </div>
-              <div className="whitespace-pre-wrap text-sm font-mono bg-background p-4 rounded border">
+              <div className="whitespace-pre-wrap text-xs sm:text-sm font-mono bg-background p-3 sm:p-4 rounded border overflow-x-auto">
                 {result}
               </div>
             </CardContent>
@@ -137,34 +138,34 @@ const IMEIChecker = () => {
 
         {/* Info Section */}
         <Card className="bg-muted/50">
-          <CardContent className="pt-6">
-            <h3 className="font-medium mb-2">{t("imei.whatIsImei")}</h3>
-            <p className="text-sm text-muted-foreground">
+          <CardContent className="pt-4 sm:pt-6 p-4 sm:p-6">
+            <h3 className="font-medium mb-2 text-sm sm:text-base">{t("imei.whatIsImei")}</h3>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
               {t("imei.imeiDescription")}
             </p>
           </CardContent>
         </Card>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-          <div className="text-center p-4">
-            <div className="text-3xl mb-2">🔒</div>
-            <h3 className="font-semibold mb-2">{t("imei.features.secure")}</h3>
-            <p className="text-sm text-muted-foreground">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mt-6 sm:mt-8">
+          <div className="text-center p-3 sm:p-4">
+            <div className="text-2xl sm:text-3xl mb-2">🔒</div>
+            <h3 className="font-semibold mb-2 text-sm sm:text-base">{t("imei.features.secure")}</h3>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
               {t("imei.features.secureDesc")}
             </p>
           </div>
-          <div className="text-center p-4">
-            <div className="text-3xl mb-2">⚡</div>
-            <h3 className="font-semibold mb-2">{t("imei.features.instant")}</h3>
-            <p className="text-sm text-muted-foreground">
+          <div className="text-center p-3 sm:p-4">
+            <div className="text-2xl sm:text-3xl mb-2">⚡</div>
+            <h3 className="font-semibold mb-2 text-sm sm:text-base">{t("imei.features.instant")}</h3>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
               {t("imei.features.instantDesc")}
             </p>
           </div>
-          <div className="text-center p-4">
-            <div className="text-3xl mb-2">💯</div>
-            <h3 className="font-semibold mb-2">{t("imei.features.free")}</h3>
-            <p className="text-sm text-muted-foreground">
+          <div className="text-center p-3 sm:p-4">
+            <div className="text-2xl sm:text-3xl mb-2">💯</div>
+            <h3 className="font-semibold mb-2 text-sm sm:text-base">{t("imei.features.free")}</h3>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
               {t("imei.features.freeDesc")}
             </p>
           </div>
