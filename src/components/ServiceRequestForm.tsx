@@ -71,7 +71,7 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label htmlFor="name" className="block text-sm font-medium mb-2">
-              {t("form.yourName")}<span className="text-red-500">{t("form.required")}</span>
+              {t("form.yourName")} <span className="text-red-500">{t("form.required")}</span>
             </label>
             <input
               type="text"
@@ -87,7 +87,7 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
           
           <div>
             <label htmlFor="email" className="block text-sm font-medium mb-2">
-              {t("form.emailAddress")}<span className="text-red-500">{t("form.required")}</span>
+              {t("form.emailAddress")} <span className="text-red-500">{t("form.required")}</span>
             </label>
             <input
               type="email"
@@ -142,7 +142,7 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
         
         <div>
           <label htmlFor="service" className="block text-sm font-medium mb-2">
-            {t("form.serviceInterested")}<span className="text-red-500">{t("form.required")}</span>
+            {t("form.serviceInterested")} <span className="text-red-500">{t("form.required")}</span>
           </label>
           <select
             id="service"
@@ -168,7 +168,7 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
         
         <div>
           <label htmlFor="message" className="block text-sm font-medium mb-2">
-            {t("form.projectDetails")}<span className="text-red-500">{t("form.required")}</span>
+            {t("form.projectDetails")} <span className="text-red-500">{t("form.required")}</span>
           </label>
           <textarea
             id="message"

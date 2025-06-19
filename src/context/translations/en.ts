@@ -1,4 +1,3 @@
-
 export const enTranslations = {
   // Navigation
   "nav.home": "Home",
@@ -92,6 +91,25 @@ export const enTranslations = {
   "form.projectDetails": "Project Details",
   "form.projectDetailsPlaceholder": "Describe your project requirements...",
   "form.submitRequest": "Submit Request",
+  "form.submitting": "Submitting...",
+  "form.submitted": "Request Submitted",
+  "form.submittedDesc": "Thank you for your request. We'll get back to you soon!",
+  "form.lessThan300": "Less than $300",
+  "form.budget300to500": "$300 - $500",
+  "form.budget500to1000": "$500 - $1000",
+  "form.budget1000to2000": "$1000 - $2000",
+  "form.moreThan2000": "More than $2000",
+  "form.contactForPricing": "Contact for pricing",
+  "form.webDevelopment": "Web Development",
+  "form.itSupport": "IT Support",
+  "form.wordpressDevelopment": "WordPress Development",
+  "form.seoOptimization": "SEO Optimization",
+  "form.systemSecurity": "System Security",
+  "form.customToolsDevelopment": "Custom Tools Development",
+  "form.imeiFrpRemote": "IMEI, FRP & Remote",
+  "form.serverCardsGames": "Server, Cards & Games",
+  "form.expertSupport": "Expert Support",
+  "form.other": "Other",
 
   // Skills Section
   "skills.title": "Skills",
