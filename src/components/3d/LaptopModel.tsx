@@ -182,7 +182,7 @@ const LaptopModel = () => {
         {/* Power LED indicator */}
         <mesh position={[1.7, 0.2, 0.01]}>
           <sphereGeometry args={[0.02, 8, 8]} />
-          <meshBasicMaterial 
+          <meshStandardMaterial 
             color={lidOpen ? "#00ff00" : "#ff0000"} 
             emissive={lidOpen ? "#004400" : "#440000"}
           />
@@ -194,8 +194,8 @@ const LaptopModel = () => {
         position={[0, 1.8, -1.4]}
         fontSize={0.15}
         color="#888"
-        anchorX="center"
-        anchorY="center"
+        anchorX={0.5}
+        anchorY={0.5}
         rotation={[0, 0, 0]}
       >
         ZWANSKI
