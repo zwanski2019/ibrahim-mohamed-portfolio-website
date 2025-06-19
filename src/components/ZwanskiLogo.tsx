@@ -24,7 +24,7 @@ const ZwanskiLogo: React.FC<ZwanskiLogoProps> = ({
       role="button"
       aria-label="Navigate to home page"
     >
-      <div className="text-lg sm:text-xl md:text-2xl font-bold text-gradient select-none">
+      <div className="text-lg sm:text-xl md:text-2xl font-bold text-gradient select-none whitespace-nowrap">
         Zwanski Tech
       </div>
     </div>
