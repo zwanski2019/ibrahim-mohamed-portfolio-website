@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
@@ -92,6 +91,11 @@ const Navbar = () => {
     navigate("/");
   };
 
+  const handleLogoClick = () => {
+    navigate("/");
+    setIsMenuOpen(false); // Close mobile menu if open
+  };
+
   const isActivePath = (path: string) => {
     return location.pathname === path;
   };
@@ -111,7 +115,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-4">
-            <ZwanskiLogo />
+            <ZwanskiLogo onClick={handleLogoClick} />
           </div>
 
           {/* Desktop Navigation */}
