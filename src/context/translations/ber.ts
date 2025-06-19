@@ -77,6 +77,8 @@ export const berTranslations = {
   // Pricing
   "services.pricing.from": "seg",
   "services.pricing.perHour": "/asrag",
+  "services.pricing.negotiableTitle": "💡 Akk Ssuman Zemren ad ttumeslayen",
+  "services.pricing.negotiableDescription": "Ssuman-nneɣ i d-yettumeṛṛden d tizwirin n usenker. Nessken yal ssuma alapres isebganen-ik yusligen, uṛti n usenfar, d wakud. Nermes-aɣ i usmekti ilelelli d ssuma yettwabedlen.",
 
   // Form
   "form.requestService": "Suter Tanfa",

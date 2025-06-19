@@ -7,7 +7,7 @@ import ServiceCard from "@/components/ServiceCard";
 import ServiceRequestForm from "@/components/ServiceRequestForm";
 import IMEIChecker from "@/components/IMEIChecker";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Smartphone } from "lucide-react";
+import { Smartphone, Info } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 const Services = () => {
@@ -19,7 +19,7 @@ const Services = () => {
       id: "web-development",
       title: t("services.categories.webDevelopment"),
       description: t("services.categories.webDevelopmentDesc"),
-      price: `${t("services.pricing.from")} $500`,
+      price: `${t("services.pricing.from")} 300 TND`,
       icon: "Monitor" as const,
       category: "development"
     },
@@ -27,7 +27,7 @@ const Services = () => {
       id: "it-support",
       title: t("services.categories.itSupport"),
       description: t("services.categories.itSupportDesc"),
-      price: `$50${t("services.pricing.perHour")}`,
+      price: `25 TND${t("services.pricing.perHour")}`,
       icon: "LifeBuoy" as const,
       category: "support"
     },
@@ -35,7 +35,7 @@ const Services = () => {
       id: "wordpress",
       title: t("services.categories.wordpress"),
       description: t("services.categories.wordpressDesc"),
-      price: `${t("services.pricing.from")} $300`,
+      price: `${t("services.pricing.from")} 200 TND`,
       icon: "Layout" as const,
       category: "development"
     },
@@ -43,7 +43,7 @@ const Services = () => {
       id: "seo",
       title: t("services.categories.seo"),
       description: t("services.categories.seoDesc"),
-      price: `${t("services.pricing.from")} $200`,
+      price: `${t("services.pricing.from")} 150 TND`,
       icon: "Search" as const,
       category: "marketing"
     },
@@ -51,7 +51,7 @@ const Services = () => {
       id: "system-security",
       title: t("services.categories.systemSecurity"),
       description: t("services.categories.systemSecurityDesc"),
-      price: `${t("services.pricing.from")} $400`,
+      price: `${t("services.pricing.from")} 400 TND`,
       icon: "Shield" as const,
       category: "security"
     },
@@ -59,7 +59,7 @@ const Services = () => {
       id: "custom-tools",
       title: t("services.categories.customTools"),
       description: t("services.categories.customToolsDesc"),
-      price: `${t("services.pricing.from")} $300`,
+      price: `${t("services.pricing.from")} 250 TND`,
       icon: "Code" as const,
       category: "development"
     }
@@ -134,7 +134,7 @@ const Services = () => {
             </div>
             
             {/* Services Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16 px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-12 px-4">
               {filteredServices.map((service) => (
                 <ServiceCard 
                   key={service.id}
@@ -146,6 +146,25 @@ const Services = () => {
                   onSelect={() => setSelectedService(service.title)}
                 />
               ))}
+            </div>
+
+            {/* Pricing Notice */}
+            <div className="mb-12 md:mb-16 px-4">
+              <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border-blue-200 dark:border-blue-800">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-3">
+                    <Info className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+                    <div className="text-center w-full">
+                      <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">
+                        {t("services.pricing.negotiableTitle")}
+                      </h3>
+                      <p className="text-blue-700 dark:text-blue-200 text-sm leading-relaxed">
+                        {t("services.pricing.negotiableDescription")}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
             
             <div className="px-4">

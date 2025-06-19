@@ -77,6 +77,8 @@ export const enTranslations = {
   // Pricing
   "services.pricing.from": "from",
   "services.pricing.perHour": "/hour",
+  "services.pricing.negotiableTitle": "💡 All Prices Are Negotiable",
+  "services.pricing.negotiableDescription": "Our listed prices are starting points. We customize every quote based on your specific requirements, project complexity, and timeline. Contact us for a free consultation and personalized pricing.",
 
   // Form
   "form.requestService": "Request Service",

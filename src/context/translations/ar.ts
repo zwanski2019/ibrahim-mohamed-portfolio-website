@@ -59,6 +59,10 @@ export const arTranslations = {
   "services.stats.moneyBackGuarantee": "ضمان استرداد الأموال",
   "services.stats.yearsExperience": "سنوات الخبرة",
   "services.stats.trustedByGlobalClients": "موثوق من قبل عملاء عالميين",
+  "services.pricing.from": "من",
+  "services.pricing.perHour": "/ساعة",
+  "services.pricing.negotiableTitle": "💡 جميع الأسعار قابلة للتفاوض",
+  "services.pricing.negotiableDescription": "الأسعار المدرجة هي نقاط انطلاق. نقوم بتخصيص كل عرض أسعار بناءً على متطلباتك المحددة وتعقيد المشروع والجدول الزمني. اتصل بنا للحصول على استشارة مجانية وتسعير شخصي.",
 
   // Service Categories
   "services.categories.webDevelopment": "تطوير الويب",
@@ -73,10 +77,6 @@ export const arTranslations = {
   "services.categories.systemSecurityDesc": "حلول أمن سيبراني شاملة وحماية",
   "services.categories.customTools": "أدوات مخصصة",
   "services.categories.customToolsDesc": "حلول برمجية مصممة خصيصاً لاحتياجاتك المحددة",
-
-  // Pricing
-  "services.pricing.from": "من",
-  "services.pricing.perHour": "/ساعة",
 
   // Form
   "form.requestService": "طلب خدمة",
