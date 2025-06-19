@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play, Shield, Globe, Zap, Users, MessageSquare, Star, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -171,10 +172,10 @@ const Hero = () => {
                     <ArrowRight className="ml-3 h-6 w-6 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                   </Button>
                 </Link>
-                <Link to="/computer-model" aria-label={t("hero.cta2")}>
+                <Link to="/infrastructure" aria-label="View Our Infrastructure">
                   <Button variant="outline" size="lg" className="group h-16 px-10 text-xl border-2 border-emerald-500 text-emerald-400 hover:bg-emerald-500/10 shadow-elevation-3 hover:shadow-elevation-4 transition-all duration-300 transform hover:scale-105 backdrop-blur-sm will-change-transform">
                     <Play className="mr-3 h-6 w-6 transition-transform group-hover:scale-110" aria-hidden="true" />
-                    {t("hero.cta2")}
+                    View Infrastructure
                   </Button>
                 </Link>
               </div>
