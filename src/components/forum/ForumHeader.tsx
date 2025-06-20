@@ -41,7 +41,7 @@ export const ForumHeader = () => {
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">Welcome back,</span>
                 <span className="text-sm font-medium">
-                  {user.full_name || user.username || 'User'}
+                  {user.username || 'User'}
                 </span>
               </div>
             </>
