@@ -1,108 +1,94 @@
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'sonner';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Helmet, HelmetProvider } from "react-helmet-async";
+import { ThemeProvider } from "@/components/theme-provider"
+import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
+import { AuthProvider } from './contexts/AuthContext';
+import { CookieConsentProvider } from './contexts/CookieConsentContext';
 
-// Context Providers
-import { ThemeProvider } from "@/context/ThemeContext";
-import { LanguageProvider } from "@/context/LanguageContext";
-import { CookiePreferencesProvider } from "@/context/CookiePreferencesContext";
-import { AuthProvider } from "@/context/AuthContext";
-
-// Components
 import Index from "./pages/Index";
-import Services from "./pages/Services";
 import About from "./pages/About";
-import ComputerModel from "./pages/ComputerModel";
+import Auth from "./pages/Auth";
 import Chat from "./pages/Chat";
-import Newsletter from "./pages/Newsletter";
+import Community from "./pages/Community";
 import Academy from "./pages/Academy";
 import Jobs from "./pages/Jobs";
 import PostJob from "./pages/PostJob";
 import Freelancers from "./pages/Freelancers";
-import Auth from "./pages/Auth";
-import Community from "./pages/Community";
-import NotFound from "./pages/NotFound";
+import Services from "./pages/Services";
+import ComputerModel from "./pages/ComputerModel";
+import IMEICheck from "./pages/IMEICheck";
+import FAQ from "./pages/FAQ";
+import Support from "./pages/Support";
+import Infrastructure from "./pages/Infrastructure";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
-import Support from "./pages/Support";
-import FAQ from "./pages/FAQ";
-import Infrastructure from "./pages/Infrastructure";
-import IMEICheck from "./pages/IMEICheck";
+import Newsletter from "./pages/Newsletter";
 import RSS from "./pages/RSS";
-import CookieConsent from "./components/CookieConsent";
-import { LanguageDetectionNotice } from "./components/LanguageDetectionNotice";
-import ScrollToTop from "./components/ScrollToTop";
-import ScrollToTopButton from "./components/ScrollToTopButton";
-import ChatWidget from "./components/ChatWidget";
+import NotFound from "./pages/NotFound";
 
-// Styles
-import "./App.css";
-import "./styles/components.css";
-import "./styles/utilities.css";
-import "./styles/base.css";
-import "./styles/animations.css";
+import LanguageDetectionNotice from './components/LanguageDetectionNotice';
+import CookieConsent from './components/CookieConsent';
+import ScrollToTopButton from './components/ScrollToTopButton';
+
+import Forum from "./pages/Forum";
+import ForumCategory from "./pages/ForumCategory";
+import ForumThread from "./pages/ForumThread";
+import CreateForumThread from "./pages/CreateForumThread";
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <ThemeProvider>
-            <LanguageProvider>
-              <CookiePreferencesProvider>
-                <AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <LanguageProvider>
+        <ThemeProvider>
+          <CookieConsentProvider>
+            <AuthProvider>
+              <BrowserRouter>
+                <div className="App">
+                  <LanguageDetectionNotice />
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/auth" element={<Auth />} />
+                    <Route path="/chat" element={<Chat />} />
+                    <Route path="/community" element={<Community />} />
+                    <Route path="/academy" element={<Academy />} />
+                    <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/post-job" element={<PostJob />} />
+                    <Route path="/freelancers" element={<Freelancers />} />
+                    <Route path="/services" element={<Services />} />
+                    <Route path="/computer-model" element={<ComputerModel />} />
+                    <Route path="/imei-check" element={<IMEICheck />} />
+                    <Route path="/faq" element={<FAQ />} />
+                    <Route path="/support" element={<Support />} />
+                    <Route path="/infrastructure" element={<Infrastructure />} />
+                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                    <Route path="/terms-of-service" element={<TermsOfService />} />
+                    <Route path="/newsletter" element={<Newsletter />} />
+                    <Route path="/rss" element={<RSS />} />
+                    
+                    {/* Forum Routes */}
+                    <Route path="/forum" element={<Forum />} />
+                    <Route path="/forum/category/:slug" element={<ForumCategory />} />
+                    <Route path="/forum/thread/:slug" element={<ForumThread />} />
+                    <Route path="/forum/new-thread" element={<CreateForumThread />} />
+                    
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
                   <Toaster />
-                  <BrowserRouter>
-                    <ScrollToTop />
-                    <Helmet>
-                      <title>Zwanski Tech - Professional Web Development & IT Support Services</title>
-                      <meta name="description" content="Zwanski Tech provides professional web development, IT support, and cybersecurity services in Tunis, Tunisia. Expert solutions for businesses and individuals." />
-                    </Helmet>
-                    <Routes>
-                      <Route path="/" element={<Index />} />
-                      <Route path="/services" element={<Services />} />
-                      <Route path="/about" element={<About />} />
-                      <Route path="/3d" element={<ComputerModel />} />
-                      <Route path="/chat" element={<Chat />} />
-                      <Route path="/newsletter" element={<Newsletter />} />
-                      <Route path="/academy" element={<Academy />} />
-                      <Route path="/jobs" element={<Jobs />} />
-                      <Route path="/post-job" element={<PostJob />} />
-                      <Route path="/freelancers" element={<Freelancers />} />
-                      <Route path="/auth" element={<Auth />} />
-                      <Route path="/community" element={<Community />} />
-                      
-                      {/* Privacy and Terms Routes - Support both formats */}
-                      <Route path="/privacy" element={<PrivacyPolicy />} />
-                      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                      <Route path="/terms" element={<TermsOfService />} />
-                      <Route path="/terms-of-service" element={<TermsOfService />} />
-                      
-                      <Route path="/support" element={<Support />} />
-                      <Route path="/faq" element={<FAQ />} />
-                      <Route path="/infrastructure" element={<Infrastructure />} />
-                      <Route path="/imei-check" element={<IMEICheck />} />
-                      <Route path="/rss" element={<RSS />} />
-                      <Route path="/feed" element={<RSS />} />
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                    <CookieConsent />
-                    <LanguageDetectionNotice />
-                    <ScrollToTopButton />
-                    <ChatWidget />
-                  </BrowserRouter>
-                </AuthProvider>
-              </CookiePreferencesProvider>
-            </LanguageProvider>
-          </ThemeProvider>
-        </TooltipProvider>
-      </QueryClientProvider>
-    </HelmetProvider>
+                  <CookieConsent />
+                  <ScrollToTopButton />
+                </div>
+              </BrowserRouter>
+            </AuthProvider>
+          </CookieConsentProvider>
+        </ThemeProvider>
+      </LanguageProvider>
+    </QueryClientProvider>
   );
 }
 

@@ -808,6 +808,412 @@ export type Database = {
         }
         Relationships: []
       }
+      forum_categories: {
+        Row: {
+          color: string | null
+          created_at: string | null
+          description: string | null
+          icon: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          parent_id: string | null
+          post_count: number | null
+          slug: string
+          sort_order: number | null
+          thread_count: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          parent_id?: string | null
+          post_count?: number | null
+          slug: string
+          sort_order?: number | null
+          thread_count?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          color?: string | null
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          parent_id?: string | null
+          post_count?: number | null
+          slug?: string
+          sort_order?: number | null
+          thread_count?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_categories_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "forum_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_moderation_logs: {
+        Row: {
+          action: Database["public"]["Enums"]["moderation_action"]
+          created_at: string | null
+          id: string
+          moderator_id: string
+          notes: string | null
+          reason: string
+          target_reply_id: string | null
+          target_thread_id: string | null
+          target_user_id: string | null
+        }
+        Insert: {
+          action: Database["public"]["Enums"]["moderation_action"]
+          created_at?: string | null
+          id?: string
+          moderator_id: string
+          notes?: string | null
+          reason: string
+          target_reply_id?: string | null
+          target_thread_id?: string | null
+          target_user_id?: string | null
+        }
+        Update: {
+          action?: Database["public"]["Enums"]["moderation_action"]
+          created_at?: string | null
+          id?: string
+          moderator_id?: string
+          notes?: string | null
+          reason?: string
+          target_reply_id?: string | null
+          target_thread_id?: string | null
+          target_user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_moderation_logs_moderator_id_fkey"
+            columns: ["moderator_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_moderation_logs_target_reply_id_fkey"
+            columns: ["target_reply_id"]
+            isOneToOne: false
+            referencedRelation: "forum_replies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_moderation_logs_target_thread_id_fkey"
+            columns: ["target_thread_id"]
+            isOneToOne: false
+            referencedRelation: "forum_threads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_moderation_logs_target_user_id_fkey"
+            columns: ["target_user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_replies: {
+        Row: {
+          author_id: string
+          content: string
+          created_at: string | null
+          edit_count: number | null
+          id: string
+          is_edited: boolean | null
+          like_count: number | null
+          parent_id: string | null
+          thread_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          author_id: string
+          content: string
+          created_at?: string | null
+          edit_count?: number | null
+          id?: string
+          is_edited?: boolean | null
+          like_count?: number | null
+          parent_id?: string | null
+          thread_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          author_id?: string
+          content?: string
+          created_at?: string | null
+          edit_count?: number | null
+          id?: string
+          is_edited?: boolean | null
+          like_count?: number | null
+          parent_id?: string | null
+          thread_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_replies_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_replies_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "forum_replies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_replies_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "forum_threads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_reply_likes: {
+        Row: {
+          created_at: string | null
+          id: string
+          reply_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          reply_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          reply_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_reply_likes_reply_id_fkey"
+            columns: ["reply_id"]
+            isOneToOne: false
+            referencedRelation: "forum_replies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_reply_likes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_thread_bookmarks: {
+        Row: {
+          created_at: string | null
+          id: string
+          notes: string | null
+          thread_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          thread_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          thread_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_thread_bookmarks_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "forum_threads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_thread_bookmarks_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_thread_likes: {
+        Row: {
+          created_at: string | null
+          id: string
+          thread_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          thread_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          thread_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_thread_likes_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "forum_threads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_thread_likes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_threads: {
+        Row: {
+          author_id: string
+          category_id: string
+          content: string
+          created_at: string | null
+          id: string
+          is_featured: boolean | null
+          is_pinned: boolean | null
+          last_activity_at: string | null
+          like_count: number | null
+          reply_count: number | null
+          slug: string
+          status: Database["public"]["Enums"]["thread_status"] | null
+          tags: string[] | null
+          title: string
+          updated_at: string | null
+          view_count: number | null
+        }
+        Insert: {
+          author_id: string
+          category_id: string
+          content: string
+          created_at?: string | null
+          id?: string
+          is_featured?: boolean | null
+          is_pinned?: boolean | null
+          last_activity_at?: string | null
+          like_count?: number | null
+          reply_count?: number | null
+          slug: string
+          status?: Database["public"]["Enums"]["thread_status"] | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string | null
+          view_count?: number | null
+        }
+        Update: {
+          author_id?: string
+          category_id?: string
+          content?: string
+          created_at?: string | null
+          id?: string
+          is_featured?: boolean | null
+          is_pinned?: boolean | null
+          last_activity_at?: string | null
+          like_count?: number | null
+          reply_count?: number | null
+          slug?: string
+          status?: Database["public"]["Enums"]["thread_status"] | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string | null
+          view_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_threads_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_threads_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "forum_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_user_preferences: {
+        Row: {
+          created_at: string | null
+          email_notifications: boolean | null
+          forum_role: Database["public"]["Enums"]["forum_user_role"] | null
+          id: string
+          push_notifications: boolean | null
+          signature: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          email_notifications?: boolean | null
+          forum_role?: Database["public"]["Enums"]["forum_user_role"] | null
+          id?: string
+          push_notifications?: boolean | null
+          signature?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          email_notifications?: boolean | null
+          forum_role?: Database["public"]["Enums"]["forum_user_role"] | null
+          id?: string
+          push_notifications?: boolean | null
+          signature?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_user_preferences_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       freelancer_profiles: {
         Row: {
           availability: string | null
@@ -2013,9 +2419,15 @@ export type Database = {
     Enums: {
       application_status: "pending" | "accepted" | "rejected" | "withdrawn"
       course_difficulty: "beginner" | "intermediate" | "advanced"
+      forum_user_role: "admin" | "moderator" | "trusted_user" | "member"
       job_status: "draft" | "published" | "closed" | "filled"
       job_type: "full-time" | "part-time" | "contract" | "freelance"
       lesson_type: "video" | "article" | "interactive" | "quiz"
+      moderation_action:
+        | "warning"
+        | "temp_ban"
+        | "permanent_ban"
+        | "content_removal"
       payment_status: "pending" | "completed" | "failed" | "refunded"
       post_status: "draft" | "published" | "scheduled"
       progress_status: "not_started" | "in_progress" | "completed"
@@ -2028,6 +2440,7 @@ export type Database = {
         | "devops"
         | "design"
         | "other"
+      thread_status: "open" | "closed" | "locked" | "archived"
       urgency_level: "low" | "medium" | "high"
       user_role:
         | "student"
@@ -2154,9 +2567,16 @@ export const Constants = {
     Enums: {
       application_status: ["pending", "accepted", "rejected", "withdrawn"],
       course_difficulty: ["beginner", "intermediate", "advanced"],
+      forum_user_role: ["admin", "moderator", "trusted_user", "member"],
       job_status: ["draft", "published", "closed", "filled"],
       job_type: ["full-time", "part-time", "contract", "freelance"],
       lesson_type: ["video", "article", "interactive", "quiz"],
+      moderation_action: [
+        "warning",
+        "temp_ban",
+        "permanent_ban",
+        "content_removal",
+      ],
       payment_status: ["pending", "completed", "failed", "refunded"],
       post_status: ["draft", "published", "scheduled"],
       progress_status: ["not_started", "in_progress", "completed"],
@@ -2170,6 +2590,7 @@ export const Constants = {
         "design",
         "other",
       ],
+      thread_status: ["open", "closed", "locked", "archived"],
       urgency_level: ["low", "medium", "high"],
       user_role: [
         "student",
