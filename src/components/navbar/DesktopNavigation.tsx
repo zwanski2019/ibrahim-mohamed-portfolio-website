@@ -1,8 +1,7 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { useLanguage } from "@/context/LanguageContext";
+import { useLanguage } from "@/hooks/useLanguage";
 import { MoreDropdown } from "@/components/navbar/MoreDropdown";
 
 export const DesktopNavigation = () => {

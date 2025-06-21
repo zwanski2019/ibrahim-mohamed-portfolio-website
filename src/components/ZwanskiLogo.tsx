@@ -32,4 +32,3 @@ const ZwanskiLogo: React.FC<ZwanskiLogoProps> = ({
 };
 
 export default ZwanskiLogo;
-export { ZwanskiLogo };

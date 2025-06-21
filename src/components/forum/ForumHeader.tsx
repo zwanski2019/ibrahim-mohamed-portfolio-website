@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Plus } from 'lucide-react';
-import ZwanskiLogo from '@/components/ZwanskiLogo';
+import { ZwanskiLogo } from '@/components/ZwanskiLogo';
 import { useAuth } from '@/hooks/useAuth';
 
 export const ForumHeader = () => {
@@ -40,7 +40,7 @@ export const ForumHeader = () => {
               </Button>
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">Welcome back,</span>
-                <span className="text-sm font-medium">{user.username || 'User'}</span>
+                <span className="text-sm font-medium">{user.user_metadata.full_name}</span>
               </div>
             </>
           ) : (

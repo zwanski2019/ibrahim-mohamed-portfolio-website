@@ -1,13 +1,12 @@
-
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { ThemeProvider } from "@/components/theme-provider"
-import { LanguageProvider } from './context/LanguageContext';
-import { AuthProvider } from './context/AuthContext';
-import { CookieConsentProvider } from './context/CookieConsentContext';
+import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
+import { AuthProvider } from './contexts/AuthContext';
+import { CookieConsentProvider } from './contexts/CookieConsentContext';
 
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -30,7 +29,7 @@ import Newsletter from "./pages/Newsletter";
 import RSS from "./pages/RSS";
 import NotFound from "./pages/NotFound";
 
-import { LanguageDetectionNotice } from './components/LanguageDetectionNotice';
+import LanguageDetectionNotice from './components/LanguageDetectionNotice';
 import CookieConsent from './components/CookieConsent';
 import ScrollToTopButton from './components/ScrollToTopButton';
 
@@ -45,7 +44,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <ThemeProvider>
           <CookieConsentProvider>
             <AuthProvider>
               <BrowserRouter>

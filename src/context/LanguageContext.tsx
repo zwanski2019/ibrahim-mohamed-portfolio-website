@@ -12,7 +12,7 @@ interface LanguageContextType {
   wasAutoDetected: boolean;
 }
 
-export const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { language, setLanguage, wasAutoDetected } = useLanguageDetection();

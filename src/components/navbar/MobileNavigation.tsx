@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Sheet,
@@ -9,9 +8,9 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
-import ZwanskiLogo from "@/components/ZwanskiLogo";
+import { ZwanskiLogo } from "@/components/ZwanskiLogo";
 import { Link } from "react-router-dom";
-import { useLanguage } from "@/context/LanguageContext";
+import { useLanguage } from "@/hooks/useLanguage";
 
 export const MobileNavigation = () => {
   const [isOpen, setIsOpen] = useState(false);
