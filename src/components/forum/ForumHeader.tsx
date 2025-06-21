@@ -9,6 +9,22 @@ import { useAuth } from '@/hooks/useAuth';
 export const ForumHeader = () => {
   const { user } = useAuth();
 
+  const getUserDisplayName = () => {
+    if (!user) return 'User';
+    
+    // Check if user has email property (AuthUser)
+    if ('email' in user && user.email) {
+      return user.email;
+    }
+    
+    // Check if user has username property (ChatUser)
+    if ('username' in user && user.username) {
+      return user.username;
+    }
+    
+    return 'User';
+  };
+
   return (
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
       <div className="container flex h-16 items-center justify-between">
@@ -41,7 +57,7 @@ export const ForumHeader = () => {
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">Welcome back,</span>
                 <span className="text-sm font-medium">
-                  {user.email || 'User'}
+                  {getUserDisplayName()}
                 </span>
               </div>
             </>

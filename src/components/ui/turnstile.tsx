@@ -18,7 +18,7 @@ export const TurnstileWidget = React.forwardRef<TurnstileInstance, TurnstileWidg
         <Turnstile
           ref={ref}
           siteKey="0x4AAAAAABhxuYUdORnhPKDe"
-          onVerify={onVerify}
+          onSuccess={onVerify}
           onError={onError}
           onExpire={onExpire}
           options={{
