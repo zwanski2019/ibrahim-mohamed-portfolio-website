@@ -51,7 +51,7 @@ function App() {
             <CookieConsentProvider>
               <AuthProvider>
                 <BrowserRouter>
-                  <div className="App">
+                  <div className="App min-h-screen bg-background text-foreground">
                     <LanguageDetectionNotice />
                     <Routes>
                       <Route path="/" element={<Index />} />
