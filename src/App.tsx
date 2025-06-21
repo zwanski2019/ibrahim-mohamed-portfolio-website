@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { HelmetProvider } from 'react-helmet-async';
 
 import { ThemeProvider } from "@/context/ThemeContext"
 import { LanguageProvider } from '@/context/LanguageContext';
@@ -43,53 +44,55 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
-        <ThemeProvider>
-          <CookieConsentProvider>
-            <AuthProvider>
-              <BrowserRouter>
-                <div className="App">
-                  <LanguageDetectionNotice />
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/auth" element={<Auth />} />
-                    <Route path="/chat" element={<Chat />} />
-                    <Route path="/community" element={<Community />} />
-                    <Route path="/academy" element={<Academy />} />
-                    <Route path="/jobs" element={<Jobs />} />
-                    <Route path="/post-job" element={<PostJob />} />
-                    <Route path="/freelancers" element={<Freelancers />} />
-                    <Route path="/services" element={<Services />} />
-                    <Route path="/computer-model" element={<ComputerModel />} />
-                    <Route path="/imei-check" element={<IMEICheck />} />
-                    <Route path="/faq" element={<FAQ />} />
-                    <Route path="/support" element={<Support />} />
-                    <Route path="/infrastructure" element={<Infrastructure />} />
-                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                    <Route path="/terms-of-service" element={<TermsOfService />} />
-                    <Route path="/newsletter" element={<Newsletter />} />
-                    <Route path="/rss" element={<RSS />} />
-                    
-                    {/* Forum Routes */}
-                    <Route path="/forum" element={<Forum />} />
-                    <Route path="/forum/category/:slug" element={<ForumCategory />} />
-                    <Route path="/forum/thread/:slug" element={<ForumThread />} />
-                    <Route path="/forum/new-thread" element={<CreateForumThread />} />
-                    
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                  <Toaster />
-                  <CookieConsent />
-                  <ScrollToTopButton />
-                </div>
-              </BrowserRouter>
-            </AuthProvider>
-          </CookieConsentProvider>
-        </ThemeProvider>
-      </LanguageProvider>
-    </QueryClientProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <LanguageProvider>
+          <ThemeProvider>
+            <CookieConsentProvider>
+              <AuthProvider>
+                <BrowserRouter>
+                  <div className="App">
+                    <LanguageDetectionNotice />
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/auth" element={<Auth />} />
+                      <Route path="/chat" element={<Chat />} />
+                      <Route path="/community" element={<Community />} />
+                      <Route path="/academy" element={<Academy />} />
+                      <Route path="/jobs" element={<Jobs />} />
+                      <Route path="/post-job" element={<PostJob />} />
+                      <Route path="/freelancers" element={<Freelancers />} />
+                      <Route path="/services" element={<Services />} />
+                      <Route path="/computer-model" element={<ComputerModel />} />
+                      <Route path="/imei-check" element={<IMEICheck />} />
+                      <Route path="/faq" element={<FAQ />} />
+                      <Route path="/support" element={<Support />} />
+                      <Route path="/infrastructure" element={<Infrastructure />} />
+                      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                      <Route path="/terms-of-service" element={<TermsOfService />} />
+                      <Route path="/newsletter" element={<Newsletter />} />
+                      <Route path="/rss" element={<RSS />} />
+                      
+                      {/* Forum Routes */}
+                      <Route path="/forum" element={<Forum />} />
+                      <Route path="/forum/category/:slug" element={<ForumCategory />} />
+                      <Route path="/forum/thread/:slug" element={<ForumThread />} />
+                      <Route path="/forum/new-thread" element={<CreateForumThread />} />
+                      
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                    <Toaster />
+                    <CookieConsent />
+                    <ScrollToTopButton />
+                  </div>
+                </BrowserRouter>
+              </AuthProvider>
+            </CookieConsentProvider>
+          </ThemeProvider>
+        </LanguageProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 }
 
