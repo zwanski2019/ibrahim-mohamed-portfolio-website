@@ -16,11 +16,16 @@
 
   /* Enhanced Glass Effect */
   .glass-card {
-    @apply bg-card/20 backdrop-blur-md border border-border/20 shadow-2xl;
+    @apply bg-card/20 backdrop-blur-md border border-purple-500/20 shadow-2xl shadow-purple-500/10;
   }
 
   .glass-nav {
-    @apply bg-background/80 backdrop-blur-md border-b border-border/20;
+    @apply bg-background/80 backdrop-blur-md border-b border-purple-500/20;
+  }
+  
+  /* Border Gradient Effect */
+  .border-gradient {
+    @apply relative before:absolute before:inset-0 before:p-[1px] before:bg-gradient-to-r before:from-purple-500/50 before:to-blue-500/50 before:rounded-lg before:-z-10;
   }
   
   /* Improved form input for better mobile experience */
@@ -41,6 +46,17 @@
     animation: glow 2s ease-in-out infinite alternate;
   }
 
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   /* Gradient Cursor Effect */
   .gradient-cursor {
     position: fixed;
@@ -56,7 +72,7 @@
 
   /* Focus indicators */
   .focus-ring:focus-visible {
-    outline: 2px solid theme('colors.blue.500');
+    outline: 2px solid theme('colors.purple.500');
     outline-offset: 2px;
   }
 
@@ -76,5 +92,10 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  
+  .animate-on-scroll {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

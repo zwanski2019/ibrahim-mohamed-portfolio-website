@@ -46,33 +46,37 @@ const DynamicExperience = () => {
   const currentContent = aboutContent[language];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-muted/20 to-background">
-      <div className="container mx-auto px-4">
+    <section className="py-20 bg-gradient-to-br from-indigo-900/20 via-purple-900/20 to-pink-900/20 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(147,51,234,0.1),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.1),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_40%_80%,rgba(236,72,153,0.1),transparent_70%)]" />
+      
+      <div className="container mx-auto px-4 relative z-10">
         {/* About Section */}
-        <div className="max-w-4xl mx-auto mb-16 text-center animate-on-scroll">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+        <div className="max-w-5xl mx-auto mb-16 text-center animate-on-scroll">
+          <h2 className="text-5xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 bg-clip-text text-transparent">
             {currentContent.title}
           </h2>
-          <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
-            <p>{currentContent.description}</p>
-            <p>{currentContent.additionalInfo}</p>
+          <div className="space-y-8 text-lg leading-relaxed">
+            <p className="text-slate-300 max-w-4xl mx-auto text-xl">{currentContent.description}</p>
+            <p className="text-slate-400 max-w-4xl mx-auto">{currentContent.additionalInfo}</p>
           </div>
         </div>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {currentContent.stats.map((stat, index) => (
-            <Card key={index} className="text-center group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-card/50 backdrop-blur-sm border-border/50 animate-on-scroll">
-              <CardHeader className="pb-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform">
+            <Card key={index} className="text-center group hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 glass-card border-gradient bg-gradient-to-br from-purple-500/10 to-blue-500/10 border-purple-500/30 animate-on-scroll">
+              <CardHeader className="pb-3">
+                <div className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-3 group-hover:scale-110 transition-transform duration-300">
                   {stat.number}
                 </div>
-                <CardTitle className="text-lg font-semibold">
+                <CardTitle className="text-lg font-bold text-slate-200">
                   {stat.label}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-sm">
+                <CardDescription className="text-sm text-slate-400">
                   {stat.description}
                 </CardDescription>
               </CardContent>
@@ -83,10 +87,10 @@ const DynamicExperience = () => {
         {/* Professional Experience Cards */}
         <div className="space-y-8">
           <div className="text-center mb-12 animate-on-scroll">
-            <h3 className="text-2xl md:text-3xl font-bold mb-4">
+            <h3 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               {language === 'en' ? 'Professional Experience' : language === 'fr' ? 'Expérience Professionnelle' : 'الخبرة المهنية'}
             </h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-slate-300 max-w-3xl mx-auto text-lg">
               {language === 'en' 
                 ? 'Our proven track record in IT solutions and device repair services'
                 : language === 'fr'
@@ -98,34 +102,34 @@ const DynamicExperience = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* IT Solutions & Web Development */}
-            <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-card/50 backdrop-blur-sm border-border/50 animate-on-scroll">
+            <Card className="group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 glass-card bg-gradient-to-br from-blue-500/10 to-purple-500/10 border-blue-500/30 animate-on-scroll">
               <CardHeader className="pb-4">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="p-2 rounded-lg bg-primary/10">
-                    <Building className="h-5 w-5 text-primary" />
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg">
+                    <Building className="h-6 w-6 text-white" />
                   </div>
                   <div className="flex-1">
-                    <CardTitle className="text-xl">
+                    <CardTitle className="text-xl text-slate-100 mb-2">
                       {language === 'en' ? 'IT Solutions & Web Development' : language === 'fr' ? 'Solutions IT & Développement Web' : 'حلول تقنية المعلومات وتطوير الويب'}
                     </CardTitle>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                    <div className="flex items-center gap-2 text-sm text-slate-400">
                       <Calendar className="h-4 w-4" />
                       <span>2019 - {language === 'en' ? 'Present' : language === 'fr' ? 'Présent' : 'الحاضر'}</span>
                     </div>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2 mb-4">
-                  <Badge variant="secondary">React</Badge>
-                  <Badge variant="secondary">PHP</Badge>
-                  <Badge variant="secondary">WordPress</Badge>
-                  <Badge variant="secondary">JavaScript</Badge>
-                  <Badge variant="secondary">Cybersecurity</Badge>
+                  <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">React</Badge>
+                  <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30">PHP</Badge>
+                  <Badge className="bg-indigo-500/20 text-indigo-300 border-indigo-500/30">WordPress</Badge>
+                  <Badge className="bg-yellow-500/20 text-yellow-300 border-yellow-500/30">JavaScript</Badge>
+                  <Badge className="bg-red-500/20 text-red-300 border-red-500/30">Cybersecurity</Badge>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <Trophy className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">
+                  <Trophy className="h-5 w-5 text-blue-400 mt-1 flex-shrink-0" />
+                  <span className="text-sm text-slate-300">
                     {language === 'en' 
                       ? 'Developed custom Chrome extensions and automation workflows'
                       : language === 'fr'
@@ -135,8 +139,8 @@ const DynamicExperience = () => {
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Trophy className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">
+                  <Trophy className="h-5 w-5 text-purple-400 mt-1 flex-shrink-0" />
+                  <span className="text-sm text-slate-300">
                     {language === 'en' 
                       ? 'Implemented Wazuh SIEM solutions reducing vulnerabilities by 65%'
                       : language === 'fr'
@@ -146,8 +150,8 @@ const DynamicExperience = () => {
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Trophy className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">
+                  <Trophy className="h-5 w-5 text-indigo-400 mt-1 flex-shrink-0" />
+                  <span className="text-sm text-slate-300">
                     {language === 'en' 
                       ? 'Built responsive websites and managed IT infrastructure for SMEs'
                       : language === 'fr'
@@ -160,33 +164,33 @@ const DynamicExperience = () => {
             </Card>
 
             {/* Device Repair & Technical Support */}
-            <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-card/50 backdrop-blur-sm border-border/50 animate-on-scroll">
+            <Card className="group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 glass-card bg-gradient-to-br from-purple-500/10 to-pink-500/10 border-purple-500/30 animate-on-scroll">
               <CardHeader className="pb-4">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="p-2 rounded-lg bg-primary/10">
-                    <Building className="h-5 w-5 text-primary" />
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 shadow-lg">
+                    <Building className="h-6 w-6 text-white" />
                   </div>
                   <div className="flex-1">
-                    <CardTitle className="text-xl">
+                    <CardTitle className="text-xl text-slate-100 mb-2">
                       {language === 'en' ? 'Device Repair & Technical Support' : language === 'fr' ? 'Réparation d\'Appareils & Support Technique' : 'إصلاح الأجهزة والدعم التقني'}
                     </CardTitle>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                    <div className="flex items-center gap-2 text-sm text-slate-400">
                       <Calendar className="h-4 w-4" />
                       <span>2020 - {language === 'en' ? 'Present' : language === 'fr' ? 'Présent' : 'الحاضر'}</span>
                     </div>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2 mb-4">
-                  <Badge variant="secondary">IMEI Repair</Badge>
-                  <Badge variant="secondary">BIOS Repair</Badge>
-                  <Badge variant="secondary">Remote Support</Badge>
-                  <Badge variant="secondary">Hardware Diagnostics</Badge>
+                  <Badge className="bg-green-500/20 text-green-300 border-green-500/30">IMEI Repair</Badge>
+                  <Badge className="bg-orange-500/20 text-orange-300 border-orange-500/30">BIOS Repair</Badge>
+                  <Badge className="bg-cyan-500/20 text-cyan-300 border-cyan-500/30">Remote Support</Badge>
+                  <Badge className="bg-pink-500/20 text-pink-300 border-pink-500/30">Hardware Diagnostics</Badge>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <Trophy className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">
+                  <Trophy className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
+                  <span className="text-sm text-slate-300">
                     {language === 'en' 
                       ? 'Successfully repaired 300+ devices with 98% customer satisfaction'
                       : language === 'fr'
@@ -196,8 +200,8 @@ const DynamicExperience = () => {
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Trophy className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">
+                  <Trophy className="h-5 w-5 text-orange-400 mt-1 flex-shrink-0" />
+                  <span className="text-sm text-slate-300">
                     {language === 'en' 
                       ? 'Specialized in IMEI services for Android & iPhone devices'
                       : language === 'fr'
@@ -207,8 +211,8 @@ const DynamicExperience = () => {
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Trophy className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">
+                  <Trophy className="h-5 w-5 text-pink-400 mt-1 flex-shrink-0" />
+                  <span className="text-sm text-slate-300">
                     {language === 'en' 
                       ? 'Expert-level BIOS and firmware repair for all major laptop brands'
                       : language === 'fr'

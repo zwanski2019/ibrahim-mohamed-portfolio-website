@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
@@ -8,6 +7,7 @@ import DynamicExperience from "@/components/dynamic/DynamicExperience";
 import YouTubeVideos from "@/components/YouTubeVideos";
 import EnhancedContact from "@/components/EnhancedContact";
 import Footer from "@/components/Footer";
+import ChatWidget from "@/components/ChatWidget";
 import AcademyHero from "@/components/academy/AcademyHero";
 import CourseGrid from "@/components/academy/CourseGrid";
 import { Helmet } from "react-helmet-async";
@@ -209,6 +209,7 @@ const Index = () => {
           <EnhancedContact />
         </main>
         <Footer />
+        <ChatWidget />
       </div>
     </>
   );
