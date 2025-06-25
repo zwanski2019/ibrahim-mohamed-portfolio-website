@@ -26,7 +26,7 @@
     --ring: 217.2 91.2% 59.8%;
     --radius: 0.75rem;
     
-    /* Brand Colors */
+    /* Enhanced Brand Colors - ZWANSKI TECH Purple/Blue Theme */
     --brand-50: 240 100% 98%;
     --brand-100: 239 84% 95%;
     --brand-200: 238 79% 89%;
@@ -38,9 +38,12 @@
     --brand-800: 226 47% 28%;
     --brand-900: 224 44% 21%;
     
-    /* Accent Colors */
-    --accent-color: 280 100% 70%;
-    --highlight: 320 100% 75%;
+    /* Vibrant Accent Colors */
+    --accent-purple: 280 100% 70%;
+    --accent-blue: 217 91% 60%;
+    --accent-indigo: 244 89% 65%;
+    --gradient-primary: linear-gradient(135deg, #7c3aed, #3b82f6, #6366f1);
+    --gradient-secondary: linear-gradient(135deg, #ec4899, #8b5cf6, #06b6d4);
   }
 
   .dark {
@@ -63,6 +66,10 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;
+    
+    /* Dark mode brand colors enhancement */
+    --gradient-primary: linear-gradient(135deg, #8b5cf6, #3b82f6, #06b6d4);
+    --gradient-secondary: linear-gradient(135deg, #f472b6, #a855f7, #0ea5e9);
   }
 }
 
@@ -78,6 +85,19 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    background: linear-gradient(135deg, 
+      hsl(var(--background)) 0%, 
+      hsl(var(--background)) 50%, 
+      hsl(var(--brand-50)) 100%
+    );
+  }
+  
+  .dark body {
+    background: linear-gradient(135deg, 
+      hsl(var(--background)) 0%, 
+      hsl(var(--background)) 50%, 
+      hsl(var(--brand-900)) 100%
+    );
   }
   
   img {
@@ -85,7 +105,7 @@
     height: auto;
   }
   
-  /* Custom scrollbar */
+  /* Enhanced Custom scrollbar with brand colors */
   ::-webkit-scrollbar {
     width: 8px;
   }
@@ -95,19 +115,28 @@
   }
   
   ::-webkit-scrollbar-thumb {
-    @apply bg-muted-foreground/30 rounded-full;
+    @apply bg-gradient-to-b from-purple-500 to-blue-500 rounded-full;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-foreground/50;
+    @apply from-purple-600 to-blue-600;
   }
 
-  /* Selection styling */
+  /* Enhanced Selection styling with brand colors */
   ::selection {
-    @apply bg-brand-500/20 text-brand-900;
+    @apply bg-purple-500/30 text-purple-900;
   }
 
   .dark ::selection {
-    @apply bg-brand-400/30 text-brand-100;
+    @apply bg-purple-400/30 text-purple-100;
+  }
+  
+  /* Global gradient text utility */
+  .text-gradient {
+    @apply bg-gradient-to-r from-purple-500 via-blue-500 to-indigo-500 bg-clip-text text-transparent;
+  }
+  
+  .dark .text-gradient {
+    @apply from-purple-400 via-blue-400 to-indigo-400;
   }
 }

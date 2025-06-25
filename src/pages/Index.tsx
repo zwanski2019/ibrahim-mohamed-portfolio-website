@@ -5,7 +5,7 @@ import DynamicSkills from "@/components/dynamic/DynamicSkills";
 import DynamicProjects from "@/components/dynamic/DynamicProjects";
 import DynamicExperience from "@/components/dynamic/DynamicExperience";
 import YouTubeVideos from "@/components/YouTubeVideos";
-import EnhancedContact from "@/components/EnhancedContact";
+import ContactWithTurnstile from "@/components/ContactWithTurnstile";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
 import AcademyHero from "@/components/academy/AcademyHero";
@@ -206,7 +206,7 @@ const Index = () => {
             </div>
           </section>
           
-          <EnhancedContact />
+          <ContactWithTurnstile />
         </main>
         <Footer />
         <ChatWidget />
