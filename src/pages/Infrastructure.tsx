@@ -44,12 +44,12 @@ export default function Infrastructure() {
                   <div className="flex justify-between items-center">
                     <span className="font-medium">Platform:</span>
                     <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-                      Rocket.Chat Enterprise
+                      Enterprise Chat Platform
                     </Badge>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="font-medium">Version:</span>
-                    <span className="text-green-600 font-mono">6.13.0</span>
+                    <span className="text-green-600 font-mono">Latest Enterprise</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="font-medium">Instance Class:</span>
@@ -82,18 +82,18 @@ export default function Infrastructure() {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="font-medium">Region:</span>
-                    <Badge variant="outline">Europe (Paris)</Badge>
+                    <Badge variant="outline">European Region</Badge>
                   </div>
                   <div className="space-y-2">
                     <span className="font-medium">Network:</span>
                     <div className="bg-muted p-2 rounded text-sm">
-                      Private VPC with isolated subnets
+                      Private cloud with isolated networks
                     </div>
                   </div>
                   <div className="space-y-2">
                     <span className="font-medium">Deployment:</span>
                     <div className="bg-muted p-2 rounded text-sm">
-                      Custom AMI with hardened security
+                      Enterprise security hardening
                     </div>
                   </div>
                 </CardContent>
@@ -195,7 +195,7 @@ export default function Infrastructure() {
                 <CardContent className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="font-medium">Database:</span>
-                    <Badge variant="outline">MongoDB Enterprise</Badge>
+                    <Badge variant="outline">Enterprise Database</Badge>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="font-medium">Backup Strategy:</span>
@@ -269,7 +269,7 @@ export default function Infrastructure() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
-                    href="mailto:support@zwanski.org"
+                    href="/services"
                     className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
                   >
                     Contact Technical Team
