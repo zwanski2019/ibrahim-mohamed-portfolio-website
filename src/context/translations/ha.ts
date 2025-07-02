@@ -77,8 +77,6 @@ export const haTranslations = {
   // Pricing
   "services.pricing.from": "daga",
   "services.pricing.perHour": "/sa'a",
-  "services.pricing.negotiableTitle": "💡 Duk Farashin Ana Iya Tattaunawa",
-  "services.pricing.negotiableDescription": "Farashin da muka jera su ne wuraren farawa. Muna keɓanta kowane farashin bisa ga bukatun ku na musamman, sarkar aikin, da lokacin aiki. Tuntuɓe mu don shawarwari kyauta da farashin na musamman.",
 
   // Form
   "form.requestService": "Nemi Hidima",

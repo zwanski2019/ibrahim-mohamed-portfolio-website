@@ -110,7 +110,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-lg border-b border-purple-500/20 shadow-lg shadow-purple-500/10">
+    <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -132,11 +132,7 @@ const Navbar = () => {
                   variant={isActivePath(item.path) ? "default" : "ghost"}
                   size="sm"
                   onClick={() => navigate(item.path)}
-                  className={`flex items-center gap-2 transition-all duration-300 ${
-                    isActivePath(item.path) 
-                      ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/25" 
-                      : "hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-blue-500/10 hover:text-purple-300"
-                  }`}
+                  className="flex items-center gap-2"
                 >
                   <Icon className="h-4 w-4" />
                   {item.label}
@@ -237,7 +233,7 @@ const Navbar = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="lg:hidden hover:bg-purple-500/10"
+              className="lg:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -247,7 +243,7 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden border-t border-purple-500/20 py-4 bg-gradient-to-r from-purple-500/5 to-blue-500/5 backdrop-blur-md">
+          <div className="lg:hidden border-t border-border/50 py-4">
             <div className="flex flex-col space-y-2">
               {mainNavItems.map((item) => {
                 const Icon = item.icon;

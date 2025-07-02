@@ -6,9 +6,6 @@
 
 /* Import all CSS modules for better organization and maintainability */
 @import './styles/base.css';
-@import './styles/typography.css';
-@import './styles/component-utilities.css';
-@import './styles/animation-keyframes.css';
 @import './styles/animations.css';
 @import './styles/components.css';
 @import './styles/utilities.css';

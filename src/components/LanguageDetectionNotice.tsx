@@ -1,78 +1,88 @@
 
-import React, { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useState, useEffect } from "react";
+import { useLanguage } from "@/context/LanguageContext";
+import { Button } from "@/components/ui/button";
+import { X, Globe } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-export const LanguageDetectionNotice = () => {
+export function LanguageDetectionNotice() {
   const { language, wasAutoDetected, setLanguage } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     if (wasAutoDetected) {
-      setIsVisible(true);
+      // Show the notice after a short delay
+      const timer = setTimeout(() => {
+        setIsVisible(true);
+        setIsAnimating(true);
+      }, 1000);
+
+      return () => clearTimeout(timer);
     }
   }, [wasAutoDetected]);
 
-  if (!isVisible || !wasAutoDetected) return null;
-
-  const handleAccept = () => {
-    setIsVisible(false);
-  };
-
-  const handleChangeLanguage = (newLang: "en" | "fr" | "ar" | "ha" | "ber") => {
-    setLanguage(newLang);
-    setIsVisible(false);
+  const handleDismiss = () => {
+    setIsAnimating(false);
+    setTimeout(() => setIsVisible(false), 200);
   };
 
   const getLanguageName = (lang: string) => {
     const names = {
-      en: 'English',
-      fr: 'Français',
-      ar: 'العربية',
-      ha: 'Hausa',
-      ber: 'Tamazight'
+      en: "English",
+      fr: "Français",
+      ar: "العربية",
+      ha: "Hausa",
+      ber: "Tamaziɣt"
     };
-    return names[lang] || lang;
+    return names[lang as keyof typeof names] || lang;
   };
 
+  const getMessage = () => {
+    switch (language) {
+      case 'fr':
+        return `Nous avons détecté votre langue comme ${getLanguageName(language)}`;
+      case 'ar':
+        return `تم اكتشاف لغتك كـ ${getLanguageName(language)}`;
+      case 'ha':
+        return `Mun gano harshenku a matsayin ${getLanguageName(language)}`;
+      case 'ber':
+        return `Naf-d tutlayt-ik d ${getLanguageName(language)}`;
+      default:
+        return `We detected your language as ${getLanguageName(language)}`;
+    }
+  };
+
+  if (!isVisible || !wasAutoDetected) return null;
+
   return (
-    <div className="fixed top-0 left-0 right-0 bg-blue-600 text-white p-4 z-50 shadow-lg">
-      <div className="max-w-6xl mx-auto flex items-center justify-between">
+    <div
+      className={cn(
+        "fixed top-20 right-4 z-40 bg-background/95 backdrop-blur-lg border rounded-lg shadow-lg p-4 max-w-sm transition-all duration-200",
+        isAnimating ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"
+      )}
+    >
+      <div className="flex items-center gap-3">
+        <Globe className="h-5 w-5 text-primary" />
         <div className="flex-1">
-          <p className="text-sm">
-            We detected your language as <strong>{getLanguageName(language)}</strong>. 
-            Is this correct?
+          <p className="text-sm font-medium">{getMessage()}</p>
+          <p className="text-xs text-muted-foreground mt-1">
+            {language === 'fr' && "Vous pouvez changer cela à tout moment"}
+            {language === 'ar' && "يمكنك تغيير هذا في أي وقت"}
+            {language === 'ha' && "Kuna iya canza wannan koyaushe"}
+            {language === 'ber' && "Tzemreḍ ad tbeddleḍ aya melmi tebɣiḍ"}
+            {language === 'en' && "You can change this anytime"}
           </p>
         </div>
-        <div className="flex items-center gap-2 ml-4">
-          <button
-            onClick={handleAccept}
-            className="bg-white text-blue-600 px-3 py-1 rounded text-sm font-medium hover:bg-gray-100 transition-colors"
-          >
-            Yes, continue
-          </button>
-          <div className="flex gap-1">
-            {['en', 'fr', 'ar', 'ha', 'ber'].map((lang) => (
-              <button
-                key={lang}
-                onClick={() => handleChangeLanguage(lang as any)}
-                className={`px-2 py-1 text-xs rounded border border-white/30 hover:bg-white/10 transition-colors ${
-                  language === lang ? 'bg-white/20' : ''
-                }`}
-              >
-                {getLanguageName(lang)}
-              </button>
-            ))}
-          </div>
-          <button
-            onClick={() => setIsVisible(false)}
-            className="ml-2 p-1 hover:bg-white/10 rounded transition-colors"
-            aria-label="Close"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleDismiss}
+          className="h-8 w-8 p-0"
+        >
+          <X className="h-4 w-4" />
+        </Button>
       </div>
     </div>
   );
-};
+}

@@ -40,11 +40,11 @@ const Services = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 relative overflow-hidden">
+    <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
       {/* Enhanced Background */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(147,51,234,0.15),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(59,130,246,0.08),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(249,115,22,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.08),transparent_60%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px]" />
       </div>
 
@@ -56,11 +56,11 @@ const Services = () => {
           {achievements.map((achievement, index) => (
             <div 
               key={index}
-              className="group p-6 rounded-2xl glass-card border border-purple-500/30 hover:border-purple-400/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25"
+              className="group p-6 rounded-2xl bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm border border-slate-700/50 hover:border-orange-500/30 transition-all duration-500 hover:scale-105 hover:shadow-elevation-3"
             >
               <div className="mb-4 flex justify-center">
                 <div className={`p-3 rounded-xl bg-gradient-to-r ${achievement.color} bg-opacity-20 group-hover:bg-opacity-30 transition-all duration-300`}>
-                  <achievement.icon className={`h-6 w-6 text-white`} />
+                  <achievement.icon className={`h-6 w-6 bg-gradient-to-r ${achievement.color} bg-clip-text text-transparent`} />
                 </div>
               </div>
               <h4 className="text-white font-semibold text-sm mb-2 text-center">{achievement.title}</h4>
@@ -79,25 +79,25 @@ const Services = () => {
         </div>
 
         {/* Enhanced CTA Section */}
-        <div className="text-center animate-on-scroll glass-card rounded-3xl p-12 border border-purple-500/30">
+        <div className="text-center animate-on-scroll bg-gradient-to-r from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-3xl p-12 border border-slate-700/50">
           <div className="max-w-2xl mx-auto mb-8">
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Ready to Transform Your <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">Digital Future?</span>
+            <h3 className="text-heading-2 font-display text-white mb-4">
+              Ready to Transform Your Digital Future?
             </h3>
-            <p className="text-lg text-slate-300 mb-8">
+            <p className="text-body-large text-slate-300 mb-8">
               Join hundreds of satisfied clients who trust Zwanski Tech for their digital transformation needs.
             </p>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="h-14 px-8 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 transform hover:scale-105" asChild>
+            <Button size="lg" className="h-14 px-8 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white shadow-elevation-3 hover:shadow-elevation-4 transition-all duration-300 transform hover:scale-105" asChild>
               <Link to="/services">
                 {t("services.getStartedToday")}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
             
-            <Button variant="outline" size="lg" className="h-14 px-8 border-2 border-purple-500/50 text-purple-400 hover:bg-purple-500/10 shadow-xl hover:shadow-2xl transition-all duration-300 backdrop-blur-sm">
+            <Button variant="outline" size="lg" className="h-14 px-8 border-2 border-orange-500/50 text-orange-400 hover:bg-orange-500/10 shadow-elevation-2 hover:shadow-elevation-3 transition-all duration-300 backdrop-blur-sm">
               View Portfolio
               <Star className="ml-2 h-5 w-5" />
             </Button>

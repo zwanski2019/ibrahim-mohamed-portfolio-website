@@ -24,25 +24,22 @@ export default function Footer() {
         />
       </Helmet>
       
-      <footer className="py-12 bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 border-t border-purple-500/20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(147,51,234,0.1),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(59,130,246,0.1),transparent_50%)]" />
-        
-        <div className="container mx-auto px-4 relative z-10">
+      <footer className="py-12 bg-card border-t border-border">
+        <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             {/* Company Info */}
             <div className="md:col-span-2">
-              <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              <Link to="/" className="text-xl font-bold text-gradient">
                 ZWANSKI TECH
               </Link>
-              <p className="text-sm text-slate-300 mt-3 max-w-md">
+              <p className="text-sm text-muted-foreground mt-2">
                 {t('hero.subtitle')}
               </p>
-              <div className="mt-6 space-y-3">
+              <div className="mt-4 space-y-2">
                 <div className="flex items-center gap-4 flex-wrap">
                   <Link 
                     to="/rss" 
-                    className="text-xs text-slate-400 hover:text-purple-300 transition-colors px-3 py-1 bg-purple-500/10 rounded-full border border-purple-500/20 hover:border-purple-400/30"
+                    className="text-xs text-muted-foreground hover:text-primary transition-colors"
                     title="Subscribe to RSS Feed"
                   >
                     RSS Feed
@@ -51,7 +48,7 @@ export default function Footer() {
                     href="https://t.me/zwanski_tech" 
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-xs text-blue-300 hover:text-blue-200 transition-colors font-medium px-3 py-1 bg-blue-500/10 rounded-full border border-blue-500/20 hover:border-blue-400/30"
+                    className="flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 transition-colors font-medium"
                     title="Join our Telegram for instant news"
                   >
                     <MessageSquare className="h-3 w-3" />
@@ -63,30 +60,30 @@ export default function Footer() {
 
             {/* Company Links */}
             <div>
-              <h3 className="font-semibold mb-4 text-purple-300">Company</h3>
-              <ul className="space-y-3 text-sm">
+              <h3 className="font-semibold mb-3">Company</h3>
+              <ul className="space-y-2 text-sm">
                 <li>
-                  <Link to="/about" className="text-slate-400 hover:text-purple-300 transition-colors block py-1">
+                  <Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">
                     About Us
                   </Link>
                 </li>
                 <li>
-                  <Link to="/services" className="text-slate-400 hover:text-purple-300 transition-colors block py-1">
+                  <Link to="/services" className="text-muted-foreground hover:text-primary transition-colors">
                     Services
                   </Link>
                 </li>
                 <li>
-                  <Link to="/academy" className="text-slate-400 hover:text-purple-300 transition-colors block py-1">
+                  <Link to="/academy" className="text-muted-foreground hover:text-primary transition-colors">
                     Academy
                   </Link>
                 </li>
                 <li>
-                  <Link to="/jobs" className="text-slate-400 hover:text-purple-300 transition-colors block py-1">
+                  <Link to="/jobs" className="text-muted-foreground hover:text-primary transition-colors">
                     Job Marketplace
                   </Link>
                 </li>
                 <li>
-                  <Link to="/infrastructure" className="text-slate-400 hover:text-purple-300 transition-colors block py-1">
+                  <Link to="/infrastructure" className="text-muted-foreground hover:text-primary transition-colors">
                     Infrastructure
                   </Link>
                 </li>
@@ -95,25 +92,25 @@ export default function Footer() {
 
             {/* Support & Legal */}
             <div>
-              <h3 className="font-semibold mb-4 text-blue-300">Support & Legal</h3>
-              <ul className="space-y-3 text-sm">
+              <h3 className="font-semibold mb-3">Support & Legal</h3>
+              <ul className="space-y-2 text-sm">
                 <li>
-                  <Link to="/faq" className="text-slate-400 hover:text-blue-300 transition-colors block py-1">
+                  <Link to="/faq" className="text-muted-foreground hover:text-primary transition-colors">
                     FAQ
                   </Link>
                 </li>
                 <li>
-                  <Link to="/support" className="text-slate-400 hover:text-blue-300 transition-colors block py-1">
+                  <Link to="/support" className="text-muted-foreground hover:text-primary transition-colors">
                     Support
                   </Link>
                 </li>
                 <li>
-                  <Link to="/privacy" className="text-slate-400 hover:text-blue-300 transition-colors block py-1">
+                  <Link to="/privacy" className="text-muted-foreground hover:text-primary transition-colors">
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link to="/terms" className="text-slate-400 hover:text-blue-300 transition-colors block py-1">
+                  <Link to="/terms" className="text-muted-foreground hover:text-primary transition-colors">
                     Terms of Service
                   </Link>
                 </li>
@@ -121,27 +118,27 @@ export default function Footer() {
             </div>
           </div>
           
-          <div className="pt-8 border-t border-purple-500/20">
+          <div className="pt-8 border-t border-border">
             <div className="flex flex-col md:flex-row justify-between items-center">
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-muted-foreground">
                 &copy; {new Date().getFullYear()} Zwanski Tech. {t('footer.rights')}
               </p>
-              <div className="flex items-center gap-6 mt-4 md:mt-0">
+              <div className="flex items-center gap-4 mt-4 md:mt-0">
                 <Link 
                   to="/privacy" 
-                  className="text-xs text-slate-400 hover:text-purple-300 transition-colors"
+                  className="text-xs text-muted-foreground hover:text-primary transition-colors"
                 >
                   Privacy
                 </Link>
                 <Link 
                   to="/terms" 
-                  className="text-xs text-slate-400 hover:text-purple-300 transition-colors"
+                  className="text-xs text-muted-foreground hover:text-primary transition-colors"
                 >
                   Terms
                 </Link>
                 <Link 
                   to="/faq" 
-                  className="text-xs text-slate-400 hover:text-purple-300 transition-colors"
+                  className="text-xs text-muted-foreground hover:text-primary transition-colors"
                 >
                   FAQ
                 </Link>

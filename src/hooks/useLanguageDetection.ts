@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Language } from "@/context/LanguageContext";
 import { getInitialLanguage } from "@/utils/languageDetection";
 

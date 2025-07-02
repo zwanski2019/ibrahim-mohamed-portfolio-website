@@ -11,47 +11,28 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 210 40% 96%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96%;
+    --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
+    --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 217.2 91.2% 59.8%;
+    --ring: 221.2 83.2% 53.3%;
     --radius: 0.75rem;
-    
-    /* Enhanced Brand Colors - ZWANSKI TECH Purple/Blue Theme */
-    --brand-50: 240 100% 98%;
-    --brand-100: 239 84% 95%;
-    --brand-200: 238 79% 89%;
-    --brand-300: 236 72% 79%;
-    --brand-400: 234 66% 67%;
-    --brand-500: 232 62% 55%;
-    --brand-600: 230 55% 45%;
-    --brand-700: 228 50% 36%;
-    --brand-800: 226 47% 28%;
-    --brand-900: 224 44% 21%;
-    
-    /* Vibrant Accent Colors */
-    --accent-purple: 280 100% 70%;
-    --accent-blue: 217 91% 60%;
-    --accent-indigo: 244 89% 65%;
-    --gradient-primary: linear-gradient(135deg, #7c3aed, #3b82f6, #6366f1);
-    --gradient-secondary: linear-gradient(135deg, #ec4899, #8b5cf6, #06b6d4);
   }
 
   .dark {
-    --background: 215 28% 17%;
+    --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-    --card: 222 84% 4.9%;
+    --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-    --popover: 222 84% 4.9%;
+    --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
     --primary: 217.2 91.2% 59.8%;
     --primary-foreground: 222.2 47.4% 11.2%;
@@ -66,10 +47,6 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;
-    
-    /* Dark mode brand colors enhancement */
-    --gradient-primary: linear-gradient(135deg, #8b5cf6, #3b82f6, #06b6d4);
-    --gradient-secondary: linear-gradient(135deg, #f472b6, #a855f7, #0ea5e9);
   }
 }
 
@@ -85,27 +62,74 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    background: linear-gradient(135deg, 
-      hsl(var(--background)) 0%, 
-      hsl(var(--background)) 50%, 
-      hsl(var(--brand-50)) 100%
-    );
   }
   
-  .dark body {
-    background: linear-gradient(135deg, 
-      hsl(var(--background)) 0%, 
-      hsl(var(--background)) 50%, 
-      hsl(var(--brand-900)) 100%
-    );
+  /* Enhanced Typography System */
+  .text-display-1 {
+    @apply font-display text-6xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight;
   }
   
+  .text-display-2 {
+    @apply font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight;
+  }
+  
+  .text-display-3 {
+    @apply font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight;
+  }
+  
+  .text-heading-1 {
+    @apply font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight;
+  }
+  
+  .text-heading-2 {
+    @apply font-display text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight;
+  }
+  
+  .text-heading-3 {
+    @apply font-display text-xl md:text-2xl lg:text-3xl font-medium leading-snug;
+  }
+  
+  .text-body-large {
+    @apply text-lg md:text-xl leading-relaxed;
+  }
+  
+  .text-body {
+    @apply text-base leading-relaxed;
+  }
+  
+  .text-body-small {
+    @apply text-sm leading-relaxed;
+  }
+  
+  /* Improved responsive typography */
+  h1 {
+    @apply text-display-2;
+  }
+  h2 {
+    @apply text-heading-1;
+  }
+  h3 {
+    @apply text-heading-2;
+  }
+  h4 {
+    @apply text-heading-3;
+  }
+  
+  p {
+    @apply text-body;
+  }
+  
+  /* Improved form input for better mobile experience */
+  input, select, textarea {
+    @apply text-base md:text-sm w-full focus:outline-none transition-all duration-200;
+  }
+
   img {
     max-width: 100%;
     height: auto;
   }
   
-  /* Enhanced Custom scrollbar with brand colors */
+  /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
   }
@@ -115,28 +139,58 @@
   }
   
   ::-webkit-scrollbar-thumb {
-    @apply bg-gradient-to-b from-purple-500 to-blue-500 rounded-full;
+    @apply bg-muted-foreground/30 rounded-full;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    @apply from-purple-600 to-blue-600;
+    @apply bg-muted-foreground/50;
   }
+}
 
-  /* Enhanced Selection styling with brand colors */
-  ::selection {
-    @apply bg-purple-500/30 text-purple-900;
-  }
-
-  .dark ::selection {
-    @apply bg-purple-400/30 text-purple-100;
+/* Enhanced responsive typography */
+@media (max-width: 640px) {
+  .text-display-1 {
+    @apply text-5xl;
   }
   
-  /* Global gradient text utility */
-  .text-gradient {
-    @apply bg-gradient-to-r from-purple-500 via-blue-500 to-indigo-500 bg-clip-text text-transparent;
+  .text-display-2 {
+    @apply text-4xl;
   }
   
-  .dark .text-gradient {
-    @apply from-purple-400 via-blue-400 to-indigo-400;
+  .hero-title {
+    @apply text-4xl md:text-6xl lg:text-8xl;
   }
+}
+
+/* Enhanced accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus indicators */
+.focus-ring:focus-visible {
+  outline: 2px solid theme('colors.blue.500');
+  outline-offset: 2px;
+}
+
+/* Performance optimizations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Selection styling */
+::selection {
+  @apply bg-brand-500/20 text-brand-900;
+}
+
+.dark ::selection {
+  @apply bg-brand-400/30 text-brand-100;
 }
