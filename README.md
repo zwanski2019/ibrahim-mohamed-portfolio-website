@@ -1,144 +1,78 @@
-# 🌟 Zwanski Portfolio - Clone & Customize Your Own 🌟
+# 🌟 Zwanski Tech – Free Tech Academy, IT Services & Community
 
-Welcome to my personal portfolio repository! This project is designed to be cloned and customized by developers looking to create a professional and modern online presence. Explore my skills, projects, and experiences, and feel free to modify this template for your own portfolio.
+Welcome to the Zwanski Tech platform! This project powers [zwanski.org](https://zwanski.org), a modern, multilingual platform offering:
 
-## 📌 About This Portfolio
+- **Free programming courses and tech education**
+- **Professional web development & IT support services**
+- **A job marketplace for freelancers and employers**
+- **Community forums, live chat, and resources**
+- **Free tools like IMEI checker and 3D computer model lookup**
 
-This portfolio showcases my work as a **Web Developer & Cybersecurity Enthusiast**. The main goals of this portfolio are:
+---
 
-- **Showcase** my skills and past projects.
-- Provide a point of contact for potential clients and employers.
-- Serve as an inspiration for other developers creating their own portfolio websites.
+## 🚀 Features
 
-## ✨ Features
+- 🌐 Multilingual support (English, Arabic, Hausa, Berber, French)
+- 🎓 Free interactive academy with certificates
+- 💼 Job marketplace for freelancers & employers
+- 🛠️ IT services: web/mobile development, device repair, cybersecurity
+- 🧑‍💻 Community: forums, live chat, Telegram integration
+- 📱 Free IMEI checker & device tools
+- 🖥️ Interactive 3D computer model (React Three Fiber)
+- 🌙 Dark & light mode, responsive design
+- 🔒 GDPR-ready, privacy-focused
 
-✅ Responsive Design (Works on Desktop, Tablet & Mobile)
-✅ Modern & Minimalistic UI
-✅ Project Showcase with Details
-✅ Skills and Experience Sections
-✅ Contact Form & Social Media Links
-✅ Dark & Light Mode Support
+---
 
-## 🔧 Tech Stack
+## 🛠️ Tech Stack
 
-This portfolio is built using the following technologies:
+- **Frontend:** React, TypeScript, Tailwind CSS, shadcn/ui
+- **Backend/DB:** Supabase (Postgres, Auth, Edge Functions)
+- **3D/Creative:** Three.js, React Three Fiber
+- **Other:** Vite, React Query, Lucide Icons, i18n
 
-- **Frontend:** HTML, CSS (Tailwind), JavaScript, React
-- **Frameworks:** Bootstrap, React.js
-- **Backend:** PHP
-- **Database:** MySQL (optional, for dynamic content)
-- **Other:** WordPress (for certain sections)
+---
 
-## 🚀 Getting Started
+## 🏁 Getting Started
 
-To get a local copy up and running, follow these simple steps:
-
-### Prerequisites
-- **[Node.js](https://nodejs.org/) v14+** (for development server & dependencies)
-- **[Git](https://git-scm.com/)** (optional but recommended)
-- A text editor (VS Code, PHPStorm, etc.)
-
-### 🔧 Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/zwanski2019/portfolio.git
-cd portfolio
-
-# Install dependencies
-npm install
-
-# Run the development server
-npm run dev
-```
-
-Your local version of the portfolio should now be available at `http://localhost:3000/`.
-
-## 🛠️ Customization
-
-1. Update the profile information in `src/data/profile.js`.
-2. Add or modify skills in the `skills.js` file.
-3. Modify the `projects` section in `src/data/projects.js` to showcase your own work.
-4. Customize styles in the `styles/` directory to match your personal brand.
-5. Once done, deploy your portfolio to Vercel, Netlify, or your preferred hosting provider.
-
-## 📌 My Skills
-
-💻 **Frontend**: HTML, CSS, JavaScript, React, jQuery, Bootstrap  
-⚙️ **Backend:** PHP
-📊 **CMS:** WordPress, WooCommerce, Magento 2
-🌍 **Languages:** Arabic, French, Hausa, Berber, English
-
-## 🏆 Featured Projects
-
-Here are some of the exciting projects I've worked on:
-
-### 🚀 [ISHT Group](https://github.com/ihstgroup/ihs-website)
-A business-oriented website for ISHT Group, featuring eCommerce functionality and stock management.
-
-**Tech Stack:** PHP, Magento 2, Docker, WordPress, Laravel
-
-### 🛠️ [Zwansave - WordPress Theme Tracker](https://github.com/zwanski2019/wordpressthemetracker)
-A powerful tool for tracking WordPress themes and updates to efficiently manage multiple WordPress installations.
-
-### 🏪 [Pet House Website](#)
-An online platform for selling pets, pet food, and related products with secure transactions and an intuitive UI.
-
-## 🔧 Technologies Used
-Here are some of the tools and technologies I work with:
-
-- **Frontend:** HTML, CSS, JavaScript, React, jQuery, Bootstrap
-- **Backend:** PHP
-- **CMS:** WordPress
-- **Languages:** English, French, Arabic, Hausa, Berber
-- **Additional Skills:** Cybersecurity, WordPress Development, Creative Coding
-
-## 📬 Contact Me
-If you're interested in working together or have any questions, feel free to reach out:
-
-📧 Email: [mohaaibb4@proton.me](mailto:mohaaibb4@proton.me)  
-📞 Phone: +216 94934141  
-📍 Location: Tunis, Tunisia  
-🌍 Portfolio: [View My Work](#)  
-🔗 Connect: [Linktree](https://linktr.ee/zwanski)  
-
-## 🤝 Want to Customize & Use This Portfolio?
-
-1. **Clone the Repository:**
 ```bash
 git clone https://github.com/zwanski2019/portfolio.git
 cd portfolio
-```
-
-2. **Install dependencies:**
-```bash
 npm install
-```
-
-3. **Run the local server:**
-```bash
 npm run dev
 ```
 
-4. **Customize Your Portfolio:**
-- Update `src/config.js` with your personal information.
-- Modify styles in the `styles/` directory to suit your personal brand.
-- Edit existing projects or add new ones in the `projects/` folder.
-- Update social media links and contact details in `src/config.js`.
+Visit [http://localhost:3000](http://localhost:3000) to view the app.
 
-5. **Deploy to Netlify, Vercel, or your preferred hosting provider.**
+---
 
-## 🚀 Let's Connect
-- 🌍 [Portfolio Website](#)
+## 📚 Main Sections
+
+- **Academy:** Free programming courses, interactive tutorials, certificates
+- **Services:** Web/mobile development, IT support, consulting
+- **Marketplace:** Post jobs, hire freelancers, find projects
+- **Community:** Forums, chat, Telegram, support
+- **Tools:** IMEI checker, 3D computer model, developer utilities
+
+---
+
+## 🤝 Contributing & Support
+
+- **Contact:** [support@zwanski.org](mailto:support@zwanski.org)
+- **Telegram:** [Join our channel](https://t.me/zwanski_tech)
+- **Support:** [Support page](https://zwanski.org/support)
+- **License:** MIT
+
+---
+
+## 📬 Contact & Links
+
+- 🌍 Website: [zwanski.org](https://zwanski.org)
 - 🔗 [GitHub](https://github.com/zwanski2019)
 - 📷 [Instagram](https://www.instagram.com/mohamed_zwanski)
 - 🎥 [TikTok](https://www.tiktok.com/@zwanski.m)
-- 🌍 [Linktree](https://linktr.ee/your_profile)
+- 🌍 [Linktree](https://linktr.ee/zwanski)
 
-### ⭐ Show your support!
-If you like my work and would like to support me, consider buying me a coffee ☕
+---
 
-[![ko-fi](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?style=flat&logo=ko-fi&logoColor=black)](https://ko-fi.com/zwanski)
-
-## 📜 License
-This project is licensed under the MIT License. You are free to use and modify it as needed.
+> Empowering the next generation of tech innovators and entrepreneurs. Join us today!
