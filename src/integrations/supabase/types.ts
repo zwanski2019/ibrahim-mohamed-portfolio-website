@@ -2449,7 +2449,7 @@ export type Database = {
         | "employer"
         | "freelancer"
         | "admin"
-      user_type: "employer" | "worker"
+      user_type: "employer" | "worker" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -2600,7 +2600,7 @@ export const Constants = {
         "freelancer",
         "admin",
       ],
-      user_type: ["employer", "worker"],
+      user_type: ["employer", "worker", "admin"],
     },
   },
 } as const
