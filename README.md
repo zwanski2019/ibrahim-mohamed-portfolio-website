@@ -36,8 +36,8 @@ Welcome to the Zwanski Tech platform! This project powers [zwanski.org](https://
 ## 🏁 Getting Started
 
 ```bash
-git clone https://github.com/zwanski2019/portfolio.git
-cd portfolio
+git clone https://https://github.com/zwanski2019/ZWANSKI-TECH.git
+cd ZWANSKI-TECH
 npm install
 npm run dev
 ```
