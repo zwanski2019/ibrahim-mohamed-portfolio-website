@@ -24,6 +24,10 @@ import PostJob from "./pages/PostJob";
 import Freelancers from "./pages/Freelancers";
 import Auth from "./pages/Auth";
 import Community from "./pages/Community";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminUsers from "./pages/admin/AdminUsers";
+import AdminPosts from "./pages/admin/AdminPosts";
+import AdminMessages from "./pages/admin/AdminMessages";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
@@ -75,9 +79,15 @@ function App() {
                       <Route path="/post-job" element={<PostJob />} />
                       <Route path="/freelancers" element={<Freelancers />} />
                       <Route path="/auth" element={<Auth />} />
-                      <Route path="/community" element={<Community />} />
-                      
-                      {/* Privacy and Terms Routes - Support both formats */}
+                        <Route path="/community" element={<Community />} />
+                        
+                        {/* Admin Routes */}
+                        <Route path="/admin" element={<AdminDashboard />} />
+                        <Route path="/admin/users" element={<AdminUsers />} />
+                        <Route path="/admin/posts" element={<AdminPosts />} />
+                        <Route path="/admin/messages" element={<AdminMessages />} />
+                        
+                        {/* Privacy and Terms Routes - Support both formats */}
                       <Route path="/privacy" element={<PrivacyPolicy />} />
                       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                       <Route path="/terms" element={<TermsOfService />} />

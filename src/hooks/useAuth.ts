@@ -10,7 +10,7 @@ interface ChatUser {
 }
 
 interface AuthUser extends User {
-  user_type?: 'employer' | 'worker';
+  user_type?: 'employer' | 'worker' | 'admin';
   full_name?: string;
   username?: string;
   avatar?: string;
