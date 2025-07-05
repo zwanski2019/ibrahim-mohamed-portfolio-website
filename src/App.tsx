@@ -36,7 +36,6 @@ import FAQ from "./pages/FAQ";
 import Infrastructure from "./pages/Infrastructure";
 import IMEICheck from "./pages/IMEICheck";
 import RSS from "./pages/RSS";
-import CookieConsent from "./components/CookieConsent";
 import { LanguageDetectionNotice } from "./components/LanguageDetectionNotice";
 import ScrollToTop from "./components/ScrollToTop";
 import ScrollToTopButton from "./components/ScrollToTopButton";
@@ -101,7 +100,6 @@ function App() {
                       <Route path="/feed" element={<RSS />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
-                    <CookieConsent />
                     <LanguageDetectionNotice />
                     <ScrollToTopButton />
                     <ChatWidget />

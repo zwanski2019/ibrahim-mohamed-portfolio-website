@@ -1,6 +1,17 @@
 
 import { useState, useEffect } from "react";
 
+// Extend window object to include Axeptio
+declare global {
+  interface Window {
+    axeptio: {
+      on: (event: string, callback: Function) => void;
+      getUserConsent: () => any;
+      getAllVendorsConsent: () => any;
+    };
+  }
+}
+
 export type CookiePreferences = {
   necessary: boolean;
   analytics: boolean;
@@ -17,41 +28,72 @@ export const useCookieConsent = () => {
   const [hasConsented, setHasConsented] = useState<boolean>(false);
   const [showBanner, setShowBanner] = useState<boolean>(false);
 
-  useEffect(() => {
-    const consentCookie = getCookie("cookie-consent");
-    if (consentCookie) {
+  // Function to sync with Axeptio consent data
+  const syncWithAxeptio = () => {
+    if (typeof window !== 'undefined' && window.axeptio) {
       try {
-        const savedPreferences = JSON.parse(consentCookie);
+        const axeptioConsent = window.axeptio.getUserConsent();
+        if (axeptioConsent) {
+          const preferences: CookiePreferences = {
+            necessary: true, // Always true
+            analytics: axeptioConsent.analytics || false,
+            preferences: axeptioConsent.preferences || false,
+          };
+          setCookiePreferences(preferences);
+          setHasConsented(true);
+          setShowBanner(false);
+        }
+      } catch (error) {
+        console.error("Error syncing with Axeptio:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    // Check if Axeptio is loaded and sync consent
+    const checkAxeptio = () => {
+      if (typeof window !== 'undefined' && window.axeptio) {
+        // Listen for Axeptio consent events
+        window.axeptio.on('ready', syncWithAxeptio);
+        window.axeptio.on('consent', syncWithAxeptio);
+        
+        // Initial sync
+        syncWithAxeptio();
+      } else {
+        // Axeptio not loaded yet, try again in 100ms
+        setTimeout(checkAxeptio, 100);
+      }
+    };
+
+    checkAxeptio();
+
+    // Fallback: Check for legacy cookie consent for migration
+    const legacyConsent = getCookie("cookie-consent");
+    if (legacyConsent && !hasConsented) {
+      try {
+        const savedPreferences = JSON.parse(legacyConsent);
         setCookiePreferences(savedPreferences);
         setHasConsented(true);
       } catch (e) {
-        console.error("Error parsing cookie consent:", e);
-        setShowBanner(true);
+        console.error("Error parsing legacy cookie consent:", e);
       }
-    } else {
-      // No consent cookie found, show the banner
-      setShowBanner(true);
     }
   }, []);
 
   const saveCookiePreferences = (preferences: CookiePreferences) => {
-    // Set cookie for 6 months
-    const expiryDate = new Date();
-    expiryDate.setMonth(expiryDate.getMonth() + 6);
-    document.cookie = `cookie-consent=${JSON.stringify(
-      preferences
-    )}; expires=${expiryDate.toUTCString()}; path=/; SameSite=Lax`;
-    
     setCookiePreferences(preferences);
     setHasConsented(true);
     setShowBanner(false);
-    
-    // Return the new preferences
     return preferences;
   };
 
   const resetConsent = () => {
-    document.cookie = "cookie-consent=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    // Reset Axeptio consent if available
+    if (typeof window !== 'undefined' && window.axeptio) {
+      // Axeptio will handle resetting consent
+      location.reload(); // Reload to show Axeptio banner again
+    }
+    
     setHasConsented(false);
     setShowBanner(true);
     setCookiePreferences({
@@ -73,6 +115,7 @@ export const useCookieConsent = () => {
   };
 
   const handleAcceptAll = () => {
+    // This will be handled by Axeptio
     const allAccepted = {
       necessary: true,
       analytics: true,
@@ -84,7 +127,7 @@ export const useCookieConsent = () => {
   return {
     cookiePreferences,
     hasConsented,
-    showBanner,
+    showBanner: false, // Axeptio handles the banner
     setShowBanner,
     saveCookiePreferences,
     resetConsent,

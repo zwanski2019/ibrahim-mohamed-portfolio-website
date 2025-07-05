@@ -17,6 +17,20 @@ export interface YouTubeVideo {
   url: string;
 }
 
+interface YouTubeSearchItem {
+  id: {
+    videoId: string;
+  };
+  snippet: {
+    title: string;
+    publishedAt: string;
+    thumbnails: {
+      default: { url: string };
+      high?: { url: string };
+    };
+  };
+}
+
 // Function to get channel ID from channel handle
 async function getChannelId(): Promise<string | null> {
   try {

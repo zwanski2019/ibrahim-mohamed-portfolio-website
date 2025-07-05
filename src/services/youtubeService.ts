@@ -17,6 +17,35 @@ export interface YouTubeVideo {
   url: string;
 }
 
+interface YouTubeSearchItem {
+  id: {
+    videoId: string;
+  };
+  snippet: {
+    title: string;
+    publishedAt: string;
+    thumbnails: {
+      default: { url: string };
+      high?: { url: string };
+    };
+  };
+}
+
+interface YouTubeSearchResponse {
+  items: YouTubeSearchItem[];
+}
+
+interface YouTubeVideoDetailsResponse {
+  items: Array<{
+    contentDetails: {
+      duration: string;
+    };
+    statistics: {
+      viewCount: string;
+    };
+  }>;
+}
+
 interface CachedData {
   videos: YouTubeVideo[];
   timestamp: number;
