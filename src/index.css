@@ -1,11 +1,13 @@
 
-/* Import Tailwind CSS directives */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* Import all CSS modules for better organization and maintainability */
 @import './styles/base.css';
 @import './styles/animations.css';
 @import './styles/components.css';
 @import './styles/utilities.css';
+
+/* Import Tailwind CSS directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+

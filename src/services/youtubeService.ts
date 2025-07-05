@@ -156,7 +156,7 @@ export async function fetchYouTubeVideos(forceRefresh = false): Promise<YouTubeV
     console.log('Fetching fresh YouTube videos...');
     
     // Fetch latest videos from the channel using direct channel ID
-    const videosData = await fetchWithRetry(
+    const videosData: YouTubeSearchResponse = await fetchWithRetry(
       `${YOUTUBE_API_BASE_URL}/search?part=snippet&channelId=${CHANNEL_ID}&type=video&order=date&maxResults=6&key=${YOUTUBE_API_KEY}`
     );
     
@@ -165,15 +165,15 @@ export async function fetchYouTubeVideos(forceRefresh = false): Promise<YouTubeV
     }
 
     // Get video IDs for additional details
-    const videoIds = videosData.items.map((item: any) => item.id.videoId).join(',');
+    const videoIds = videosData.items.map((item: YouTubeSearchItem) => item.id.videoId).join(",");
     
     // Fetch video statistics and content details
-    const detailsData = await fetchWithRetry(
+    const detailsData: YouTubeVideoDetailsResponse = await fetchWithRetry(
       `${YOUTUBE_API_BASE_URL}/videos?part=statistics,contentDetails&id=${videoIds}&key=${YOUTUBE_API_KEY}`
     );
     
     // Combine data and format for our component
-    const videos: YouTubeVideo[] = videosData.items.map((video: any, index: number) => {
+    const videos: YouTubeVideo[] = videosData.items.map((video: YouTubeSearchItem, index: number) => {
       const details = detailsData.items?.[index];
       const videoId = video.id.videoId;
       

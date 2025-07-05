@@ -11,6 +11,7 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     allowedHosts: [
       "36d3624d-d6b8-44c2-aa3d-5e74376284c4.lovableproject.com",
+      "8080-iyzh4ybq817pa0xwg4vwu-72bb8412.manusvm.computer",
     ],
   },
   plugins: [

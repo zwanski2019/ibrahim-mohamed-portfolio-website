@@ -96,7 +96,7 @@ export async function fetchYouTubeVideos(): Promise<YouTubeVideo[]> {
     }
 
     // Get video IDs for additional details
-    const videoIds = videosData.items.map((item: any) => item.id.videoId).join(',');
+    const videoIds = videosData.items.map((item: YouTubeSearchItem) => item.id.videoId).join(",");
     
     // Fetch video statistics and content details
     const detailsResponse = await fetch(
@@ -106,7 +106,7 @@ export async function fetchYouTubeVideos(): Promise<YouTubeVideo[]> {
     const detailsData = await detailsResponse.json();
     
     // Combine data and format for our component
-    const videos: YouTubeVideo[] = videosData.items.map((video: any, index: number) => {
+    const videos: YouTubeVideo[] = videosData.items.map((video: YouTubeSearchItem, index: number) => {
       const details = detailsData.items?.[index];
       const videoId = video.id.videoId;
       

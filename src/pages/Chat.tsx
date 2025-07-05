@@ -12,11 +12,12 @@ import LoginForm from "@/components/LoginForm";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { Profile } from "@/types/profile";
 
 const Chat = () => {
   const { user, isAuthenticated, signOut } = useAuth();
   const [newMessage, setNewMessage] = useState("");
-  const [userProfile, setUserProfile] = useState<any>(null);
+  const [userProfile, setUserProfile] = useState<Profile | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   

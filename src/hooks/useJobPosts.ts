@@ -2,6 +2,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { JobPost } from '@/types/marketplace';
+import { Profile } from '@/types/profile';
 
 export const useJobPosts = (filters?: {
   category?: string;
@@ -59,7 +60,7 @@ export const useJobPosts = (filters?: {
             verified: false
           }
         })) as (JobPost & { 
-          employer: any;
+          employer: Profile;
           applications: { count: number }[];
         })[];
       } catch (error) {
