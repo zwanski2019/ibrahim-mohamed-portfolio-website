@@ -51,6 +51,45 @@ export type Database = {
         }
         Relationships: []
       }
+      api_error_logs: {
+        Row: {
+          client_info: Json | null
+          error_message: string | null
+          id: string
+          method: string
+          path: string
+          request_data: Json | null
+          request_id: string | null
+          status_code: number
+          timestamp: string | null
+          user_id: string | null
+        }
+        Insert: {
+          client_info?: Json | null
+          error_message?: string | null
+          id?: string
+          method: string
+          path: string
+          request_data?: Json | null
+          request_id?: string | null
+          status_code: number
+          timestamp?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          client_info?: Json | null
+          error_message?: string | null
+          id?: string
+          method?: string
+          path?: string
+          request_data?: Json | null
+          request_id?: string | null
+          status_code?: number
+          timestamp?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       applications: {
         Row: {
           cover_letter: string | null
@@ -238,6 +277,33 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      chat_messages: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          id: number
+          message: string
+          user_id: string | null
+          username: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          id?: never
+          message: string
+          user_id?: string | null
+          username: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          id?: never
+          message?: string
+          user_id?: string | null
+          username?: string
+        }
+        Relationships: []
       }
       comments: {
         Row: {
@@ -1700,6 +1766,21 @@ export type Database = {
           },
         ]
       }
+      password_failed_verification_attempts: {
+        Row: {
+          last_failed_at: string
+          user_id: string
+        }
+        Insert: {
+          last_failed_at?: string
+          user_id: string
+        }
+        Update: {
+          last_failed_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       payments: {
         Row: {
           amount: number
@@ -2414,6 +2495,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      hook_password_verification_attempt: {
+        Args: { event: Json }
+        Returns: Json
+      }
       is_admin: {
         Args: Record<PropertyKey, never>
         Returns: boolean

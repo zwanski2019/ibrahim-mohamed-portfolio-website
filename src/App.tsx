@@ -28,6 +28,9 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminPosts from "./pages/admin/AdminPosts";
 import AdminMessages from "./pages/admin/AdminMessages";
+import AdminSettings from "./pages/admin/AdminSettings";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
@@ -85,6 +88,11 @@ function App() {
                         <Route path="/admin/users" element={<AdminUsers />} />
                         <Route path="/admin/posts" element={<AdminPosts />} />
                         <Route path="/admin/messages" element={<AdminMessages />} />
+                        <Route path="/admin/settings" element={<AdminSettings />} />
+                        
+                        {/* User Profile Routes */}
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/settings" element={<Settings />} />
                         
                         {/* Privacy and Terms Routes - Support both formats */}
                       <Route path="/privacy" element={<PrivacyPolicy />} />

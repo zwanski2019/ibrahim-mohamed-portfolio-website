@@ -34,7 +34,7 @@ export function MoreDropdown() {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link to="/computer-model" className="flex items-center">
+          <Link to="/3d" className="flex items-center">
             🖥️ Computer Model
           </Link>
         </DropdownMenuItem>
