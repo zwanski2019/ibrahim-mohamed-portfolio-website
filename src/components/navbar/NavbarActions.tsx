@@ -1,29 +1,96 @@
-
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import ZwanskiLogo from "./ZwanskiLogo";
+import { ThemeToggle } from "./ThemeToggle";
+import { LanguageSelector } from "./LanguageSelector";
+import DesktopNavigation from "./navbar/DesktopNavigation";
+import MobileNavigation from "./navbar/MobileNavigation";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "../ThemeToggle";
-import { LanguageSelector } from "../LanguageSelector";
-import { useAdmin } from "@/hooks/useAdmin";
-import { Shield } from "lucide-react";
+import { User, X, Menu } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export function NavbarActions() {
-  const { isAdmin } = useAdmin();
+export default function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isAuthenticated, signOut, userProfile } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
 
   return (
-    <div className="flex items-center space-x-2 ml-4">
-      <Button variant="outline" size="sm" asChild>
-        <Link to="/post-job">Post a Job</Link>
-      </Button>
-      {isAdmin && (
-        <Button variant="outline" size="sm" asChild>
-          <Link to="/admin">
-            <Shield className="mr-2 h-4 w-4" />
-            Admin
-          </Link>
-        </Button>
+    <nav className="navbar flex items-center justify-between px-4 py-2">
+      <div className="flex items-center gap-2">
+        <Link to="/" className="logo-btn"><ZwanskiLogo /></Link>
+      </div>
+      {/* Desktop nav */}
+      <div className="hidden md:flex flex-1 justify-center">
+        <DesktopNavigation />
+      </div>
+      {/* User menu and mobile button */}
+      <div className="flex items-center gap-2">
+        <LanguageSelector />
+        <ThemeToggle />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm">
+              {isAuthenticated ? (
+                <Avatar>
+                  <AvatarImage src={userProfile?.avatar_url} />
+                  <AvatarFallback>U</AvatarFallback>
+                </Avatar>
+              ) : (
+                <User className="h-4 w-4" />
+              )}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {isAuthenticated ? (
+              <>
+                <DropdownMenuItem asChild>
+                  <Link to="/profile">Profile</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/settings">Settings</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleSignOut}>Sign Out</DropdownMenuItem>
+              </>
+            ) : (
+              <DropdownMenuItem asChild>
+                <Link to="/auth">Sign In / Register</Link>
+              </DropdownMenuItem>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        {/* Mobile menu button */}
+        <div className="md:hidden flex items-center">
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="mobile-menu-btn"
+            aria-label="Open menu"
+          >
+            {isMenuOpen ? <X /> : <Menu />}
+          </button>
+        </div>
+      </div>
+      {/* Mobile nav */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-50 bg-black/50">
+          <div className="fixed top-0 left-0 right-0 bg-white shadow-lg">
+            <div className="flex justify-between items-center p-4">
+              <ZwanskiLogo />
+              <button onClick={() => setIsMenuOpen(false)} className="close-btn">
+                <X />
+              </button>
+            </div>
+            <div className="flex flex-col gap-2 p-4">
+              <MobileNavigation onNavigate={() => setIsMenuOpen(false)} />
+            </div>
+          </div>
+        </div>
       )}
-      <LanguageSelector />
-      <ThemeToggle />
-    </div>
+    </nav>
   );
 }
