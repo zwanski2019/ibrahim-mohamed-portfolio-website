@@ -1,109 +1,64 @@
-import { Briefcase, Search } from "lucide-react";
-import { Link } from "react-router-dom";
-import { SearchBar } from "../SearchBar";
-import { NavbarActions } from "./NavbarActions";
-import { MoreDropdown } from "./MoreDropdown";
-import { useLanguage } from "@/context/LanguageContext";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Shield, Home, Wrench, GraduationCap, Briefcase, Users, MessageSquare, Mail, CheckCircle, BookOpen, Info, FileText, LifeBuoy, Rss } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
-export function DesktopNavigation() {
-  const { t } = useLanguage();
+const navItems = [
+  { label: "Home", path: "/", icon: Home },
+  { label: "Services", path: "/services", icon: Wrench },
+  { label: "Academy", path: "/academy", icon: GraduationCap },
+  { label: "Jobs", path: "/jobs", icon: Briefcase },
+  { label: "Freelancers", path: "/freelancers", icon: Users },
+  { label: "Community", path: "/community", icon: Users, authRequired: true },
+  { label: "Chat", path: "/chat", icon: MessageSquare },
+  { label: "Newsletter", path: "/newsletter", icon: Mail },
+  { label: "IMEI Check", path: "/imei-check", icon: CheckCircle },
+  { label: "3D Model", path: "/3d", icon: BookOpen },
+  { label: "About", path: "/about", icon: Info },
+  { label: "FAQ", path: "/faq", icon: FileText },
+  { label: "Support", path: "/support", icon: LifeBuoy },
+  { label: "Infrastructure", path: "/infrastructure" },
+  { label: "Privacy", path: "/privacy-policy" },
+  { label: "Terms", path: "/terms-of-service" },
+  { label: "RSS", path: "/rss", icon: Rss },
+];
 
-  // Main navigation items with clear structure
-  const NAV_ITEMS = [
-    { 
-      name: t("nav.findJobs"), 
-      href: "/jobs", 
-      icon: Briefcase,
-      ariaLabel: "Browse job opportunities" 
-    },
-    { 
-      name: t("nav.findFreelancers"), 
-      href: "/freelancers", 
-      icon: Search,
-      ariaLabel: "Find freelance professionals" 
-    },
-    { 
-      name: t("nav.services"), 
-      href: "/services", 
-      icon: null,
-      ariaLabel: "View our services" 
-    },
-    { 
-      name: t("nav.academy"), 
-      href: "/academy", 
-      icon: null,
-      ariaLabel: "Explore learning resources" 
-    },
-  ];
+export default function DesktopNavigation() {
+  const { isAuthenticated, userProfile } = useAuth();
+  const location = useLocation();
+  const isAdmin = userProfile?.user_type === "admin";
 
   return (
-    <div className="hidden lg:flex items-center space-x-6 flex-1 justify-center">
-      <div className="flex items-center space-x-6">
-        {/* Search bar with clear positioning */}
-        <div className="mr-2">
-          <SearchBar placeholder={t("search.placeholder")} />
-        </div>
-        
-        {/* Main navigation menu */}
-        <div className="flex items-center space-x-2">
-          <NavigationMenu>
-            <NavigationMenuList className="space-x-2">
-              {NAV_ITEMS.map((item) => (
-                <NavigationMenuItem key={item.name}>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      to={item.href}
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        "bg-transparent hover:bg-accent/50 px-3 py-2 flex items-center gap-2 text-sm font-medium whitespace-nowrap",
-                        "transition-colors duration-200" // Smooth hover transition
-                      )}
-                      aria-label={item.ariaLabel}
-                    >
-                      {/* Icon for the navigation item */}
-                      {item.icon && (
-                        <item.icon 
-                          className="h-4 w-4" 
-                          aria-hidden="true" 
-                        />
-                      )}
-                      
-                      {/* Full text for larger screens */}
-                      <span className="hidden xl:inline">
-                        {item.name}
-                      </span>
-                      
-                      {/* Shortened text for smaller screens */}
-                      <span className="xl:hidden">
-                        {item.name.split(' ')[0]}
-                      </span>
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
-          
-          {/* Additional options dropdown */}
-          <MoreDropdown 
-            ariaLabel="More navigation options"
-          />
-        </div>
-      </div>
-      
-      {/* User actions section (login, profile, etc.) */}
-      <NavbarActions 
-        className="ml-auto" 
-        ariaLabel="User account actions"
-      />
+    <div className="flex gap-1 items-center">
+      {navItems.map((item) => {
+        if (item.authRequired && !isAuthenticated) return null;
+        return (
+          <Button
+            asChild
+            key={item.path}
+            variant={location.pathname === item.path ? "secondary" : "ghost"}
+            className="nav-btn"
+          >
+            <Link to={item.path}>
+              {item.icon && <item.icon className="inline-block mr-1 h-4 w-4" />}
+              {item.label}
+            </Link>
+          </Button>
+        );
+      })}
+      {isAdmin && (
+        <Button
+          asChild
+          variant={location.pathname.startsWith("/admin") ? "secondary" : "ghost"}
+          className="nav-btn"
+        >
+          <Link to="/admin">
+            <Shield className="inline-block mr-1 h-4 w-4" />
+            Admin Dashboard
+          </Link>
+        </Button>
+      )}
     </div>
   );
 }
