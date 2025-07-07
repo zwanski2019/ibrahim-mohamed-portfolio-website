@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import ZwanskiLogo from "./ZwanskiLogo";
-import { ThemeToggle } from "./ThemeToggle";
-import { LanguageSelector } from "./LanguageSelector";
-import DesktopNavigation from "./navbar/DesktopNavigation";
-import MobileNavigation from "./navbar/MobileNavigation";
+import ZwanskiLogo from "../ZwanskiLogo";
+import { ThemeToggle } from "../ThemeToggle";
+import { LanguageSelector } from "../LanguageSelector";
+import DesktopNavigation from "./DesktopNavigation";
+import MobileNavigation from "./MobileNavigation";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { User, X, Menu } from "lucide-react";
@@ -13,7 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isAuthenticated, signOut, userProfile } = useAuth();
+  const { isAuthenticated, signOut, user } = useAuth();
 
   const handleSignOut = async () => {
     await signOut();
@@ -37,7 +37,7 @@ export default function Navbar() {
             <Button variant="ghost" size="sm">
               {isAuthenticated ? (
                 <Avatar>
-                  <AvatarImage src={userProfile?.avatar_url} />
+                  <AvatarImage src={user?.user_metadata?.avatar_url} />
                   <AvatarFallback>U</AvatarFallback>
                 </Avatar>
               ) : (

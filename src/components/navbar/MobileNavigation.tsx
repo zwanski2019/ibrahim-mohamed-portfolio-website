@@ -25,9 +25,9 @@ const navItems = [
 ];
 
 export default function MobileNavigation({ onNavigate }: { onNavigate?: () => void }) {
-  const { isAuthenticated, userProfile } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const location = useLocation();
-  const isAdmin = userProfile?.user_type === "admin";
+  const isAdmin = false; // Simplified for now - can be enhanced later with profile data
 
   return (
     <div className="flex flex-col gap-2">

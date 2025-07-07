@@ -29,7 +29,6 @@ import {
 import ZwanskiLogo from "./ZwanskiLogo";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageSelector } from "./LanguageSelector";
-import { MoreDropdown } from "./navbar/MoreDropdown";
 import { supabase } from "@/integrations/supabase/client";
 
 const Navbar = () => {
@@ -139,7 +138,6 @@ const Navbar = () => {
                 </Button>
               );
             })}
-            <MoreDropdown />
           </div>
 
           {/* Right Side */}

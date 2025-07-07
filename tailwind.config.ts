@@ -63,6 +63,15 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
+				// Axeptio-inspired Color Palette
+				axeptio: {
+					navy: '216 65% 13%',      // #0B1B33 - Primary background
+					'navy-light': '216 65% 20%', // Slightly lighter navy
+					blue: '216 73% 58%',       // #3C7DD9 - Primary accent
+					'blue-light': '228 92% 75%', // #5983F8 - Secondary accent
+					white: '0 0% 100%',        // #FFFFFF - Primary text
+					gray: '220 13% 91%',       // #D1D5DB - Secondary text
+				},
 				// Enhanced Brand Colors
 				brand: {
 					50: '#f0f9ff',
@@ -76,19 +85,6 @@ export default {
 					800: '#075985',
 					900: '#0c4a6e',
 					950: '#082f49',
-				},
-				accent: {
-					50: '#f0fdf4',
-					100: '#dcfce7',
-					200: '#bbf7d0',
-					300: '#86efac',
-					400: '#4ade80',
-					500: '#22c55e',
-					600: '#16a34a',
-					700: '#15803d',
-					800: '#166534',
-					900: '#14532d',
-					950: '#052e16',
 				},
 				highlight: '#8b5cf6',
 			},
@@ -242,11 +238,12 @@ export default {
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-				'hero-pattern': 'linear-gradient(to right, rgba(74, 47, 189, 0.8), rgba(156, 39, 176, 0.8))',
-				'card-gradient': 'linear-gradient(135deg, rgba(76, 29, 149, 0.1) 0%, rgba(124, 58, 237, 0.2) 100%)',
+				'hero-pattern': 'linear-gradient(to right, rgba(11, 27, 51, 0.9), rgba(60, 125, 217, 0.8))',
+				'card-gradient': 'linear-gradient(135deg, rgba(11, 27, 51, 0.8) 0%, rgba(60, 125, 217, 0.2) 100%)',
 				'glass': 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.1) 100%)',
-				'mesh-gradient': 'linear-gradient(45deg, #667eea 0%, #764ba2 100%)',
-				'brand-gradient': 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)'
+				'axeptio-gradient': 'linear-gradient(135deg, #0B1B33 0%, #3C7DD9 50%, #5983F8 100%)',
+				'axeptio-card': 'linear-gradient(135deg, rgba(11, 27, 51, 0.95) 0%, rgba(60, 125, 217, 0.1) 100%)',
+				'brand-gradient': 'linear-gradient(135deg, #3C7DD9 0%, #5983F8 50%, #0B1B33 100%)'
 			},
 			backdropBlur: {
 				xs: '2px',

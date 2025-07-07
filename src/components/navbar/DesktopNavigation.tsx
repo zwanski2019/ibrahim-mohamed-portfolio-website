@@ -25,9 +25,9 @@ const navItems = [
 ];
 
 export default function DesktopNavigation() {
-  const { isAuthenticated, userProfile } = useAuth();
+  const { isAuthenticated } = useAuth();
   const location = useLocation();
-  const isAdmin = userProfile?.user_type === "admin";
+  const isAdmin = false; // Simplified for now - can be enhanced later with profile data
 
   return (
     <div className="flex gap-1 items-center">

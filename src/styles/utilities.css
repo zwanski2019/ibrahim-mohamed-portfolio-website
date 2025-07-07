@@ -13,9 +13,13 @@
 }
 
 .bg-hero-gradient {
-  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 25%, #0f172a 50%, #059669 75%, #0f172a 100%);
+  background: linear-gradient(135deg, hsl(216, 65%, 13%) 0%, hsl(216, 73%, 58%) 25%, hsl(216, 65%, 13%) 50%, hsl(228, 92%, 75%) 75%, hsl(216, 65%, 13%) 100%);
   background-size: 400% 400%;
   animation: gradient-shift 15s ease infinite;
+}
+
+.bg-axeptio-gradient {
+  background: linear-gradient(135deg, hsl(216, 65%, 13%) 0%, hsl(216, 73%, 58%) 50%, hsl(228, 92%, 75%) 100%);
 }
 
 /* Shadow utilities */
