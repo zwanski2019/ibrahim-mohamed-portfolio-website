@@ -65,12 +65,12 @@ export default {
 				},
 				// Axeptio-inspired Color Palette
 				axeptio: {
-					navy: '216 65% 13%',      // #0B1B33 - Primary background
-					'navy-light': '216 65% 20%', // Slightly lighter navy
-					blue: '216 73% 58%',       // #3C7DD9 - Primary accent
-					'blue-light': '228 92% 75%', // #5983F8 - Secondary accent
-					white: '0 0% 100%',        // #FFFFFF - Primary text
-					gray: '220 13% 91%',       // #D1D5DB - Secondary text
+					yellow: '47 96% 53%',       // #FFC107 - Primary CTA
+					white: '0 0% 100%',         // #FFFFFF - Background
+					dark: '222 84% 5%',         // #0F1419 - Dark text
+					gray: '215 16% 47%',        // #6B7280 - Secondary text
+					'gray-light': '210 40% 98%', // #F9FAFB - Light background
+					border: '214 32% 91%',      // #E5E7EB - Borders
 				},
 				// Enhanced Brand Colors
 				brand: {

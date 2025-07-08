@@ -12,39 +12,34 @@
   @apply text-muted-foreground text-center max-w-3xl mx-auto mb-12;
 }
 
-/* Card components */
-.card-transform-3d {
-  @apply transition-all duration-300 hover:-translate-y-2;
+/* Card components - Axept.io style */
+.card-clean {
+  @apply transition-all duration-200 hover:shadow-md;
 }
 
-.card-3d {
-  @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+.card-minimal {
+  @apply bg-card border border-border rounded-lg transition-all duration-200 hover:border-primary/20;
 }
 
-.card-3d-enhanced {
-  transform-style: preserve-3d;
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.card-interactive {
+  @apply hover:shadow-md hover:-translate-y-1 transition-all duration-200;
 }
 
-.card-3d-enhanced:hover {
-  transform: rotateY(10deg) rotateX(10deg) translateZ(20px);
-}
-
-/* Course and tutoring components */
+/* Course and tutoring components - Clean style */
 .course-card {
-  @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-2;
+  @apply transition-all duration-200 hover:shadow-md hover:-translate-y-1;
 }
 
 .course-card:hover .course-image {
-  @apply scale-105;
+  @apply scale-102;
 }
 
 .course-image {
-  @apply transition-transform duration-300;
+  @apply transition-transform duration-200;
 }
 
 .instructor-card {
-  @apply transition-all duration-300 hover:shadow-xl hover:scale-105;
+  @apply transition-all duration-200 hover:shadow-md hover:scale-102;
 }
 
 /* Service components */

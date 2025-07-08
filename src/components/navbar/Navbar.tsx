@@ -20,7 +20,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar flex items-center justify-between px-4 py-2">
+    <nav className="bg-background border-b border-border flex items-center justify-between px-6 py-4 sticky top-0 z-50 backdrop-blur-sm">
       <div className="flex items-center gap-2">
         <Link to="/" className="logo-btn"><ZwanskiLogo /></Link>
       </div>
@@ -68,21 +68,21 @@ export default function Navbar() {
         <div className="md:hidden flex items-center">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="mobile-menu-btn"
+            className="p-2 hover:bg-accent rounded-md transition-colors"
             aria-label="Open menu"
           >
-            {isMenuOpen ? <X /> : <Menu />}
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>
       {/* Mobile nav */}
       {isMenuOpen && (
         <div className="fixed inset-0 z-50 bg-black/50">
-          <div className="fixed top-0 left-0 right-0 bg-white shadow-lg">
+          <div className="fixed top-0 left-0 right-0 bg-background shadow-lg border-b border-border">
             <div className="flex justify-between items-center p-4">
               <ZwanskiLogo />
-              <button onClick={() => setIsMenuOpen(false)} className="close-btn">
-                <X />
+              <button onClick={() => setIsMenuOpen(false)} className="p-2 hover:bg-accent rounded-md transition-colors">
+                <X className="h-5 w-5" />
               </button>
             </div>
             <div className="flex flex-col gap-2 p-4">

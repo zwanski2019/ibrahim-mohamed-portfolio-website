@@ -1,0 +1,118 @@
+/* Axept.io-inspired design system */
+
+/* Clean layout utilities */
+.axeptio-section {
+  @apply py-16 md:py-20 lg:py-24;
+}
+
+.axeptio-container {
+  @apply max-w-6xl mx-auto px-6;
+}
+
+/* Typography system */
+.axeptio-heading {
+  @apply text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight;
+}
+
+.axeptio-subheading {
+  @apply text-xl md:text-2xl text-muted-foreground font-medium;
+}
+
+.axeptio-body {
+  @apply text-base md:text-lg text-muted-foreground leading-relaxed;
+}
+
+/* Button system */
+.axeptio-button-primary {
+  @apply bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md;
+}
+
+.axeptio-button-secondary {
+  @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 px-6 py-3 rounded-lg font-medium transition-all duration-200 border border-border;
+}
+
+/* Card system */
+.axeptio-card {
+  @apply bg-card border border-border rounded-xl p-6 transition-all duration-200 hover:shadow-md hover:border-primary/20;
+}
+
+.axeptio-card-feature {
+  @apply bg-card border border-border rounded-xl p-8 text-center transition-all duration-200 hover:shadow-md;
+}
+
+/* Grid systems */
+.axeptio-grid-3 {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8;
+}
+
+.axeptio-grid-4 {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6;
+}
+
+/* Stats/metrics */
+.axeptio-stat {
+  @apply text-center p-6 bg-card border border-border rounded-xl;
+}
+
+.axeptio-stat-number {
+  @apply text-3xl md:text-4xl font-bold text-foreground mb-2;
+}
+
+.axeptio-stat-label {
+  @apply text-sm text-muted-foreground font-medium;
+}
+
+/* Hero layout */
+.axeptio-hero {
+  @apply py-20 md:py-24 lg:py-32 bg-background;
+}
+
+.axeptio-hero-content {
+  @apply max-w-4xl mx-auto text-center px-6;
+}
+
+/* Navigation */
+.axeptio-nav {
+  @apply bg-background/95 backdrop-blur-sm border-b border-border sticky top-0 z-50;
+}
+
+.axeptio-nav-item {
+  @apply text-sm font-medium text-foreground hover:text-primary transition-colors duration-200 px-3 py-2 rounded-md hover:bg-accent;
+}
+
+/* Company logos section */
+.axeptio-logos {
+  @apply py-12 bg-secondary/30;
+}
+
+.axeptio-logo-grid {
+  @apply flex flex-wrap justify-center items-center gap-8 md:gap-12 opacity-60 hover:opacity-80 transition-opacity;
+}
+
+/* Feature highlights */
+.axeptio-feature-icon {
+  @apply w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 mx-auto;
+}
+
+.axeptio-feature-title {
+  @apply text-lg font-semibold text-foreground mb-2;
+}
+
+.axeptio-feature-description {
+  @apply text-muted-foreground text-sm leading-relaxed;
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .axeptio-heading {
+    @apply text-3xl md:text-4xl;
+  }
+  
+  .axeptio-section {
+    @apply py-12 md:py-16;
+  }
+  
+  .axeptio-container {
+    @apply px-4;
+  }
+}
