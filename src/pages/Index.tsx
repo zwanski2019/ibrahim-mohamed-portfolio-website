@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import DynamicSkills from "@/components/dynamic/DynamicSkills";
 import DynamicProjects from "@/components/dynamic/DynamicProjects";
 import DynamicExperience from "@/components/dynamic/DynamicExperience";
+import Services from "@/components/Services";
 import YouTubeVideos from "@/components/YouTubeVideos";
 import EnhancedContact from "@/components/EnhancedContact";
 import Footer from "@/components/Footer";
@@ -151,6 +152,7 @@ const Index = () => {
           <DynamicSkills />
           <DynamicProjects />
           <DynamicExperience />
+          <Services />
           <YouTubeVideos />
           
           {/* Clean Academy Section */}
