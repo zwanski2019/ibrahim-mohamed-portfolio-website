@@ -17,23 +17,23 @@ export default function Infrastructure() {
         <meta name="description" content="Our robust technical infrastructure powered by AWS with enterprise-grade security and reliability." />
       </Helmet>
 
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen bg-background">
         <Navbar />
         
-        <main className="flex-1 py-12">
-          <div className="container mx-auto px-4 max-w-6xl">
+        <main className="flex-1 axeptio-section">
+          <div className="axeptio-container max-w-6xl">
             <div className="text-center mb-12">
-              <h1 className="text-4xl font-bold mb-4">
-                Technical <span className="text-gradient">Infrastructure</span>
+              <h1 className="axeptio-heading">
+                Technical Infrastructure
               </h1>
-              <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+              <p className="axeptio-subheading max-w-3xl mx-auto">
                 Enterprise-grade infrastructure built on AWS with advanced security protocols and 99.9% uptime guarantee
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            <div className="axeptio-grid-3 lg:grid-cols-2 gap-8 mb-12">
               {/* Server Specifications */}
-              <Card className="card-3d">
+              <div className="axeptio-card">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Server className="h-6 w-6 text-blue-500" />
@@ -62,11 +62,11 @@ export default function Infrastructure() {
                       <span className="text-green-600 font-medium">Operational</span>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                 </CardContent>
+              </div>
 
               {/* AWS Configuration */}
-              <Card className="card-3d">
+              <div className="axeptio-card">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Cloud className="h-6 w-6 text-orange-500" />
@@ -96,13 +96,13 @@ export default function Infrastructure() {
                       Enterprise security hardening
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                 </CardContent>
+              </div>
             </div>
 
             {/* Security & Compliance */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-              <Card className="card-3d">
+            <div className="axeptio-grid-3 lg:grid-cols-2 gap-8 mb-12">
+              <div className="axeptio-card">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Shield className="h-6 w-6 text-green-500" />
@@ -140,11 +140,11 @@ export default function Infrastructure() {
                       Advanced security protocols with network isolation and encrypted connections
                     </p>
                   </div>
-                </CardContent>
-              </Card>
+                 </CardContent>
+              </div>
 
               {/* Performance & Reliability */}
-              <Card className="card-3d">
+              <div className="axeptio-card">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Zap className="h-6 w-6 text-yellow-500" />
@@ -179,13 +179,13 @@ export default function Infrastructure() {
                       Optimized content delivery with edge locations across Europe
                     </p>
                   </div>
-                </CardContent>
-              </Card>
+                 </CardContent>
+              </div>
             </div>
 
             {/* Additional Technical Features */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-              <Card className="card-3d">
+            <div className="axeptio-grid-3 lg:grid-cols-2 gap-8 mb-12">
+              <div className="axeptio-card">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Database className="h-6 w-6 text-purple-500" />
@@ -218,10 +218,10 @@ export default function Infrastructure() {
                       Continuous data protection with point-in-time recovery
                     </p>
                   </div>
-                </CardContent>
-              </Card>
+                 </CardContent>
+              </div>
 
-              <Card className="card-3d">
+              <div className="axeptio-card">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Monitor className="h-6 w-6 text-indigo-500" />
@@ -254,12 +254,12 @@ export default function Infrastructure() {
                       Advanced metrics and performance analytics with instant notifications
                     </p>
                   </div>
-                </CardContent>
-              </Card>
+                 </CardContent>
+              </div>
             </div>
 
             {/* Technical Consultation */}
-            <Card className="bg-gradient-to-r from-primary/5 to-secondary/5 border-primary/20">
+            <div className="axeptio-card bg-secondary/30">
               <CardHeader>
                 <CardTitle className="text-center">Infrastructure Consultation & Support</CardTitle>
               </CardHeader>
@@ -270,19 +270,19 @@ export default function Infrastructure() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
                     href="/services"
-                    className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
+                    className="axeptio-button-primary"
                   >
                     Contact Technical Team
                   </a>
                   <a
                     href="/services"
-                    className="inline-flex items-center justify-center px-6 py-3 border border-primary text-primary rounded-lg hover:bg-primary/10 transition-colors font-medium"
+                    className="axeptio-button-secondary"
                   >
                     View Our Services
                   </a>
                 </div>
-              </CardContent>
-            </Card>
+               </CardContent>
+            </div>
           </div>
         </main>
 

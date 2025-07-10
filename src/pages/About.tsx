@@ -45,29 +45,27 @@ export default function About() {
         <meta name="description" content="Learn about Zwanski Tech's mission to provide free tech education and quality development services worldwide." />
       </Helmet>
 
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen bg-background">
         <Navbar />
         
-        <main className="flex-1 py-12">
-          <div className="container mx-auto px-4 max-w-4xl">
+        <main className="flex-1 axeptio-section">
+          <div className="axeptio-container max-w-4xl">
             <div className="text-center mb-12">
-              <h1 className="text-4xl font-bold mb-4">
-                About <span className="text-gradient">Zwanski Tech</span>
+              <h1 className="axeptio-heading">
+                About Zwanski Tech
               </h1>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              <p className="axeptio-subheading max-w-2xl mx-auto">
                 Empowering the next generation of developers through free education and innovative solutions.
               </p>
             </div>
 
             <div className="space-y-8">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Target className="h-5 w-5" />
-                    Our Mission
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="prose dark:prose-invert max-w-none">
+              <div className="axeptio-card">
+                <div className="axeptio-feature-icon">
+                  <Target className="h-6 w-6 text-primary" />
+                </div>
+                <h2 className="axeptio-feature-title">Our Mission</h2>
+                <div className="axeptio-body">
                   <p>
                     At Zwanski Tech, we're on a mission to democratize technology education and provide 
                     world-class development services. We believe that everyone should have access to quality 
@@ -78,17 +76,15 @@ export default function About() {
                     application, we combine educational excellence with professional development services 
                     to create a comprehensive ecosystem for learners and businesses alike.
                   </p>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Users className="h-5 w-5" />
-                    What We Do
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
+              <div className="axeptio-card">
+                <div className="axeptio-feature-icon">
+                  <Users className="h-6 w-6 text-primary" />
+                </div>
+                <h2 className="axeptio-feature-title">What We Do</h2>
+                <div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <h3 className="font-semibold mb-2">Education & Academy</h3>
@@ -127,14 +123,12 @@ export default function About() {
                       </ul>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>Our Values</CardTitle>
-                </CardHeader>
-                <CardContent>
+              <div className="axeptio-card">
+                <h2 className="axeptio-feature-title">Our Values</h2>
+                <div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {values.map((value, index) => (
                       <div key={index} className="flex items-start gap-3">
@@ -148,14 +142,12 @@ export default function About() {
                       </div>
                     ))}
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>Technologies We Use</CardTitle>
-                </CardHeader>
-                <CardContent>
+              <div className="axeptio-card">
+                <h2 className="axeptio-feature-title">Technologies We Use</h2>
+                <div>
                   <div className="flex flex-wrap gap-2">
                     {technologies.map((tech, index) => (
                       <Badge key={index} variant="secondary">
@@ -167,14 +159,12 @@ export default function About() {
                     We stay current with the latest technologies to provide modern solutions 
                     and teach relevant skills that employers actually need.
                   </p>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>Why Choose Zwanski Tech?</CardTitle>
-                </CardHeader>
-                <CardContent className="prose dark:prose-invert max-w-none">
+              <div className="axeptio-card">
+                <h2 className="axeptio-feature-title">Why Choose Zwanski Tech?</h2>
+                <div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 not-prose">
                     <div className="text-center">
                       <div className="text-3xl font-bold text-primary mb-2">100%</div>
@@ -189,39 +179,37 @@ export default function About() {
                       <div className="text-sm text-muted-foreground">Reach & Impact</div>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>Get Involved</CardTitle>
-                </CardHeader>
-                <CardContent>
+              <div className="axeptio-card">
+                <h2 className="axeptio-feature-title">Get Involved</h2>
+                <div>
                   <p className="text-muted-foreground mb-4">
                     Join our growing community and be part of the mission to make tech education accessible to everyone.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <a 
                       href="/academy"
-                      className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors"
+                      className="axeptio-button-primary"
                     >
                       Start Learning
                     </a>
                     <a 
                       href="/jobs"
-                      className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-primary border border-primary rounded-lg hover:bg-primary/10 transition-colors"
+                      className="axeptio-button-secondary"
                     >
                       Find Opportunities
                     </a>
                     <a 
                       href="/support"
-                      className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-red-600 border border-red-600 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
+                      className="axeptio-button-secondary"
                     >
                       Support Our Mission
                     </a>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </div>
           </div>
         </main>

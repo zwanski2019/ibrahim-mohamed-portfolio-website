@@ -8,7 +8,7 @@ import { Helmet } from "react-helmet-async";
 
 const Support = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-background">
       <Helmet>
         <title>Support Zwanski Tech - Keep Our Services Free</title>
         <meta 
@@ -19,24 +19,24 @@ const Support = () => {
       
       <Navbar />
       
-      <main className="flex-grow py-16 bg-gradient-to-br from-background to-muted/20">
-        <div className="container mx-auto px-4">
+      <main className="flex-grow axeptio-section">
+        <div className="axeptio-container">
           {/* Hero Section */}
           <div className="text-center mb-16">
             <div className="flex items-center justify-center gap-2 mb-4">
-              <Heart className="h-8 w-8 text-red-500 animate-pulse" />
-              <h1 className="text-4xl md:text-5xl font-bold">
-                Support <span className="text-gradient">Zwanski Tech</span>
+              <Heart className="h-8 w-8 text-red-500" />
+              <h1 className="axeptio-heading">
+                Support Zwanski Tech
               </h1>
             </div>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+            <p className="axeptio-subheading max-w-3xl mx-auto mb-8">
               Help us keep our courses, tools, and IT services completely free for everyone around the world.
             </p>
           </div>
 
           {/* Why We Need Support */}
           <div className="mb-16">
-            <Card className="bg-gradient-to-r from-blue-50/50 to-purple-50/50 dark:from-blue-950/20 dark:to-purple-950/20 border-blue-200/50">
+            <div className="axeptio-card bg-secondary/30">
               <CardHeader>
                 <CardTitle className="text-2xl text-center">Why Your Support Matters</CardTitle>
               </CardHeader>
@@ -64,19 +64,19 @@ const Support = () => {
                     </p>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+               </CardContent>
+            </div>
           </div>
 
           {/* Ways to Support */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-center mb-12">
-              Simple Ways to <span className="text-gradient">Support Us</span>
+            <h2 className="axeptio-subheading text-center mb-12">
+              Simple Ways to Support Us
             </h2>
             
             <div className="grid md:grid-cols-2 gap-8">
               {/* Share Content */}
-              <Card className="hover:shadow-lg transition-shadow">
+              <div className="axeptio-card">
                 <CardHeader>
                   <Share2 className="h-8 w-8 text-blue-500 mb-2" />
                   <CardTitle>Share Our Content</CardTitle>
@@ -92,11 +92,11 @@ const Support = () => {
                       </a>
                     </Button>
                   </div>
-                </CardContent>
-              </Card>
+                 </CardContent>
+              </div>
 
               {/* Use Our Services */}
-              <Card className="hover:shadow-lg transition-shadow">
+              <div className="axeptio-card">
                 <CardHeader>
                   <Heart className="h-8 w-8 text-red-500 mb-2" />
                   <CardTitle>Use Our Services</CardTitle>
@@ -113,14 +113,14 @@ const Support = () => {
                       <a href="/services">Services</a>
                     </Button>
                   </div>
-                </CardContent>
-              </Card>
+                 </CardContent>
+              </div>
             </div>
           </div>
 
           {/* Transparency Section */}
           <div className="mb-16">
-            <Card className="bg-gradient-to-r from-green-50/50 to-blue-50/50 dark:from-green-950/20 dark:to-blue-950/20 border-green-200/50">
+            <div className="axeptio-card bg-secondary/30">
               <CardHeader>
                 <CardTitle className="text-2xl text-center">Our Commitment to Transparency</CardTitle>
               </CardHeader>
@@ -138,13 +138,13 @@ const Support = () => {
                     </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+               </CardContent>
+            </div>
           </div>
 
           {/* Call to Action */}
           <div className="text-center">
-            <Card className="bg-gradient-to-r from-purple-50/50 to-pink-50/50 dark:from-purple-950/20 dark:to-pink-950/20 border-purple-200/50">
+            <div className="axeptio-card bg-secondary/30">
               <CardContent className="pt-8">
                 <Heart className="h-12 w-12 text-red-500 mx-auto mb-4 animate-pulse" />
                 <h3 className="text-2xl font-bold mb-4">Thank You for Your Support!</h3>
@@ -153,15 +153,15 @@ const Support = () => {
                   high-quality education and IT services to everyone.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button asChild className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
-                    <a href="/academy">Explore Free Courses</a>
-                  </Button>
-                  <Button variant="outline" asChild>
-                    <a href="/services">View Our Services</a>
-                  </Button>
+                  <a href="/academy" className="axeptio-button-primary">
+                    Explore Free Courses
+                  </a>
+                  <a href="/services" className="axeptio-button-secondary">
+                    View Our Services
+                  </a>
                 </div>
-              </CardContent>
-            </Card>
+               </CardContent>
+            </div>
           </div>
         </div>
       </main>
