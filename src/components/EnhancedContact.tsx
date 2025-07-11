@@ -116,91 +116,106 @@ const EnhancedContact = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
+        <div className="grid gap-8 lg:gap-12 lg:grid-cols-2 max-w-7xl mx-auto">
           {/* Contact Form */}
-          <Card className="axeptio-card">
-            <CardHeader>
-              <CardTitle className="axeptio-feature-title flex items-center gap-3">
-                <Zap className="h-6 w-6 text-primary" />
-                {language === 'en' ? 'Quick Project Start' : language === 'fr' ? 'Démarrage Rapide de Projet' : 'بداية سريعة للمشروع'}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <Input
-                      placeholder={currentContent.form.name}
-                      value={formData.name}
-                      onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    />
-                  </div>
-                  <div>
-                    <Input
-                      type="email"
-                      placeholder={currentContent.form.email}
-                      value={formData.email}
-                      onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    />
-                  </div>
-                </div>
-                
-                <select
-                  className="w-full p-3 bg-background border border-border rounded-md focus:border-primary text-foreground"
-                  value={formData.service}
-                  onChange={(e) => setFormData({...formData, service: e.target.value})}
-                >
-                  <option value="">{currentContent.form.service}</option>
-                  {currentContent.services.map((service, index) => (
-                    <option key={index} value={service}>{service}</option>
-                  ))}
-                </select>
-                
-                <Textarea
-                  placeholder={currentContent.form.message}
-                  value={formData.message}
-                  onChange={(e) => setFormData({...formData, message: e.target.value})}
-                  rows={4}
-                />
-                
-                <Button 
-                  type="submit"
-                  size="lg"
-                  className="w-full axeptio-button-primary"
-                >
-                  {currentContent.form.submit}
-                  <Send className="ml-2 h-5 w-5" />
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-
-          {/* Contact Methods */}
-          <div className="space-y-6">
+          <div className="order-2 lg:order-1">
             <Card className="axeptio-card">
               <CardHeader>
                 <CardTitle className="axeptio-feature-title flex items-center gap-3">
-                  <MessageCircle className="h-6 w-6 text-primary" />
-                  {language === 'en' ? 'Get in Touch' : language === 'fr' ? 'Contactez-nous' : 'تواصل معنا'}
+                  <div className="axeptio-feature-icon flex-shrink-0">
+                    <Zap className="h-5 w-5" />
+                  </div>
+                  <span className="text-base sm:text-lg">
+                    {language === 'en' ? 'Quick Project Start' : language === 'fr' ? 'Démarrage Rapide de Projet' : 'بداية سريعة للمشروع'}
+                  </span>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="w-full">
+                      <Input
+                        placeholder={currentContent.form.name}
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        className="w-full"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <Input
+                        type="email"
+                        placeholder={currentContent.form.email}
+                        value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                  
+                  <select
+                    className="w-full p-3 bg-background border border-border rounded-md focus:border-primary text-foreground text-sm sm:text-base"
+                    value={formData.service}
+                    onChange={(e) => setFormData({...formData, service: e.target.value})}
+                  >
+                    <option value="">{currentContent.form.service}</option>
+                    {currentContent.services.map((service, index) => (
+                      <option key={index} value={service}>{service}</option>
+                    ))}
+                  </select>
+                  
+                  <Textarea
+                    placeholder={currentContent.form.message}
+                    value={formData.message}
+                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                    rows={4}
+                    className="w-full resize-none"
+                  />
+                  
+                  <Button 
+                    type="submit"
+                    size="lg"
+                    className="w-full axeptio-button-primary flex items-center justify-center gap-2"
+                  >
+                    <span>{currentContent.form.submit}</span>
+                    <Send className="h-4 w-4" />
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Contact Methods */}
+          <div className="order-1 lg:order-2 space-y-4 sm:space-y-6">
+            <Card className="axeptio-card">
+              <CardHeader>
+                <CardTitle className="axeptio-feature-title flex items-center gap-3">
+                  <div className="axeptio-feature-icon flex-shrink-0">
+                    <MessageCircle className="h-5 w-5" />
+                  </div>
+                  <span className="text-base sm:text-lg">
+                    {language === 'en' ? 'Get in Touch' : language === 'fr' ? 'Contactez-nous' : 'تواصل معنا'}
+                  </span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3 sm:space-y-4">
                 {currentContent.contact.map((item, index) => (
                   <div
                     key={index}
                     onClick={() => handleContactAction(item.action)}
-                    className={`flex items-center gap-4 p-4 rounded-lg transition-all duration-300 cursor-pointer group hover:bg-accent ${
+                    className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg transition-all duration-300 cursor-pointer group hover:bg-accent ${
                       item.action === 'telegram' 
                         ? 'bg-primary/5 border border-primary/20'
                         : 'bg-muted/30'
                     }`}
                   >
-                    <div className="axeptio-feature-icon">
-                      <item.icon className="h-5 w-5 text-primary" />
+                    <div className="axeptio-feature-icon flex-shrink-0">
+                      <item.icon className="h-4 w-4 sm:h-5 sm:w-5" />
                     </div>
-                    <div>
-                      <div className="font-semibold text-foreground">{item.label}</div>
-                      <div className="text-muted-foreground group-hover:text-foreground transition-colors">{item.value}</div>
+                    <div className="min-w-0 flex-1">
+                      <div className="font-semibold text-foreground text-sm sm:text-base truncate">{item.label}</div>
+                      <div className="text-muted-foreground group-hover:text-foreground transition-colors text-xs sm:text-sm truncate">
+                        {item.value}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -208,19 +223,21 @@ const EnhancedContact = () => {
             </Card>
 
             <Card className="axeptio-card bg-primary/5 border-primary/20">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4 mb-4">
-                  <Clock className="h-6 w-6 text-primary" />
-                  <div>
-                    <div className="font-semibold text-foreground">
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
+                  <div className="axeptio-feature-icon flex-shrink-0 mt-1">
+                    <Clock className="h-5 w-5 sm:h-6 sm:w-6" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="font-semibold text-foreground text-sm sm:text-base">
                       {language === 'en' ? 'Response Time' : language === 'fr' ? 'Temps de Réponse' : 'وقت الاستجابة'}
                     </div>
-                    <div className="text-primary">
+                    <div className="text-primary font-medium text-sm sm:text-base">
                       {language === 'en' ? 'Usually within 2-4 hours' : language === 'fr' ? 'Généralement sous 2-4 heures' : 'عادة خلال 2-4 ساعات'}
                     </div>
                   </div>
                 </div>
-                <div className="text-muted-foreground text-sm">
+                <div className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
                   {language === 'en' 
                     ? 'We pride ourselves on quick response times and efficient project delivery.'
                     : language === 'fr'
