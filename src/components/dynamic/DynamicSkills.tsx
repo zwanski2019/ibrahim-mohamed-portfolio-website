@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import ServiceCards from '../ServiceCards';
+
 
 const categoryIcons = {
   frontend: '🎨',
@@ -24,7 +24,6 @@ const DynamicSkills = () => {
   if (isLoading) {
     return (
       <>
-        <ServiceCards />
         <section className="py-20">
           <div className="section-container">
             <div className="text-center mb-12">
@@ -60,7 +59,6 @@ const DynamicSkills = () => {
   if (error) {
     return (
       <>
-        <ServiceCards />
         <section className="py-20">
           <div className="section-container">
             <div className="text-center">
@@ -75,7 +73,6 @@ const DynamicSkills = () => {
 
   return (
     <>
-      <ServiceCards />
       <section className="py-20">
         <div className="section-container">
           <div className="text-center mb-12 animate-on-scroll">
