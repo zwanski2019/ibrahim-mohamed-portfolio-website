@@ -84,71 +84,79 @@ const Services = () => {
       
       <main className="flex-grow">
         {/* Featured Free Tool Section */}
-        <section className="py-12 md:py-16 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-950/20 dark:to-blue-950/20">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-8 md:mb-12">
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <Smartphone className="h-6 w-6 md:h-8 md:w-8 text-green-600" />
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold">
-                  {t("nav.freeImeiCheck").split(" ")[0]} <span className="text-green-600">{t("nav.freeImeiCheck").split(" ").slice(1).join(" ")}</span>
+        <section className="axeptio-section bg-primary/5">
+          <div className="axeptio-container">
+            <div className="text-center mb-8 lg:mb-12">
+              <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                <div className="axeptio-feature-icon">
+                  <Smartphone className="h-5 w-5 sm:h-6 sm:w-6" />
+                </div>
+                <h2 className="axeptio-heading text-xl sm:text-2xl md:text-3xl lg:text-4xl">
+                  {t("nav.freeImeiCheck").split(" ")[0]} <span className="text-primary">{t("nav.freeImeiCheck").split(" ").slice(1).join(" ")}</span>
                 </h2>
               </div>
-              <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
+              <p className="axeptio-subheading text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
                 {t("imei.description")}
               </p>
             </div>
             
-            <IMEIChecker />
+            <div className="max-w-4xl mx-auto">
+              <IMEIChecker />
+            </div>
           </div>
         </section>
 
         {/* Services Section */}
-        <section className="py-16 md:py-20 bg-gradient-to-b from-background to-muted/20">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                {t("services.ourServices").split(" ")[0]} <span className="text-gradient">{t("services.ourServices").split(" ").slice(1).join(" ")}</span>
+        <section className="axeptio-section">
+          <div className="axeptio-container">
+            <div className="text-center mb-8 lg:mb-12">
+              <h2 className="axeptio-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-4 sm:mb-6">
+                {t("services.ourServices").split(" ")[0]} <span className="text-primary">{t("services.ourServices").split(" ").slice(1).join(" ")}</span>
               </h2>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto px-4">
+              <p className="axeptio-subheading text-sm sm:text-base md:text-lg lg:text-xl max-w-3xl mx-auto">
                 {t("services.ourServicesSubtitle")}
               </p>
             </div>
 
             {/* Category Filter */}
-            <div className="mb-8 md:mb-12 animate-on-scroll">
-              <div className="flex flex-wrap justify-center gap-2 md:gap-4 px-4">
+            <div className="mb-8 lg:mb-12">
+              <div className="flex flex-wrap justify-center gap-2 sm:gap-3 lg:gap-4">
                 {categories.map((category) => (
                   <button
                     key={category.id}
                     onClick={() => setActiveCategory(category.id)}
-                    className={`px-4 md:px-6 py-2 md:py-3 rounded-full font-medium transition-all duration-300 text-sm md:text-base min-h-[44px] ${
+                    className={`px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 rounded-full font-medium transition-all duration-300 text-xs sm:text-sm lg:text-base min-h-[40px] sm:min-h-[44px] lg:min-h-[48px] ${
                       activeCategory === category.id
-                        ? 'bg-primary text-primary-foreground shadow-lg'
-                        : 'bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground'
+                        ? 'axeptio-button-primary'
+                        : 'axeptio-button-secondary'
                     }`}
                   >
-                    {category.name} ({category.count})
+                    <span className="whitespace-nowrap">
+                      {category.name} ({category.count})
+                    </span>
                   </button>
                 ))}
               </div>
             </div>
             
             {/* Services Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16 px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 lg:mb-12">
               {filteredServices.map((service) => (
-                <ServiceCard 
-                  key={service.id}
-                  id={service.id}
-                  title={service.title}
-                  description={service.description}
-                  price={service.price}
-                  icon={service.icon}
-                  onSelect={() => setSelectedService(service.title)}
-                />
+                <div key={service.id} className="w-full">
+                  <ServiceCard 
+                    id={service.id}
+                    title={service.title}
+                    description={service.description}
+                    price={service.price}
+                    icon={service.icon}
+                    onSelect={() => setSelectedService(service.title)}
+                  />
+                </div>
               ))}
             </div>
             
-            <div className="px-4">
+            {/* Service Request Form */}
+            <div className="max-w-4xl mx-auto">
               <ServiceRequestForm selectedService={selectedService} />
             </div>
           </div>
