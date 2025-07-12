@@ -22,6 +22,7 @@ import {
   Users,
   Home,
   Wrench,
+  Shield,
   Info,
   Menu,
   X
@@ -101,8 +102,30 @@ const Navbar = () => {
 
   const mainNavItems = [
     { label: "Home", path: "/", icon: Home },
-    { label: "Services", path: "/services", icon: Wrench },
-    { label: "Academy", path: "/academy", icon: GraduationCap },
+    { 
+      label: "Fix", 
+      path: "/services?category=repair", 
+      icon: Wrench,
+      description: "Device Repair & Recovery"
+    },
+    { 
+      label: "Build", 
+      path: "/services?category=development", 
+      icon: Briefcase,
+      description: "Custom Development"
+    },
+    { 
+      label: "Secure", 
+      path: "/services?category=security", 
+      icon: Shield,
+      description: "Cybersecurity Solutions"
+    },
+    { 
+      label: "Teach", 
+      path: "/academy", 
+      icon: GraduationCap,
+      description: "Education & Training"
+    },
     { label: "Jobs", path: "/jobs", icon: Briefcase },
     { label: "Community", path: "/community", icon: Users, authRequired: true },
     { label: "Chat", path: "/chat", icon: MessageSquare },

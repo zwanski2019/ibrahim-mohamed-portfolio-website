@@ -140,13 +140,23 @@ const Hero = () => {
                 </a>
               </div>
 
-              {/* Clean Main Headlines */}
+              {/* Enhanced Value Proposition */}
               <div className={`mb-12 transition-all duration-500 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                {/* Value Proposition Tagline */}
+                <div className="mb-6">
+                  <div className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
+                    <span className="bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-transparent">Fix.</span>{" "}
+                    <span className="bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">Build.</span>{" "}
+                    <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">Secure.</span>{" "}
+                    <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">Teach.</span>
+                  </div>
+                </div>
+                
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground leading-tight">
                   {t("hero.headline")}
                 </h1>
                 <h2 className="text-xl md:text-2xl text-muted-foreground mb-8 font-medium">
-                  {t("hero.subheadline")}
+                  From device repair to cybersecurity education — empowering your digital journey
                 </h2>
               </div>
 

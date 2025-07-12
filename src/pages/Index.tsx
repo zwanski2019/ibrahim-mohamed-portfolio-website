@@ -2,10 +2,12 @@
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import ValueProposition from "@/components/ValueProposition";
 import DynamicSkills from "@/components/dynamic/DynamicSkills";
 import DynamicProjects from "@/components/dynamic/DynamicProjects";
 import DynamicExperience from "@/components/dynamic/DynamicExperience";
 import Services from "@/components/Services";
+import Testimonials from "@/components/Testimonials";
 import YouTubeVideos from "@/components/YouTubeVideos";
 import EnhancedContact from "@/components/EnhancedContact";
 import Footer from "@/components/Footer";
@@ -149,10 +151,12 @@ const Index = () => {
         
         <main>
           <Hero />
+          <ValueProposition />
+          <Services />
+          <Testimonials />
           <DynamicSkills />
           <DynamicProjects />
           <DynamicExperience />
-          <Services />
           <YouTubeVideos />
           
           {/* Clean Academy Section */}
