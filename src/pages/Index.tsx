@@ -8,6 +8,7 @@ import DynamicProjects from "@/components/dynamic/DynamicProjects";
 import DynamicExperience from "@/components/dynamic/DynamicExperience";
 import Services from "@/components/Services";
 import Testimonials from "@/components/Testimonials";
+import QuickContact from "@/components/QuickContact";
 import YouTubeVideos from "@/components/YouTubeVideos";
 import EnhancedContact from "@/components/EnhancedContact";
 import Footer from "@/components/Footer";
@@ -208,6 +209,7 @@ const Index = () => {
             </div>
           </section>
           
+          <QuickContact />
           <EnhancedContact />
         </main>
         <Footer />

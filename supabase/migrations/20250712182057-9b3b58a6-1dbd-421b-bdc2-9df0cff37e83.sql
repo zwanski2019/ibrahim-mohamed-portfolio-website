@@ -1,0 +1,8 @@
+-- Insert sample testimonials with the correct schema
+INSERT INTO public.testimonials (name, position, company, content, rating, featured, sort_order) VALUES
+('Sarah Johnson', 'CTO', 'TechStart Inc.', 'Zwanski Tech delivered exceptional web development services. Their team built our entire platform from scratch with incredible attention to detail and performance.', 5, true, 1),
+('Ahmed Hassan', 'IT Manager', 'Digital Solutions LLC', 'Outstanding cybersecurity implementation. They secured our entire infrastructure and provided excellent Wazuh monitoring setup. Highly professional team.', 5, true, 2),
+('Maria Garcia', 'Founder', 'Local Business Hub', 'Quick and reliable device repair service. They recovered all my data from a damaged laptop and had it working like new within 24 hours.', 5, true, 3),
+('David Kim', 'Operations Director', 'CloudFirst Co.', 'Excellent cloud migration services. They moved our entire infrastructure to the cloud seamlessly with zero downtime. Very impressed with their expertise.', 5, true, 4),
+('Fatima Al-Zahra', 'Marketing Manager', 'Growth Agency', 'Amazing SEO results! Our website traffic increased by 300% within 3 months. Their digital marketing strategies are top-notch.', 5, true, 5),
+('John Smith', 'Small Business Owner', 'Smith Electronics', 'Professional network setup for our office. WiFi coverage is excellent and the security configuration gives us peace of mind.', 5, true, 6);
