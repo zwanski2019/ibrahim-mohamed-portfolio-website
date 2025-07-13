@@ -121,32 +121,14 @@ const Index = () => {
 
   return (
     <>
-      <Helmet>
-        <title>ZWANSKI TECH | Your Partner in Building, Repairing & Securing Digital Futures</title>
-        <meta 
-          name="description" 
-          content="Digital Solutions, Reimagined. Fix. Build. Secure. Empower. Professional IT services, web development, device repair, cybersecurity, and more."
-        />
-        <meta name="author" content="ZWANSKI TECH Team" />
-        <meta name="keywords" content="ZWANSKI TECH, IT services, web development, device repair, cybersecurity, IMEI repair, BIOS repair, remote support" />
-        
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://zwanski.org/" />
-        <meta property="og:title" content="ZWANSKI TECH | Your Partner in Building, Repairing & Securing Digital Futures" />
-        <meta property="og:description" content="Digital Solutions, Reimagined. Fix. Build. Secure. Empower." />
-        <meta property="og:image" content="/og-image.png" />
-        
-        {/* Twitter */}
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://zwanski.org/" />
-        <meta property="twitter:title" content="ZWANSKI TECH | Your Partner in Building, Repairing & Securing Digital Futures" />
-        <meta property="twitter:description" content="Digital Solutions, Reimagined. Fix. Build. Secure. Empower." />
-        <meta property="twitter:image" content="/og-image.png" />
-        
-        {/* Canonical link */}
-        <link rel="canonical" href="https://zwanski.org/" />
-      </Helmet>
+      <SEOHelmet
+        title="ZWANSKI TECH | Your Partner in Building, Repairing & Securing Digital Futures"
+        description="Digital Solutions, Reimagined. Fix. Build. Secure. Empower. Professional IT services, web development, device repair, cybersecurity, and more."
+        keywords="ZWANSKI TECH, IT services, web development, device repair, cybersecurity, IMEI repair, BIOS repair, remote support"
+        ogImage="https://zwanski.org/og-image.png"
+        canonical="https://zwanski.org/"
+        structuredData={[organizationStructuredData, localBusinessStructuredData, websiteStructuredData]}
+      />
       
       <div className="flex flex-col min-h-screen">
         <Navbar />
