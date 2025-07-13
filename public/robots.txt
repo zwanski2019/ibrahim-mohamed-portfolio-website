@@ -1,0 +1,36 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://zwanski.org/sitemap.xml
+
+# Crawl delay for better server performance
+Crawl-delay: 1
+
+# Allow access to important pages
+Allow: /services
+Allow: /about
+Allow: /academy
+Allow: /jobs
+Allow: /freelancers
+Allow: /community
+Allow: /blog
+Allow: /support
+Allow: /faq
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /settings/
+Disallow: /auth/
+Disallow: /profile/
+Disallow: /chat/
+
+# Disallow utility pages
+Disallow: /3d/
+Disallow: /newsletter/
+
+# Cache and temporary files
+Disallow: /*?*
+Disallow: /*.json$
+Disallow: /*.xml$
+Disallow: /*.txt$
