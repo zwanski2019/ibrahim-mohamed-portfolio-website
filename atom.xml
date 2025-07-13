@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title>Zwanski Tech</title>
+  <link href="https://zwanski.org/atom.xml" rel="self"/>
+  <link href="https://zwanski.org/"/>
+  <updated>2025-07-13T20:00:00Z</updated> 
+  <id>tag:zwanski.org,2025:/</id> <author>
+    <name>Zwanski Tech</name>
+    <uri>https://zwanski.org/</uri>
+    <email>support@zwanski.org</email> </author>
+  <generator uri="https://zwanski.org/" version="1.0">Zwanski Tech Manual Feed</generator>
+
+  <entry>
+    <title>Complete Evilginx2 Setup Guide for CTF Labs</title>
+    <link href="https://zwanskitechacademy.zwanski.org/p/complete-evilginx2-setup-guide-for-ctf.html"/> <id>tag:zwanski.org,2025-07-13:/evilginx2-setup-guide</id> <published>2025-07-13T18:30:00Z</published> <updated>2025-07-13T20:00:00Z</updated> <summary type="html">Learn to install and test Evilginx2 on Kali Linux for ethical hacking exercises. Perfect for CTF students!</summary>
+    </entry>
+  <entry>
+    <title>Your Previous Chemistry Exam Solutions</title>
+    <link href="https://zwanskitechacademy.zwanski.org/p/neco-answers-by-zwanski-tech.html"/> <id>tag:zwanski.org,2025-07-01:/chemistry-solutions</id>
+    <published>2025-07-01T10:00:00Z</published>
+    <updated>2025-07-01T10:00:00Z</updated>
+    <summary type="html">Comprehensive answers and detailed explanations for chemistry topics, useful for exam review.</summary>
+  </entry>
+  </feed>
