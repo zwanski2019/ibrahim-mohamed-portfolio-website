@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
-import { Shield, Home, Wrench, GraduationCap, Briefcase, Users, MessageSquare, Mail, CheckCircle, BookOpen, Info, FileText, LifeBuoy, Rss } from "lucide-react";
+import { Shield, Home, Wrench, GraduationCap, Briefcase, Users, MessageSquare, Mail, CheckCircle, BookOpen, Info, FileText, LifeBuoy, Rss, PenTool } from "lucide-react";
 
 const navItems = [
   { label: "Home", path: "/", icon: Home },
@@ -10,7 +10,7 @@ const navItems = [
   { label: "Academy", path: "/academy", icon: GraduationCap },
   { label: "Jobs", path: "/jobs", icon: Briefcase },
   { label: "Freelancers", path: "/freelancers", icon: Users },
-  { label: "Community", path: "/community", icon: Users, authRequired: true },
+  { label: "Blog", path: "/blog", icon: PenTool },
   { label: "Chat", path: "/chat", icon: MessageSquare },
   { label: "Newsletter", path: "/newsletter", icon: Mail },
   { label: "IMEI Check", path: "/imei-check", icon: CheckCircle },
@@ -32,7 +32,6 @@ export default function MobileNavigation({ onNavigate }: { onNavigate?: () => vo
   return (
     <div className="flex flex-col gap-2">
       {navItems.map((item) => {
-        if (item.authRequired && !isAuthenticated) return null;
         return (
           <Button
             asChild

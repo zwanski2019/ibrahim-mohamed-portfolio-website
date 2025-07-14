@@ -23,7 +23,7 @@ import Jobs from "./pages/Jobs";
 import PostJob from "./pages/PostJob";
 import Freelancers from "./pages/Freelancers";
 import Auth from "./pages/Auth";
-import Community from "./pages/Community";
+import Blog from "./pages/Blog";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminPosts from "./pages/admin/AdminPosts";
@@ -81,7 +81,7 @@ function App() {
                       <Route path="/post-job" element={<PostJob />} />
                       <Route path="/freelancers" element={<Freelancers />} />
                       <Route path="/auth" element={<Auth />} />
-                        <Route path="/community" element={<Community />} />
+                        <Route path="/blog" element={<Blog />} />
                         
                         {/* Admin Routes */}
                         <Route path="/admin" element={<AdminDashboard />} />
