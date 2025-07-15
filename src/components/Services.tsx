@@ -189,7 +189,7 @@ const Services = () => {
                     </p>
                     
                     <a
-                      href={`https://wa.me/21658008196?text=Hi! I'm interested in your ${selectedService.title} service. Can you provide more details?`}
+                      href={`https://wa.me/21694934141?text=Hi! I'm interested in your ${selectedService.title} service. Can you provide more details?`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
@@ -199,7 +199,7 @@ const Services = () => {
                     </a>
                     
                     <div className="mt-4 text-sm text-muted-foreground">
-                      Or call us at: <span className="font-medium">+216 58 008 196</span>
+                      Or call us at: <span className="font-medium">+216 94 934 141</span>
                     </div>
                   </div>
                 </div>
