@@ -1,5 +1,5 @@
 const BLOGGER_API_URL = 'https://www.googleapis.com/blogger/v3';
-const BLOG_ID = '2094023803732877329'; // You can update this with your actual Blogger blog ID
+const BLOG_ID = '1865195035349515836'; // Your actual blog ID
 const API_KEY = 'AIzaSyD0OTN6ul9ClQSAmgBYjDL5YXoqGPWo-1g'; // Your Blogger API key
 
 export interface BlogPost {
