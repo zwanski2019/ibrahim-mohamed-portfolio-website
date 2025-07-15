@@ -25,7 +25,8 @@ import {
   Shield,
   Info,
   Menu,
-  X
+  X,
+  PenTool
 } from "lucide-react";
 import ZwanskiLogo from "./ZwanskiLogo";
 import { ThemeToggle } from "./ThemeToggle";
@@ -127,7 +128,7 @@ const Navbar = () => {
       description: "Education & Training"
     },
     { label: "Jobs", path: "/jobs", icon: Briefcase },
-    { label: "Community", path: "/community", icon: Users, authRequired: true },
+    { label: "Blog", path: "/blog", icon: PenTool },
     { label: "Chat", path: "/chat", icon: MessageSquare },
   ];
 
@@ -144,7 +145,7 @@ const Navbar = () => {
           <div className="hidden lg:flex items-center space-x-8">
             {mainNavItems.map((item) => {
               const Icon = item.icon;
-              const showItem = !item.authRequired || isAuthenticated;
+              const showItem = !(item as any).authRequired || isAuthenticated;
               
               if (!showItem) return null;
               
@@ -268,7 +269,7 @@ const Navbar = () => {
             <div className="flex flex-col space-y-2">
               {mainNavItems.map((item) => {
                 const Icon = item.icon;
-                const showItem = !item.authRequired || isAuthenticated;
+                const showItem = !(item as any).authRequired || isAuthenticated;
                 
                 if (!showItem) return null;
                 
