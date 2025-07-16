@@ -13,10 +13,11 @@ Allow: /about
 Allow: /academy
 Allow: /jobs
 Allow: /freelancers
-Allow: /community
 Allow: /blog
 Allow: /support
 Allow: /faq
+Allow: /infrastructure
+Allow: /imei-check
 
 # Disallow admin and private areas
 Disallow: /admin/

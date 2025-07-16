@@ -191,6 +191,86 @@ const Index = () => {
               </div>
             </div>
           </section>
+
+          {/* SEO Content Section */}
+          <section className="py-16 bg-secondary/20">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto">
+                <h2 className="text-3xl font-bold text-center mb-8">Expert IT Services & Digital Education in Tunisia</h2>
+                
+                <div className="grid md:grid-cols-2 gap-8 mb-12">
+                  <div>
+                    <h3 className="text-xl font-semibold mb-4">Professional IT Support & Device Repair</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Zwanski Tech has been serving Tunisia's digital community since 2019, specializing in comprehensive IT support services. 
+                      Our expert team provides professional computer repair, smartphone troubleshooting, and IMEI unlocking services. 
+                      With over 300 successfully repaired devices and a 98% customer satisfaction rate, we've established ourselves as 
+                      Tunisia's premier IT service provider. From hardware diagnostics to software optimization, our technical expertise 
+                      covers all aspects of modern device maintenance and repair.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-xl font-semibold mb-4">Cybersecurity & Web Development Excellence</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Our cybersecurity consulting services help businesses in Tunis and across Tunisia strengthen their digital defenses. 
+                      We conduct thorough security audits, implement robust protection systems, and provide ongoing monitoring to ensure 
+                      your digital assets remain secure. Additionally, our web development team creates modern, responsive websites using 
+                      cutting-edge technologies like React, Node.js, and TypeScript. Whether you need a corporate website, e-commerce platform, 
+                      or custom web application, our developers deliver solutions that drive business growth.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="grid md:grid-cols-2 gap-8 mb-12">
+                  <div>
+                    <h3 className="text-xl font-semibold mb-4">Zwanski Academy: Digital Skills Education</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      The Zwanski Academy represents our commitment to digital education and skill development in Tunisia. 
+                      Our comprehensive online learning platform offers courses in web development, cybersecurity, and IT fundamentals. 
+                      Students gain practical, industry-relevant skills through hands-on projects and real-world scenarios. 
+                      With multilingual support in Arabic, French, and English, we make quality tech education accessible to all Tunisians. 
+                      Our courses are designed by industry professionals with 5+ years of experience in their respective fields.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-xl font-semibold mb-4">Freelance Marketplace & Job Opportunities</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Our job marketplace connects talented Tunisian developers and IT professionals with local and international opportunities. 
+                      We facilitate freelance projects, full-time positions, and consulting engagements across various technology sectors. 
+                      Employers benefit from access to pre-vetted technical talent, while job seekers gain exposure to quality opportunities 
+                      that match their skills and career goals. The platform supports remote work arrangements and provides tools for 
+                      project management, secure payments, and professional networking within Tunisia's growing tech ecosystem.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="text-center bg-card rounded-lg p-8 border border-border">
+                  <h3 className="text-2xl font-bold mb-4">Why Choose Zwanski Tech?</h3>
+                  <div className="grid sm:grid-cols-3 gap-6 text-center">
+                    <div>
+                      <div className="text-3xl font-bold text-primary mb-2">5+</div>
+                      <p className="text-muted-foreground">Years of Experience</p>
+                    </div>
+                    <div>
+                      <div className="text-3xl font-bold text-primary mb-2">300+</div>
+                      <p className="text-muted-foreground">Devices Repaired</p>
+                    </div>
+                    <div>
+                      <div className="text-3xl font-bold text-primary mb-2">98%</div>
+                      <p className="text-muted-foreground">Customer Satisfaction</p>
+                    </div>
+                  </div>
+                  <p className="text-muted-foreground mt-6 max-w-2xl mx-auto">
+                    Based in Tunis, Tunisia, Zwanski Tech combines local expertise with international standards to deliver 
+                    exceptional IT services and digital education. Contact us today to discuss your technology needs or 
+                    explore our academy to advance your digital skills.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
           
           <QuickContact />
           <EnhancedContact />

@@ -153,7 +153,7 @@ const Hero = () => {
                 </div>
                 
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground leading-tight">
-                  {t("hero.headline")}
+                  Professional IT Services & Digital Education Platform in Tunisia
                 </h1>
                 <h2 className="text-xl md:text-2xl text-muted-foreground mb-8 font-medium">
                   From device repair to cybersecurity education — empowering your digital journey

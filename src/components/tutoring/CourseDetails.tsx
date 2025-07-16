@@ -15,6 +15,7 @@ const CourseDetails = () => {
     originalPrice: 199.99,
     description: "Master modern web development with React, Node.js, and MongoDB. Build real-world projects and get job-ready skills.",
     image: "/placeholder.svg",
+    imageAlt: "Complete Web Development Bootcamp 2024 - Learn React, Node.js, and modern web development",
     curriculum: [
       { title: "HTML & CSS Fundamentals", duration: "4 hours", lessons: 12 },
       { title: "JavaScript Essentials", duration: "8 hours", lessons: 24 },
@@ -44,7 +45,7 @@ const CourseDetails = () => {
             <div className="relative mb-6">
               <img 
                 src={course.image} 
-                alt={course.title}
+                alt={course.imageAlt}
                 className="w-full h-64 object-cover rounded-lg"
               />
               <Button 

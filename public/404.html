@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | Zwanski Tech</title>
+    <meta name="description" content="The page you're looking for couldn't be found. Return to Zwanski Tech homepage for IT services and digital education.">
+    <link rel="canonical" href="https://zwanski.org/404">
+    <link rel="icon" href="/favicon-professional.svg" type="image/svg+xml">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        .error-code {
+            font-size: 8rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #4a5568;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        .tagline {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-bottom: 2rem;
+        }
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            border: 2px solid #667eea;
+            color: #667eea;
+            background: transparent;
+        }
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .links {
+            border-top: 1px solid #e2e8f0;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .links p {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            color: #718096;
+        }
+        .quick-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .quick-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .quick-links a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 480px) {
+            .error-code {
+                font-size: 5rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .quick-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-code">404</div>
+        
+        <h1>Page Not Found</h1>
+        <p>Sorry, we couldn't find the page you're looking for. It might have been moved, deleted, or you entered the wrong URL.</p>
+        
+        <div class="logo">ZWANSKI TECH</div>
+        <div class="tagline">Professional IT Services & Digital Education</div>
+        
+        <div class="buttons">
+            <a href="/" class="btn btn-primary">Return to Home</a>
+            <a href="/services" class="btn btn-secondary">View Our Services</a>
+        </div>
+        
+        <div class="links">
+            <p>Need help finding what you're looking for?</p>
+            <div class="quick-links">
+                <a href="/about">About Us</a>
+                <a href="/academy">Academy</a>
+                <a href="/jobs">Jobs</a>
+                <a href="/support">Support</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
