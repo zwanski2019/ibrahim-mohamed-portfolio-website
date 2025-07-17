@@ -34,45 +34,39 @@ const Computer = () => {
         <meshBasicMaterial color="#1a1a2e" />
       </mesh>
 
-      {/* Simplified Text on Screen - using any to bypass strict typing */}
+      {/* Text on Screen */}
       <Text
-        {...({
-          position: [0, 0.8, 0.17],
-          fontSize: 0.15,
-          color: "#00ff88",
-          anchorX: "center",
-          anchorY: "middle",
-          maxWidth: 2,
-          textAlign: "center"
-        } as any)}
+        position={[0, 0.8, 0.17]}
+        fontSize={0.15}
+        color="#00ff88"
+        anchorX="center"
+        anchorY="middle"
+        maxWidth={2}
+        textAlign="center"
       >
-        Welcome to SOS Services
+        Welcome to Zwanski
       </Text>
 
       <Text
-        {...({
-          position: [0, 0.5, 0.17],
-          fontSize: 0.12,
-          color: "#ffffff",
-          anchorX: "center",
-          anchorY: "middle",
-          maxWidth: 2,
-          textAlign: "center"
-        } as any)}
+        position={[0, 0.5, 0.17]}
+        fontSize={0.12}
+        color="#ffffff"
+        anchorX="center"
+        anchorY="middle"
+        maxWidth={2}
+        textAlign="center"
       >
         Tunisia's Premier IT Solutions
       </Text>
 
       <Text
-        {...({
-          position: [0, 0.2, 0.17],
-          fontSize: 0.1,
-          color: "#cccccc",
-          anchorX: "center",
-          anchorY: "middle",
-          maxWidth: 2,
-          textAlign: "center"
-        } as any)}
+        position={[0, 0.2, 0.17]}
+        fontSize={0.1}
+        color="#cccccc"
+        anchorX="center"
+        anchorY="middle"
+        maxWidth={2}
+        textAlign="center"
       >
         Professional Tech Services
       </Text>
@@ -89,9 +83,11 @@ const Computer = () => {
         <meshStandardMaterial color="#2a2a2a" />
       </mesh>
 
-      {/* Lighting */}
-      <pointLight position={[2, 2, 2]} intensity={0.5} />
-      <ambientLight intensity={0.3} />
+      {/* Enhanced Lighting */}
+      <pointLight position={[2, 2, 2]} intensity={1} />
+      <pointLight position={[-2, -1, 2]} intensity={0.5} color="#4f46e5" />
+      <ambientLight intensity={0.4} />
+      <directionalLight position={[0, 5, 5]} intensity={0.5} />
     </group>
   )
 }
