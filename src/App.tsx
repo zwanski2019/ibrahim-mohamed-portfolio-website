@@ -95,13 +95,9 @@ import "./styles/animations.css";
 const queryClient = new QueryClient(); // Force refresh for Tools import
 
 function App() {
-  // Performance monitoring hooks with error handling
-  try {
-    usePerformanceMonitoring();
-    useMemoryMonitoring();
-  } catch (error) {
-    console.debug('Performance monitoring hook error:', error);
-  }
+  // Performance monitoring hooks - moved to top level to follow React Rules of Hooks
+  usePerformanceMonitoring();
+  useMemoryMonitoring();
 
   // Preloader state for home page only
   const [showPreloader, setShowPreloader] = useState(false);
