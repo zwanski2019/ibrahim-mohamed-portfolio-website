@@ -143,33 +143,8 @@ function App() {
                         <meta name="description" content="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals." />
                       </Helmet>
                       <div className="app-content-ready homepage-content">
-                        <ErrorBoundary fallback={
-                          <div className="min-h-screen flex items-center justify-center bg-background">
-                            <div className="text-center p-8">
-                              <h1 className="text-2xl font-bold mb-4">Zwanski Tech</h1>
-                              <p className="text-muted-foreground mb-4">Professional IT Services & Digital Education</p>
-                              <button 
-                                onClick={() => window.location.reload()} 
-                                className="px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90"
-                              >
-                                Retry
-                              </button>
-                            </div>
-                          </div>
-                        }>
-                          <Routes>
-                        <Route path="/" element={
-                          <ErrorBoundary fallback={
-                            <div className="min-h-screen flex items-center justify-center bg-background">
-                              <div className="text-center p-8">
-                                <h1 className="text-2xl font-bold mb-4">Welcome to Zwanski Tech</h1>
-                                <p className="text-muted-foreground">Professional IT Services & Digital Education Platform</p>
-                              </div>
-                            </div>
-                          }>
-                            <Index />
-                          </ErrorBoundary>
-                        } />
+                        <Routes>
+                        <Route path="/" element={<Index />} />
                         <Route path="/services" element={<Services />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/computer-model" element={<ComputerModel />} />
@@ -211,8 +186,7 @@ function App() {
                         <Route path="/rss" element={<RSS />} />
                         <Route path="/feed" element={<RSS />} />
                         <Route path="*" element={<NotFound />} />
-                          </Routes>
-                        </ErrorBoundary>
+                        </Routes>
                       </div>
                       
                       <AccessibilityEnhancer />
