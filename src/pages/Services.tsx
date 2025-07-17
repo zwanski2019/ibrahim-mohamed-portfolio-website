@@ -5,9 +5,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ServiceCard from "@/components/ServiceCard";
 import ServiceRequestForm from "@/components/ServiceRequestForm";
-import IMEIChecker from "@/components/IMEIChecker";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Smartphone } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 const Services = () => {
@@ -83,29 +80,6 @@ const Services = () => {
       <Navbar />
       
       <main className="flex-grow">
-        {/* Featured Free Tool Section */}
-        <section className="axeptio-section bg-primary/5">
-          <div className="axeptio-container">
-            <div className="text-center mb-8 lg:mb-12">
-              <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <div className="axeptio-feature-icon">
-                  <Smartphone className="h-5 w-5 sm:h-6 sm:w-6" />
-                </div>
-                <h2 className="axeptio-heading text-xl sm:text-2xl md:text-3xl lg:text-4xl">
-                  {t("nav.freeImeiCheck").split(" ")[0]} <span className="text-primary">{t("nav.freeImeiCheck").split(" ").slice(1).join(" ")}</span>
-                </h2>
-              </div>
-              <p className="axeptio-subheading text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
-                {t("imei.description")}
-              </p>
-            </div>
-            
-            <div className="max-w-4xl mx-auto">
-              <IMEIChecker />
-            </div>
-          </div>
-        </section>
-
         {/* Services Section */}
         <section className="axeptio-section">
           <div className="axeptio-container">

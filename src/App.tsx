@@ -40,6 +40,7 @@ import Support from "./pages/Support";
 import FAQ from "./pages/FAQ";
 import Infrastructure from "./pages/Infrastructure";
 import IMEICheck from "./pages/IMEICheck";
+import Tools from "./pages/Tools";
 import RSS from "./pages/RSS";
 import { LanguageDetectionNotice } from "./components/LanguageDetectionNotice";
 import ScrollToTop from "./components/ScrollToTop";
@@ -107,7 +108,8 @@ function App() {
                       <Route path="/support" element={<Support />} />
                       <Route path="/faq" element={<FAQ />} />
                       <Route path="/infrastructure" element={<Infrastructure />} />
-                      <Route path="/imei-check" element={<IMEICheck />} />
+            <Route path="/imei-check" element={<IMEICheck />} />
+            <Route path="/tools" element={<Tools />} />
                       <Route path="/rss" element={<RSS />} />
                       <Route path="/feed" element={<RSS />} />
                       <Route path="*" element={<NotFound />} />

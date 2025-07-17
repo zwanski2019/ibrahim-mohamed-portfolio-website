@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
-import { Shield, Home, Wrench, GraduationCap, Briefcase, Users, MessageSquare, Mail, CheckCircle, BookOpen, Info, FileText, LifeBuoy, Rss, PenTool } from "lucide-react";
+import { Shield, Home, Wrench, GraduationCap, Briefcase, Users, MessageSquare, Mail, Settings, BookOpen, Info, FileText, LifeBuoy, Rss, PenTool } from "lucide-react";
 
 const navItems = [
   { label: "Home", path: "/", icon: Home },
@@ -13,7 +13,7 @@ const navItems = [
   { label: "Blog", path: "/blog", icon: PenTool },
   { label: "Chat", path: "/chat", icon: MessageSquare },
   { label: "Newsletter", path: "/newsletter", icon: Mail },
-  { label: "IMEI Check", path: "/imei-check", icon: CheckCircle },
+  { label: "Tools", path: "/tools", icon: Settings },
   { label: "3D Model", path: "/3d", icon: BookOpen },
   { label: "About", path: "/about", icon: Info },
   { label: "FAQ", path: "/faq", icon: FileText },
