@@ -126,6 +126,7 @@ function App() {
                           <Route path="/services" element={<Services />} />
                           <Route path="/about" element={<About />} />
                           <Route path="/computer-model" element={<ComputerModel />} />
+                          <Route path="/3d" element={<ComputerModel />} />
                           <Route path="/chat" element={<Chat />} />
                           <Route path="/newsletter" element={<Newsletter />} />
                           <Route path="/academy" element={<Academy />} />
