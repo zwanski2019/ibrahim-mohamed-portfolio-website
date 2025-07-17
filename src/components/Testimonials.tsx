@@ -31,6 +31,10 @@ const Testimonials = () => {
   }, []);
 
   const fetchTestimonials = async () => {
+    // Set fallback data immediately for better performance
+    setTestimonials(fallbackTestimonials);
+    setIsLoading(false);
+    
     try {
       const { data, error } = await supabase
         .from("testimonials")
@@ -39,19 +43,13 @@ const Testimonials = () => {
         .order("created_at", { ascending: false })
         .limit(6);
 
-      if (error) throw error;
-      
-      // If no testimonials in database, use fallback data
-      if (!data || data.length === 0) {
-        setTestimonials(fallbackTestimonials);
-      } else {
+      // Only update if we got actual data
+      if (!error && data && data.length > 0) {
         setTestimonials(data);
       }
     } catch (error) {
-      console.error("Error fetching testimonials:", error);
-      setTestimonials(fallbackTestimonials);
-    } finally {
-      setIsLoading(false);
+      // Silently fail - we already have fallback data
+      console.warn("Could not load testimonials from database, using fallback data");
     }
   };
 

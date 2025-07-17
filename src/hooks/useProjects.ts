@@ -23,17 +23,27 @@ export const useFeaturedProjects = () => {
   return useQuery({
     queryKey: ['featured-projects'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('projects')
-        .select('*')
-        .eq('status', 'published')
-        .eq('featured', true)
-        .order('sort_order', { ascending: true })
-        .limit(6);
-      
-      if (error) throw error;
-      return data as Project[];
+      try {
+        const { data, error } = await supabase
+          .from('projects')
+          .select('*')
+          .eq('status', 'published')
+          .eq('featured', true)
+          .order('sort_order', { ascending: true })
+          .limit(6);
+        
+        if (error) {
+          console.warn('Failed to load projects:', error);
+          return [];
+        }
+        return data as Project[] || [];
+      } catch (error) {
+        console.warn('Failed to load projects:', error);
+        return [];
+      }
     },
+    staleTime: 10 * 60 * 1000, // 10 minutes
+    retry: 1, // Only retry once
   });
 };
 

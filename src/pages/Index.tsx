@@ -26,7 +26,7 @@ const Index = () => {
   const { user } = useAuth();
   const { t } = useLanguage();
 
-  // Fetch courses for the home page with error handling
+  // Fetch courses for the home page with error handling and longer cache
   const { data: courses, isLoading } = useQuery({
     queryKey: ['featured-courses'],
     queryFn: async () => {
@@ -44,24 +44,22 @@ const Index = () => {
           .limit(6);
 
         if (error) {
-          if (process.env.NODE_ENV === 'development') {
-            console.warn('Failed to load courses:', error);
-          }
+          console.warn('Failed to load courses:', error);
           return [];
         }
         return data || [];
       } catch (error) {
-        if (process.env.NODE_ENV === 'development') {
-          console.warn('Failed to load courses:', error);
-        }
-        return []; // Return empty array to prevent page crash
+        console.warn('Failed to load courses:', error);
+        return [];
       }
     },
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    retry: 1 // Only retry once
+    staleTime: 15 * 60 * 1000, // 15 minutes - longer cache
+    gcTime: 30 * 60 * 1000, // 30 minutes
+    retry: 1,
+    refetchOnWindowFocus: false
   });
 
-  // Fetch user enrollments if logged in with error handling
+  // Fetch user enrollments if logged in with error handling and longer cache
   const { data: userEnrollments } = useQuery({
     queryKey: ['user-enrollments', user?.id],
     queryFn: async () => {
@@ -77,73 +75,58 @@ const Index = () => {
           .eq('user_id', user.id);
 
         if (error) {
-          if (process.env.NODE_ENV === 'development') {
-            console.warn('Failed to load user enrollments:', error);
-          }
+          console.warn('Failed to load user enrollments:', error);
           return [];
         }
         return data || [];
       } catch (error) {
-        if (process.env.NODE_ENV === 'development') {
-          console.warn('Failed to load user enrollments:', error);
-        }
-        return []; // Return empty array to prevent page crash
+        console.warn('Failed to load user enrollments:', error);
+        return [];
       }
     },
     enabled: !!user?.id,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    retry: 1 // Only retry once
+    staleTime: 10 * 60 * 1000, // 10 minutes - longer cache
+    gcTime: 20 * 60 * 1000, // 20 minutes
+    retry: 1,
+    refetchOnWindowFocus: false
   });
 
-  // Optimized gradient cursor effect with throttling
+  // Minimal animation setup for better performance
   useEffect(() => {
-    let ticking = false;
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const cursor = document.querySelector('.gradient-cursor') as HTMLElement;
-          if (cursor) {
-            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    document.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => document.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  // Optimized scroll animation with proper initialization delay
-  useEffect(() => {
-    // Simplified animation setup - no delays, immediate visibility
-    const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
-    if (elementsToAnimate.length > 0) {
-      // Make elements visible immediately
-      elementsToAnimate.forEach(element => {
+    if (prefersReducedMotion) {
+      // Make everything visible immediately for accessibility
+      const elements = document.querySelectorAll('.animate-on-scroll');
+      elements.forEach(element => {
         (element as HTMLElement).style.opacity = '1';
-        (element as HTMLElement).style.visibility = 'visible';
+        (element as HTMLElement).style.transform = 'none';
       });
-
-      // Set up intersection observer for animations
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, {
-        threshold: 0.1,
-        rootMargin: '50px 0px -25px 0px'
-      });
-
-      elementsToAnimate.forEach((element) => observer.observe(element));
-
-      return () => observer.disconnect();
+      return;
     }
+
+    // Simplified intersection observer for progressive loading
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { 
+      threshold: 0.1,
+      rootMargin: '20px'
+    });
+
+    // Immediate visibility for better perceived performance
+    const elements = document.querySelectorAll('.animate-on-scroll');
+    elements.forEach((element) => {
+      (element as HTMLElement).style.opacity = '1';
+      observer.observe(element);
+    });
+
+    return () => observer.disconnect();
   }, [])
 
   const structuredDataItems = [

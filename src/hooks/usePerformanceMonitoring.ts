@@ -10,265 +10,52 @@ interface PerformanceMetrics {
 
 export const usePerformanceMonitoring = () => {
   useEffect(() => {
-    // Only run in production
+    // Simplified performance monitoring with minimal overhead
     if (import.meta.env.DEV) return;
 
-    try {
-      const metrics: PerformanceMetrics = {};
-
-      // Largest Contentful Paint (LCP)
-      const observeLCP = () => {
-        try {
-          if ('PerformanceObserver' in window && window.PerformanceObserver) {
-            const observer = new PerformanceObserver((list) => {
-              try {
-                const entries = list.getEntries();
-                const lastEntry = entries[entries.length - 1];
-                if (lastEntry) {
-                  metrics.lcp = lastEntry.startTime;
-                  
-                  // Log if LCP is poor (>2.5s)
-                  if (metrics.lcp > 2500) {
-                    console.warn('Poor LCP detected:', metrics.lcp);
-                  }
-                }
-              } catch (error) {
-                console.debug('LCP observation error:', error);
-              }
-            });
-            
-            observer.observe({ entryTypes: ['largest-contentful-paint'] });
+    // Use a single timeout to batch performance measurements
+    const timeoutId = setTimeout(() => {
+      try {
+        if ('performance' in window && 'getEntriesByType' in performance) {
+          const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+          if (navigation) {
+            const loadTime = navigation.loadEventEnd - navigation.fetchStart;
+            if (loadTime > 3000) { // Only log if slow
+              console.warn('Slow page load detected:', Math.round(loadTime), 'ms');
+            }
           }
-        } catch (error) {
-          console.debug('LCP setup error:', error);
         }
-      };
-
-      // First Input Delay (FID)
-      const observeFID = () => {
-        try {
-          if ('PerformanceObserver' in window && window.PerformanceObserver) {
-            const observer = new PerformanceObserver((list) => {
-              try {
-                const entries = list.getEntries();
-                entries.forEach((entry: any) => {
-                  if (entry.processingStart && entry.startTime) {
-                    metrics.fid = entry.processingStart - entry.startTime;
-                    
-                    // Log if FID is poor (>100ms)
-                    if (metrics.fid > 100) {
-                      console.warn('Poor FID detected:', metrics.fid);
-                    }
-                  }
-                });
-              } catch (error) {
-                console.debug('FID observation error:', error);
-              }
-            });
-            
-            observer.observe({ entryTypes: ['first-input'] });
-          }
-        } catch (error) {
-          console.debug('FID setup error:', error);
-        }
-      };
-
-    // Cumulative Layout Shift (CLS)
-    const observeCLS = () => {
-      if ('PerformanceObserver' in window) {
-        let clsValue = 0;
-        
-        const observer = new PerformanceObserver((list) => {
-          const entries = list.getEntries();
-          entries.forEach((entry: any) => {
-            if (!entry.hadRecentInput) {
-              clsValue += entry.value;
-            }
-          });
-          
-          metrics.cls = clsValue;
-          
-          // Log if CLS is poor (>0.1)
-          if (metrics.cls > 0.1) {
-            console.warn('Poor CLS detected:', metrics.cls);
-          }
-        });
-        
-        observer.observe({ entryTypes: ['layout-shift'] });
+      } catch (error) {
+        // Silently fail
       }
-    };
+    }, 2000);
 
-    // First Contentful Paint (FCP)
-    const observeFCP = () => {
-      if ('PerformanceObserver' in window) {
-        const observer = new PerformanceObserver((list) => {
-          const entries = list.getEntries();
-          entries.forEach((entry: any) => {
-            metrics.fcp = entry.startTime;
-            
-            // Log if FCP is poor (>1.8s)
-            if (metrics.fcp > 1800) {
-              console.warn('Poor FCP detected:', metrics.fcp);
-            }
-          });
-        });
-        
-        observer.observe({ entryTypes: ['paint'] });
-      }
-    };
-
-    // Time to First Byte (TTFB)
-    const observeTTFB = () => {
-      if ('PerformanceObserver' in window) {
-        const observer = new PerformanceObserver((list) => {
-          const entries = list.getEntries();
-          entries.forEach((entry: any) => {
-            if (entry.name === window.location.href) {
-              metrics.ttfb = entry.responseStart - entry.requestStart;
-              
-              // Log if TTFB is poor (>800ms)
-              if (metrics.ttfb > 800) {
-                console.warn('Poor TTFB detected:', metrics.ttfb);
-              }
-            }
-          });
-        });
-        
-        observer.observe({ entryTypes: ['navigation'] });
-      }
-    };
-
-    // Resource loading performance
-    const observeResources = () => {
-      if ('PerformanceObserver' in window) {
-        const observer = new PerformanceObserver((list) => {
-          const entries = list.getEntries();
-          entries.forEach((entry: any) => {
-            const duration = entry.duration;
-            const size = entry.transferSize || 0;
-            
-            // Log slow resources (>1s)
-            if (duration > 1000) {
-              console.warn('Slow resource detected:', {
-                name: entry.name,
-                duration,
-                size
-              });
-            }
-            
-            // Log large resources (>1MB)
-            if (size > 1024 * 1024) {
-              console.warn('Large resource detected:', {
-                name: entry.name,
-                size: `${(size / 1024 / 1024).toFixed(2)}MB`
-              });
-            }
-          });
-        });
-        
-        observer.observe({ entryTypes: ['resource'] });
-      }
-    };
-
-    // Long tasks monitoring
-    const observeLongTasks = () => {
-      if ('PerformanceObserver' in window) {
-        const observer = new PerformanceObserver((list) => {
-          const entries = list.getEntries();
-          entries.forEach((entry: any) => {
-            console.warn('Long task detected:', {
-              duration: entry.duration,
-              startTime: entry.startTime
-            });
-          });
-        });
-        
-        observer.observe({ entryTypes: ['longtask'] });
-      }
-    };
-
-      // Initialize all observers
-      observeLCP();
-      observeFID();
-      observeCLS();
-      observeFCP();
-      observeTTFB();
-      observeResources();
-      observeLongTasks();
-
-    // Send metrics to analytics on page unload
-    const sendMetrics = () => {
-      if (Object.keys(metrics).length > 0) {
-        // You can send metrics to your analytics service here
-        console.log('Performance Metrics:', metrics);
-        
-        // Example: Send to Google Analytics
-        if ((window as any).gtag) {
-          (window as any).gtag('event', 'web_vitals', {
-            custom_map: {
-              metric_lcp: metrics.lcp,
-              metric_fid: metrics.fid,
-              metric_cls: metrics.cls,
-              metric_fcp: metrics.fcp,
-              metric_ttfb: metrics.ttfb
-            }
-          });
-        }
-      }
-    };
-
-    window.addEventListener('beforeunload', sendMetrics);
-    
-    // Also send metrics after 10 seconds for single-page apps
-    const timeout = setTimeout(sendMetrics, 10000);
-
-      return () => {
-        window.removeEventListener('beforeunload', sendMetrics);
-        clearTimeout(timeout);
-      };
-    } catch (error) {
-      console.debug('Performance monitoring setup error:', error);
-      return () => {}; // Return empty cleanup function
-    }
+    return () => clearTimeout(timeoutId);
   }, []);
 };
 
-// Hook to monitor memory usage
+// Simplified memory monitoring hook
 export const useMemoryMonitoring = () => {
   useEffect(() => {
     if (import.meta.env.DEV) return;
 
-    try {
-      if (!('memory' in performance)) return;
-
-      const checkMemory = () => {
-        try {
+    // Single memory check with timeout
+    const timeoutId = setTimeout(() => {
+      try {
+        if ('memory' in performance) {
           const memory = (performance as any).memory;
-          if (memory && memory.usedJSHeapSize && memory.totalJSHeapSize && memory.jsHeapSizeLimit) {
+          if (memory?.usedJSHeapSize) {
             const used = memory.usedJSHeapSize / 1024 / 1024;
-            const total = memory.totalJSHeapSize / 1024 / 1024;
-            const limit = memory.jsHeapSizeLimit / 1024 / 1024;
-            
-            // Warn if memory usage is high
-            if (used > 100) { // More than 100MB
-              console.warn('High memory usage detected:', {
-                used: `${used.toFixed(2)}MB`,
-                total: `${total.toFixed(2)}MB`,
-                limit: `${limit.toFixed(2)}MB`
-              });
+            if (used > 150) { // Only warn if > 150MB
+              console.warn('High memory usage:', Math.round(used), 'MB');
             }
           }
-        } catch (error) {
-          console.debug('Memory check error:', error);
         }
-      };
+      } catch (error) {
+        // Silently fail
+      }
+    }, 5000);
 
-      const interval = setInterval(checkMemory, 30000); // Check every 30 seconds
-      
-      return () => clearInterval(interval);
-    } catch (error) {
-      console.debug('Memory monitoring setup error:', error);
-      return () => {}; // Return empty cleanup function
-    }
+    return () => clearTimeout(timeoutId);
   }, []);
 };

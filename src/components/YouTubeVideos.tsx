@@ -22,9 +22,10 @@ export default function YouTubeVideos() {
   } = useQuery({
     queryKey: ['youtube-videos'],
     queryFn: youtubeService.getVideos,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 30 * 60 * 1000, // 30 minutes
-    retry: 2,
+    staleTime: 30 * 60 * 1000, // 30 minutes - longer cache
+    gcTime: 60 * 60 * 1000, // 1 hour
+    retry: 1, // Only retry once
+    refetchOnWindowFocus: false, // Don't refetch on window focus
   });
 
   const isFromCache = videos === fallbackVideos;
