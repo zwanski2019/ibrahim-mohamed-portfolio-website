@@ -4,29 +4,40 @@ import { Language } from "@/context/LanguageContext";
 import { getInitialLanguage } from "@/utils/languageDetection";
 
 export function useLanguageDetection() {
-  const [language, setLanguageState] = useState<Language>('en');
-  const [wasAutoDetected, setWasAutoDetected] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
-
-  // Initialize language only on client side
-  useEffect(() => {
-    if (typeof window !== 'undefined' && !isInitialized) {
-      const initialLanguage = getInitialLanguage();
-      setLanguageState(initialLanguage);
-      
-      // Check if language was auto-detected (not from localStorage)
+  // Initialize immediately with detected language (synchronous)
+  const [language, setLanguageState] = useState<Language>(() => {
+    if (typeof window !== 'undefined') {
+      return getInitialLanguage();
+    }
+    return 'en';
+  });
+  
+  const [wasAutoDetected, setWasAutoDetected] = useState(() => {
+    if (typeof window !== 'undefined') {
       try {
         const savedLanguage = localStorage.getItem('language');
-        if (!savedLanguage && initialLanguage !== 'en') {
-          setWasAutoDetected(true);
-        }
+        const initialLanguage = getInitialLanguage();
+        return !savedLanguage && initialLanguage !== 'en';
       } catch (error) {
         console.warn('Error checking localStorage:', error);
+        return false;
       }
-      
-      setIsInitialized(true);
     }
-  }, [isInitialized]);
+    return false;
+  });
+  
+  const [isInitialized, setIsInitialized] = useState(true); // Always initialized now
+
+  // Set initial direction on mount
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      if (language === 'ar') {
+        document.documentElement.dir = 'rtl';
+      } else {
+        document.documentElement.dir = 'ltr';
+      }
+    }
+  }, []);
 
   const setLanguage = useCallback((newLanguage: Language) => {
     setLanguageState(newLanguage);
@@ -49,16 +60,16 @@ export function useLanguageDetection() {
     }
   }, []);
 
-  // Set initial direction based on language
+  // Update direction when language changes
   useEffect(() => {
-    if (typeof document !== 'undefined' && isInitialized) {
+    if (typeof document !== 'undefined') {
       if (language === 'ar') {
         document.documentElement.dir = 'rtl';
       } else {
         document.documentElement.dir = 'ltr';
       }
     }
-  }, [language, isInitialized]);
+  }, [language]);
 
   return {
     language,
