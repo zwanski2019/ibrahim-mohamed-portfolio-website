@@ -35,7 +35,7 @@ interface JobMapProps {
   onJobSelect?: (job: JobPost) => void;
 }
 
-export const JobMap = ({ jobs = [], onJobSelect }: JobMapProps) => {
+const JobMap: React.FC<JobMapProps> = ({ jobs = [], onJobSelect }) => {
   // Ensure jobs is always an array and filter jobs with valid coordinates
   const jobsWithCoordinates = useMemo(() => {
     if (!Array.isArray(jobs)) return [];
@@ -209,3 +209,5 @@ export const JobMap = ({ jobs = [], onJobSelect }: JobMapProps) => {
     </Card>
   );
 };
+
+export { JobMap };
