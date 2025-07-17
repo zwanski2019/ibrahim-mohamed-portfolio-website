@@ -84,8 +84,8 @@ function App() {
             <LanguageProvider>
               <CookiePreferencesProvider>
                 <AuthProvider>
-                  <ErrorBoundary>
-                    <BrowserRouter>
+                  <BrowserRouter>
+                    <ErrorBoundary>
                       <ScrollToTop />
                       <Helmet>
                         <title>Zwanski Tech - Professional IT Services & Digital Education Platform</title>
@@ -142,8 +142,8 @@ function App() {
                       <ScrollToTopButton />
                       <ChatWidget />
                       <Toaster />
-                    </BrowserRouter>
-                  </ErrorBoundary>
+                    </ErrorBoundary>
+                  </BrowserRouter>
                 </AuthProvider>
               </CookiePreferencesProvider>
             </LanguageProvider>
