@@ -12,8 +12,9 @@ import { CookiePreferencesProvider } from "@/context/CookiePreferencesContext";
 import { AuthProvider } from "@/context/AuthContext";
 
 // Lazy load components for better performance
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState, useCallback } from "react";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import Preloader from "@/components/Preloader";
 
 const Index = lazy(() => import("./pages/Index"));
 const Services = lazy(() => import("./pages/Services"));
@@ -69,12 +70,40 @@ function App() {
   usePerformanceMonitoring();
   useMemoryMonitoring();
 
+  // Preloader state
+  const [showPreloader, setShowPreloader] = useState(true);
+
+  const handlePreloaderComplete = useCallback(() => {
+    setShowPreloader(false);
+  }, []);
+
   const LoadingSpinner = () => (
     <div className="min-h-screen flex items-center justify-center" role="status" aria-label="Loading">
       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       <span className="sr-only">Loading...</span>
     </div>
   );
+
+  // Show preloader first
+  if (showPreloader) {
+    return (
+      <HelmetProvider>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <ThemeProvider>
+              <LanguageProvider>
+                <CookiePreferencesProvider>
+                  <AuthProvider>
+                    <Preloader onComplete={handlePreloaderComplete} />
+                  </AuthProvider>
+                </CookiePreferencesProvider>
+              </LanguageProvider>
+            </ThemeProvider>
+          </TooltipProvider>
+        </QueryClientProvider>
+      </HelmetProvider>
+    );
+  }
 
   return (
     <HelmetProvider>

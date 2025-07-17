@@ -6,6 +6,7 @@
 @import './styles/utilities.css';
 @import './styles/axeptio.css';
 @import './styles/performance.css';
+@import './styles/preloader.css';
 
 /* Import Tailwind CSS directives */
 @tailwind base;
