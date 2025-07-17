@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-build: {
+  build: {
     target: 'esnext',
     minify: 'terser',
     terserOptions: {
@@ -34,6 +34,25 @@ build: {
       },
     },
     rollupOptions: {
+      external: (id) => {
+        // Handle problematic three-stdlib dependencies
+        if (id.includes('three-stdlib/libs/lottie')) {
+          return true;
+        }
+        return false;
+      },
+      onwarn: (warning, defaultHandler) => {
+        // Suppress PURE annotation warnings from react-helmet-async
+        if (warning.code === 'INVALID_ANNOTATION' && warning.message?.includes('PURE')) {
+          return;
+        }
+        // Suppress eval warnings from three-stdlib
+        if (warning.code === 'EVAL' && warning.id?.includes('three-stdlib')) {
+          return;
+        }
+        // Use default handling for other warnings
+        defaultHandler(warning);
+      },
       output: {
         manualChunks: (id) => {
           if (id.includes('node_modules')) {
