@@ -6,68 +6,85 @@ import { getInitialLanguage } from "@/utils/languageDetection";
 export function useLanguageDetection() {
   // Initialize immediately with detected language (synchronous)
   const [language, setLanguageState] = useState<Language>(() => {
-    if (typeof window !== 'undefined') {
-      return getInitialLanguage();
+    try {
+      if (typeof window !== 'undefined') {
+        return getInitialLanguage();
+      }
+      return 'en';
+    } catch (error) {
+      console.debug('Language detection error:', error);
+      return 'en';
     }
-    return 'en';
   });
   
   const [wasAutoDetected, setWasAutoDetected] = useState(() => {
-    if (typeof window !== 'undefined') {
-      try {
+    try {
+      if (typeof window !== 'undefined') {
         const savedLanguage = localStorage.getItem('language');
         const initialLanguage = getInitialLanguage();
         return !savedLanguage && initialLanguage !== 'en';
-      } catch (error) {
-        console.warn('Error checking localStorage:', error);
-        return false;
       }
+      return false;
+    } catch (error) {
+      console.debug('Auto-detection check error:', error);
+      return false;
     }
-    return false;
   });
   
   const [isInitialized, setIsInitialized] = useState(true); // Always initialized now
 
   // Set initial direction on mount
   useEffect(() => {
-    if (typeof document !== 'undefined') {
-      if (language === 'ar') {
-        document.documentElement.dir = 'rtl';
-      } else {
-        document.documentElement.dir = 'ltr';
+    try {
+      if (typeof document !== 'undefined') {
+        if (language === 'ar') {
+          document.documentElement.dir = 'rtl';
+        } else {
+          document.documentElement.dir = 'ltr';
+        }
       }
+    } catch (error) {
+      console.debug('Error setting document direction:', error);
     }
   }, []);
 
   const setLanguage = useCallback((newLanguage: Language) => {
-    setLanguageState(newLanguage);
-    
     try {
-      localStorage.setItem('language', newLanguage);
-    } catch (error) {
-      console.warn('Error saving language to localStorage:', error);
-    }
-    
-    setWasAutoDetected(false); // Reset auto-detection flag when user manually changes language
-    
-    // Update document direction for RTL languages
-    if (typeof document !== 'undefined') {
-      if (newLanguage === 'ar') {
-        document.documentElement.dir = 'rtl';
-      } else {
-        document.documentElement.dir = 'ltr';
+      setLanguageState(newLanguage);
+      
+      try {
+        localStorage.setItem('language', newLanguage);
+      } catch (error) {
+        console.debug('Error saving language to localStorage:', error);
       }
+      
+      setWasAutoDetected(false); // Reset auto-detection flag when user manually changes language
+      
+      // Update document direction for RTL languages
+      if (typeof document !== 'undefined') {
+        if (newLanguage === 'ar') {
+          document.documentElement.dir = 'rtl';
+        } else {
+          document.documentElement.dir = 'ltr';
+        }
+      }
+    } catch (error) {
+      console.debug('Error setting language:', error);
     }
   }, []);
 
   // Update direction when language changes
   useEffect(() => {
-    if (typeof document !== 'undefined') {
-      if (language === 'ar') {
-        document.documentElement.dir = 'rtl';
-      } else {
-        document.documentElement.dir = 'ltr';
+    try {
+      if (typeof document !== 'undefined') {
+        if (language === 'ar') {
+          document.documentElement.dir = 'rtl';
+        } else {
+          document.documentElement.dir = 'ltr';
+        }
       }
+    } catch (error) {
+      console.debug('Error updating document direction:', error);
     }
   }, [language]);
 

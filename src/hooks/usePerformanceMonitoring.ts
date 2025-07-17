@@ -13,44 +13,65 @@ export const usePerformanceMonitoring = () => {
     // Only run in production
     if (import.meta.env.DEV) return;
 
-    const metrics: PerformanceMetrics = {};
+    try {
+      const metrics: PerformanceMetrics = {};
 
-    // Largest Contentful Paint (LCP)
-    const observeLCP = () => {
-      if ('PerformanceObserver' in window) {
-        const observer = new PerformanceObserver((list) => {
-          const entries = list.getEntries();
-          const lastEntry = entries[entries.length - 1];
-          metrics.lcp = lastEntry.startTime;
-          
-          // Log if LCP is poor (>2.5s)
-          if (metrics.lcp > 2500) {
-            console.warn('Poor LCP detected:', metrics.lcp);
-          }
-        });
-        
-        observer.observe({ entryTypes: ['largest-contentful-paint'] });
-      }
-    };
-
-    // First Input Delay (FID)
-    const observeFID = () => {
-      if ('PerformanceObserver' in window) {
-        const observer = new PerformanceObserver((list) => {
-          const entries = list.getEntries();
-          entries.forEach((entry: any) => {
-            metrics.fid = entry.processingStart - entry.startTime;
+      // Largest Contentful Paint (LCP)
+      const observeLCP = () => {
+        try {
+          if ('PerformanceObserver' in window && window.PerformanceObserver) {
+            const observer = new PerformanceObserver((list) => {
+              try {
+                const entries = list.getEntries();
+                const lastEntry = entries[entries.length - 1];
+                if (lastEntry) {
+                  metrics.lcp = lastEntry.startTime;
+                  
+                  // Log if LCP is poor (>2.5s)
+                  if (metrics.lcp > 2500) {
+                    console.warn('Poor LCP detected:', metrics.lcp);
+                  }
+                }
+              } catch (error) {
+                console.debug('LCP observation error:', error);
+              }
+            });
             
-            // Log if FID is poor (>100ms)
-            if (metrics.fid > 100) {
-              console.warn('Poor FID detected:', metrics.fid);
-            }
-          });
-        });
-        
-        observer.observe({ entryTypes: ['first-input'] });
-      }
-    };
+            observer.observe({ entryTypes: ['largest-contentful-paint'] });
+          }
+        } catch (error) {
+          console.debug('LCP setup error:', error);
+        }
+      };
+
+      // First Input Delay (FID)
+      const observeFID = () => {
+        try {
+          if ('PerformanceObserver' in window && window.PerformanceObserver) {
+            const observer = new PerformanceObserver((list) => {
+              try {
+                const entries = list.getEntries();
+                entries.forEach((entry: any) => {
+                  if (entry.processingStart && entry.startTime) {
+                    metrics.fid = entry.processingStart - entry.startTime;
+                    
+                    // Log if FID is poor (>100ms)
+                    if (metrics.fid > 100) {
+                      console.warn('Poor FID detected:', metrics.fid);
+                    }
+                  }
+                });
+              } catch (error) {
+                console.debug('FID observation error:', error);
+              }
+            });
+            
+            observer.observe({ entryTypes: ['first-input'] });
+          }
+        } catch (error) {
+          console.debug('FID setup error:', error);
+        }
+      };
 
     // Cumulative Layout Shift (CLS)
     const observeCLS = () => {
@@ -166,14 +187,14 @@ export const usePerformanceMonitoring = () => {
       }
     };
 
-    // Initialize all observers
-    observeLCP();
-    observeFID();
-    observeCLS();
-    observeFCP();
-    observeTTFB();
-    observeResources();
-    observeLongTasks();
+      // Initialize all observers
+      observeLCP();
+      observeFID();
+      observeCLS();
+      observeFCP();
+      observeTTFB();
+      observeResources();
+      observeLongTasks();
 
     // Send metrics to analytics on page unload
     const sendMetrics = () => {
@@ -201,38 +222,53 @@ export const usePerformanceMonitoring = () => {
     // Also send metrics after 10 seconds for single-page apps
     const timeout = setTimeout(sendMetrics, 10000);
 
-    return () => {
-      window.removeEventListener('beforeunload', sendMetrics);
-      clearTimeout(timeout);
-    };
+      return () => {
+        window.removeEventListener('beforeunload', sendMetrics);
+        clearTimeout(timeout);
+      };
+    } catch (error) {
+      console.debug('Performance monitoring setup error:', error);
+      return () => {}; // Return empty cleanup function
+    }
   }, []);
 };
 
 // Hook to monitor memory usage
 export const useMemoryMonitoring = () => {
   useEffect(() => {
-    if (import.meta.env.DEV || !('memory' in performance)) return;
+    if (import.meta.env.DEV) return;
 
-    const checkMemory = () => {
-      const memory = (performance as any).memory;
-      if (memory) {
-        const used = memory.usedJSHeapSize / 1024 / 1024;
-        const total = memory.totalJSHeapSize / 1024 / 1024;
-        const limit = memory.jsHeapSizeLimit / 1024 / 1024;
-        
-        // Warn if memory usage is high
-        if (used > 100) { // More than 100MB
-          console.warn('High memory usage detected:', {
-            used: `${used.toFixed(2)}MB`,
-            total: `${total.toFixed(2)}MB`,
-            limit: `${limit.toFixed(2)}MB`
-          });
+    try {
+      if (!('memory' in performance)) return;
+
+      const checkMemory = () => {
+        try {
+          const memory = (performance as any).memory;
+          if (memory && memory.usedJSHeapSize && memory.totalJSHeapSize && memory.jsHeapSizeLimit) {
+            const used = memory.usedJSHeapSize / 1024 / 1024;
+            const total = memory.totalJSHeapSize / 1024 / 1024;
+            const limit = memory.jsHeapSizeLimit / 1024 / 1024;
+            
+            // Warn if memory usage is high
+            if (used > 100) { // More than 100MB
+              console.warn('High memory usage detected:', {
+                used: `${used.toFixed(2)}MB`,
+                total: `${total.toFixed(2)}MB`,
+                limit: `${limit.toFixed(2)}MB`
+              });
+            }
+          }
+        } catch (error) {
+          console.debug('Memory check error:', error);
         }
-      }
-    };
+      };
 
-    const interval = setInterval(checkMemory, 30000); // Check every 30 seconds
-    
-    return () => clearInterval(interval);
+      const interval = setInterval(checkMemory, 30000); // Check every 30 seconds
+      
+      return () => clearInterval(interval);
+    } catch (error) {
+      console.debug('Memory monitoring setup error:', error);
+      return () => {}; // Return empty cleanup function
+    }
   }, []);
 };
