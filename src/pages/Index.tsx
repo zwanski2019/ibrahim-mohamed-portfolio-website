@@ -67,28 +67,40 @@ const Index = () => {
     enabled: !!user?.id
   });
 
-  // Gradient cursor effect
+  // Optimized gradient cursor effect with throttling
   useEffect(() => {
+    let ticking = false;
     const handleMouseMove = (e: MouseEvent) => {
-      const cursor = document.querySelector('.gradient-cursor') as HTMLElement;
-      if (cursor) {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const cursor = document.querySelector('.gradient-cursor') as HTMLElement;
+          if (cursor) {
+            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => document.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Scroll animation for elements
+  // Optimized scroll animation with debouncing
   useEffect(() => {
+    let timeout: NodeJS.Timeout;
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-fade-in');
-        }
-      });
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in');
+            // Stop observing once animated to improve performance
+            observer.unobserve(entry.target);
+          }
+        });
+      }, 50);
     };
 
     const observer = new IntersectionObserver(observerCallback, {
@@ -96,12 +108,14 @@ const Index = () => {
       rootMargin: '0px 0px -50px 0px'
     });
 
-    // Observe elements with the class 'animate-on-scroll'
     const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
     elementsToAnimate.forEach((element) => observer.observe(element));
 
-    return () => observer.disconnect();
-  }, [courses]); // Re-run when courses data changes
+    return () => {
+      clearTimeout(timeout);
+      observer.disconnect();
+    };
+  }, [courses]);
 
   const structuredDataItems = [
     organizationStructuredData,
@@ -112,8 +126,8 @@ const Index = () => {
 
   return (
     <>
-      {/* Gradient cursor effect */}
-      <div className="gradient-cursor fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-50 opacity-20 bg-gradient-to-r from-blue-400 to-purple-500 blur-sm transform -translate-x-1/2 -translate-y-1/2" />
+      {/* Optimized gradient cursor effect */}
+      <div className="gradient-cursor fixed top-0 left-0 w-6 h-6 rounded-full pointer-events-none z-50 opacity-15 bg-gradient-to-r from-blue-400 to-purple-500 blur-sm will-change-transform" />
       
       <SEOHelmet 
         title="Zwanski Tech - Professional IT Services & Digital Education Platform"

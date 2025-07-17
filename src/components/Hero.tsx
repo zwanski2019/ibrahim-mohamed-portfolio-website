@@ -7,9 +7,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import heroImage from "@/assets/hero-it-services.jpg";
 
 const Hero = () => {
-  console.log('Hero component rendering...');
   const { t } = useLanguage();
-  console.log('Hero language context:', !!t);
   const [counters, setCounters] = useState({
     devices: 0,
     satisfaction: 0,
@@ -19,10 +17,10 @@ const Hero = () => {
 
   const [isVisible, setIsVisible] = useState(false);
 
-  // Enhanced animated counters effect with useCallback
+  // Optimized animated counters with CSS animations
   const animateCounters = useCallback(() => {
-    const duration = 2500; // 2.5 seconds for smoother animation
-    const steps = 80; // More steps for smoother animation
+    const duration = 2000; // Reduced duration
+    const steps = 60; // Fewer steps for better performance
     const stepDuration = duration / steps;
 
     let step = 0;
@@ -30,24 +28,19 @@ const Hero = () => {
       step++;
       const progress = step / steps;
       
-      // Use easing function for smoother animation
-      const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+      // Simplified easing
+      const ease = 1 - Math.pow(1 - progress, 2);
       
       setCounters({
-        devices: Math.floor(300 * easeOutCubic),
-        satisfaction: Math.floor(98 * easeOutCubic),
-        experience: Math.floor(5 * easeOutCubic),
-        security: Math.floor(65 * easeOutCubic)
+        devices: Math.floor(300 * ease),
+        satisfaction: Math.floor(98 * ease),
+        experience: Math.floor(5 * ease),
+        security: Math.floor(65 * ease)
       });
 
       if (step >= steps) {
         clearInterval(timer);
-        setCounters({
-          devices: 300,
-          satisfaction: 98,
-          experience: 5,
-          security: 65
-        });
+        setCounters({ devices: 300, satisfaction: 98, experience: 5, security: 65 });
       }
     }, stepDuration);
 
@@ -209,8 +202,8 @@ const Hero = () => {
                   fetchPriority="high"
                   width="600"
                   height="500"
-                  onError={(e) => {
-                    console.error('Hero image failed to load:', e);
+                  onError={() => {
+                    // Silently handle image load errors
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />

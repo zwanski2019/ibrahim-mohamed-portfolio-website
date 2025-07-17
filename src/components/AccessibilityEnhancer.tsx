@@ -201,23 +201,35 @@ export const AccessibilityEnhancer = () => {
     improveFocusManagement();
     addLiveRegions();
     
-    // Run checks after DOM is fully loaded
-    setTimeout(() => {
-      improveButtonAccessibility();
-      improveFormAccessibility();
-      improveHeadingHierarchy();
-      checkColorContrast();
-    }, 1000);
+    // Debounced accessibility checks
+    let checkTimeout: NodeJS.Timeout;
+    const debouncedChecks = () => {
+      clearTimeout(checkTimeout);
+      checkTimeout = setTimeout(() => {
+        improveButtonAccessibility();
+        improveFormAccessibility();
+        improveHeadingHierarchy();
+        checkColorContrast();
+      }, 500);
+    };
 
-    // Set up mutation observer for dynamic content
+    // Initial check
+    debouncedChecks();
+
+    // Optimized mutation observer with debouncing
+    let mutationTimeout: NodeJS.Timeout;
     const observer = new MutationObserver(() => {
-      improveButtonAccessibility();
-      improveFormAccessibility();
+      clearTimeout(mutationTimeout);
+      mutationTimeout = setTimeout(() => {
+        improveButtonAccessibility();
+        improveFormAccessibility();
+      }, 250);
     });
     
     observer.observe(document.body, {
       childList: true,
-      subtree: true
+      subtree: true,
+      attributes: false // Only watch for DOM changes, not attribute changes
     });
 
     return () => {
