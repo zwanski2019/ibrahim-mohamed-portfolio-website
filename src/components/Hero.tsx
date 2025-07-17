@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Play, Shield, Globe, Zap, Users, MessageSquare, Star, Sparkles, Monitor, Award, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/context/LanguageContext";
-import heroImage from "@/assets/hero-it-services.jpg";
+import heroImage from "@/assets/hero-it-services-optimized.webp";
 
 const Hero = () => {
   const { t } = useLanguage();
