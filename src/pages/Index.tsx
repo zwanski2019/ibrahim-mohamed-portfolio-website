@@ -43,10 +43,17 @@ const Index = () => {
           .order('enrollment_count', { ascending: false })
           .limit(6);
 
-        if (error) throw error;
+        if (error) {
+          if (process.env.NODE_ENV === 'development') {
+            console.warn('Failed to load courses:', error);
+          }
+          return [];
+        }
         return data || [];
       } catch (error) {
-        console.warn('Failed to load courses:', error);
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('Failed to load courses:', error);
+        }
         return []; // Return empty array to prevent page crash
       }
     },
@@ -69,10 +76,17 @@ const Index = () => {
           `)
           .eq('user_id', user.id);
 
-        if (error) throw error;
+        if (error) {
+          if (process.env.NODE_ENV === 'development') {
+            console.warn('Failed to load user enrollments:', error);
+          }
+          return [];
+        }
         return data || [];
       } catch (error) {
-        console.warn('Failed to load user enrollments:', error);
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('Failed to load user enrollments:', error);
+        }
         return []; // Return empty array to prevent page crash
       }
     },
@@ -415,7 +429,9 @@ const Index = () => {
         </>
       );
     } catch (error) {
-      console.error('Homepage rendering error:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Homepage rendering error:', error);
+      }
       return (
         <div className="min-h-screen flex items-center justify-center bg-background">
           <div className="text-center p-8">

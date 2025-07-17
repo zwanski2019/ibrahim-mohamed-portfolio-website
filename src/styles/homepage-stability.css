@@ -10,6 +10,7 @@
   background-color: hsl(var(--background)) !important;
   position: relative !important;
   z-index: 1 !important;
+  contain: layout !important;
 }
 
 /* Prevent any conflicting animations on initial load */
@@ -38,6 +39,15 @@
   visibility: visible !important;
   display: block !important;
   min-height: auto !important;
+}
+
+/* Critical production render fix */
+.app-content-ready {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  min-height: 100vh !important;
+  background-color: hsl(var(--background)) !important;
 }
 
 /* Prevent any React lazy loading issues */

@@ -37,11 +37,9 @@ import { GlobalSearchBar } from "./search/GlobalSearchBar";
 import { supabase } from "@/integrations/supabase/client";
 
 const Navbar = () => {
-  console.log('Navbar component rendering...');
   const navigate = useNavigate();
   const location = useLocation();
   const { user, isAuthenticated, signOut } = useAuth();
-  console.log('Navbar auth state:', { user: !!user, isAuthenticated });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [unreadNotifications, setUnreadNotifications] = useState(0);
   const [userProfile, setUserProfile] = useState<any>(null);
@@ -65,13 +63,17 @@ const Navbar = () => {
         .single();
 
       if (error && error.code !== 'PGRST116') {
-        console.error("Error fetching profile:", error);
+        if (process.env.NODE_ENV === 'development') {
+          console.error("Error fetching profile:", error);
+        }
         return;
       }
 
       setUserProfile(data);
     } catch (error) {
-      console.error("Error fetching user profile:", error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error("Error fetching user profile:", error);
+      }
     }
   };
 
@@ -88,7 +90,9 @@ const Navbar = () => {
       if (error) throw error;
       setUnreadNotifications(count || 0);
     } catch (error) {
-      console.error("Error fetching notifications:", error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error("Error fetching notifications:", error);
+      }
     }
   };
 

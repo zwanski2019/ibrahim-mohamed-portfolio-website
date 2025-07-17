@@ -19,15 +19,25 @@ import Preloader from "@/components/Preloader";
 // Enhanced Index import with retry logic
 const Index = lazy(() => 
   import("./pages/Index").catch((error) => {
-    console.error('Failed to load Index component:', error);
-    // Return a fallback component on import failure
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Failed to load Index component:', error);
+    }
+    // Return a robust fallback component on import failure
     return {
       default: () => (
         <div className="min-h-screen flex items-center justify-center bg-background">
-          <div className="text-center p-8">
-            <h1 className="text-2xl font-bold mb-4">Zwanski Tech</h1>
-            <p className="text-muted-foreground mb-4">Professional IT Services & Digital Education</p>
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <div className="text-center p-8 max-w-md mx-auto">
+            <h1 className="text-3xl font-bold mb-4 text-foreground">Zwanski Tech</h1>
+            <p className="text-muted-foreground mb-6">Professional IT Services & Digital Education Platform</p>
+            <div className="space-y-4">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+              <button 
+                onClick={() => window.location.reload()} 
+                className="px-6 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+              >
+                Reload Page
+              </button>
+            </div>
           </div>
         </div>
       )
