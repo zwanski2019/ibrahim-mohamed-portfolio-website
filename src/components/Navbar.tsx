@@ -159,7 +159,8 @@ const Navbar = () => {
                 const Icon = item.icon;
                 const showItem = !(item as any).authRequired || isAuthenticated;
                 
-                if (!showItem) return null;
+                // Hide Home button on desktop since logo serves as home button
+                if (item.path === "/" || !showItem) return null;
                 
                 return (
                   <Button
