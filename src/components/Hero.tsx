@@ -7,7 +7,9 @@ import { useEffect, useState, useCallback } from "react";
 import heroImage from "@/assets/hero-it-services.jpg";
 
 const Hero = () => {
+  console.log('Hero component rendering...');
   const { t } = useLanguage();
+  console.log('Hero language context:', !!t);
   const [counters, setCounters] = useState({
     devices: 0,
     satisfaction: 0,

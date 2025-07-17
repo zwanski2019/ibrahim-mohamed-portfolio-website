@@ -24,8 +24,10 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Link } from "react-router-dom";
 
 const Index = () => {
+  console.log('Index component rendering...');
   const { user } = useAuth();
   const { t } = useLanguage();
+  console.log('User:', user, 'Language loaded:', !!t);
 
   // Fetch courses for the home page
   const { data: courses, isLoading } = useQuery({

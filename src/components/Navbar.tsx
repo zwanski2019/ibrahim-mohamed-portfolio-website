@@ -37,9 +37,11 @@ import { GlobalSearchBar } from "./search/GlobalSearchBar";
 import { supabase } from "@/integrations/supabase/client";
 
 const Navbar = () => {
+  console.log('Navbar component rendering...');
   const navigate = useNavigate();
   const location = useLocation();
   const { user, isAuthenticated, signOut } = useAuth();
+  console.log('Navbar auth state:', { user: !!user, isAuthenticated });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [unreadNotifications, setUnreadNotifications] = useState(0);
   const [userProfile, setUserProfile] = useState<any>(null);
