@@ -34,10 +34,15 @@
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <link rel="alternate" type="application/atom+xml" title="Zwanski Tech Website Feed" href="https://zwanski2019.github.io/ZWANSKI-TECH/atom.xml" />
-    <!-- Preload critical fonts -->
+    <!-- Optimized critical font preload -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
     
+    <!-- Critical CSS inline -->
+    <style>
+      /* Critical above-the-fold CSS for hero section */
+      .hero-container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;position:relative;overflow:hidden}.hero-content{max-width:1200px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}.hero-text{z-index:10}.hero-title{font-size:3.75rem;font-weight:700;line-height:1.1;margin-bottom:1.5rem}.hero-subtitle{font-size:1.25rem;line-height:1.6;margin-bottom:2rem;opacity:0.9}.hero-image-container{position:relative;height:500px;width:600px;border-radius:1rem;overflow:hidden}.hero-buttons{display:flex;gap:1rem;flex-wrap:wrap}.hero-button{padding:0.75rem 2rem;border-radius:0.5rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.2s ease-in-out}:root{--background:0 0% 100%;--foreground:222.2 84% 4.9%;--primary:221.2 83.2% 53.3%;--primary-foreground:210 40% 98%;--muted:210 40% 96%;--muted-foreground:215.4 16.3% 46.9%;--border:214.3 31.8% 91.4%}[data-theme="dark"]{--background:222.2 84% 4.9%;--foreground:210 40% 98%;--primary:217.2 91.2% 59.8%;--primary-foreground:222.2 84% 4.9%;--muted:217.2 32.6% 17.5%;--muted-foreground:215 20.2% 65.1%;--border:217.2 32.6% 17.5%}@media (max-width:768px){.hero-content{grid-template-columns:1fr;gap:2rem;text-align:center}.hero-title{font-size:2.5rem}.hero-image-container{height:300px;width:100%;max-width:400px;margin:0 auto}}
+    </style>
     
     <!-- Axeptio Cookie Consent -->
     <script>
@@ -63,14 +68,11 @@
     </script>
     <!-- End Axeptio Cookie Consent -->
     <meta name="google-adsense-account" content="ca-pub-8775206393701040">
-    <!-- Enhanced Font Loading with Preconnect for Performance -->
+    <!-- Preconnect hints for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Performance and DNS prefetch hints -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="//www.googletagmanager.com">
     <link rel="dns-prefetch" href="//www.google-analytics.com">
     <link rel="dns-prefetch" href="//j2ppv6ytda-dsn.algolia.net">
@@ -104,8 +106,8 @@
     </script>
     <!-- End Schema.org -->
     
-    <!-- TrustBox script -->
-    <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+    <!-- TrustBox script - deferred for performance -->
+    <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async defer></script>
     <!-- End TrustBox script -->
 
     <style>
@@ -236,27 +238,40 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- Load analytics after main app -->
+    <!-- Load analytics after main app with reduced priority -->
     <script>
-      window.addEventListener('load', function() {
-        // Google Analytics
+      // Defer analytics loading until after critical resources
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(function() {
+          loadAnalytics();
+        });
+      } else {
+        setTimeout(loadAnalytics, 2000);
+      }
+      
+      function loadAnalytics() {
+        // Google Analytics - deferred
         var gtag = document.createElement('script');
         gtag.async = true;
         gtag.src = 'https://www.googletagmanager.com/gtag/js?id=G-JCY70KNM0Y';
+        gtag.onload = function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtagFn(){dataLayer.push(arguments);}
+          window.gtag = gtagFn;
+          gtagFn('js', new Date());
+          gtagFn('config', 'G-JCY70KNM0Y');
+        };
         document.head.appendChild(gtag);
         
-        window.dataLayer = window.dataLayer || [];
-        function gtagFn(){dataLayer.push(arguments);}
-        gtagFn('js', new Date());
-        gtagFn('config', 'G-JCY70KNM0Y');
-        
-        // Google Tag Manager
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-PM37NL7K');
-      });
+        // Google Tag Manager - deferred
+        setTimeout(function() {
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-PM37NL7K');
+        }, 1000);
+      }
     </script>
     
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
