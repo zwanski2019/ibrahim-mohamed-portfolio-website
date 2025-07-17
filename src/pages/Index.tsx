@@ -122,9 +122,9 @@ const Index = () => {
   return (
     <>
       <SEOHelmet
-        title="IT Services Tunisia | Computer Repair Tunis | Zwanski Tech - Professional Tech Support"
-        description="Leading IT services Tunisia: computer repair, cybersecurity consulting, web development, and online tech education. Professional tech support in Tunis, Sfax, Sousse. 24/7 remote assistance available."
-        keywords="IT services Tunisia, computer repair Tunis, tech support Tunisia, cybersecurity education Tunisia, web development Tunisia, IT courses Tunisia, device repair Tunisia, IMEI unlocking Tunisia, tech consulting Tunisia, digital transformation Tunisia"
+        title="Zwanski Tech – IT Services, Web Development & Unlocking Solutions"
+        description="Zwanski Tech offers expert IT support, website design, computer repair, and iPhone/Android unlocking services. Trusted by individuals and businesses in Tunisia."
+        keywords="IT services Tunisia, web development, computer repair Tunis, unlocking solutions, cybersecurity, device repair, IMEI unlock, website design, tech support, iPhone unlock, Android unlock"
         ogImage="https://zwanski.org/og-image.png"
         canonical="https://zwanski.org/"
         structuredData={[organizationStructuredData, localBusinessStructuredData, websiteStructuredData, faqStructuredData]}

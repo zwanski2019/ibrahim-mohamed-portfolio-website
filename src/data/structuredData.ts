@@ -5,7 +5,7 @@ export const organizationStructuredData = {
   "alternateName": "ZWANSKI TECH",
   "url": "https://zwanski.org",
   "logo": "https://zwanski.org/favicon-professional.svg",
-  "description": "Leading IT services provider in Tunisia offering computer repair, web development, cybersecurity consulting, and digital education since 2019.",
+  "description": "Zwanski Tech offers expert IT support, website design, computer repair, and iPhone/Android unlocking services. Trusted by individuals and businesses in Tunisia since 2019.",
   "foundingDate": "2019",
   "founder": {
     "@type": "Person",
@@ -80,8 +80,8 @@ export const organizationStructuredData = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Computer Repair Tunisia",
-          "description": "Professional laptop and desktop repair services in Tunis, Sfax, Sousse with 24/7 support",
+          "name": "Computer Repair & IT Support",
+          "description": "Expert computer repair, laptop fixing, and technical support services in Tunisia with unlocking solutions",
           "provider": {
             "@type": "Organization",
             "name": "Zwanski Tech"
@@ -93,8 +93,8 @@ export const organizationStructuredData = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service", 
-          "name": "Web Development Tunisia",
-          "description": "Modern responsive websites using React, Node.js, and full-stack development solutions",
+          "name": "Website Design & Development",
+          "description": "Professional website design, custom web development, and mobile-responsive solutions for businesses",
           "provider": {
             "@type": "Organization",
             "name": "Zwanski Tech"
@@ -106,8 +106,8 @@ export const organizationStructuredData = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Cybersecurity Education Tunisia",
-          "description": "Cybersecurity consulting, penetration testing, security audits and training programs",
+          "name": "Device Unlocking Solutions",
+          "description": "iPhone and Android unlocking services, IMEI unlocking, and mobile device repair solutions",
           "provider": {
             "@type": "Organization",
             "name": "Zwanski Tech"
@@ -119,8 +119,8 @@ export const organizationStructuredData = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "IT Courses Tunisia",
-          "description": "Online programming courses, digital skills training through Zwanski Academy",
+          "name": "Cybersecurity & IT Training",
+          "description": "Professional cybersecurity consulting, IT training courses, and digital education services",
           "provider": {
             "@type": "Organization",
             "name": "Zwanski Tech"
@@ -177,7 +177,7 @@ export const localBusinessStructuredData = {
   "@type": "LocalBusiness",
   "name": "Zwanski Tech",
   "image": "https://zwanski.org/og-image.png",
-  "description": "Leading IT services provider in Tunisia offering web development, cybersecurity, and digital education",
+  "description": "Expert IT support, website design, computer repair, and iPhone/Android unlocking services. Trusted by individuals and businesses in Tunisia.",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Tunis",
@@ -207,8 +207,9 @@ export const localBusinessStructuredData = {
 export const websiteStructuredData = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "Zwanski Tech",
+  "name": "Zwanski Tech – IT Services, Web Development & Unlocking Solutions",
   "url": "https://zwanski.org",
+  "description": "Zwanski Tech offers expert IT support, website design, computer repair, and iPhone/Android unlocking services. Trusted by individuals and businesses in Tunisia.",
   "potentialAction": {
     "@type": "SearchAction",
     "target": {

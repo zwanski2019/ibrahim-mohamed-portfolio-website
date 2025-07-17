@@ -11,9 +11,9 @@ interface SEOHelmetProps {
 }
 
 export const SEOHelmet = ({
-  title = "Zwanski Tech - Professional Web Development & IT Support Services",
-  description = "Zwanski Tech provides professional web development, IT support, cybersecurity, and digital education services in Tunisia. Expert solutions for businesses and individuals.",
-  keywords = "web development, IT support, cybersecurity, Tunisia, Tunis, web design, digital services, IMEI unlock, phone repair, computer repair, freelance development, online education",
+  title = "Zwanski Tech – IT Services, Web Development & Unlocking Solutions",
+  description = "Zwanski Tech offers expert IT support, website design, computer repair, and iPhone/Android unlocking services. Trusted by individuals and businesses in Tunisia.",
+  keywords = "IT services Tunisia, web development, computer repair Tunis, unlocking solutions, cybersecurity, device repair, IMEI unlock, website design, tech support, iPhone unlock, Android unlock",
   ogImage = "https://zwanski.org/og-image.png",
   canonical,
   type = "website",
