@@ -24,18 +24,55 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  build: {
+build: {
+    target: 'esnext',
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: mode === 'production',
+        drop_debugger: true,
+      },
+    },
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          router: ['react-router-dom'],
-          ui: ['@radix-ui/react-accordion', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react-vendor';
+            }
+            if (id.includes('react-router')) {
+              return 'router';
+            }
+            if (id.includes('@radix-ui')) {
+              return 'ui-components';
+            }
+            if (id.includes('lucide-react')) {
+              return 'icons';
+            }
+            if (id.includes('@tanstack') || id.includes('algoliasearch')) {
+              return 'external-apis';
+            }
+            if (id.includes('three') || id.includes('@react-three')) {
+              return '3d-libs';
+            }
+            return 'vendor';
+          }
+          if (id.includes('src/components/3d/')) {
+            return '3d-components';
+          }
+          if (id.includes('src/pages/admin/')) {
+            return 'admin';
+          }
         },
+        chunkFileNames: 'assets/[name].[hash].js',
+        entryFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash].[ext]',
       },
     },
     sourcemap: mode === 'development',
-    cssMinify: true,
+    cssMinify: 'lightningcss',
+    reportCompressedSize: false,
+    chunkSizeWarningLimit: 1000,
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],

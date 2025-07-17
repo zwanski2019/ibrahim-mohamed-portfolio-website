@@ -5,6 +5,7 @@
 @import './styles/components.css';
 @import './styles/utilities.css';
 @import './styles/axeptio.css';
+@import './styles/performance.css';
 
 /* Import Tailwind CSS directives */
 @tailwind base;

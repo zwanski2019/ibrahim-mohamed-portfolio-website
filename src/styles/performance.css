@@ -1,0 +1,116 @@
+/* Performance optimizations */
+
+/* Improve font loading */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+}
+
+/* Optimize animations for performance */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-fade-in,
+  .animate-scale-in,
+  .animate-slide-in-right {
+    will-change: transform, opacity;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Optimize scrolling performance */
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+/* Contain layout shifts */
+.contain-layout {
+  contain: layout style paint;
+}
+
+/* Optimize images */
+img {
+  content-visibility: auto;
+}
+
+/* Lazy loading skeleton */
+.loading-skeleton {
+  background: linear-gradient(90deg, hsl(var(--muted)) 25%, hsl(var(--muted-foreground) / 0.1) 50%, hsl(var(--muted)) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Critical rendering optimizations */
+.critical-content {
+  content-visibility: visible;
+}
+
+.non-critical-content {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+/* Optimize composite layers */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Memory-efficient animations */
+.efficient-animation {
+  animation-fill-mode: both;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize third-party content */
+.third-party-content {
+  content-visibility: auto;
+  contain: layout style paint;
+}
+
+/* Critical CSS inlining helper */
+.above-fold {
+  content-visibility: visible;
+}
+
+.below-fold {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 400px;
+}
+
+/* Performance monitoring helpers */
+.performance-mark {
+  position: relative;
+}
+
+.performance-mark::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}

@@ -199,12 +199,18 @@ const Hero = () => {
             {/* Right Column - Hero Image with Trust Signals */}
             <div className={`relative h-[500px] lg:h-[600px] transition-all duration-500 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               <div className="absolute inset-0 bg-gradient-to-br from-secondary/30 to-secondary/10 rounded-2xl border border-border overflow-hidden">
-                <img 
-                  src={heroImage}
-                  alt="Professional IT services in Tunisia - Computer repair, cybersecurity, web development"
-                  className="w-full h-full object-cover"
-                  loading="eager"
-                />
+                <picture>
+                  <source srcSet={heroImage.replace('.jpg', '.webp')} type="image/webp" />
+                  <img 
+                    src={heroImage}
+                    alt="Professional IT services in Tunisia - Computer repair, cybersecurity, web development"
+                    className="w-full h-full object-cover"
+                    loading="eager"
+                    fetchPriority="high"
+                    width="600"
+                    height="500"
+                  />
+                </picture>
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
               </div>
               

@@ -11,11 +11,11 @@ interface SEOHelmetProps {
 }
 
 export const SEOHelmet = ({
-  title = "Zwanski Tech – IT Services, Web Development & Unlocking Solutions",
-  description = "Zwanski Tech offers expert IT support, website design, computer repair, and iPhone/Android unlocking services. Trusted by individuals and businesses in Tunisia.",
-  keywords = "IT services Tunisia, web development, computer repair Tunis, unlocking solutions, cybersecurity, device repair, IMEI unlock, website design, tech support, iPhone unlock, Android unlock",
+  title = "Zwanski Tech - Professional IT Services & Digital Education Platform in Tunisia",
+  description = "Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals.",
+  keywords = "IT services Tunisia, computer repair Tunisia, cybersecurity Tunisia, web development Tunisia, digital education, Mohamed Ibrahim Zwanski",
   ogImage = "https://zwanski.org/og-image.png",
-  canonical,
+  canonical = typeof window !== 'undefined' ? window.location.href : "https://zwanski.org/",
   type = "website",
   structuredData
 }: SEOHelmetProps) => {
@@ -27,13 +27,14 @@ export const SEOHelmet = ({
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
-      <meta name="author" content="Zwanski Tech" />
-      <meta name="robots" content="index, follow" />
+      <meta name="author" content="Mohamed Ibrahim Zwanski" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
       <meta name="language" content="en" />
       <meta name="revisit-after" content="7 days" />
       
       {/* Canonical URL */}
-      <link rel="canonical" href={currentUrl} />
+      <link rel="canonical" href={canonical} />
       
       {/* Open Graph Meta Tags */}
       <meta property="og:type" content={type} />
