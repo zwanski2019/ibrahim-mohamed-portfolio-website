@@ -34,65 +34,20 @@ export default defineConfig(({ mode }) => ({
       },
     },
     rollupOptions: {
-      external: (id) => {
-        // Handle problematic three-stdlib dependencies
-        if (id.includes('three-stdlib/libs/lottie')) {
-          return true;
-        }
-        return false;
-      },
-      onwarn: (warning, defaultHandler) => {
-        // Suppress PURE annotation warnings from react-helmet-async
-        if (warning.code === 'INVALID_ANNOTATION' && warning.message?.includes('PURE')) {
-          return;
-        }
-        // Suppress eval warnings from three-stdlib
-        if (warning.code === 'EVAL' && warning.id?.includes('three-stdlib')) {
-          return;
-        }
-        // Use default handling for other warnings
-        defaultHandler(warning);
-      },
       output: {
-        manualChunks: (id) => {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'react-vendor';
-            }
-            if (id.includes('react-router')) {
-              return 'router';
-            }
-            if (id.includes('@radix-ui')) {
-              return 'ui-components';
-            }
-            if (id.includes('lucide-react')) {
-              return 'icons';
-            }
-            if (id.includes('@tanstack') || id.includes('algoliasearch')) {
-              return 'external-apis';
-            }
-            if (id.includes('three') || id.includes('@react-three')) {
-              return '3d-libs';
-            }
-            return 'vendor';
-          }
-          if (id.includes('src/components/3d/')) {
-            return '3d-components';
-          }
-          if (id.includes('src/pages/admin/')) {
-            return 'admin';
-          }
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'router': ['react-router-dom'],
+          'ui': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-toast'],
         },
-        chunkFileNames: 'assets/[name].[hash].js',
-        entryFileNames: 'assets/[name].[hash].js',
-        assetFileNames: 'assets/[name].[hash].[ext]',
       },
     },
-    sourcemap: mode === 'development',
+    sourcemap: false,
     cssMinify: true,
     reportCompressedSize: false,
     chunkSizeWarningLimit: 1000,
   },
+  base: './',
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
   },
