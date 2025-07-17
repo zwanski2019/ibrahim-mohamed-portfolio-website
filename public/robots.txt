@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 
+# Algolia-Crawler-Verif: AFF487B5095E3753
+
 # Sitemap
 Sitemap: https://zwanski.org/sitemap.xml
 
