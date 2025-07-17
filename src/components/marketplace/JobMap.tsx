@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -35,20 +35,48 @@ interface JobMapProps {
   onJobSelect?: (job: JobPost) => void;
 }
 
-export const JobMap = ({ jobs, onJobSelect }: JobMapProps) => {
-  const jobsWithCoordinates = jobs.filter(job => job.latitude && job.longitude);
-  const hasJobs = jobs.length > 0;
+export const JobMap = ({ jobs = [], onJobSelect }: JobMapProps) => {
+  // Ensure jobs is always an array and filter jobs with valid coordinates
+  const jobsWithCoordinates = useMemo(() => {
+    if (!Array.isArray(jobs)) return [];
+    return jobs.filter(job => 
+      job && 
+      typeof job.latitude === 'number' && 
+      typeof job.longitude === 'number' &&
+      !isNaN(job.latitude) && 
+      !isNaN(job.longitude)
+    );
+  }, [jobs]);
 
-  // Calculate center point from all job locations or use Tunisia center as fallback
-  let centerLat = TUNISIA_CENTER.latitude;
-  let centerLng = TUNISIA_CENTER.longitude;
-  let zoomLevel = 6; // Country view
+  const hasJobs = Array.isArray(jobs) && jobs.length > 0;
 
-  if (jobsWithCoordinates.length > 0) {
-    centerLat = jobsWithCoordinates.reduce((sum, job) => sum + (job.latitude || 0), 0) / jobsWithCoordinates.length;
-    centerLng = jobsWithCoordinates.reduce((sum, job) => sum + (job.longitude || 0), 0) / jobsWithCoordinates.length;
-    zoomLevel = 10; // City view
-  }
+  // Calculate center point with error handling
+  const mapConfig = useMemo(() => {
+    let centerLat = TUNISIA_CENTER.latitude;
+    let centerLng = TUNISIA_CENTER.longitude;
+    let zoomLevel = 6; // Country view
+
+    if (jobsWithCoordinates.length > 0) {
+      try {
+        centerLat = jobsWithCoordinates.reduce((sum, job) => sum + job.latitude!, 0) / jobsWithCoordinates.length;
+        centerLng = jobsWithCoordinates.reduce((sum, job) => sum + job.longitude!, 0) / jobsWithCoordinates.length;
+        
+        // Validate calculated center
+        if (isNaN(centerLat) || isNaN(centerLng)) {
+          centerLat = TUNISIA_CENTER.latitude;
+          centerLng = TUNISIA_CENTER.longitude;
+        } else {
+          zoomLevel = 10; // City view
+        }
+      } catch (error) {
+        console.error('Error calculating map center:', error);
+        centerLat = TUNISIA_CENTER.latitude;
+        centerLng = TUNISIA_CENTER.longitude;
+      }
+    }
+
+    return { centerLat, centerLng, zoomLevel };
+  }, [jobsWithCoordinates]);
 
   const formatSalary = (job: JobPost) => {
     if (!job.salary_min && !job.salary_max) return null;
@@ -57,6 +85,20 @@ export const JobMap = ({ jobs, onJobSelect }: JobMapProps) => {
     const range = min && max ? `${min} - ${max}` : min || max;
     return `${range} / ${job.salary_type}`;
   };
+
+  // Don't render if we don't have valid config
+  if (!mapConfig.centerLat || !mapConfig.centerLng || isNaN(mapConfig.centerLat) || isNaN(mapConfig.centerLng)) {
+    return (
+      <Card className="h-96 flex items-center justify-center">
+        <CardContent>
+          <div className="text-center text-muted-foreground">
+            <MapPin className="h-12 w-12 mx-auto mb-2" />
+            <p>Map temporarily unavailable</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className="h-96 relative">
@@ -76,9 +118,11 @@ export const JobMap = ({ jobs, onJobSelect }: JobMapProps) => {
           </div>
         </div>
       )}
+      
       <MapContainer
-        center={[centerLat, centerLng]}
-        zoom={zoomLevel}
+        key={`${mapConfig.centerLat}-${mapConfig.centerLng}-${mapConfig.zoomLevel}`}
+        center={[mapConfig.centerLat, mapConfig.centerLng]}
+        zoom={mapConfig.zoomLevel}
         style={{ height: '100%', width: '100%' }}
         className="rounded-lg"
       >
