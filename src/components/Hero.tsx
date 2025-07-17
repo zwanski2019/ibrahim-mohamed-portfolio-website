@@ -4,8 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Play, Shield, Globe, Zap, Users, MessageSquare, Star, Sparkles, Monitor, Award, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/context/LanguageContext";
-// Import the hero image that exists in the public folder
-const heroImage = "/hero-it-services.jpg";
+import heroImage from "@/assets/hero-it-services-optimized.webp";
 
 const Hero = () => {
   const { t } = useLanguage();
@@ -211,22 +210,18 @@ const Hero = () => {
             {/* Right Column - Hero Image with Trust Signals */}
             <div className={`relative h-[500px] lg:h-[600px] transition-all duration-500 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               <div className="absolute inset-0 bg-gradient-to-br from-secondary/30 to-secondary/10 rounded-2xl border border-border overflow-hidden">
-                <picture>
-                  <source srcSet="/hero-it-services-optimized.webp" type="image/webp" />
-                  <img 
-                    src={heroImage}
-                    alt="Professional IT services in Tunisia - Computer repair, cybersecurity, web development"
-                    className="w-full h-full object-cover"
-                    loading="eager"
-                    fetchPriority="high"
-                    width="600"
-                    height="500"
-                    onError={(e) => {
-                      // Fallback to a placeholder if main image fails
-                      e.currentTarget.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDYwMCA1MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiBmaWxsPSIjZjNmNGY2Ii8+CjxjaXJjbGUgY3g9IjMwMCIgY3k9IjI1MCIgcj0iNTAiIGZpbGw9IiNlMWU1ZTkiLz4KPHN2Zz4K";
-                    }}
-                  />
-                </picture>
+                <img 
+                  src={heroImage}
+                  alt="Professional IT services in Tunisia - Computer repair, cybersecurity, web development"
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                  fetchPriority="high"
+                  width="600"
+                  height="500"
+                  onError={() => {
+                    // Silently handle image load errors
+                  }}
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
               </div>
               

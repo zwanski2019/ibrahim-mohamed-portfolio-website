@@ -71,7 +71,6 @@
     "terser": "^5.43.1",
     "three": "^0.170.0",
     "vaul": "^0.9.3",
-    "web-vitals": "^5.0.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {
