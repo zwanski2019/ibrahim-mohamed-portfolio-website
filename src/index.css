@@ -13,23 +13,4 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Accessibility improvements for better color contrast */
-@layer base {
-  .text-muted-foreground {
-    @apply text-slate-600 dark:text-slate-300;
-  }
-  
-  /* Ensure adequate touch targets */
-  .touch-target {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  /* High contrast for better accessibility */
-  .high-contrast {
-    color: hsl(var(--foreground));
-    background-color: hsl(var(--background));
-  }
-}
-
 

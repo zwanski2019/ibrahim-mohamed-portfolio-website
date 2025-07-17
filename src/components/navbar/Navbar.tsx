@@ -34,7 +34,7 @@ export default function Navbar() {
         <ThemeToggle />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="touch-target" aria-label="User menu">
+            <Button variant="ghost" size="sm">
               {isAuthenticated ? (
                 <Avatar>
                   <AvatarImage src={user?.user_metadata?.avatar_url} />

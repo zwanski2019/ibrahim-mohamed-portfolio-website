@@ -43,8 +43,10 @@ export default defineConfig(({ mode }) => ({
         manualChunks: {
           'react-vendor': ['react', 'react-dom'],
           'router': ['react-router-dom'],
-          'ui-radix': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-toast', '@radix-ui/react-select', '@radix-ui/react-popover', '@radix-ui/react-navigation-menu', '@radix-ui/react-tooltip'],
+          'ui': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-toast', '@radix-ui/react-select', '@radix-ui/react-popover', '@radix-ui/react-navigation-menu'],
           'utils': ['clsx', 'class-variance-authority', 'tailwind-merge'],
+          'forms': ['react-hook-form', '@hookform/resolvers', 'zod'],
+          'query': ['@tanstack/react-query'],
           'supabase': ['@supabase/supabase-js'],
         },
       },
@@ -57,6 +59,5 @@ export default defineConfig(({ mode }) => ({
   base: './',
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
-    force: true,
   },
 }));

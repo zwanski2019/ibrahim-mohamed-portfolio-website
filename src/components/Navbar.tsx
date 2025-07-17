@@ -153,27 +153,25 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
-            {mainNavItems
-              .filter((item) => item.label !== "Home") // Hide Home button on desktop
-              .map((item) => {
-                const Icon = item.icon;
-                const showItem = !(item as any).authRequired || isAuthenticated;
-                
-                if (!showItem) return null;
-                
-                return (
-                  <Button
-                    key={item.path}
-                    variant={isActivePath(item.path) ? "default" : "ghost"}
-                    size="sm"
-                    onClick={() => navigate(item.path)}
-                    className="flex items-center gap-2"
-                  >
-                    <Icon className="h-4 w-4" />
-                    {item.label}
-                  </Button>
-                );
-              })}
+            {mainNavItems.map((item) => {
+              const Icon = item.icon;
+              const showItem = !(item as any).authRequired || isAuthenticated;
+              
+              if (!showItem) return null;
+              
+              return (
+                <Button
+                  key={item.path}
+                  variant={isActivePath(item.path) ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => navigate(item.path)}
+                  className="flex items-center gap-2"
+                >
+                  <Icon className="h-4 w-4" />
+                  {item.label}
+                </Button>
+              );
+            })}
           </div>
 
           {/* Right Side */}
@@ -193,7 +191,7 @@ const Navbar = () => {
             {isAuthenticated && user ? (
               <div className="flex items-center space-x-3">
                 {/* Notifications */}
-                <Button variant="ghost" size="sm" className="relative touch-target" aria-label="Notifications">
+                <Button variant="ghost" size="sm" className="relative">
                   <Bell className="h-4 w-4" />
                   {unreadNotifications > 0 && (
                     <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs">

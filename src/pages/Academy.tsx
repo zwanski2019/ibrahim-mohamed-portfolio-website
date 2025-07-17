@@ -101,13 +101,10 @@ const Academy = () => {
                 </div>
                 
                 <div className="flex flex-wrap gap-4 justify-center">
-                  <label htmlFor="difficulty-filter" className="sr-only">Filter by difficulty level</label>
                   <select
-                    id="difficulty-filter"
-                    aria-label="Filter courses by difficulty level"
                     value={difficulty}
                     onChange={(e) => setDifficulty(e.target.value)}
-                    className="px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    className="px-4 py-2 rounded-lg border border-border bg-background"
                   >
                     <option value="all">{t("academy.allLevels")}</option>
                     <option value="beginner">{t("academy.beginner")}</option>

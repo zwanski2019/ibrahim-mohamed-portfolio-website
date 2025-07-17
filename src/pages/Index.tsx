@@ -23,7 +23,6 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Link } from "react-router-dom";
 
 const Index = () => {
-  console.log("Landing page loaded");
   const { user } = useAuth();
   const { t } = useLanguage();
 

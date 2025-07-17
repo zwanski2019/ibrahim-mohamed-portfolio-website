@@ -17,62 +17,46 @@ const Hero = () => {
 
   const [isVisible, setIsVisible] = useState(false);
 
-  // Optimized counter animation with requestAnimationFrame to prevent forced reflows
+  // Optimized animated counters with CSS animations
   const animateCounters = useCallback(() => {
-    const duration = 2000;
-    const targetValues = { devices: 300, satisfaction: 98, experience: 5, security: 65 };
-    const startTime = performance.now();
+    const duration = 2000; // Reduced duration
+    const steps = 60; // Fewer steps for better performance
+    const stepDuration = duration / steps;
 
-    const animate = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
+    let step = 0;
+    const timer = setInterval(() => {
+      step++;
+      const progress = step / steps;
       
-      // Use easeOutQuart for smooth animation
-      const ease = 1 - Math.pow(1 - progress, 3);
+      // Simplified easing
+      const ease = 1 - Math.pow(1 - progress, 2);
       
-      // Batch DOM updates to prevent layout thrashing
       setCounters({
-        devices: Math.floor(targetValues.devices * ease),
-        satisfaction: Math.floor(targetValues.satisfaction * ease),
-        experience: Math.floor(targetValues.experience * ease),
-        security: Math.floor(targetValues.security * ease)
+        devices: Math.floor(300 * ease),
+        satisfaction: Math.floor(98 * ease),
+        experience: Math.floor(5 * ease),
+        security: Math.floor(65 * ease)
       });
 
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      } else {
-        // Set final values to ensure precision
-        setCounters(targetValues);
+      if (step >= steps) {
+        clearInterval(timer);
+        setCounters({ devices: 300, satisfaction: 98, experience: 5, security: 65 });
       }
-    };
+    }, stepDuration);
 
-    requestAnimationFrame(animate);
+    return timer;
   }, []);
 
   useEffect(() => {
-    // Use Intersection Observer for better performance
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !isVisible) {
-          setIsVisible(true);
-          // Delay animation start to prevent layout issues
-          requestAnimationFrame(() => {
-            setTimeout(animateCounters, 300);
-          });
-        }
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -10% 0px' }
-    );
-
-    const heroElement = document.querySelector('.hero-container');
-    if (heroElement) {
-      observer.observe(heroElement);
-    }
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [animateCounters, isVisible]);
+    // Trigger visibility and animation
+    const timeout = setTimeout(() => {
+      setIsVisible(true);
+      const timer = animateCounters();
+      return () => clearInterval(timer);
+    }, 300);
+    
+    return () => clearTimeout(timeout);
+  }, [animateCounters]);
 
   const stats = [
     { 
@@ -166,9 +150,9 @@ const Hero = () => {
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground leading-tight">
                   Professional IT Services & Digital Education Platform in Tunisia
                 </h1>
-                <p className="text-xl md:text-2xl text-muted-foreground mb-8 font-medium">
+                <h2 className="text-xl md:text-2xl text-muted-foreground mb-8 font-medium">
                   From device repair to cybersecurity education — empowering your digital journey
-                </p>
+                </h2>
               </div>
 
               {/* Clean Description */}
@@ -244,12 +228,7 @@ const Hero = () => {
                   </div>
                   <div className="mt-3 text-center">
                     <Link to="/computer-model">
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        className="text-xs min-h-[44px] min-w-[44px]"
-                        aria-label="View 3D Computer Model"
-                      >
+                      <Button variant="outline" size="sm" className="text-xs">
                         <Monitor className="mr-1 h-3 w-3" />
                         View 3D Model
                       </Button>
