@@ -119,13 +119,10 @@ function App() {
     setShowPreloader(false);
   };
 
-  const LoadingSpinner = () => (
-    <div className="min-h-screen flex items-center justify-center bg-background" role="status" aria-label="Loading">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-        <p className="text-sm text-muted-foreground">Loading Zwanski Tech...</p>
-        <span className="sr-only">Loading application</span>
-      </div>
+  const MinimalLoader = () => (
+    <div className="flex items-center justify-center p-4" role="status" aria-label="Loading page">
+      <div className="animate-spin rounded-full h-6 w-6 border-2 border-primary border-t-transparent"></div>
+      <span className="sr-only">Loading page content</span>
     </div>
   );
 
@@ -145,7 +142,7 @@ function App() {
                         <title>Zwanski Tech - Professional IT Services & Digital Education Platform</title>
                         <meta name="description" content="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals." />
                       </Helmet>
-                      <Suspense fallback={<LoadingSpinner />}>
+                      <Suspense fallback={<MinimalLoader />}>
                         <div className="app-content-ready homepage-content">
                           <ErrorBoundary fallback={
                             <div className="min-h-screen flex items-center justify-center bg-background">
