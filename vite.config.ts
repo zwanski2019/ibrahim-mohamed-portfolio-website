@@ -97,6 +97,7 @@ export default defineConfig(({ mode }) => ({
     assetsInlineLimit: 4096, // Inline small assets
   },
   base: '/',
+  publicDir: 'public',
   optimizeDeps: {
     include: [
       'react', 
