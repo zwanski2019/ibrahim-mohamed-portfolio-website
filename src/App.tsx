@@ -80,10 +80,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import ChatWidget from "./components/ChatWidget";
 import { AccessibilityEnhancer } from "./components/AccessibilityEnhancer";
-import { usePerformanceMonitoring, useMemoryMonitoring } from "./hooks/usePerformanceMonitoring";
-import Preloader from "./components/Preloader";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 
 // Styles
 import "./App.css";
@@ -92,36 +89,9 @@ import "./styles/utilities.css";
 import "./styles/base.css";
 import "./styles/animations.css";
 
-const queryClient = new QueryClient(); // Force refresh for Tools import
+const queryClient = new QueryClient();
 
 function App() {
-  // Performance monitoring hooks with error handling
-  try {
-    usePerformanceMonitoring();
-    useMemoryMonitoring();
-  } catch (error) {
-    console.debug('Performance monitoring hook error:', error);
-  }
-
-  // Preloader state for home page only
-  const [showPreloader, setShowPreloader] = useState(false);
-  const [preloaderCompleted, setPreloaderCompleted] = useState(false);
-
-  useEffect(() => {
-    // Show preloader only on initial load to home page
-    const isHomePage = window.location.pathname === '/';
-    const hasSeenPreloader = sessionStorage.getItem('preloader-shown');
-    
-    if (isHomePage && !hasSeenPreloader) {
-      setShowPreloader(true);
-      sessionStorage.setItem('preloader-shown', 'true');
-    }
-  }, []);
-
-  const handlePreloaderComplete = () => {
-    setPreloaderCompleted(true);
-    setShowPreloader(false);
-  };
 
   const MinimalLoader = () => (
     <div className="flex items-center justify-center p-4" role="status" aria-label="Loading page">
@@ -140,7 +110,6 @@ function App() {
                 <AuthProvider>
                   <BrowserRouter>
                     <ErrorBoundary>
-                      {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
                       <ScrollToTop />
                       <Helmet>
                         <title>Zwanski Tech - Professional IT Services & Digital Education Platform</title>

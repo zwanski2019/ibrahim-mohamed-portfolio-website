@@ -26,108 +26,78 @@ const Index = () => {
   const { user } = useAuth();
   const { t } = useLanguage();
 
-  // Fetch courses for the home page with error handling and longer cache
-  const { data: courses, isLoading } = useQuery({
+  // Simplified featured courses query
+  const { 
+    data: featuredCourses = [], 
+    isLoading: coursesLoading 
+  } = useQuery({
     queryKey: ['featured-courses'],
     queryFn: async () => {
-      try {
-        const { data, error } = await supabase
-          .from('courses')
-          .select(`
-            *,
-            categories:category_id(name, icon),
-            course_enrollments(id)
-          `)
-          .eq('is_active', true)
-          .eq('is_featured', true)
-          .order('enrollment_count', { ascending: false })
-          .limit(6);
-
-        if (error) {
-          console.warn('Failed to load courses:', error);
-          return [];
-        }
-        return data || [];
-      } catch (error) {
-        console.warn('Failed to load courses:', error);
-        return [];
-      }
+      const { data, error } = await supabase
+        .from('courses')
+        .select(`
+          *,
+          categories:category_id(name, icon),
+          course_enrollments(id)
+        `)
+        .eq('is_featured', true)
+        .eq('is_active', true)
+        .limit(6);
+      
+      if (error) throw error;
+      return data || [];
     },
-    staleTime: 15 * 60 * 1000, // 15 minutes - longer cache
-    gcTime: 30 * 60 * 1000, // 30 minutes
+    staleTime: 1000 * 60 * 10,
     retry: 1,
-    refetchOnWindowFocus: false
   });
 
-  // Fetch user enrollments if logged in with error handling and longer cache
-  const { data: userEnrollments } = useQuery({
+  // Simplified user enrollments query
+  const { 
+    data: userEnrollments = [], 
+    isLoading: enrollmentsLoading 
+  } = useQuery({
     queryKey: ['user-enrollments', user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
       
-      try {
-        const { data, error } = await supabase
-          .from('course_enrollments')
-          .select(`
-            *,
-            courses:course_id(*)
-          `)
-          .eq('user_id', user.id);
-
-        if (error) {
-          console.warn('Failed to load user enrollments:', error);
-          return [];
-        }
-        return data || [];
-      } catch (error) {
-        console.warn('Failed to load user enrollments:', error);
-        return [];
-      }
+      const { data, error } = await supabase
+        .from('course_enrollments')
+        .select(`
+          *,
+          courses (id, title, slug, thumbnail_url, difficulty, duration_hours)
+        `)
+        .eq('user_id', user.id)
+        .limit(5);
+      
+      if (error) throw error;
+      return data || [];
     },
     enabled: !!user?.id,
-    staleTime: 10 * 60 * 1000, // 10 minutes - longer cache
-    gcTime: 20 * 60 * 1000, // 20 minutes
+    staleTime: 1000 * 60 * 5,
     retry: 1,
-    refetchOnWindowFocus: false
   });
 
-  // Minimal animation setup for better performance
+  // Basic animation setup
   useEffect(() => {
-    // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    if (prefersReducedMotion) {
-      // Make everything visible immediately for accessibility
-      const elements = document.querySelectorAll('.animate-on-scroll');
-      elements.forEach(element => {
-        (element as HTMLElement).style.opacity = '1';
-        (element as HTMLElement).style.transform = 'none';
-      });
-      return;
-    }
+    if (prefersReducedMotion) return;
 
-    // Simplified intersection observer for progressive loading
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-fade-in');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { 
-      threshold: 0.1,
-      rootMargin: '20px'
-    });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in-up');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
 
-    // Immediate visibility for better perceived performance
-    const elements = document.querySelectorAll('.animate-on-scroll');
-    elements.forEach((element) => {
-      (element as HTMLElement).style.opacity = '1';
-      observer.observe(element);
-    });
+    const sections = document.querySelectorAll('section');
+    sections.forEach((section) => observer.observe(section));
 
     return () => observer.disconnect();
-  }, [])
+  }, []);
 
   const structuredDataItems = [
     organizationStructuredData,
@@ -212,8 +182,8 @@ const Index = () => {
             <div className="mb-12">
               <h3 className="text-2xl font-bold mb-8 text-center">Featured Courses</h3>
               <CourseGrid 
-                courses={courses || []} 
-                isLoading={isLoading}
+                courses={featuredCourses || []} 
+                isLoading={coursesLoading}
                 userEnrollments={userEnrollments?.map(enrollment => enrollment.course_id) || []}
               />
             </div>
