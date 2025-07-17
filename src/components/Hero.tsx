@@ -166,9 +166,9 @@ const Hero = () => {
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground leading-tight">
                   Professional IT Services & Digital Education Platform in Tunisia
                 </h1>
-                <h2 className="text-xl md:text-2xl text-muted-foreground mb-8 font-medium">
+                <p className="text-xl md:text-2xl text-muted-foreground mb-8 font-medium">
                   From device repair to cybersecurity education — empowering your digital journey
-                </h2>
+                </p>
               </div>
 
               {/* Clean Description */}
@@ -244,7 +244,12 @@ const Hero = () => {
                   </div>
                   <div className="mt-3 text-center">
                     <Link to="/computer-model">
-                      <Button variant="outline" size="sm" className="text-xs">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="text-xs min-h-[44px] min-w-[44px]"
+                        aria-label="View 3D Computer Model"
+                      >
                         <Monitor className="mr-1 h-3 w-3" />
                         View 3D Model
                       </Button>

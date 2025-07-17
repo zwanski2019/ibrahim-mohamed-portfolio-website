@@ -191,7 +191,7 @@ const Navbar = () => {
             {isAuthenticated && user ? (
               <div className="flex items-center space-x-3">
                 {/* Notifications */}
-                <Button variant="ghost" size="sm" className="relative">
+                <Button variant="ghost" size="sm" className="relative touch-target" aria-label="Notifications">
                   <Bell className="h-4 w-4" />
                   {unreadNotifications > 0 && (
                     <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs">

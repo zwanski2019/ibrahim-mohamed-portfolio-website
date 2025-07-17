@@ -207,8 +207,13 @@ const EnhancedContact = () => {
                     </div>
                   </div>
                   
+                  <label htmlFor="service-select" className="block text-sm font-medium mb-2 text-foreground">
+                    {currentContent.form.service}
+                  </label>
                   <select
-                    className="w-full p-3 bg-background border border-border rounded-md focus:border-primary text-foreground text-sm sm:text-base"
+                    id="service-select"
+                    aria-label={currentContent.form.service}
+                    className="w-full p-3 bg-background border border-border rounded-md focus:border-primary text-foreground text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary/50"
                     value={formData.service}
                     onChange={(e) => setFormData({...formData, service: e.target.value})}
                   >
