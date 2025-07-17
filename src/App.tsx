@@ -142,80 +142,78 @@ function App() {
                         <title>Zwanski Tech - Professional IT Services & Digital Education Platform</title>
                         <meta name="description" content="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals." />
                       </Helmet>
-                      <Suspense fallback={<MinimalLoader />}>
-                        <div className="app-content-ready homepage-content">
+                      <div className="app-content-ready homepage-content">
+                        <ErrorBoundary fallback={
+                          <div className="min-h-screen flex items-center justify-center bg-background">
+                            <div className="text-center p-8">
+                              <h1 className="text-2xl font-bold mb-4">Zwanski Tech</h1>
+                              <p className="text-muted-foreground mb-4">Professional IT Services & Digital Education</p>
+                              <button 
+                                onClick={() => window.location.reload()} 
+                                className="px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90"
+                              >
+                                Retry
+                              </button>
+                            </div>
+                          </div>
+                        }>
+                          <Routes>
+                        <Route path="/" element={
                           <ErrorBoundary fallback={
                             <div className="min-h-screen flex items-center justify-center bg-background">
                               <div className="text-center p-8">
-                                <h1 className="text-2xl font-bold mb-4">Zwanski Tech</h1>
-                                <p className="text-muted-foreground mb-4">Professional IT Services & Digital Education</p>
-                                <button 
-                                  onClick={() => window.location.reload()} 
-                                  className="px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90"
-                                >
-                                  Retry
-                                </button>
+                                <h1 className="text-2xl font-bold mb-4">Welcome to Zwanski Tech</h1>
+                                <p className="text-muted-foreground">Professional IT Services & Digital Education Platform</p>
                               </div>
                             </div>
                           }>
-                            <Routes>
-                          <Route path="/" element={
-                            <ErrorBoundary fallback={
-                              <div className="min-h-screen flex items-center justify-center bg-background">
-                                <div className="text-center p-8">
-                                  <h1 className="text-2xl font-bold mb-4">Welcome to Zwanski Tech</h1>
-                                  <p className="text-muted-foreground">Professional IT Services & Digital Education Platform</p>
-                                </div>
-                              </div>
-                            }>
-                              <Index />
-                            </ErrorBoundary>
-                          } />
-                          <Route path="/services" element={<Services />} />
-                          <Route path="/about" element={<About />} />
-                          <Route path="/computer-model" element={<ComputerModel />} />
-                          <Route path="/3d" element={<ComputerModel />} />
-                          <Route path="/chat" element={<Chat />} />
-                          <Route path="/newsletter" element={<Newsletter />} />
-                          <Route path="/academy" element={<Academy />} />
-                          <Route path="/jobs" element={<Jobs />} />
-                          <Route path="/jobs/:id" element={<JobDetail />} />
-                          <Route path="/post-job" element={<PostJob />} />
-                          <Route path="/freelancers" element={<Freelancers />} />
-                          <Route path="/auth" element={<Auth />} />
-                          <Route path="/blog" element={<Blog />} />
-                          
-                          {/* Admin Routes */}
-                          <Route path="/admin" element={<AdminDashboard />} />
-                          <Route path="/admin/users" element={<AdminUsers />} />
-                          <Route path="/admin/posts" element={<AdminPosts />} />
-                          <Route path="/admin/jobs" element={<AdminJobs />} />
-                          <Route path="/admin/messages" element={<AdminMessages />} />
-                          <Route path="/admin/settings" element={<AdminSettings />} />
-                          
-                          {/* User Profile Routes */}
-                          <Route path="/profile" element={<Profile />} />
-                          <Route path="/settings" element={<Settings />} />
-                          
-                          {/* Privacy and Terms Routes */}
-                          <Route path="/privacy" element={<PrivacyPolicy />} />
-                          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                          <Route path="/terms" element={<TermsOfService />} />
-                          <Route path="/terms-of-service" element={<TermsOfService />} />
-                          
-                          <Route path="/support" element={<Support />} />
-                          <Route path="/faq" element={<FAQ />} />
-                          <Route path="/infrastructure" element={<Infrastructure />} />
-                          <Route path="/imei-check" element={<IMEICheck />} />
-                          <Route path="/tools" element={<Tools />} />
-                          <Route path="/search" element={<Search />} />
-                          <Route path="/rss" element={<RSS />} />
-                          <Route path="/feed" element={<RSS />} />
-                          <Route path="*" element={<NotFound />} />
-                            </Routes>
+                            <Index />
                           </ErrorBoundary>
-                        </div>
-                      </Suspense>
+                        } />
+                        <Route path="/services" element={<Services />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/computer-model" element={<ComputerModel />} />
+                        <Route path="/3d" element={<ComputerModel />} />
+                        <Route path="/chat" element={<Chat />} />
+                        <Route path="/newsletter" element={<Newsletter />} />
+                        <Route path="/academy" element={<Academy />} />
+                        <Route path="/jobs" element={<Jobs />} />
+                        <Route path="/jobs/:id" element={<JobDetail />} />
+                        <Route path="/post-job" element={<PostJob />} />
+                        <Route path="/freelancers" element={<Freelancers />} />
+                        <Route path="/auth" element={<Auth />} />
+                        <Route path="/blog" element={<Blog />} />
+                        
+                        {/* Admin Routes */}
+                        <Route path="/admin" element={<AdminDashboard />} />
+                        <Route path="/admin/users" element={<AdminUsers />} />
+                        <Route path="/admin/posts" element={<AdminPosts />} />
+                        <Route path="/admin/jobs" element={<AdminJobs />} />
+                        <Route path="/admin/messages" element={<AdminMessages />} />
+                        <Route path="/admin/settings" element={<AdminSettings />} />
+                        
+                        {/* User Profile Routes */}
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/settings" element={<Settings />} />
+                        
+                        {/* Privacy and Terms Routes */}
+                        <Route path="/privacy" element={<PrivacyPolicy />} />
+                        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                        <Route path="/terms" element={<TermsOfService />} />
+                        <Route path="/terms-of-service" element={<TermsOfService />} />
+                        
+                        <Route path="/support" element={<Support />} />
+                        <Route path="/faq" element={<FAQ />} />
+                        <Route path="/infrastructure" element={<Infrastructure />} />
+                        <Route path="/imei-check" element={<IMEICheck />} />
+                        <Route path="/tools" element={<Tools />} />
+                        <Route path="/search" element={<Search />} />
+                        <Route path="/rss" element={<RSS />} />
+                        <Route path="/feed" element={<RSS />} />
+                        <Route path="*" element={<NotFound />} />
+                          </Routes>
+                        </ErrorBoundary>
+                      </div>
                       
                       <AccessibilityEnhancer />
                       <LanguageDetectionNotice />
