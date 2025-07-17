@@ -33,6 +33,7 @@ import {
 import ZwanskiLogo from "./ZwanskiLogo";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageSelector } from "./LanguageSelector";
+import { GlobalSearchBar } from "./search/GlobalSearchBar";
 import { supabase } from "@/integrations/supabase/client";
 
 const Navbar = () => {
@@ -169,6 +170,11 @@ const Navbar = () => {
 
           {/* Right Side */}
           <div className="flex items-center space-x-4">
+            {/* Global Search - Hidden on small screens */}
+            <div className="hidden md:block w-64">
+              <GlobalSearchBar placeholder="Search..." compact />
+            </div>
+            
             {/* Theme Toggle */}
             <ThemeToggle />
             
@@ -270,6 +276,11 @@ const Navbar = () => {
         {isMenuOpen && (
           <div className="lg:hidden border-t border-border/50 py-4">
             <div className="flex flex-col space-y-2">
+              {/* Mobile Search */}
+              <div className="px-4 pb-4">
+                <GlobalSearchBar placeholder="Search..." />
+              </div>
+              
               {mainNavItems.map((item) => {
                 const Icon = item.icon;
                 const showItem = !(item as any).authRequired || isAuthenticated;

@@ -42,6 +42,7 @@ import Infrastructure from "./pages/Infrastructure";
 import IMEICheck from "./pages/IMEICheck";
 import Tools from "./pages/Tools";
 import RSS from "./pages/RSS";
+import Search from "./pages/Search";
 import { LanguageDetectionNotice } from "./components/LanguageDetectionNotice";
 import ScrollToTop from "./components/ScrollToTop";
 import ScrollToTopButton from "./components/ScrollToTopButton";
@@ -110,6 +111,7 @@ function App() {
                       <Route path="/infrastructure" element={<Infrastructure />} />
             <Route path="/imei-check" element={<IMEICheck />} />
             <Route path="/tools" element={<Tools />} />
+                      <Route path="/search" element={<Search />} />
                       <Route path="/rss" element={<RSS />} />
                       <Route path="/feed" element={<RSS />} />
                       <Route path="*" element={<NotFound />} />
