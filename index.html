@@ -170,32 +170,7 @@
           banner.style.transition = 'opacity 0.3s ease-in-out, transform 0.3s ease-in-out';
           banner.style.zIndex = '9999';
 
-          // Auto-accept after 8 seconds if no interaction
-          autoAcceptTimer = setTimeout(() => {
-            if (banner && banner.offsetParent !== null) {
-              // Try to find and click accept button
-              const acceptBtn = banner.querySelector('button[data-ax-action="accept"]') ||
-                              banner.querySelector('.axeptio_widget_acceptButton') ||
-                              banner.querySelector('[data-action="accept"]');
-              
-              if (acceptBtn) {
-                acceptBtn.click();
-              } else {
-                // Fallback: hide banner gracefully
-                banner.style.opacity = '0';
-                banner.style.transform = 'translateY(100%)';
-                setTimeout(() => banner.style.display = 'none', 300);
-              }
-            }
-          }, 5000);
-
-          // Clear auto-accept if user interacts
-          banner.addEventListener('click', () => {
-            if (autoAcceptTimer) {
-              clearTimeout(autoAcceptTimer);
-              autoAcceptTimer = null;
-            }
-          });
+          // Removed auto-accept timer to preserve default Axeptio behavior
 
           // Scroll-based transparency
           let lastScrollY = window.scrollY;
