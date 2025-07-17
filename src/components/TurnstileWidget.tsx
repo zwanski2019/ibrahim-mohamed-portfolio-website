@@ -56,7 +56,7 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
   useEffect(() => {
     if (isLoaded && containerRef.current && window.turnstile) {
       const id = window.turnstile.render(containerRef.current, {
-        sitekey: 'ceihcnfngpmrtqunhaey', // Will be replaced with actual site key from secrets
+        sitekey: '0x4AAAAAAAiC4uPFgUCJvz4K', // Cloudflare Turnstile site key
         theme,
         size,
         callback: onVerify,
