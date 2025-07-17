@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import TurnstileWidget from "./TurnstileWidget";
 
 export default function Contact() {
   const { toast } = useToast();
@@ -14,6 +15,7 @@ export default function Contact() {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -24,9 +26,28 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!turnstileToken) {
+      toast({
+        title: "Security verification required",
+        description: "Please complete the security check.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
     setIsSubmitting(true);
     
     try {
+      // Verify Turnstile token with edge function
+      const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-turnstile', {
+        body: { token: turnstileToken }
+      });
+
+      if (verificationError || !verificationData?.success) {
+        throw new Error('Security verification failed');
+      }
+
       const { error } = await supabase
         .from('contact_messages')
         .insert([
@@ -45,6 +66,7 @@ export default function Contact() {
         description: "Thanks for reaching out. I'll get back to you soon.",
       });
       setFormData({ name: "", email: "", subject: "", message: "" });
+      setTurnstileToken(null);
     } catch (error) {
       console.error('Error sending message:', error);
       toast({
@@ -136,9 +158,20 @@ export default function Contact() {
                 ></textarea>
               </div>
               
+              {/* Turnstile Widget */}
+              <div className="py-2">
+                <TurnstileWidget
+                  onVerify={setTurnstileToken}
+                  onError={() => setTurnstileToken(null)}
+                  onExpire={() => setTurnstileToken(null)}
+                  theme="auto"
+                  size="normal"
+                />
+              </div>
+              
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || !turnstileToken}
                 className="w-full py-3 px-6 rounded-lg bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-xl transition-all hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? "Sending..." : "Send Message"}

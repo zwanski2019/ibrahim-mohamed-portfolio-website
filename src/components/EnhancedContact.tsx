@@ -8,6 +8,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import TurnstileWidget from "./TurnstileWidget";
 
 const EnhancedContact = () => {
   const { language } = useLanguage();
@@ -19,6 +20,7 @@ const EnhancedContact = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   const content = {
     en: {
@@ -84,9 +86,28 @@ const EnhancedContact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!turnstileToken) {
+      toast({
+        title: "Security verification required",
+        description: "Please complete the security check.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
     setIsSubmitting(true);
     
     try {
+      // Verify Turnstile token with edge function
+      const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-turnstile', {
+        body: { token: turnstileToken }
+      });
+
+      if (verificationError || !verificationData?.success) {
+        throw new Error('Security verification failed');
+      }
+
       const { error } = await supabase
         .from('contact_messages')
         .insert([
@@ -105,6 +126,7 @@ const EnhancedContact = () => {
         description: "We'll get back to you soon.",
       });
       setFormData({ name: '', email: '', service: '', message: '' });
+      setTurnstileToken(null);
     } catch (error) {
       console.error('Error sending message:', error);
       toast({
@@ -204,11 +226,22 @@ const EnhancedContact = () => {
                     className="w-full resize-none"
                   />
                   
+                  {/* Turnstile Widget */}
+                  <div className="py-2">
+                    <TurnstileWidget
+                      onVerify={setTurnstileToken}
+                      onError={() => setTurnstileToken(null)}
+                      onExpire={() => setTurnstileToken(null)}
+                      theme="auto"
+                      size="normal"
+                    />
+                  </div>
+                  
                   <Button 
                     type="submit"
                     size="lg"
                     className="w-full axeptio-button-primary flex items-center justify-center gap-2"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !turnstileToken}
                   >
                     <span>{isSubmitting ? 'Sending...' : currentContent.form.submit}</span>
                     <Send className="h-4 w-4" />

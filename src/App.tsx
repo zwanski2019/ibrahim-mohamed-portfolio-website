@@ -81,6 +81,9 @@ import ScrollToTopButton from "./components/ScrollToTopButton";
 import ChatWidget from "./components/ChatWidget";
 import { AccessibilityEnhancer } from "./components/AccessibilityEnhancer";
 import { usePerformanceMonitoring, useMemoryMonitoring } from "./hooks/usePerformanceMonitoring";
+import Preloader from "./components/Preloader";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 // Styles
 import "./App.css";
@@ -95,6 +98,26 @@ function App() {
   // Performance monitoring hooks
   usePerformanceMonitoring();
   useMemoryMonitoring();
+
+  // Preloader state for home page only
+  const [showPreloader, setShowPreloader] = useState(false);
+  const [preloaderCompleted, setPreloaderCompleted] = useState(false);
+
+  useEffect(() => {
+    // Show preloader only on initial load to home page
+    const isHomePage = window.location.pathname === '/';
+    const hasSeenPreloader = sessionStorage.getItem('preloader-shown');
+    
+    if (isHomePage && !hasSeenPreloader) {
+      setShowPreloader(true);
+      sessionStorage.setItem('preloader-shown', 'true');
+    }
+  }, []);
+
+  const handlePreloaderComplete = () => {
+    setPreloaderCompleted(true);
+    setShowPreloader(false);
+  };
 
   const LoadingSpinner = () => (
     <div className="min-h-screen flex items-center justify-center bg-background" role="status" aria-label="Loading">
@@ -116,6 +139,7 @@ function App() {
                 <AuthProvider>
                   <BrowserRouter>
                     <ErrorBoundary>
+                      {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
                       <ScrollToTop />
                       <Helmet>
                         <title>Zwanski Tech - Professional IT Services & Digital Education Platform</title>

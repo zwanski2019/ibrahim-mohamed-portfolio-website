@@ -12,6 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Eye, EyeOff, Mail, Lock, User, Github } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import TurnstileWidget from "@/components/TurnstileWidget";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const Auth = () => {
   const [fullName, setFullName] = useState("");
   const [userRoles, setUserRoles] = useState<string[]>(["student"]);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   // Redirect authenticated users
   useEffect(() => {
@@ -79,15 +81,34 @@ const Auth = () => {
       return;
     }
 
-    const { error } = await signUp(email, password, {
-      full_name: fullName,
-      user_roles: userRoles
-    });
-    
-    if (error) {
-      setError(error.message);
-    } else {
-      setSuccess("Check your email for verification link!");
+    if (!turnstileToken) {
+      setError("Please complete the security verification");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      // Verify Turnstile token first
+      const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-turnstile', {
+        body: { token: turnstileToken }
+      });
+
+      if (verificationError || !verificationData?.success) {
+        throw new Error('Security verification failed');
+      }
+
+      const { error } = await signUp(email, password, {
+        full_name: fullName,
+        user_roles: userRoles
+      });
+      
+      if (error) {
+        setError(error.message);
+      } else {
+        setSuccess("Check your email for verification link!");
+      }
+    } catch (error) {
+      setError("Security verification failed. Please try again.");
     }
     
     setLoading(false);
@@ -354,7 +375,18 @@ const Auth = () => {
                   </Label>
                 </div>
 
-                <Button type="submit" className="w-full" disabled={loading}>
+                {/* Turnstile Widget */}
+                <div className="py-2">
+                  <TurnstileWidget
+                    onVerify={setTurnstileToken}
+                    onError={() => setTurnstileToken(null)}
+                    onExpire={() => setTurnstileToken(null)}
+                    theme="auto"
+                    size="compact"
+                  />
+                </div>
+
+                <Button type="submit" className="w-full" disabled={loading || !turnstileToken}>
                   {loading ? "Creating Account..." : "Create Account"}
                 </Button>
               </form>
