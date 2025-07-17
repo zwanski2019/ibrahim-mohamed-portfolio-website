@@ -17,46 +17,62 @@ const Hero = () => {
 
   const [isVisible, setIsVisible] = useState(false);
 
-  // Optimized animated counters with CSS animations
+  // Optimized counter animation with requestAnimationFrame to prevent forced reflows
   const animateCounters = useCallback(() => {
-    const duration = 2000; // Reduced duration
-    const steps = 60; // Fewer steps for better performance
-    const stepDuration = duration / steps;
+    const duration = 2000;
+    const targetValues = { devices: 300, satisfaction: 98, experience: 5, security: 65 };
+    const startTime = performance.now();
 
-    let step = 0;
-    const timer = setInterval(() => {
-      step++;
-      const progress = step / steps;
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
       
-      // Simplified easing
-      const ease = 1 - Math.pow(1 - progress, 2);
+      // Use easeOutQuart for smooth animation
+      const ease = 1 - Math.pow(1 - progress, 3);
       
+      // Batch DOM updates to prevent layout thrashing
       setCounters({
-        devices: Math.floor(300 * ease),
-        satisfaction: Math.floor(98 * ease),
-        experience: Math.floor(5 * ease),
-        security: Math.floor(65 * ease)
+        devices: Math.floor(targetValues.devices * ease),
+        satisfaction: Math.floor(targetValues.satisfaction * ease),
+        experience: Math.floor(targetValues.experience * ease),
+        security: Math.floor(targetValues.security * ease)
       });
 
-      if (step >= steps) {
-        clearInterval(timer);
-        setCounters({ devices: 300, satisfaction: 98, experience: 5, security: 65 });
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        // Set final values to ensure precision
+        setCounters(targetValues);
       }
-    }, stepDuration);
+    };
 
-    return timer;
+    requestAnimationFrame(animate);
   }, []);
 
   useEffect(() => {
-    // Trigger visibility and animation
-    const timeout = setTimeout(() => {
-      setIsVisible(true);
-      const timer = animateCounters();
-      return () => clearInterval(timer);
-    }, 300);
-    
-    return () => clearTimeout(timeout);
-  }, [animateCounters]);
+    // Use Intersection Observer for better performance
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !isVisible) {
+          setIsVisible(true);
+          // Delay animation start to prevent layout issues
+          requestAnimationFrame(() => {
+            setTimeout(animateCounters, 300);
+          });
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -10% 0px' }
+    );
+
+    const heroElement = document.querySelector('.hero-container');
+    if (heroElement) {
+      observer.observe(heroElement);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [animateCounters, isVisible]);
 
   const stats = [
     { 

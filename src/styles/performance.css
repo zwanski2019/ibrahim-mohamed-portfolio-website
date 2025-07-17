@@ -1,6 +1,22 @@
 /* Performance optimizations */
 
 /* Improve font loading */
+/* Prevent forced reflows by optimizing animations */
+.animate-fade-in,
+.animate-scale-in,
+.animate-slide-in-right,
+.hero-container,
+.hero-image-container {
+  will-change: transform, opacity;
+  transform: translateZ(0); /* Force GPU acceleration */
+  backface-visibility: hidden;
+}
+
+/* Optimize counter animations to prevent layout thrashing */
+.counter-animation {
+  contain: layout style paint;
+}
+
 /* Optimized font declarations removed - now using preload in HTML */
 
 /* Optimize animations for performance */
