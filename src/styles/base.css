@@ -16,7 +16,7 @@
     --secondary: 210 40% 98%;
     --secondary-foreground: 222 84% 5%;
     --muted: 210 40% 98%;
-    --muted-foreground: 215 16% 47%;
+    --muted-foreground: 215 16% 35%; /* Improved contrast ratio */
     --accent: 210 40% 98%;
     --accent-foreground: 222 84% 5%;
     --destructive: 0 84% 60%;
@@ -39,7 +39,7 @@
     --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted-foreground: 215 20% 75%; /* Improved contrast ratio for dark mode */
     --accent: 217 33% 17%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 63% 31%;

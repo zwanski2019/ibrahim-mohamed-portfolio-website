@@ -127,6 +127,7 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
               name="budget"
               value={formData.budget}
               onChange={handleChange}
+              aria-labelledby="budget-label"
               className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
             >
               <option value="">{t("form.selectBudget")}</option>
@@ -141,7 +142,7 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
         </div>
         
         <div>
-          <label htmlFor="service" className="block text-sm font-medium mb-2">
+          <label htmlFor="service" className="block text-sm font-medium mb-2" id="service-label">
             {t("form.serviceInterested")} <span className="text-red-500">{t("form.required")}</span>
           </label>
           <select
@@ -150,6 +151,7 @@ const ServiceRequestForm = ({ selectedService }: ServiceRequestFormProps) => {
             value={formData.service}
             onChange={handleChange}
             required
+            aria-labelledby="service-label"
             className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
           >
             <option value="">{t("form.selectService")}</option>

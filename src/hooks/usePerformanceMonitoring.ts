@@ -10,27 +10,46 @@ interface PerformanceMetrics {
 
 export const usePerformanceMonitoring = () => {
   useEffect(() => {
-    // Simplified performance monitoring with minimal overhead
+    // Ultra-lightweight performance monitoring with Web Worker fallback
     if (import.meta.env.DEV) return;
+    
+    // Sample only 2% of users to minimize overhead
+    if (Math.random() > 0.02) return;
 
-    // Use a single timeout to batch performance measurements
-    const timeoutId = setTimeout(() => {
-      try {
-        if ('performance' in window && 'getEntriesByType' in performance) {
-          const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
-          if (navigation) {
-            const loadTime = navigation.loadEventEnd - navigation.fetchStart;
-            if (loadTime > 3000) { // Only log if slow
-              console.warn('Slow page load detected:', Math.round(loadTime), 'ms');
+    let worker: Worker | null = null;
+    
+    // Try to use Web Worker for heavy lifting
+    try {
+      worker = new Worker('/performance-worker.js');
+      worker.postMessage({ type: 'START_MONITORING' });
+    } catch (error) {
+      // Fallback to minimal main thread monitoring
+      const timeoutId = setTimeout(() => {
+        try {
+          if ('performance' in window && 'getEntriesByType' in performance) {
+            const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+            if (navigation && navigation.loadEventEnd > 0) {
+              const loadTime = navigation.loadEventEnd - navigation.fetchStart;
+              // Only report if performance is concerning
+              if (loadTime > 4000) {
+                console.debug('Performance concern:', Math.round(loadTime), 'ms');
+              }
             }
           }
+        } catch (error) {
+          // Silently fail to avoid any user impact
         }
-      } catch (error) {
-        // Silently fail
-      }
-    }, 2000);
+      }, 3000);
 
-    return () => clearTimeout(timeoutId);
+      return () => clearTimeout(timeoutId);
+    }
+
+    return () => {
+      if (worker) {
+        worker.postMessage({ type: 'STOP_MONITORING' });
+        worker.terminate();
+      }
+    };
   }, []);
 };
 
