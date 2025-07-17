@@ -33,7 +33,7 @@ export const CookieConsent: React.FC = () => {
 
   return (
     <>
-      <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center p-2">
+      <div className="fixed bottom-0 left-0 right-0 z-[9999] flex justify-center p-2">
         <div className="bg-card border border-border rounded-lg shadow-lg w-full max-w-md mx-auto">
           <div className="p-3 sm:p-4">
             <div className="flex items-start justify-between gap-2">

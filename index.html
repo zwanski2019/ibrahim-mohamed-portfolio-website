@@ -134,6 +134,19 @@
       .trustpilot-widget {
         background: transparent !important;
       }
+
+      /* Ensure cookie banners always stay above other widgets */
+      .axeptio_widget,
+      [id*="axeptio"],
+      [class*="axeptio"] {
+        z-index: 9999 !important;
+      }
+
+      /* Add space at bottom when cookie banner is active */
+      body:has(.axeptio_widget:not([style*="display: none"])) footer {
+        margin-bottom: 80px;
+        transition: margin-bottom 0.3s ease;
+      }
     </style>
 
     <!-- Axeptio Cookie Banner Enhancements -->
@@ -155,7 +168,7 @@
 
           // Add CSS for smooth transitions
           banner.style.transition = 'opacity 0.3s ease-in-out, transform 0.3s ease-in-out';
-          banner.style.zIndex = '1000';
+          banner.style.zIndex = '9999';
 
           // Auto-accept after 8 seconds if no interaction
           autoAcceptTimer = setTimeout(() => {
@@ -174,7 +187,7 @@
                 setTimeout(() => banner.style.display = 'none', 300);
               }
             }
-          }, 8000);
+          }, 5000);
 
           // Clear auto-accept if user interacts
           banner.addEventListener('click', () => {
