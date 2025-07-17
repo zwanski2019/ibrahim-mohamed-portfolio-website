@@ -151,31 +151,31 @@ const Navbar = () => {
             <ZwanskiLogo onClick={handleLogoClick} />
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
-            {mainNavItems.map((item) => {
-              const Icon = item.icon;
-              const showItem = !(item as any).authRequired || isAuthenticated;
-              
-              if (!showItem) return null;
-              
-              return (
-                <Button
-                  key={item.path}
-                  variant={isActivePath(item.path) ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => navigate(item.path)}
-                  className="flex items-center gap-2"
-                >
-                  <Icon className="h-4 w-4" />
-                  {item.label}
-                </Button>
-              );
-            })}
-          </div>
-
           {/* Right Side */}
           <div className="flex items-center space-x-4">
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center space-x-6">
+              {mainNavItems.map((item) => {
+                const Icon = item.icon;
+                const showItem = !(item as any).authRequired || isAuthenticated;
+                
+                if (!showItem) return null;
+                
+                return (
+                  <Button
+                    key={item.path}
+                    variant={isActivePath(item.path) ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => navigate(item.path)}
+                    className="flex items-center gap-2"
+                  >
+                    <Icon className="h-4 w-4" />
+                    {item.label}
+                  </Button>
+                );
+              })}
+            </div>
+            
             {/* Global Search - Hidden on small screens */}
             <div className="hidden md:block w-64">
               <GlobalSearchBar placeholder="Search..." compact />
