@@ -1,5 +1,5 @@
 
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, Suspense } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { MapPin, DollarSign } from "lucide-react";
 import { JobPost } from "@/types/marketplace";
 import { TUNISIA_CENTER, TUNISIA_CITIES } from "@/utils/geocoding";
+import MapErrorBoundary from './MapErrorBoundary';
+import SimpleJobMap from './SimpleJobMap';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -36,6 +38,21 @@ interface JobMapProps {
 }
 
 const JobMap: React.FC<JobMapProps> = ({ jobs = [], onJobSelect }) => {
+  console.log('JobMap rendering with jobs:', jobs?.length || 0);
+  
+  // Add debugging
+  useEffect(() => {
+    console.log('JobMap mounted, jobs count:', jobs?.length || 0);
+    return () => {
+      console.log('JobMap unmounting');
+    };
+  }, []);
+
+  // Early return with fallback if jobs is not an array
+  if (!Array.isArray(jobs)) {
+    console.warn('JobMap received non-array jobs:', jobs);
+    return <SimpleJobMap jobs={[]} onJobSelect={onJobSelect} />;
+  }
   // Ensure jobs is always an array and filter jobs with valid coordinates
   const jobsWithCoordinates = useMemo(() => {
     if (!Array.isArray(jobs)) return [];
@@ -101,112 +118,116 @@ const JobMap: React.FC<JobMapProps> = ({ jobs = [], onJobSelect }) => {
   }
 
   return (
-    <Card className="h-96 relative">
-      {!hasJobs && (
-        <div className="absolute top-4 left-4 z-[1000] bg-background/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <MapPin className="h-4 w-4" />
-            <span>No jobs available - showing Tunisia</span>
-          </div>
-        </div>
-      )}
-      {jobsWithCoordinates.length === 0 && hasJobs && (
-        <div className="absolute top-4 left-4 z-[1000] bg-background/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <MapPin className="h-4 w-4" />
-            <span>{jobs.length} jobs without map coordinates</span>
-          </div>
-        </div>
-      )}
-      
-      <MapContainer
-        key={`${mapConfig.centerLat}-${mapConfig.centerLng}-${mapConfig.zoomLevel}`}
-        center={[mapConfig.centerLat, mapConfig.centerLng]}
-        zoom={mapConfig.zoomLevel}
-        style={{ height: '100%', width: '100%' }}
-        className="rounded-lg"
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        
-        {/* Show major cities when no jobs have coordinates */}
-        {jobsWithCoordinates.length === 0 && TUNISIA_CITIES.map((city) => (
-          <Marker
-            key={city.name}
-            position={[city.latitude, city.longitude]}
-            icon={L.divIcon({
-              className: 'city-marker',
-              html: '<div style="background: #8B5CF6; border: 2px solid white; border-radius: 50%; width: 12px; height: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>',
-              iconSize: [12, 12],
-              iconAnchor: [6, 6]
-            })}
-          >
-            <Popup>
-              <div className="text-center">
-                <h3 className="font-semibold text-sm">{city.name}</h3>
-                <p className="text-xs text-muted-foreground">Major city in Tunisia</p>
+    <MapErrorBoundary fallback={<SimpleJobMap jobs={jobs} onJobSelect={onJobSelect} />}>
+      <Suspense fallback={<SimpleJobMap jobs={jobs} onJobSelect={onJobSelect} />}>
+        <Card className="h-96 relative">
+          {!hasJobs && (
+            <div className="absolute top-4 left-4 z-[1000] bg-background/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <MapPin className="h-4 w-4" />
+                <span>No jobs available - showing Tunisia</span>
               </div>
-            </Popup>
-          </Marker>
-        ))}
-
-        {/* Show actual jobs with coordinates */}
-        {jobsWithCoordinates.map((job) => (
-          <Marker
-            key={job.id}
-            position={[job.latitude!, job.longitude!]}
+            </div>
+          )}
+          {jobsWithCoordinates.length === 0 && hasJobs && (
+            <div className="absolute top-4 left-4 z-[1000] bg-background/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <MapPin className="h-4 w-4" />
+                <span>{jobs.length} jobs without map coordinates</span>
+              </div>
+            </div>
+          )}
+          
+          <MapContainer
+            key={`${mapConfig.centerLat}-${mapConfig.centerLng}-${mapConfig.zoomLevel}`}
+            center={[mapConfig.centerLat, mapConfig.centerLng]}
+            zoom={mapConfig.zoomLevel}
+            style={{ height: '100%', width: '100%' }}
+            className="rounded-lg"
           >
-            <Popup className="w-64">
-              <div className="space-y-2">
-                <div className="flex items-start justify-between">
-                  <h3 className="font-semibold text-sm line-clamp-2">{job.title}</h3>
-                  <Badge 
-                    variant={job.urgency === 'high' ? 'destructive' : 
-                           job.urgency === 'medium' ? 'default' : 'secondary'}
-                    className="ml-2"
-                  >
-                    {job.urgency}
-                  </Badge>
-                </div>
-                
-                <p className="text-xs text-muted-foreground line-clamp-2">
-                  {job.description}
-                </p>
-                
-                <div className="space-y-1">
-                  <div className="flex items-center gap-1 text-xs">
-                    <MapPin className="h-3 w-3" />
-                    <span>{job.location}</span>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            
+            {/* Show major cities when no jobs have coordinates */}
+            {jobsWithCoordinates.length === 0 && TUNISIA_CITIES.map((city) => (
+              <Marker
+                key={city.name}
+                position={[city.latitude, city.longitude]}
+                icon={L.divIcon({
+                  className: 'city-marker',
+                  html: '<div style="background: #8B5CF6; border: 2px solid white; border-radius: 50%; width: 12px; height: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>',
+                  iconSize: [12, 12],
+                  iconAnchor: [6, 6]
+                })}
+              >
+                <Popup>
+                  <div className="text-center">
+                    <h3 className="font-semibold text-sm">{city.name}</h3>
+                    <p className="text-xs text-muted-foreground">Major city in Tunisia</p>
                   </div>
-                  
-                  {formatSalary(job) && (
-                    <div className="flex items-center gap-1 text-xs">
-                      <DollarSign className="h-3 w-3" />
-                      <span className="font-medium text-green-600">{formatSalary(job)}</span>
+                </Popup>
+              </Marker>
+            ))}
+
+            {/* Show actual jobs with coordinates */}
+            {jobsWithCoordinates.map((job) => (
+              <Marker
+                key={job.id}
+                position={[job.latitude!, job.longitude!]}
+              >
+                <Popup className="w-64">
+                  <div className="space-y-2">
+                    <div className="flex items-start justify-between">
+                      <h3 className="font-semibold text-sm line-clamp-2">{job.title}</h3>
+                      <Badge 
+                        variant={job.urgency === 'high' ? 'destructive' : 
+                               job.urgency === 'medium' ? 'default' : 'secondary'}
+                        className="ml-2"
+                      >
+                        {job.urgency}
+                      </Badge>
                     </div>
-                  )}
-                </div>
+                    
+                    <p className="text-xs text-muted-foreground line-clamp-2">
+                      {job.description}
+                    </p>
+                    
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-1 text-xs">
+                        <MapPin className="h-3 w-3" />
+                        <span>{job.location}</span>
+                      </div>
+                      
+                      {formatSalary(job) && (
+                        <div className="flex items-center gap-1 text-xs">
+                          <DollarSign className="h-3 w-3" />
+                          <span className="font-medium text-green-600">{formatSalary(job)}</span>
+                        </div>
+                      )}
+                    </div>
 
-                <div className="flex gap-1">
-                  <Badge variant="outline" className="text-xs">{job.category}</Badge>
-                  <Badge variant="outline" className="text-xs">{job.job_type}</Badge>
-                </div>
+                    <div className="flex gap-1">
+                      <Badge variant="outline" className="text-xs">{job.category}</Badge>
+                      <Badge variant="outline" className="text-xs">{job.job_type}</Badge>
+                    </div>
 
-                <Button 
-                  size="sm" 
-                  className="w-full text-xs"
-                  onClick={() => onJobSelect?.(job)}
-                >
-                  View Details
-                </Button>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
-    </Card>
+                    <Button 
+                      size="sm" 
+                      className="w-full text-xs"
+                      onClick={() => onJobSelect?.(job)}
+                    >
+                      View Details
+                    </Button>
+                  </div>
+                </Popup>
+              </Marker>
+            ))}
+          </MapContainer>
+        </Card>
+      </Suspense>
+    </MapErrorBoundary>
   );
 };
 
