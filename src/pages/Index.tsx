@@ -26,45 +26,59 @@ const Index = () => {
   const { user } = useAuth();
   const { t } = useLanguage();
 
-  // Fetch courses for the home page
+  // Fetch courses for the home page with error handling
   const { data: courses, isLoading } = useQuery({
     queryKey: ['featured-courses'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('courses')
-        .select(`
-          *,
-          categories:category_id(name, icon),
-          course_enrollments(id)
-        `)
-        .eq('is_active', true)
-        .eq('is_featured', true)
-        .order('enrollment_count', { ascending: false })
-        .limit(6);
+      try {
+        const { data, error } = await supabase
+          .from('courses')
+          .select(`
+            *,
+            categories:category_id(name, icon),
+            course_enrollments(id)
+          `)
+          .eq('is_active', true)
+          .eq('is_featured', true)
+          .order('enrollment_count', { ascending: false })
+          .limit(6);
 
-      if (error) throw error;
-      return data;
-    }
+        if (error) throw error;
+        return data || [];
+      } catch (error) {
+        console.warn('Failed to load courses:', error);
+        return []; // Return empty array to prevent page crash
+      }
+    },
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    retry: 1 // Only retry once
   });
 
-  // Fetch user enrollments if logged in
+  // Fetch user enrollments if logged in with error handling
   const { data: userEnrollments } = useQuery({
     queryKey: ['user-enrollments', user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
       
-      const { data, error } = await supabase
-        .from('course_enrollments')
-        .select(`
-          *,
-          courses:course_id(*)
-        `)
-        .eq('user_id', user.id);
+      try {
+        const { data, error } = await supabase
+          .from('course_enrollments')
+          .select(`
+            *,
+            courses:course_id(*)
+          `)
+          .eq('user_id', user.id);
 
-      if (error) throw error;
-      return data;
+        if (error) throw error;
+        return data || [];
+      } catch (error) {
+        console.warn('Failed to load user enrollments:', error);
+        return []; // Return empty array to prevent page crash
+      }
     },
-    enabled: !!user?.id
+    enabled: !!user?.id,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    retry: 1 // Only retry once
   });
 
   // Optimized gradient cursor effect with throttling
@@ -89,7 +103,7 @@ const Index = () => {
 
   // Optimized scroll animation with proper initialization delay
   useEffect(() => {
-    // Ensure DOM is fully ready before setting up animations
+    // Ensure DOM is fully ready and content is visible before setting up animations
     const initDelay = setTimeout(() => {
       const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
       
@@ -106,12 +120,12 @@ const Index = () => {
               observer.unobserve(entry.target);
             }
           });
-        }, 100);
+        }, 50); // Reduced timeout for faster response
       };
 
       const observer = new IntersectionObserver(observerCallback, {
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.1, // Lower threshold for earlier triggering
+        rootMargin: '50px 0px -25px 0px' // More generous margins
       });
 
       elementsToAnimate.forEach((element) => observer.observe(element));
@@ -120,7 +134,7 @@ const Index = () => {
         clearTimeout(timeout);
         observer.disconnect();
       };
-    }, 1000); // Longer delay to ensure content is stable
+    }, 1500); // Longer delay to ensure everything is loaded
 
     return () => clearTimeout(initDelay);
   }, [])
@@ -145,7 +159,7 @@ const Index = () => {
             structuredData={structuredDataItems}
           />
           
-          <div className="min-h-screen bg-background text-foreground homepage-content">
+          <div className="min-h-screen bg-background text-foreground homepage-content" style={{opacity: 1, visibility: 'visible'}}>
         <Navbar />
         
         {/* Hero Section */}

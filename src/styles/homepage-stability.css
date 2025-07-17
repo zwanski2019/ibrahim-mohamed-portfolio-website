@@ -1,12 +1,15 @@
-/* Homepage Content Stability Fix */
+/* Homepage Content Stability Fix - CRITICAL FOR WHITE SCREEN ISSUE */
 
-/* Ensure homepage content is always visible */
+/* Force homepage content to be always visible */
 .homepage-content {
   min-height: 100vh !important;
   opacity: 1 !important;
   visibility: visible !important;
   display: block !important;
   transform: none !important;
+  background-color: hsl(var(--background)) !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 /* Prevent any conflicting animations on initial load */
@@ -23,9 +26,25 @@
 
 /* Override any conflicting CSS that might hide content */
 .homepage-content .animate-on-scroll {
-  opacity: 1;
-  visibility: visible;
-  display: block;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  transform: none !important;
+}
+
+/* Ensure all sections are visible immediately */
+.homepage-content section {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  min-height: auto !important;
+}
+
+/* Prevent any React lazy loading issues */
+.app-content-ready {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
 }
 
 /* Prevent white screen during route transitions */
