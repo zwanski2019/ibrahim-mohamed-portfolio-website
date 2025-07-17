@@ -12,12 +12,14 @@ interface CustomerEmailRequest {
   to: string;
   subject: string;
   html: string;
-  type: 'contact-confirmation' | 'service-update' | 'thank-you' | 'internal';
+  type: 'contact-confirmation' | 'service-update' | 'thank-you' | 'internal' | 'general-inquiry' | 'business-contact';
   customerName?: string;
+  from?: string;
 }
 
 const TRUSTPILOT_BCC = "zwanski.org+7beee01bb3@invite.trustpilot.com";
-const FROM_EMAIL = "support@zwanski.org";
+const SUPPORT_EMAIL = "support@zwanski.org";
+const CONTACT_EMAIL = "contact@zwanski.org";
 
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
@@ -26,15 +28,33 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { to, subject, html, type, customerName }: CustomerEmailRequest = await req.json();
+    const { to, subject, html, type, customerName, from }: CustomerEmailRequest = await req.json();
 
     console.log(`Sending ${type} email to ${to}`);
+
+    // Determine sender email based on type or provided from address
+    const getSenderEmail = (emailType: string, providedFrom?: string): string => {
+      if (providedFrom) return providedFrom;
+      
+      switch (emailType) {
+        case 'general-inquiry':
+        case 'business-contact':
+        case 'contact-confirmation':
+          return CONTACT_EMAIL;
+        case 'service-update':
+        case 'thank-you':
+        default:
+          return SUPPORT_EMAIL;
+      }
+    };
+
+    const senderEmail = getSenderEmail(type, from);
 
     // Determine if this should include Trustpilot BCC (only for customer-facing emails)
     const shouldBccTrustpilot = type !== 'internal';
     
     const emailConfig: any = {
-      from: FROM_EMAIL,
+      from: senderEmail,
       to: [to],
       subject,
       html,
