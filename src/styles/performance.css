@@ -9,20 +9,12 @@
   src: url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 }
 
-/* GPU-accelerated animations for better performance */
+/* Optimize animations for performance */
 @media (prefers-reduced-motion: no-preference) {
   .animate-fade-in,
   .animate-scale-in,
   .animate-slide-in-right {
     will-change: transform, opacity;
-    transform: translateZ(0); /* Force GPU acceleration */
-    backface-visibility: hidden;
-  }
-  
-  /* Force GPU layer for hero section */
-  .hero-section {
-    transform: translateZ(0);
-    contain: layout style paint;
   }
 }
 
@@ -77,19 +69,6 @@ img {
 .non-critical-content {
   content-visibility: auto;
   contain-intrinsic-size: 0 500px;
-}
-
-/* Optimize component rendering */
-.section-component {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 400px;
-  contain: layout style paint;
-}
-
-/* Below-fold content optimization */
-.below-fold-content {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 300px;
 }
 
 /* Optimize composite layers */

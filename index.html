@@ -23,6 +23,7 @@
     <meta name="twitter:image" content="https://zwanski.org/og-image.png" />
     <link rel="icon" href="/favicon-professional.svg" type="image/svg+xml">
     <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="canonical" href="https://zwanski.org/">
     <link rel="apple-touch-icon" href="/favicon-professional.svg">
     
     <!-- Security Headers -->
@@ -33,48 +34,10 @@
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <link rel="alternate" type="application/atom+xml" title="Zwanski Tech Website Feed" href="https://zwanski2019.github.io/ZWANSKI-TECH/atom.xml" />
-    <!-- Critical CSS inlined for above-the-fold content -->
-    <style>
-      /* Critical styles for immediate rendering */
-      :root {
-        --background: 0 0% 100%;
-        --foreground: 222.2 84% 4.9%;
-        --primary: 221.2 83.2% 53.3%;
-        --primary-foreground: 210 40% 98%;
-        --secondary: 210 40% 96%;
-        --secondary-foreground: 222.2 84% 4.9%;
-        --muted: 210 40% 96%;
-        --muted-foreground: 215.4 16.3% 46.9%;
-        --accent: 210 40% 96%;
-        --accent-foreground: 222.2 84% 4.9%;
-        --border: 214.3 31.8% 91.4%;
-        --input: 214.3 31.8% 91.4%;
-        --ring: 221.2 83.2% 53.3%;
-        --radius: 0.5rem;
-      }
-      .dark {
-        --background: 222.2 84% 4.9%;
-        --foreground: 210 40% 98%;
-        --primary: 217.2 91.2% 59.8%;
-        --primary-foreground: 222.2 84% 4.9%;
-        --secondary: 217.2 32.6% 17.5%;
-        --secondary-foreground: 210 40% 98%;
-        --muted: 217.2 32.6% 17.5%;
-        --muted-foreground: 215 20.2% 65.1%;
-        --accent: 217.2 32.6% 17.5%;
-        --accent-foreground: 210 40% 98%;
-        --border: 217.2 32.6% 17.5%;
-        --input: 217.2 32.6% 17.5%;
-        --ring: 224.3 76.3% 94.1%;
-      }
-      body { margin: 0; font-family: Inter, system-ui, -apple-system, sans-serif; background: hsl(var(--background)); color: hsl(var(--foreground)); }
-      .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
-      .hero-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-    </style>
-    
-    <!-- Preload critical fonts with font-display: swap -->
+    <!-- Preload critical fonts -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
+    
     
     <!-- Axeptio Cookie Consent -->
     <script>
@@ -100,19 +63,18 @@
     </script>
     <!-- End Axeptio Cookie Consent -->
     <meta name="google-adsense-account" content="ca-pub-8775206393701040">
-    <!-- Optimized font loading with preconnect -->
+    <!-- Enhanced Font Loading with Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Load non-critical fonts asynchronously -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"></noscript>
-    
-    <!-- Optimized DNS prefetch hints -->
+    <!-- Performance and DNS prefetch hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="//www.googletagmanager.com">
     <link rel="dns-prefetch" href="//www.google-analytics.com">
-    <link rel="dns-prefetch" href="//static.axept.io">
-    <link rel="dns-prefetch" href="//widget.trustpilot.com">
+    <link rel="dns-prefetch" href="//j2ppv6ytda-dsn.algolia.net">
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
 
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
@@ -272,24 +234,6 @@
     <!-- End Google Tag Manager (noscript) -->
     
     <div id="root"></div>
-    
-    <!-- Service Worker Registration - Disabled temporarily -->
-    <!--
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then((registration) => {
-              console.log('SW registered: ', registration);
-            })
-            .catch((registrationError) => {
-              console.log('SW registration failed: ', registrationError);
-            });
-        });
-      }
-    </script>
-    -->
-    
     <script type="module" src="/src/main.tsx"></script>
     
     <!-- Load analytics after main app -->

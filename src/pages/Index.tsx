@@ -26,78 +26,108 @@ const Index = () => {
   const { user } = useAuth();
   const { t } = useLanguage();
 
-  // Simplified featured courses query
-  const { 
-    data: featuredCourses = [], 
-    isLoading: coursesLoading 
-  } = useQuery({
+  // Fetch courses for the home page with error handling and longer cache
+  const { data: courses, isLoading } = useQuery({
     queryKey: ['featured-courses'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('courses')
-        .select(`
-          *,
-          categories:category_id(name, icon),
-          course_enrollments(id)
-        `)
-        .eq('is_featured', true)
-        .eq('is_active', true)
-        .limit(6);
-      
-      if (error) throw error;
-      return data || [];
+      try {
+        const { data, error } = await supabase
+          .from('courses')
+          .select(`
+            *,
+            categories:category_id(name, icon),
+            course_enrollments(id)
+          `)
+          .eq('is_active', true)
+          .eq('is_featured', true)
+          .order('enrollment_count', { ascending: false })
+          .limit(6);
+
+        if (error) {
+          console.warn('Failed to load courses:', error);
+          return [];
+        }
+        return data || [];
+      } catch (error) {
+        console.warn('Failed to load courses:', error);
+        return [];
+      }
     },
-    staleTime: 1000 * 60 * 10,
+    staleTime: 15 * 60 * 1000, // 15 minutes - longer cache
+    gcTime: 30 * 60 * 1000, // 30 minutes
     retry: 1,
+    refetchOnWindowFocus: false
   });
 
-  // Simplified user enrollments query
-  const { 
-    data: userEnrollments = [], 
-    isLoading: enrollmentsLoading 
-  } = useQuery({
+  // Fetch user enrollments if logged in with error handling and longer cache
+  const { data: userEnrollments } = useQuery({
     queryKey: ['user-enrollments', user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
       
-      const { data, error } = await supabase
-        .from('course_enrollments')
-        .select(`
-          *,
-          courses (id, title, slug, thumbnail_url, difficulty, duration_hours)
-        `)
-        .eq('user_id', user.id)
-        .limit(5);
-      
-      if (error) throw error;
-      return data || [];
+      try {
+        const { data, error } = await supabase
+          .from('course_enrollments')
+          .select(`
+            *,
+            courses:course_id(*)
+          `)
+          .eq('user_id', user.id);
+
+        if (error) {
+          console.warn('Failed to load user enrollments:', error);
+          return [];
+        }
+        return data || [];
+      } catch (error) {
+        console.warn('Failed to load user enrollments:', error);
+        return [];
+      }
     },
     enabled: !!user?.id,
-    staleTime: 1000 * 60 * 5,
+    staleTime: 10 * 60 * 1000, // 10 minutes - longer cache
+    gcTime: 20 * 60 * 1000, // 20 minutes
     retry: 1,
+    refetchOnWindowFocus: false
   });
 
-  // Basic animation setup
+  // Minimal animation setup for better performance
   useEffect(() => {
+    // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+    
+    if (prefersReducedMotion) {
+      // Make everything visible immediately for accessibility
+      const elements = document.querySelectorAll('.animate-on-scroll');
+      elements.forEach(element => {
+        (element as HTMLElement).style.opacity = '1';
+        (element as HTMLElement).style.transform = 'none';
+      });
+      return;
+    }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+    // Simplified intersection observer for progressive loading
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { 
+      threshold: 0.1,
+      rootMargin: '20px'
+    });
 
-    const sections = document.querySelectorAll('section');
-    sections.forEach((section) => observer.observe(section));
+    // Immediate visibility for better perceived performance
+    const elements = document.querySelectorAll('.animate-on-scroll');
+    elements.forEach((element) => {
+      (element as HTMLElement).style.opacity = '1';
+      observer.observe(element);
+    });
 
     return () => observer.disconnect();
-  }, []);
+  }, [])
 
   const structuredDataItems = [
     organizationStructuredData,
@@ -182,8 +212,8 @@ const Index = () => {
             <div className="mb-12">
               <h3 className="text-2xl font-bold mb-8 text-center">Featured Courses</h3>
               <CourseGrid 
-                courses={featuredCourses || []} 
-                isLoading={coursesLoading}
+                courses={courses || []} 
+                isLoading={isLoading}
                 userEnrollments={userEnrollments?.map(enrollment => enrollment.course_id) || []}
               />
             </div>

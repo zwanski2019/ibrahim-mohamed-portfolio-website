@@ -15,7 +15,7 @@ export const SEOHelmet = ({
   description = "Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals.",
   keywords = "IT services Tunisia, computer repair Tunisia, cybersecurity Tunisia, web development Tunisia, digital education, Mohamed Ibrahim Zwanski",
   ogImage = "https://zwanski.org/og-image.png",
-  canonical = "https://zwanski.org/",
+  canonical = typeof window !== 'undefined' ? window.location.href : "https://zwanski.org/",
   type = "website",
   structuredData
 }: SEOHelmetProps) => {
