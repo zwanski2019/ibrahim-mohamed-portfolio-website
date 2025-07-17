@@ -26,7 +26,9 @@ import {
   Info,
   Menu,
   X,
-  PenTool
+  PenTool,
+  Settings2,
+  FileText
 } from "lucide-react";
 import ZwanskiLogo from "./ZwanskiLogo";
 import { ThemeToggle } from "./ThemeToggle";
@@ -127,8 +129,9 @@ const Navbar = () => {
       icon: GraduationCap,
       description: "Education & Training"
     },
+    { label: "Tools", path: "/tools", icon: Settings2 },
     { label: "Jobs", path: "/jobs", icon: Briefcase },
-    { label: "Blog", path: "/blog", icon: PenTool },
+    { label: "Blog", path: "/blog", icon: FileText },
     { label: "Chat", path: "/chat", icon: MessageSquare },
   ];
 
