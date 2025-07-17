@@ -1,4 +1,5 @@
 
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -114,10 +115,12 @@ export const JobCard = ({ job, onApply, onViewDetails }: JobCardProps) => {
         <Button 
           variant="outline" 
           size="sm" 
-          onClick={() => onViewDetails?.(job)}
+          asChild
           className="flex-1"
         >
-          {t("jobs.viewDetails")}
+          <Link to={`/jobs/${job.id}`}>
+            {t("jobs.viewDetails")}
+          </Link>
         </Button>
         <Button 
           size="sm" 

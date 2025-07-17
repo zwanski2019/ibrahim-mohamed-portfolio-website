@@ -11,11 +11,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { useCreateJobPost } from "@/hooks/useJobPosts";
-import { MapPin, DollarSign, Briefcase, Clock } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { MapPin, DollarSign, Briefcase, Clock, AlertCircle } from "lucide-react";
 
 const PostJob = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user, loading } = useAuth();
   const createJobPost = useCreateJobPost();
 
   const [formData, setFormData] = useState({
@@ -77,6 +79,16 @@ const PostJob = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!user?.id) {
+      toast({
+        title: "Authentication Required",
+        description: "Please sign in to post a job.",
+        variant: "destructive"
+      });
+      navigate("/auth");
+      return;
+    }
+    
     if (!formData.title || !formData.description || !formData.category || !formData.location) {
       toast({
         title: "Missing Information",
@@ -100,12 +112,12 @@ const PostJob = () => {
         benefits: formData.benefits,
         urgency: formData.urgency,
         expires_at: formData.expires_at || undefined,
-        employer_id: "temp-user-id" // This should be replaced with actual user ID from auth
+        employer_id: user.id
       });
 
       toast({
         title: "Job Posted Successfully!",
-        description: "Your job has been posted and is now visible to freelancers.",
+        description: "Your job has been submitted for review and will be published once approved.",
       });
 
       navigate("/jobs");
@@ -118,6 +130,46 @@ const PostJob = () => {
       });
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex items-center justify-center h-64">
+            <Clock className="h-8 w-8 animate-spin mr-2" />
+            <span>Loading...</span>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <div className="container mx-auto px-4 py-8">
+          <Card className="max-w-md mx-auto">
+            <CardContent className="pt-6">
+              <div className="text-center">
+                <AlertCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <h2 className="text-xl font-semibold mb-2">Sign In Required</h2>
+                <p className="text-muted-foreground mb-4">
+                  You need to be signed in to post a job.
+                </p>
+                <Button asChild>
+                  <a href="/auth">Sign In / Register</a>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">

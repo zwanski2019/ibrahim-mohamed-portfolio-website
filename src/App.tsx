@@ -21,6 +21,7 @@ import Newsletter from "./pages/Newsletter";
 import Academy from "./pages/Academy";
 import Jobs from "./pages/Jobs";
 import PostJob from "./pages/PostJob";
+import JobDetail from "./pages/JobDetail";
 import Freelancers from "./pages/Freelancers";
 import Auth from "./pages/Auth";
 import Blog from "./pages/Blog";
@@ -29,6 +30,7 @@ import AdminUsers from "./pages/admin/AdminUsers";
 import AdminPosts from "./pages/admin/AdminPosts";
 import AdminMessages from "./pages/admin/AdminMessages";
 import AdminSettings from "./pages/admin/AdminSettings";
+import AdminJobs from "./pages/admin/AdminJobs";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
@@ -78,6 +80,7 @@ function App() {
                       <Route path="/newsletter" element={<Newsletter />} />
                       <Route path="/academy" element={<Academy />} />
                       <Route path="/jobs" element={<Jobs />} />
+                      <Route path="/jobs/:id" element={<JobDetail />} />
                       <Route path="/post-job" element={<PostJob />} />
                       <Route path="/freelancers" element={<Freelancers />} />
                       <Route path="/auth" element={<Auth />} />
@@ -87,6 +90,7 @@ function App() {
                         <Route path="/admin" element={<AdminDashboard />} />
                         <Route path="/admin/users" element={<AdminUsers />} />
                         <Route path="/admin/posts" element={<AdminPosts />} />
+                        <Route path="/admin/jobs" element={<AdminJobs />} />
                         <Route path="/admin/messages" element={<AdminMessages />} />
                         <Route path="/admin/settings" element={<AdminSettings />} />
                         

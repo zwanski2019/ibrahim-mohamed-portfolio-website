@@ -101,10 +101,10 @@ export const useCreateJobPost = () => {
         throw new Error('Title and description are required');
       }
 
-      // Set the job status to published by default
+      // Set the job status to pending for moderation
       const jobPostData = {
         ...jobData,
-        status: 'published' as const,
+        status: 'pending' as const,
       };
 
       const { data, error } = await supabase
