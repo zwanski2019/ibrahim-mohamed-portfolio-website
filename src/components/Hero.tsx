@@ -1,9 +1,9 @@
 
+import React, { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play, Shield, Globe, Zap, Users, MessageSquare, Star, Sparkles, Monitor, Award, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/context/LanguageContext";
-import { useEffect, useState, useCallback } from "react";
 import heroImage from "@/assets/hero-it-services.jpg";
 
 const Hero = () => {
@@ -289,4 +289,7 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+const MemoizedHero = React.memo(Hero);
+MemoizedHero.displayName = 'Hero';
+
+export default MemoizedHero;

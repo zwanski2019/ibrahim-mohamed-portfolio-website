@@ -15,11 +15,21 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const { language, setLanguage, wasAutoDetected } = useLanguageDetection();
+  const { language, setLanguage, wasAutoDetected, isInitialized } = useLanguageDetection();
 
   const t = (key: string): string => {
+    if (!isInitialized) return key; // Return key while initializing
     return translations[language]?.[key] || key;
   };
+
+  // Don't render children until language is initialized to prevent hydration mismatches
+  if (!isInitialized) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full"></div>
+      </div>
+    );
+  }
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t, wasAutoDetected }}>

@@ -73,16 +73,25 @@ export const detectBrowserLanguage = (): Language | null => {
  * @returns The language to use on app initialization
  */
 export const getInitialLanguage = (): Language => {
-  // Check if user has a saved preference
-  const savedLanguage = localStorage.getItem('language') as Language;
-  if (savedLanguage) {
-    return savedLanguage;
+  // For SSR compatibility, return default language if window is not available
+  if (typeof window === 'undefined') {
+    return 'en';
   }
 
-  // Detect browser language for first-time visitors
-  const detectedLanguage = detectBrowserLanguage();
-  if (detectedLanguage) {
-    return detectedLanguage;
+  try {
+    // Check if user has a saved preference
+    const savedLanguage = localStorage.getItem('language') as Language;
+    if (savedLanguage) {
+      return savedLanguage;
+    }
+
+    // Detect browser language for first-time visitors
+    const detectedLanguage = detectBrowserLanguage();
+    if (detectedLanguage) {
+      return detectedLanguage;
+    }
+  } catch (error) {
+    console.warn('Error accessing localStorage or browser language:', error);
   }
 
   // Fallback to English
