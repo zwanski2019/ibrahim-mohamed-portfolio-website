@@ -110,6 +110,111 @@
     <!-- TrustBox script -->
     <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
     <!-- End TrustBox script -->
+
+    <!-- Axeptio Cookie Banner Enhancements -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        let scrollTimer;
+        let isScrolling = false;
+        let autoAcceptTimer;
+        let bannerProcessed = false;
+
+        // Enhanced Axeptio banner behavior
+        function enhanceAxeptioBanner() {
+          const banner = document.querySelector('.axeptio_widget') || 
+                        document.querySelector('[id*="axeptio"]') || 
+                        document.querySelector('[class*="axeptio"]');
+          
+          if (!banner || bannerProcessed) return;
+          bannerProcessed = true;
+
+          // Add CSS for smooth transitions
+          banner.style.transition = 'opacity 0.3s ease-in-out, transform 0.3s ease-in-out';
+          banner.style.zIndex = '1000';
+
+          // Auto-accept after 8 seconds if no interaction
+          autoAcceptTimer = setTimeout(() => {
+            if (banner && banner.offsetParent !== null) {
+              // Try to find and click accept button
+              const acceptBtn = banner.querySelector('button[data-ax-action="accept"]') ||
+                              banner.querySelector('.axeptio_widget_acceptButton') ||
+                              banner.querySelector('[data-action="accept"]');
+              
+              if (acceptBtn) {
+                acceptBtn.click();
+              } else {
+                // Fallback: hide banner gracefully
+                banner.style.opacity = '0';
+                banner.style.transform = 'translateY(100%)';
+                setTimeout(() => banner.style.display = 'none', 300);
+              }
+            }
+          }, 8000);
+
+          // Clear auto-accept if user interacts
+          banner.addEventListener('click', () => {
+            if (autoAcceptTimer) {
+              clearTimeout(autoAcceptTimer);
+              autoAcceptTimer = null;
+            }
+          });
+
+          // Scroll-based transparency
+          let lastScrollY = window.scrollY;
+          
+          function handleScroll() {
+            if (!banner || banner.offsetParent === null) return;
+            
+            const currentScrollY = window.scrollY;
+            const isScrollingDown = currentScrollY > lastScrollY;
+            
+            if (Math.abs(currentScrollY - lastScrollY) > 10) {
+              isScrolling = true;
+              banner.style.opacity = '0.7';
+              banner.style.pointerEvents = 'none';
+              
+              clearTimeout(scrollTimer);
+              scrollTimer = setTimeout(() => {
+                isScrolling = false;
+                banner.style.opacity = '1';
+                banner.style.pointerEvents = 'auto';
+              }, 1500);
+            }
+            
+            lastScrollY = currentScrollY;
+          }
+
+          window.addEventListener('scroll', handleScroll, { passive: true });
+        }
+
+        // Try to enhance immediately or wait for Axeptio to load
+        enhanceAxeptioBanner();
+        
+        // Also try after a short delay in case Axeptio loads later
+        setTimeout(enhanceAxeptioBanner, 1000);
+        setTimeout(enhanceAxeptioBanner, 3000);
+
+        // Listen for dynamic content changes
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+              if (node.nodeType === 1 && 
+                  (node.classList?.contains('axeptio_widget') || 
+                   node.id?.includes('axeptio') || 
+                   node.className?.includes('axeptio'))) {
+                setTimeout(enhanceAxeptioBanner, 100);
+              }
+            });
+          });
+        });
+
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+      });
+    </script>
+    <!-- End Axeptio Enhancements -->
   </head>
 
   <body>
