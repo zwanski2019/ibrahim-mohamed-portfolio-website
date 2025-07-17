@@ -6,15 +6,19 @@ import { Textarea } from "@/components/ui/textarea";
 import { MessageCircle, Phone, Mail, MapPin, Clock, Send, Zap, MessageSquare } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const EnhancedContact = () => {
   const { language } = useLanguage();
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     service: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const content = {
     en: {
@@ -78,10 +82,39 @@ const EnhancedContact = () => {
 
   const currentContent = content[language];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Handle form submission
+    setIsSubmitting(true);
+    
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            subject: formData.service || 'Service Inquiry',
+            message: formData.message
+          }
+        ]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Message sent!",
+        description: "We'll get back to you soon.",
+      });
+      setFormData({ name: '', email: '', service: '', message: '' });
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleContactAction = (action: string) => {
@@ -175,8 +208,9 @@ const EnhancedContact = () => {
                     type="submit"
                     size="lg"
                     className="w-full axeptio-button-primary flex items-center justify-center gap-2"
+                    disabled={isSubmitting}
                   >
-                    <span>{currentContent.form.submit}</span>
+                    <span>{isSubmitting ? 'Sending...' : currentContent.form.submit}</span>
                     <Send className="h-4 w-4" />
                   </Button>
                 </form>

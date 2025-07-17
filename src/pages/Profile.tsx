@@ -6,9 +6,34 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { User, Mail, Calendar, MapPin } from "lucide-react";
 import { Navigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function Profile() {
   const { user, isAuthenticated } = useAuth();
+
+  // Fetch user activity stats
+  const { data: userStats } = useQuery({
+    queryKey: ['user-stats', user?.id],
+    queryFn: async () => {
+      if (!user?.id) return null;
+      
+      const [postsRes, commentsRes, enrollmentsRes, applicationsRes] = await Promise.all([
+        supabase.from('posts').select('id', { count: 'exact', head: true }).eq('author_id', user.id),
+        supabase.from('comments').select('id', { count: 'exact', head: true }).eq('author_id', user.id),
+        supabase.from('course_enrollments').select('id', { count: 'exact', head: true }).eq('user_id', user.id),
+        supabase.from('applications').select('id', { count: 'exact', head: true }).eq('worker_id', user.id)
+      ]);
+
+      return {
+        posts: postsRes.count || 0,
+        comments: commentsRes.count || 0,
+        courses: enrollmentsRes.count || 0,
+        applications: applicationsRes.count || 0
+      };
+    },
+    enabled: !!user?.id
+  });
 
   if (!isAuthenticated) {
     return <Navigate to="/auth" replace />;
@@ -103,19 +128,19 @@ export default function Profile() {
             <CardContent>
               <div className="grid gap-4 md:grid-cols-4">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">0</div>
+                  <div className="text-2xl font-bold text-primary">{userStats?.posts || 0}</div>
                   <p className="text-sm text-muted-foreground">Posts Created</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">0</div>
+                  <div className="text-2xl font-bold text-primary">{userStats?.comments || 0}</div>
                   <p className="text-sm text-muted-foreground">Comments Made</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">0</div>
+                  <div className="text-2xl font-bold text-primary">{userStats?.courses || 0}</div>
                   <p className="text-sm text-muted-foreground">Courses Enrolled</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">0</div>
+                  <div className="text-2xl font-bold text-primary">{userStats?.applications || 0}</div>
                   <p className="text-sm text-muted-foreground">Jobs Applied</p>
                 </div>
               </div>
