@@ -87,35 +87,40 @@ const Index = () => {
     return () => document.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Optimized scroll animation with debouncing
+  // Optimized scroll animation with proper initialization delay
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in');
-            // Stop observing once animated to improve performance
-            observer.unobserve(entry.target);
-          }
-        });
-      }, 50);
-    };
+    // Prevent animation during initial load
+    const initDelay = setTimeout(() => {
+      let timeout: NodeJS.Timeout;
+      const observerCallback = (entries: IntersectionObserverEntry[]) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('animate-fade-in');
+              // Stop observing once animated to improve performance
+              observer.unobserve(entry.target);
+            }
+          });
+        }, 50);
+      };
 
-    const observer = new IntersectionObserver(observerCallback, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    });
+      const observer = new IntersectionObserver(observerCallback, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
 
-    const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
-    elementsToAnimate.forEach((element) => observer.observe(element));
+      const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+      elementsToAnimate.forEach((element) => observer.observe(element));
 
-    return () => {
-      clearTimeout(timeout);
-      observer.disconnect();
-    };
-  }, [courses]);
+      return () => {
+        clearTimeout(timeout);
+        observer.disconnect();
+      };
+    }, 500); // Delay animation setup to allow content to stabilize
+
+    return () => clearTimeout(initDelay);
+  }, []); // Remove courses dependency to prevent reruns
 
   const structuredDataItems = [
     organizationStructuredData,

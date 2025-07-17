@@ -70,14 +70,11 @@ function App() {
   usePerformanceMonitoring();
   useMemoryMonitoring();
 
-  // Preloader state
-  const [showPreloader, setShowPreloader] = useState(true);
-  const [showMainContent, setShowMainContent] = useState(false);
+  // Simplified single state for app readiness
+  const [isAppReady, setIsAppReady] = useState(false);
 
   const handlePreloaderComplete = useCallback(() => {
-    setShowPreloader(false);
-    // Small delay to ensure smooth transition
-    setTimeout(() => setShowMainContent(true), 50);
+    setIsAppReady(true);
   }, []);
 
   const LoadingSpinner = () => (
@@ -87,8 +84,8 @@ function App() {
     </div>
   );
 
-  // Show preloader first
-  if (showPreloader) {
+  // Show preloader until app is ready
+  if (!isAppReady) {
     return (
       <HelmetProvider>
         <QueryClientProvider client={queryClient}>
@@ -124,7 +121,7 @@ function App() {
                         <meta name="description" content="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals." />
                       </Helmet>
                       <Suspense fallback={<LoadingSpinner />}>
-                        <div className={`transition-opacity duration-300 ${showMainContent ? 'opacity-100' : 'opacity-0'}`}>
+                        <div className="animate-fade-in">
                           <Routes>
                           <Route path="/" element={<Index />} />
                           <Route path="/services" element={<Services />} />
