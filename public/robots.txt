@@ -7,7 +7,7 @@ Sitemap: https://zwanski.org/sitemap.xml
 # Crawl delay for better server performance
 Crawl-delay: 1
 
-# Allow access to important pages
+# Allow access to important pages for SEO
 Allow: /services
 Allow: /about
 Allow: /academy
@@ -18,6 +18,12 @@ Allow: /support
 Allow: /faq
 Allow: /infrastructure
 Allow: /imei-check
+Allow: /computer-model
+
+# Encourage crawling of key service pages
+Allow: /services/*
+Allow: /academy/*
+Allow: /jobs/*
 
 # Disallow admin and private areas
 Disallow: /admin/
@@ -26,8 +32,7 @@ Disallow: /auth/
 Disallow: /profile/
 Disallow: /chat/
 
-# Disallow utility pages
-Disallow: /3d/
+# Disallow utility pages (keeping 3D model accessible via dedicated page)
 Disallow: /newsletter/
 
 # Cache and temporary files

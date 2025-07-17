@@ -1,10 +1,10 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, Shield, Globe, Zap, Users, MessageSquare, Star, Sparkles } from "lucide-react";
+import { ArrowRight, Play, Shield, Globe, Zap, Users, MessageSquare, Star, Sparkles, Monitor, Award, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/context/LanguageContext";
-import { useEffect, useState, useCallback, Suspense } from "react";
-import LaptopCanvas from "@/components/3d/LaptopCanvas";
+import { useEffect, useState, useCallback } from "react";
+import heroImage from "@/assets/hero-it-services.jpg";
 
 const Hero = () => {
   const { t } = useLanguage();
@@ -196,23 +196,44 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* Right Column - Interactive 3D Laptop */}
+            {/* Right Column - Hero Image with Trust Signals */}
             <div className={`relative h-[500px] lg:h-[600px] transition-all duration-500 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-              <div className="absolute inset-0 bg-secondary/30 rounded-2xl border border-border" />
+              <div className="absolute inset-0 bg-gradient-to-br from-secondary/30 to-secondary/10 rounded-2xl border border-border overflow-hidden">
+                <img 
+                  src={heroImage}
+                  alt="Professional IT services in Tunisia - Computer repair, cybersecurity, web development"
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+              </div>
               
-              <Suspense fallback={
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+              {/* Trust Signals Overlay */}
+              <div className="absolute bottom-6 left-6 right-6">
+                <div className="bg-background/95 backdrop-blur-sm rounded-xl p-4 border border-border shadow-lg">
+                  <div className="grid grid-cols-3 gap-4 text-center">
+                    <div className="flex flex-col items-center">
+                      <Award className="h-5 w-5 text-yellow-500 mb-1" />
+                      <span className="text-xs font-medium text-foreground">5-Star Rated</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <Shield className="h-5 w-5 text-green-500 mb-1" />
+                      <span className="text-xs font-medium text-foreground">Secure Solutions</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <Clock className="h-5 w-5 text-blue-500 mb-1" />
+                      <span className="text-xs font-medium text-foreground">24/7 Support</span>
+                    </div>
+                  </div>
+                  <div className="mt-3 text-center">
+                    <Link to="/computer-model">
+                      <Button variant="outline" size="sm" className="text-xs">
+                        <Monitor className="mr-1 h-3 w-3" />
+                        View 3D Model
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
-              }>
-                <LaptopCanvas />
-              </Suspense>
-              
-              {/* Interaction Hint */}
-              <div className="absolute bottom-4 left-4 right-4 text-center">
-                <p className="text-sm text-muted-foreground bg-background/80 backdrop-blur-sm rounded-lg px-4 py-2 border border-border">
-                  🖱️ Click to open • 🔄 Drag to rotate • 📱 Interactive laptop
-                </p>
               </div>
             </div>
           </div>
