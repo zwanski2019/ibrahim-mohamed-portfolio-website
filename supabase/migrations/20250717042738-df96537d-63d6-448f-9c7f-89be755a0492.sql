@@ -1,0 +1,130 @@
+-- First, let's add a status field for job moderation
+ALTER TABLE job_posts ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'published', 'rejected', 'expired'));
+
+-- Create sample job posts for demonstration
+INSERT INTO job_posts (
+  title, 
+  description, 
+  category, 
+  location, 
+  job_type, 
+  salary_type, 
+  salary_min, 
+  salary_max, 
+  employer_id, 
+  requirements, 
+  benefits, 
+  urgency, 
+  status,
+  created_at
+) VALUES 
+(
+  'Senior Full Stack Developer',
+  'We are looking for an experienced Full Stack Developer to join our growing tech team. You will be responsible for developing and maintaining web applications using modern technologies. The ideal candidate should have experience with React, Node.js, and database management.',
+  'Web Development',
+  'Tunis, Tunisia',
+  'full-time',
+  'monthly',
+  2000,
+  3500,
+  (SELECT id FROM profiles LIMIT 1),
+  ARRAY['React.js', 'Node.js', 'PostgreSQL', '3+ years experience'],
+  ARRAY['Health insurance', 'Remote work flexibility', 'Professional development'],
+  'high',
+  'published',
+  NOW() - INTERVAL '2 days'
+),
+(
+  'Mobile App Developer (iOS/Android)',
+  'Join our mobile development team to create innovative mobile applications. We need someone experienced in both iOS and Android development, with knowledge of React Native or Flutter preferred.',
+  'Mobile Development',
+  'Remote (Tunisia)',
+  'contract',
+  'fixed',
+  5000,
+  8000,
+  (SELECT id FROM profiles LIMIT 1),
+  ARRAY['React Native or Flutter', 'iOS/Android native experience', 'API integration'],
+  ARRAY['Flexible hours', 'Project bonuses', 'Learning opportunities'],
+  'medium',
+  'published',
+  NOW() - INTERVAL '5 days'
+),
+(
+  'UI/UX Designer',
+  'We are seeking a creative UI/UX Designer to design intuitive and beautiful user interfaces. You will work closely with our development team to create user-centered designs that enhance user experience.',
+  'Design',
+  'Sfax, Tunisia',
+  'part-time',
+  'hourly',
+  25,
+  40,
+  (SELECT id FROM profiles LIMIT 1),
+  ARRAY['Figma proficiency', 'User research experience', 'Portfolio required'],
+  ARRAY['Creative freedom', 'Mentorship', 'Portfolio building'],
+  'low',
+  'published',
+  NOW() - INTERVAL '1 day'
+),
+(
+  'WordPress Developer',
+  'Looking for a WordPress expert to help with website development and maintenance. Experience with custom themes, plugins, and WooCommerce required.',
+  'Web Development',
+  'Sousse, Tunisia',
+  'freelance',
+  'fixed',
+  800,
+  1500,
+  (SELECT id FROM profiles LIMIT 1),
+  ARRAY['WordPress expertise', 'PHP knowledge', 'Custom theme development'],
+  ARRAY['Quick payment', 'Long-term collaboration potential'],
+  'medium',
+  'published',
+  NOW() - INTERVAL '3 days'
+),
+(
+  'Cybersecurity Specialist',
+  'Join our security team to help protect our systems and data. We need someone with experience in penetration testing, security audits, and compliance frameworks.',
+  'Cybersecurity',
+  'Tunis, Tunisia',
+  'full-time',
+  'monthly',
+  2500,
+  4000,
+  (SELECT id FROM profiles LIMIT 1),
+  ARRAY['Security certifications (CISSP, CEH)', 'Penetration testing', 'Risk assessment'],
+  ARRAY['Security training budget', 'Conference attendance', 'Certification support'],
+  'high',
+  'published',
+  NOW() - INTERVAL '1 week'
+);
+
+-- Add a pending job for demonstration of moderation
+INSERT INTO job_posts (
+  title, 
+  description, 
+  category, 
+  location, 
+  job_type, 
+  salary_type, 
+  salary_min, 
+  employer_id, 
+  requirements, 
+  urgency, 
+  status,
+  created_at
+) VALUES 
+(
+  'Junior Data Analyst',
+  'Entry-level position for a data analyst to join our analytics team. Training will be provided for the right candidate.',
+  'Data Science',
+  'Tunis, Tunisia',
+  'full-time',
+  'monthly',
+  1200,
+  (SELECT id FROM profiles LIMIT 1),
+  ARRAY['Basic SQL knowledge', 'Excel proficiency', 'Analytical mindset'],
+  'medium',
+  'pending',
+  NOW()
+);
