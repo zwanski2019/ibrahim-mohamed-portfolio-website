@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, DollarSign } from "lucide-react";
 import { JobPost } from "@/types/marketplace";
+import { TUNISIA_CENTER, TUNISIA_CITIES } from "@/utils/geocoding";
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -36,23 +37,18 @@ interface JobMapProps {
 
 export const JobMap = ({ jobs, onJobSelect }: JobMapProps) => {
   const jobsWithCoordinates = jobs.filter(job => job.latitude && job.longitude);
+  const hasJobs = jobs.length > 0;
 
-  if (jobsWithCoordinates.length === 0) {
-    return (
-      <Card className="h-96 flex items-center justify-center">
-        <CardContent>
-          <div className="text-center text-muted-foreground">
-            <MapPin className="h-12 w-12 mx-auto mb-2" />
-            <p>No jobs with location data available</p>
-          </div>
-        </CardContent>
-      </Card>
-    );
+  // Calculate center point from all job locations or use Tunisia center as fallback
+  let centerLat = TUNISIA_CENTER.latitude;
+  let centerLng = TUNISIA_CENTER.longitude;
+  let zoomLevel = 6; // Country view
+
+  if (jobsWithCoordinates.length > 0) {
+    centerLat = jobsWithCoordinates.reduce((sum, job) => sum + (job.latitude || 0), 0) / jobsWithCoordinates.length;
+    centerLng = jobsWithCoordinates.reduce((sum, job) => sum + (job.longitude || 0), 0) / jobsWithCoordinates.length;
+    zoomLevel = 10; // City view
   }
-
-  // Calculate center point from all job locations
-  const centerLat = jobsWithCoordinates.reduce((sum, job) => sum + (job.latitude || 0), 0) / jobsWithCoordinates.length;
-  const centerLng = jobsWithCoordinates.reduce((sum, job) => sum + (job.longitude || 0), 0) / jobsWithCoordinates.length;
 
   const formatSalary = (job: JobPost) => {
     if (!job.salary_min && !job.salary_max) return null;
@@ -63,10 +59,26 @@ export const JobMap = ({ jobs, onJobSelect }: JobMapProps) => {
   };
 
   return (
-    <Card className="h-96">
+    <Card className="h-96 relative">
+      {!hasJobs && (
+        <div className="absolute top-4 left-4 z-[1000] bg-background/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <MapPin className="h-4 w-4" />
+            <span>No jobs available - showing Tunisia</span>
+          </div>
+        </div>
+      )}
+      {jobsWithCoordinates.length === 0 && hasJobs && (
+        <div className="absolute top-4 left-4 z-[1000] bg-background/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <MapPin className="h-4 w-4" />
+            <span>{jobs.length} jobs without map coordinates</span>
+          </div>
+        </div>
+      )}
       <MapContainer
         center={[centerLat, centerLng]}
-        zoom={10}
+        zoom={zoomLevel}
         style={{ height: '100%', width: '100%' }}
         className="rounded-lg"
       >
@@ -74,6 +86,29 @@ export const JobMap = ({ jobs, onJobSelect }: JobMapProps) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        
+        {/* Show major cities when no jobs have coordinates */}
+        {jobsWithCoordinates.length === 0 && TUNISIA_CITIES.map((city) => (
+          <Marker
+            key={city.name}
+            position={[city.latitude, city.longitude]}
+            icon={L.divIcon({
+              className: 'city-marker',
+              html: '<div style="background: #8B5CF6; border: 2px solid white; border-radius: 50%; width: 12px; height: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>',
+              iconSize: [12, 12],
+              iconAnchor: [6, 6]
+            })}
+          >
+            <Popup>
+              <div className="text-center">
+                <h3 className="font-semibold text-sm">{city.name}</h3>
+                <p className="text-xs text-muted-foreground">Major city in Tunisia</p>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
+
+        {/* Show actual jobs with coordinates */}
         {jobsWithCoordinates.map((job) => (
           <Marker
             key={job.id}

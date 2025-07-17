@@ -17,6 +17,7 @@ import { useCategories } from "@/hooks/useCategories";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { useLanguage } from "@/context/LanguageContext";
+import { geocodeLocation } from "@/utils/geocoding";
 
 const jobPostSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters"),
@@ -103,6 +104,20 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
     }
 
     try {
+      // Geocode the location to get coordinates
+      const geocodingResult = await geocodeLocation(data.location);
+      let coordinates = null;
+      
+      if (geocodingResult) {
+        coordinates = {
+          latitude: geocodingResult.coordinates.latitude,
+          longitude: geocodingResult.coordinates.longitude
+        };
+        console.log('Geocoded location:', data.location, '→', coordinates);
+      } else {
+        console.warn('Could not geocode location:', data.location);
+      }
+
       await createJobPost.mutateAsync({
         title: data.title,
         description: data.description,
@@ -116,6 +131,8 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
         benefits,
         salary_max: data.salary_max,
         urgency: data.urgency,
+        latitude: coordinates?.latitude,
+        longitude: coordinates?.longitude,
       });
 
       toast.success("Job posted successfully!");

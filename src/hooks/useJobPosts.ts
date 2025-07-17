@@ -91,6 +91,8 @@ export const useCreateJobPost = () => {
       salary_max?: number;
       expires_at?: string;
       urgency?: 'low' | 'medium' | 'high';
+      latitude?: number;
+      longitude?: number;
     }) => {
       // Validate required fields
       if (!jobData.employer_id) {
