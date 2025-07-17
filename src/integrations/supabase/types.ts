@@ -2541,7 +2541,13 @@ export type Database = {
       application_status: "pending" | "accepted" | "rejected" | "withdrawn"
       course_difficulty: "beginner" | "intermediate" | "advanced"
       forum_user_role: "admin" | "moderator" | "trusted_user" | "member"
-      job_status: "draft" | "published" | "closed" | "filled"
+      job_status:
+        | "draft"
+        | "published"
+        | "closed"
+        | "filled"
+        | "pending"
+        | "rejected"
       job_type: "full-time" | "part-time" | "contract" | "freelance"
       lesson_type: "video" | "article" | "interactive" | "quiz"
       moderation_action:
@@ -2701,7 +2707,14 @@ export const Constants = {
       application_status: ["pending", "accepted", "rejected", "withdrawn"],
       course_difficulty: ["beginner", "intermediate", "advanced"],
       forum_user_role: ["admin", "moderator", "trusted_user", "member"],
-      job_status: ["draft", "published", "closed", "filled"],
+      job_status: [
+        "draft",
+        "published",
+        "closed",
+        "filled",
+        "pending",
+        "rejected",
+      ],
       job_type: ["full-time", "part-time", "contract", "freelance"],
       lesson_type: ["video", "article", "interactive", "quiz"],
       moderation_action: [
