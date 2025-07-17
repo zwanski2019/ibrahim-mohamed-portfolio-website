@@ -107,7 +107,7 @@ export default function Footer() {
                     Share your experience with our services
                   </p>
                 </div>
-                <div className="trustpilot-widget" data-locale="en-US" data-template-id="56278e9abfbbba0bdcd568bc" data-businessunit-id="68784b58bb280230abe24fa8" data-style-height="52px" data-style-width="100%">
+                <div className="trustpilot-widget" data-locale="en-US" data-template-id="5419b6a8b0d04a076446a9ad" data-businessunit-id="68784b58bb280230abe24fa8" data-style-height="52px" data-style-width="100%">
                   <a href="https://www.trustpilot.com/review/zwanski.org" target="_blank" rel="noopener" className="text-xs text-muted-foreground hover:text-primary transition-colors font-medium">
                     Leave a Review on Trustpilot →
                   </a>
