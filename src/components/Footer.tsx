@@ -83,7 +83,7 @@ export default function Footer() {
                       </svg>
                     </a>
                     <a 
-                      href="https://www.facebook.com/zwanski"
+                      href="https://www.facebook.com/ethicalhackerzwanskitech"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-muted-foreground hover:text-primary transition-colors"

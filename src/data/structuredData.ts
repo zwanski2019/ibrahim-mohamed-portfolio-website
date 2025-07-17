@@ -32,7 +32,8 @@ export const organizationStructuredData = {
   },
   "sameAs": [
     "https://github.com/zwanski2019",
-    "https://www.linkedin.com/company/zwanski-tech"
+    "https://www.linkedin.com/company/zwanski-tech",
+    "https://www.facebook.com/ethicalhackerzwanskitech"
   ],
   "serviceArea": {
     "@type": "Place",
@@ -125,7 +126,8 @@ export const websiteStructuredData = {
   },
   "sameAs": [
     "https://github.com/zwanski2019",
-    "https://www.linkedin.com/company/zwanski-tech"
+    "https://www.linkedin.com/company/zwanski-tech",
+    "https://www.facebook.com/ethicalhackerzwanskitech"
   ]
 };
 
