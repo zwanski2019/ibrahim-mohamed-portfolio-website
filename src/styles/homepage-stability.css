@@ -1,0 +1,62 @@
+/* Homepage Content Stability Fix */
+
+/* Ensure homepage content is always visible */
+.homepage-content {
+  min-height: 100vh !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  transform: none !important;
+}
+
+/* Prevent any conflicting animations on initial load */
+.homepage-content * {
+  animation-play-state: running !important;
+}
+
+/* Ensure sections are properly displayed */
+.homepage-content section {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+/* Override any conflicting CSS that might hide content */
+.homepage-content .animate-on-scroll {
+  opacity: 1;
+  visibility: visible;
+  display: block;
+}
+
+/* Prevent white screen during route transitions */
+.homepage-content .min-h-screen {
+  background-color: hsl(var(--background)) !important;
+}
+
+/* Stable gradient cursor */
+.gradient-cursor {
+  will-change: transform;
+  contain: layout style paint;
+  pointer-events: none !important;
+}
+
+/* Ensure navbar is always visible */
+nav {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+}
+
+/* Force content to stay visible during animations */
+@media (prefers-reduced-motion: no-preference) {
+  .homepage-content {
+    animation: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .homepage-content * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

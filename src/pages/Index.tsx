@@ -89,8 +89,13 @@ const Index = () => {
 
   // Optimized scroll animation with proper initialization delay
   useEffect(() => {
-    // Prevent animation during initial load
+    // Ensure DOM is fully ready before setting up animations
     const initDelay = setTimeout(() => {
+      const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+      
+      // Early return if no elements to animate
+      if (elementsToAnimate.length === 0) return;
+
       let timeout: NodeJS.Timeout;
       const observerCallback = (entries: IntersectionObserverEntry[]) => {
         clearTimeout(timeout);
@@ -98,29 +103,27 @@ const Index = () => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               entry.target.classList.add('animate-fade-in');
-              // Stop observing once animated to improve performance
               observer.unobserve(entry.target);
             }
           });
-        }, 50);
+        }, 100);
       };
 
       const observer = new IntersectionObserver(observerCallback, {
-        threshold: 0.1,
+        threshold: 0.15,
         rootMargin: '0px 0px -50px 0px'
       });
 
-      const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
       elementsToAnimate.forEach((element) => observer.observe(element));
 
       return () => {
         clearTimeout(timeout);
         observer.disconnect();
       };
-    }, 500); // Delay animation setup to allow content to stabilize
+    }, 1000); // Longer delay to ensure content is stable
 
     return () => clearTimeout(initDelay);
-  }, []); // Remove courses dependency to prevent reruns
+  }, [])
 
   const structuredDataItems = [
     organizationStructuredData,
@@ -129,20 +132,20 @@ const Index = () => {
     faqStructuredData
   ];
 
-  return (
-    <>
-      {/* Optimized gradient cursor effect */}
-      <div className="gradient-cursor fixed top-0 left-0 w-6 h-6 rounded-full pointer-events-none z-50 opacity-15 bg-gradient-to-r from-blue-400 to-purple-500 blur-sm will-change-transform" />
-      
-      <SEOHelmet 
-        title="Zwanski Tech - Professional IT Services & Digital Education Platform"
-        description="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals."
-        keywords="IT services Tunisia, computer repair, cybersecurity, web development, digital education, Zwanski Tech"
-        canonical="https://zwanski.org"
-        structuredData={structuredDataItems}
-      />
-      
-      <div className="min-h-screen bg-background text-foreground">
+  // Render with error boundary and fallback
+  const renderPageContent = () => {
+    try {
+      return (
+        <>
+          <SEOHelmet 
+            title="Zwanski Tech - Professional IT Services & Digital Education Platform"
+            description="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals."
+            keywords="IT services Tunisia, computer repair, cybersecurity, web development, digital education, Zwanski Tech"
+            canonical="https://zwanski.org"
+            structuredData={structuredDataItems}
+          />
+          
+          <div className="min-h-screen bg-background text-foreground homepage-content">
         <Navbar />
         
         {/* Hero Section */}
@@ -393,10 +396,25 @@ const Index = () => {
           <EnhancedContact />
         </section>
 
-        <Footer />
-      </div>
-    </>
-  );
+            <Footer />
+          </div>
+        </>
+      );
+    } catch (error) {
+      console.error('Homepage rendering error:', error);
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-background">
+          <div className="text-center p-8">
+            <h1 className="text-2xl font-bold mb-4">Welcome to Zwanski Tech</h1>
+            <p className="text-muted-foreground mb-4">Loading our services...</p>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          </div>
+        </div>
+      );
+    }
+  };
+
+  return renderPageContent();
 };
 
 export default Index;

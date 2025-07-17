@@ -121,8 +121,9 @@ function App() {
                         <meta name="description" content="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals." />
                       </Helmet>
                       <Suspense fallback={<LoadingSpinner />}>
-                        <div className="animate-fade-in">
-                          <Routes>
+                        <div className="app-content-ready">
+                          <ErrorBoundary>
+                            <Routes>
                           <Route path="/" element={<Index />} />
                           <Route path="/services" element={<Services />} />
                           <Route path="/about" element={<About />} />
@@ -165,7 +166,8 @@ function App() {
                           <Route path="/rss" element={<RSS />} />
                           <Route path="/feed" element={<RSS />} />
                           <Route path="*" element={<NotFound />} />
-                          </Routes>
+                            </Routes>
+                          </ErrorBoundary>
                         </div>
                       </Suspense>
                       
