@@ -8,38 +8,26 @@ interface PreloaderProps {
 const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   const { theme } = useTheme();
   const [isVisible, setIsVisible] = useState(true);
+  const [isFadingOut, setIsFadingOut] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsVisible(false);
-      setTimeout(onComplete, 500); // Wait for fade out animation
-    }, 2000); // Show preloader for 2 seconds
+      setIsFadingOut(true);
+      setTimeout(() => {
+        setIsVisible(false);
+        onComplete();
+      }, 300); // Fade out duration
+    }, 1500); // Show preloader for 1.5 seconds
 
     return () => clearTimeout(timer);
   }, [onComplete]);
 
   if (!isVisible) {
-    return (
-      <div className="preloader-container fade-out">
-        <div className="preloader-content">
-          <div className="preloader-logo">
-            <div className="logo-text">
-              <span className="logo-z">Z</span>
-              <span className="logo-full">wanski Tech</span>
-            </div>
-          </div>
-          <div className="preloader-spinner">
-            <div className="spinner-ring"></div>
-            <div className="spinner-ring"></div>
-            <div className="spinner-ring"></div>
-          </div>
-        </div>
-      </div>
-    );
+    return null;
   }
 
   return (
-    <div className="preloader-container">
+    <div className={`preloader-container ${isFadingOut ? 'fade-out' : ''}`}>
       <div className="preloader-content">
         <div className="preloader-logo">
           <div className="logo-text">

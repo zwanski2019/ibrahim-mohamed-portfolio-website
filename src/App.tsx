@@ -72,9 +72,12 @@ function App() {
 
   // Preloader state
   const [showPreloader, setShowPreloader] = useState(true);
+  const [showMainContent, setShowMainContent] = useState(false);
 
   const handlePreloaderComplete = useCallback(() => {
     setShowPreloader(false);
+    // Small delay to ensure smooth transition
+    setTimeout(() => setShowMainContent(true), 50);
   }, []);
 
   const LoadingSpinner = () => (
@@ -121,7 +124,8 @@ function App() {
                         <meta name="description" content="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals." />
                       </Helmet>
                       <Suspense fallback={<LoadingSpinner />}>
-                        <Routes>
+                        <div className={`transition-opacity duration-300 ${showMainContent ? 'opacity-100' : 'opacity-0'}`}>
+                          <Routes>
                           <Route path="/" element={<Index />} />
                           <Route path="/services" element={<Services />} />
                           <Route path="/about" element={<About />} />
@@ -164,7 +168,8 @@ function App() {
                           <Route path="/rss" element={<RSS />} />
                           <Route path="/feed" element={<RSS />} />
                           <Route path="*" element={<NotFound />} />
-                        </Routes>
+                          </Routes>
+                        </div>
                       </Suspense>
                       
                       <AccessibilityEnhancer />
