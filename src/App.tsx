@@ -54,7 +54,7 @@ import "./styles/utilities.css";
 import "./styles/base.css";
 import "./styles/animations.css";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient(); // Force refresh for Tools import
 
 function App() {
   return (

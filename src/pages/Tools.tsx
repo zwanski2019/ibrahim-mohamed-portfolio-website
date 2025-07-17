@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Smartphone, Wrench, Zap, Globe, Shield, Code } from "lucide-react";
 
 const Tools = () => {
+  console.log("Tools component is loading successfully");
   const { t } = useLanguage();
 
   const featuredTools = [
