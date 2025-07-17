@@ -96,7 +96,7 @@ export default defineConfig(({ mode }) => ({
     chunkSizeWarningLimit: 1000,
     assetsInlineLimit: 4096, // Inline small assets
   },
-  base: './',
+  base: '/',
   optimizeDeps: {
     include: [
       'react', 
