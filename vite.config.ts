@@ -35,7 +35,6 @@ export default defineConfig(({ mode }) => ({
       },
     },
     sourcemap: mode === 'development',
-    minify: 'terser',
     cssMinify: true,
   },
   optimizeDeps: {
