@@ -70,7 +70,7 @@ build: {
       },
     },
     sourcemap: mode === 'development',
-    cssMinify: 'lightningcss',
+    cssMinify: true,
     reportCompressedSize: false,
     chunkSizeWarningLimit: 1000,
   },
