@@ -1,5 +1,7 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { useAlgoliaSearch } from './useAlgoliaSearch';
+import { AlgoliaSearchResult } from '@/services/algoliaSearchService';
 
 export interface SearchResult {
   id: string;
@@ -117,6 +119,10 @@ export const useGlobalSearch = () => {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [useAlgolia, setUseAlgolia] = useState(true); // Toggle for Algolia vs Supabase search
+  
+  // Algolia search integration
+  const algolia = useAlgoliaSearch();
 
   // Debounced search
   useEffect(() => {
@@ -132,32 +138,78 @@ export const useGlobalSearch = () => {
     return () => clearTimeout(timeoutId);
   }, [query]);
 
-  const performSearch = async (searchQuery: string) => {
+  // Convert Algolia results to SearchResult format
+  const convertAlgoliaResults = useCallback((algoliaResults: AlgoliaSearchResult[]): SearchResult[] => {
+    return algoliaResults.map(result => ({
+      id: result.objectID,
+      title: result.title,
+      description: result.description,
+      url: result.url,
+      type: result.type as 'page' | 'blog' | 'job' | 'course' | 'tool',
+      category: result.category || '',
+      snippet: result._snippetResult?.content?.value || result.description,
+      relevance: 1, // Algolia handles relevance internally
+    }));
+  }, []);
+
+  const performSearch = useCallback(async (searchQuery: string) => {
+    if (!searchQuery.trim()) {
+      setResults([]);
+      setSuggestions([]);
+      algolia.clearResults();
+      return;
+    }
+
     setLoading(true);
     
     try {
-      const normalizedQuery = searchQuery.toLowerCase().trim();
-      
-      // Search static content
-      const staticResults = searchStaticContent(normalizedQuery);
-      
-      // Search dynamic content from Supabase
-      const dynamicResults = await searchDynamicContent(normalizedQuery);
-      
-      // Combine and rank results
-      const allResults = [...staticResults, ...dynamicResults];
-      const rankedResults = rankResults(allResults, normalizedQuery);
-      
-      setResults(rankedResults.slice(0, 10)); // Limit to top 10 results
-      generateSuggestions(normalizedQuery);
-      
+      if (useAlgolia) {
+        // Use Algolia search for enhanced search experience
+        await algolia.search(searchQuery);
+        const algoliaResults = convertAlgoliaResults(algolia.results);
+        
+        // If Algolia has good results, use them; otherwise fallback to Supabase
+        if (algoliaResults.length > 0) {
+          setResults(algoliaResults);
+          // Get Algolia suggestions
+          await algolia.getSuggestions(searchQuery);
+          setSuggestions(algolia.suggestions);
+        } else {
+          // Fallback to original search
+          const normalizedQuery = searchQuery.toLowerCase().trim();
+          const staticResults = searchStaticContent(normalizedQuery);
+          const dynamicResults = await searchDynamicContent(normalizedQuery);
+          const allResults = [...staticResults, ...dynamicResults];
+          const rankedResults = rankResults(allResults, normalizedQuery);
+          setResults(rankedResults.slice(0, 10));
+          generateSuggestions(normalizedQuery);
+        }
+      } else {
+        // Use original Supabase search
+        const normalizedQuery = searchQuery.toLowerCase().trim();
+        const staticResults = searchStaticContent(normalizedQuery);
+        const dynamicResults = await searchDynamicContent(normalizedQuery);
+        const allResults = [...staticResults, ...dynamicResults];
+        const rankedResults = rankResults(allResults, normalizedQuery);
+        setResults(rankedResults.slice(0, 10));
+        generateSuggestions(normalizedQuery);
+      }
     } catch (error) {
       console.error('Search error:', error);
-      setResults([]);
+      // Fallback to Supabase search on error
+      if (useAlgolia) {
+        const normalizedQuery = searchQuery.toLowerCase().trim();
+        const staticResults = searchStaticContent(normalizedQuery);
+        const dynamicResults = await searchDynamicContent(normalizedQuery);
+        const allResults = [...staticResults, ...dynamicResults];
+        const rankedResults = rankResults(allResults, normalizedQuery);
+        setResults(rankedResults.slice(0, 10));
+        generateSuggestions(normalizedQuery);
+      }
     } finally {
       setLoading(false);
     }
-  };
+  }, [useAlgolia, algolia, convertAlgoliaResults]);
 
   const searchStaticContent = (query: string): SearchResult[] => {
     return staticContent.filter(item => {
@@ -295,11 +347,12 @@ export const useGlobalSearch = () => {
     setSuggestions(filtered.slice(0, 5));
   };
 
-  const clearSearch = () => {
+  const clearSearch = useCallback(() => {
     setQuery('');
     setResults([]);
     setSuggestions([]);
-  };
+    algolia.clearResults();
+  }, [algolia]);
 
   const filterResults = useMemo(() => {
     return (type?: string) => {
@@ -308,14 +361,27 @@ export const useGlobalSearch = () => {
     };
   }, [results]);
 
+  // Track clicks for analytics
+  const trackClick = useCallback((resultId: string, position: number) => {
+    if (useAlgolia) {
+      algolia.trackClick(resultId, position, query);
+    }
+  }, [useAlgolia, algolia, query]);
+
   return {
     query,
     setQuery,
     results,
-    loading,
+    loading: loading || algolia.loading,
     suggestions,
     clearSearch,
     filterResults,
-    performSearch
+    performSearch,
+    trackClick,
+    useAlgolia,
+    setUseAlgolia,
+    // Algolia-specific metrics
+    totalHits: algolia.totalHits,
+    processingTime: algolia.processingTime,
   };
 };

@@ -31,7 +31,12 @@ export function GlobalSearchBar({
     results, 
     loading, 
     suggestions,
-    clearSearch 
+    clearSearch,
+    trackClick,
+    useAlgolia,
+    setUseAlgolia,
+    totalHits,
+    processingTime
   } = useGlobalSearch();
 
   const hasResults = results.length > 0 || suggestions.length > 0;
@@ -99,7 +104,10 @@ export function GlobalSearchBar({
     }
   };
 
-  const handleResultClick = (url: string) => {
+  const handleResultClick = (url: string, resultId?: string, position?: number) => {
+    if (resultId && position !== undefined) {
+      trackClick(resultId, position);
+    }
     navigate(url);
     setIsOpen(false);
     inputRef.current?.blur();
@@ -185,6 +193,15 @@ export function GlobalSearchBar({
       {/* Search Results Dropdown */}
       {isOpen && hasResults && (
         <div className="absolute top-full left-0 right-0 z-50 bg-background border border-t-0 rounded-b-md shadow-lg max-h-96 overflow-hidden">
+          {/* Search Stats */}
+          {useAlgolia && totalHits > 0 && processingTime !== undefined && (
+            <div className="px-3 py-2 text-xs text-muted-foreground border-b border-border bg-muted/30">
+              <div className="flex items-center justify-between">
+                <span>{totalHits} results found</span>
+                <span>{processingTime}ms via Algolia</span>
+              </div>
+            </div>
+          )}
           <ScrollArea className="max-h-96">
             <div className="p-2">
               {/* Search Results */}
@@ -196,7 +213,7 @@ export function GlobalSearchBar({
                   {results.map((result, index) => (
                     <div
                       key={result.id}
-                      onClick={() => handleResultClick(result.url)}
+                      onClick={() => handleResultClick(result.url, result.id, index)}
                       className={cn(
                         "flex items-center gap-3 p-2 rounded-md cursor-pointer transition-colors",
                         "hover:bg-muted/50",
@@ -205,19 +222,30 @@ export function GlobalSearchBar({
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-medium text-sm truncate">
-                            {result.title}
-                          </span>
+                          <span 
+                            className="font-medium text-sm truncate"
+                            dangerouslySetInnerHTML={{ 
+                              __html: (result as any)._highlightResult?.title?.value || result.title 
+                            }}
+                          />
                           <Badge 
                             variant="secondary" 
                             className={cn("text-xs px-2 py-0", getTypeColor(result.type))}
                           >
                             {getTypeLabel(result.type)}
                           </Badge>
+                          {useAlgolia && (
+                            <Badge variant="outline" className="text-xs">
+                              AI
+                            </Badge>
+                          )}
                         </div>
-                        <p className="text-xs text-muted-foreground line-clamp-2">
-                          {result.description}
-                        </p>
+                        <p 
+                          className="text-xs text-muted-foreground line-clamp-2"
+                          dangerouslySetInnerHTML={{ 
+                            __html: result.snippet || result.description 
+                          }}
+                        />
                       </div>
                       <ArrowRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                     </div>
@@ -229,7 +257,7 @@ export function GlobalSearchBar({
               {suggestions.length > 0 && (
                 <div>
                   <div className="px-2 py-1 text-xs text-muted-foreground font-medium uppercase tracking-wide">
-                    Suggestions
+                    {useAlgolia ? 'AI Suggestions' : 'Suggestions'}
                   </div>
                   {suggestions.map((suggestion, index) => (
                     <div
@@ -260,6 +288,16 @@ export function GlobalSearchBar({
                       Search for "{query}" in all content
                     </span>
                     <ArrowRight className="h-4 w-4 text-muted-foreground ml-auto" />
+                  </div>
+                  {/* Search Engine Toggle */}
+                  <div
+                    onClick={() => setUseAlgolia(!useAlgolia)}
+                    className="flex items-center justify-between p-2 rounded-md cursor-pointer transition-colors hover:bg-muted/50"
+                  >
+                    <span className="text-xs text-muted-foreground">
+                      Using: {useAlgolia ? 'Algolia (AI Enhanced)' : 'Basic Search'}
+                    </span>
+                    <span className="text-xs text-primary">Switch</span>
                   </div>
                 </div>
               )}
