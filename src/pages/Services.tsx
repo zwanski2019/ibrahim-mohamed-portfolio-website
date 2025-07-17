@@ -1,5 +1,6 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,6 +9,7 @@ import ServiceRequestForm from "@/components/ServiceRequestForm";
 import { useLanguage } from "@/context/LanguageContext";
 
 const Services = () => {
+  const [searchParams] = useSearchParams();
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const { t } = useLanguage();
   
@@ -59,6 +61,30 @@ const Services = () => {
       price: `${t("services.pricing.from")} $300`,
       icon: "Code" as const,
       category: "development"
+    },
+    {
+      id: "computer-repair",
+      title: "Computer Repair",
+      description: "Hardware diagnosis, repair, and maintenance services for desktops and laptops",
+      price: `${t("services.pricing.from")} $80`,
+      icon: "HardDrive" as const,
+      category: "repair"
+    },
+    {
+      id: "smartphone-repair",
+      title: "Smartphone Repair", 
+      description: "Screen replacement, battery repair, and diagnostic services for mobile devices",
+      price: `${t("services.pricing.from")} $60`,
+      icon: "Smartphone" as const,
+      category: "repair"
+    },
+    {
+      id: "data-recovery",
+      title: "Data Recovery",
+      description: "Professional data recovery services for damaged or corrupted storage devices",
+      price: `${t("services.pricing.from")} $150`,
+      icon: "Database" as const,
+      category: "repair"
     }
   ];
 
@@ -67,10 +93,20 @@ const Services = () => {
     { id: "development", name: t("services.development"), count: allServices.filter(s => s.category === "development").length },
     { id: "support", name: t("services.support"), count: allServices.filter(s => s.category === "support").length },
     { id: "security", name: t("services.security"), count: allServices.filter(s => s.category === "security").length },
-    { id: "marketing", name: t("services.marketing"), count: allServices.filter(s => s.category === "marketing").length }
+    { id: "marketing", name: t("services.marketing"), count: allServices.filter(s => s.category === "marketing").length },
+    { id: "repair", name: "Repair Services", count: allServices.filter(s => s.category === "repair").length }
   ];
 
   const [activeCategory, setActiveCategory] = useState("all");
+  
+  // Handle URL parameters on component mount
+  useEffect(() => {
+    const categoryParam = searchParams.get('category');
+    if (categoryParam && categories.some(cat => cat.id === categoryParam)) {
+      setActiveCategory(categoryParam);
+    }
+  }, [searchParams]);
+  
   const filteredServices = activeCategory === "all" 
     ? allServices 
     : allServices.filter(service => service.category === activeCategory);

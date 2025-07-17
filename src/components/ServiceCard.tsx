@@ -7,11 +7,14 @@ import {
   Monitor,
   Search,
   Shield,
+  HardDrive,
+  Smartphone,
+  Database,
   LucideIcon
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-type ServiceIconType = "Code" | "LifeBuoy" | "Layout" | "Monitor" | "Search" | "Shield";
+type ServiceIconType = "Code" | "LifeBuoy" | "Layout" | "Monitor" | "Search" | "Shield" | "HardDrive" | "Smartphone" | "Database";
 
 interface ServiceCardProps {
   id: string;
@@ -29,7 +32,10 @@ const ServiceCard = ({ id, title, description, price, icon, onSelect }: ServiceC
     Layout,
     Monitor,
     Search,
-    Shield
+    Shield,
+    HardDrive,
+    Smartphone,
+    Database
   };
 
   const IconComponent = IconComponents[icon];
