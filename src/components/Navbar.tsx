@@ -153,25 +153,27 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
-            {mainNavItems.map((item) => {
-              const Icon = item.icon;
-              const showItem = !(item as any).authRequired || isAuthenticated;
-              
-              if (!showItem) return null;
-              
-              return (
-                <Button
-                  key={item.path}
-                  variant={isActivePath(item.path) ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => navigate(item.path)}
-                  className="flex items-center gap-2"
-                >
-                  <Icon className="h-4 w-4" />
-                  {item.label}
-                </Button>
-              );
-            })}
+            {mainNavItems
+              .filter((item) => item.label !== "Home") // Hide Home button on desktop
+              .map((item) => {
+                const Icon = item.icon;
+                const showItem = !(item as any).authRequired || isAuthenticated;
+                
+                if (!showItem) return null;
+                
+                return (
+                  <Button
+                    key={item.path}
+                    variant={isActivePath(item.path) ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => navigate(item.path)}
+                    className="flex items-center gap-2"
+                  >
+                    <Icon className="h-4 w-4" />
+                    {item.label}
+                  </Button>
+                );
+              })}
           </div>
 
           {/* Right Side */}
