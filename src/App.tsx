@@ -12,9 +12,8 @@ import { CookiePreferencesProvider } from "@/context/CookiePreferencesContext";
 import { AuthProvider } from "@/context/AuthContext";
 
 // Lazy load components for better performance with error handling
-import { lazy, Suspense, useState, useCallback } from "react";
+import { lazy, Suspense } from "react";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import Preloader from "@/components/Preloader";
 
 // Enhanced Index import with retry logic
 const Index = lazy(() => 
@@ -97,13 +96,6 @@ function App() {
   usePerformanceMonitoring();
   useMemoryMonitoring();
 
-  // Simplified single state for app readiness
-  const [isAppReady, setIsAppReady] = useState(false);
-
-  const handlePreloaderComplete = useCallback(() => {
-    setIsAppReady(true);
-  }, []);
-
   const LoadingSpinner = () => (
     <div className="min-h-screen flex items-center justify-center bg-background" role="status" aria-label="Loading">
       <div className="text-center">
@@ -113,27 +105,6 @@ function App() {
       </div>
     </div>
   );
-
-  // Show preloader until app is ready
-  if (!isAppReady) {
-    return (
-      <HelmetProvider>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <ThemeProvider>
-              <LanguageProvider>
-                <CookiePreferencesProvider>
-                  <AuthProvider>
-                    <Preloader onComplete={handlePreloaderComplete} />
-                  </AuthProvider>
-                </CookiePreferencesProvider>
-              </LanguageProvider>
-            </ThemeProvider>
-          </TooltipProvider>
-        </QueryClientProvider>
-      </HelmetProvider>
-    );
-  }
 
   return (
     <HelmetProvider>

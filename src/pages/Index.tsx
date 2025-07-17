@@ -117,40 +117,33 @@ const Index = () => {
 
   // Optimized scroll animation with proper initialization delay
   useEffect(() => {
-    // Ensure DOM is fully ready and content is visible before setting up animations
-    const initDelay = setTimeout(() => {
-      const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
-      
-      // Early return if no elements to animate
-      if (elementsToAnimate.length === 0) return;
+    // Simplified animation setup - no delays, immediate visibility
+    const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+    
+    if (elementsToAnimate.length > 0) {
+      // Make elements visible immediately
+      elementsToAnimate.forEach(element => {
+        (element as HTMLElement).style.opacity = '1';
+        (element as HTMLElement).style.visibility = 'visible';
+      });
 
-      let timeout: NodeJS.Timeout;
-      const observerCallback = (entries: IntersectionObserverEntry[]) => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('animate-fade-in');
-              observer.unobserve(entry.target);
-            }
-          });
-        }, 50); // Reduced timeout for faster response
-      };
-
-      const observer = new IntersectionObserver(observerCallback, {
-        threshold: 0.1, // Lower threshold for earlier triggering
-        rootMargin: '50px 0px -25px 0px' // More generous margins
+      // Set up intersection observer for animations
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '50px 0px -25px 0px'
       });
 
       elementsToAnimate.forEach((element) => observer.observe(element));
 
-      return () => {
-        clearTimeout(timeout);
-        observer.disconnect();
-      };
-    }, 1500); // Longer delay to ensure everything is loaded
-
-    return () => clearTimeout(initDelay);
+      return () => observer.disconnect();
+    }
   }, [])
 
   const structuredDataItems = [
@@ -169,11 +162,11 @@ const Index = () => {
             title="Zwanski Tech - Professional IT Services & Digital Education Platform"
             description="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals."
             keywords="IT services Tunisia, computer repair, cybersecurity, web development, digital education, Zwanski Tech"
-            canonical="https://zwanski.org"
+            canonical="https://zwanski.org/"
             structuredData={structuredDataItems}
           />
           
-          <div className="min-h-screen bg-background text-foreground homepage-content" style={{opacity: 1, visibility: 'visible'}}>
+          <div className="min-h-screen bg-background text-foreground homepage-content" style={{opacity: 1, visibility: 'visible', display: 'block'}}>
         <Navbar />
         
         {/* Hero Section */}
