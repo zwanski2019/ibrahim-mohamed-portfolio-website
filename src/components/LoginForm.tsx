@@ -89,7 +89,7 @@ const LoginForm = () => {
       </div>
       
       <p className="mt-6 text-center text-sm text-muted-foreground">
-        This is a demo chat app. Messages are not persistent and will be lost on page refresh.
+        Sign in to join the live chat. Your messages will be stored securely.
       </p>
     </div>
   );
