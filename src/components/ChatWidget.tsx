@@ -5,16 +5,26 @@ import { Input } from "@/components/ui/input";
 import { MessageCircle, Send, X, Users, Wifi, WifiOff, AlertCircle } from "lucide-react";
 import ChatMessage from "@/components/ChatMessage";
 import LoginForm from "@/components/LoginForm";
-import { useWebSocket } from "@/hooks/useWebSocket";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
+
+interface ChatMessageType {
+  id: number;
+  message: string;
+  username: string;
+  avatar_url?: string;
+  created_at: string;
+  user_id?: string;
+}
 
 const ChatWidget = () => {
   const { user, isAuthenticated, signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const [userProfile, setUserProfile] = useState<any>(null);
+  const [messages, setMessages] = useState<ChatMessageType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   
@@ -57,20 +67,57 @@ const ChatWidget = () => {
   const getAvatarUrl = () => {
     return userProfile?.avatar_url || '';
   };
-  
-  const { 
-    messages, 
-    isConnected, 
-    isConnecting, 
-    connectionError,
-    connect, 
-    disconnect, 
-    sendMessage,
-    retryConnection
-  } = useWebSocket({
-    username: getDisplayName(),
-    avatar: getAvatarUrl()
-  });
+
+  // Fetch messages from Supabase
+  const fetchMessages = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("chat_messages")
+        .select("*")
+        .order("created_at", { ascending: true });
+
+      if (error) {
+        console.error("Error fetching messages:", error);
+        return;
+      }
+
+      setMessages(data || []);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
+  };
+
+  // Load messages when chat opens and user is authenticated
+  useEffect(() => {
+    if (isAuthenticated && isOpen) {
+      fetchMessages();
+    }
+  }, [isAuthenticated, isOpen]);
+
+  // Set up real-time subscription for new messages
+  useEffect(() => {
+    if (!isAuthenticated || !isOpen) return;
+
+    const channel = supabase
+      .channel('chat-messages')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'chat_messages'
+        },
+        (payload) => {
+          const newMessage = payload.new as ChatMessageType;
+          setMessages((prev) => [...prev, newMessage]);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [isAuthenticated, isOpen]);
 
   // Auto-scroll to bottom of messages
   useEffect(() => {
@@ -79,39 +126,44 @@ const ChatWidget = () => {
     }
   }, [messages, isOpen]);
 
-  // Connect when user is authenticated and widget is open
-  useEffect(() => {
-    if (isAuthenticated && userProfile && isOpen) {
-      connect();
-    } else if (!isOpen) {
-      disconnect();
-    }
-  }, [isAuthenticated, userProfile, isOpen, connect, disconnect]);
-
   // Send a new message
-  const handleSendMessage = (e: React.FormEvent) => {
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!newMessage.trim()) return;
+    if (!newMessage.trim() || !isAuthenticated || !user) return;
+
+    setIsLoading(true);
     
-    if (!isConnected) {
-      toast({
-        title: "Not Connected",
-        description: "Please wait for connection to be established",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    const success = sendMessage(newMessage);
-    if (success) {
+    try {
+      const { error } = await supabase
+        .from("chat_messages")
+        .insert({
+          message: newMessage.trim(),
+          username: getDisplayName(),
+          avatar_url: getAvatarUrl(),
+          user_id: user.id
+        });
+
+      if (error) {
+        toast({
+          title: "Message Failed",
+          description: "Failed to send message. Please try again.",
+          variant: "destructive",
+        });
+        console.error("Error sending message:", error);
+        return;
+      }
+
       setNewMessage("");
-    } else {
+    } catch (error) {
       toast({
         title: "Message Failed",
         description: "Failed to send message. Please try again.",
         variant: "destructive",
       });
+      console.error("Error sending message:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -120,7 +172,6 @@ const ChatWidget = () => {
   };
 
   const handleSignOut = async () => {
-    disconnect();
     await signOut();
   };
 
@@ -150,19 +201,13 @@ const ChatWidget = () => {
               <MessageCircle className="h-4 w-4 text-primary" />
               <h3 className="font-semibold text-sm">Live Chat</h3>
               <div className="flex items-center gap-1">
-                {isConnecting ? (
-                  <WifiOff className="h-3 w-3 text-yellow-500 animate-pulse" />
-                ) : isConnected ? (
-                  <Wifi className="h-3 w-3 text-green-500" />
-                ) : (
-                  <WifiOff className="h-3 w-3 text-red-500" />
-                )}
+                <Wifi className="h-3 w-3 text-green-500" />
               </div>
             </div>
             <div className="flex items-center gap-1">
               <Users className="h-3 w-3 text-muted-foreground" />
               <span className="text-xs text-muted-foreground">
-                {isConnected ? 'Online' : 'Offline'}
+                Connected
               </span>
               <Button
                 variant="ghost"
@@ -188,41 +233,23 @@ const ChatWidget = () => {
             <>
               {/* Messages */}
               <div className="flex-1 overflow-y-auto p-2 space-y-2">
-                {connectionError && (
-                  <div className="bg-red-50 border border-red-200 rounded p-2 mb-2">
-                    <div className="flex items-center gap-1 text-red-800 text-xs">
-                      <AlertCircle className="h-3 w-3" />
-                      <span>Connection Error</span>
-                    </div>
-                    <p className="text-red-700 text-xs mt-1">{connectionError}</p>
-                    <Button
-                      onClick={retryConnection}
-                      size="sm"
-                      className="mt-1 h-6 text-xs"
-                      disabled={isConnecting}
-                    >
-                      {isConnecting ? "Retrying..." : "Retry"}
-                    </Button>
-                  </div>
-                )}
-                
                 {messages.length === 0 ? (
                   <div className="text-center text-muted-foreground py-4">
                     <MessageCircle className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                    <p className="text-xs">No messages yet</p>
-                    <p className="text-xs">Start the conversation!</p>
+                    <p className="text-xs">You're now connected.</p>
+                    <p className="text-xs">Messages are stored securely.</p>
                   </div>
                 ) : (
                   messages.map((msg) => (
                     <ChatMessage 
                       key={msg.id}
                       message={{
-                        id: msg.id,
+                        id: msg.id.toString(),
                         sender: msg.username === getDisplayName() ? user!.id : 'other',
                         username: msg.username,
-                        avatar: msg.avatar,
+                        avatar: msg.avatar_url,
                         message: msg.message,
-                        timestamp: msg.timestamp
+                        timestamp: msg.created_at
                       }}
                       isOwnMessage={msg.username === getDisplayName()}
                     />
@@ -237,21 +264,15 @@ const ChatWidget = () => {
                 className="border-t border-primary/20 p-2 flex gap-2"
               >
                 <Input
-                  placeholder={
-                    isConnecting 
-                      ? "Connecting..." 
-                      : isConnected 
-                        ? "Type a message..." 
-                        : "Disconnected"
-                  }
+                  placeholder="Type a message..."
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   className="flex-1 h-8 text-xs"
-                  disabled={!isConnected}
+                  disabled={isLoading}
                 />
                 <Button 
                   type="submit" 
-                  disabled={!isConnected || !newMessage.trim()}
+                  disabled={isLoading || !newMessage.trim()}
                   size="sm"
                   className="h-8 w-8 p-0"
                 >
