@@ -12,7 +12,7 @@ const ZwanskiLogo: React.FC<ZwanskiLogoProps> = ({
 }) => {
   return (
     <div 
-      className={`flex items-center space-x-2 cursor-pointer transition-all duration-200 hover:scale-105 focus:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-lg p-2 -m-2 -ml-8 ${className}`}
+      className={`flex items-center space-x-2 cursor-pointer transition-all duration-200 hover:scale-105 focus:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-lg p-2 -m-2 -ml-12 ${className}`}
       onClick={onClick}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
