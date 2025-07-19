@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { MessageCircle, Phone, Mail, MapPin, Clock, Send, Zap, MessageSquare } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import TurnstileWidget from "./TurnstileWidget";
@@ -21,6 +21,8 @@ const EnhancedContact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [siteKey, setSiteKey] = useState<string>("");
+  const [loadingConfig, setLoadingConfig] = useState(true);
 
   const content = {
     en: {
@@ -83,6 +85,22 @@ const EnhancedContact = () => {
   };
 
   const currentContent = content[language];
+
+  useEffect(() => {
+    const getTurnstileConfig = async () => {
+      try {
+        const { data, error } = await supabase.functions.invoke('get-turnstile-config');
+        if (error) throw error;
+        setSiteKey(data.siteKey);
+      } catch (error) {
+        console.error('Error fetching Turnstile config:', error);
+      } finally {
+        setLoadingConfig(false);
+      }
+    };
+
+    getTurnstileConfig();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -228,13 +246,16 @@ const EnhancedContact = () => {
                   
                   {/* Turnstile Widget */}
                   <div className="py-2">
-                    <TurnstileWidget
-                      onVerify={setTurnstileToken}
-                      onError={() => setTurnstileToken(null)}
-                      onExpire={() => setTurnstileToken(null)}
-                      theme="auto"
-                      size="normal"
-                    />
+                    {!loadingConfig && siteKey && (
+                      <TurnstileWidget
+                        siteKey={siteKey}
+                        onVerify={setTurnstileToken}
+                        onError={() => setTurnstileToken(null)}
+                        onExpire={() => setTurnstileToken(null)}
+                        theme="auto"
+                        size="normal"
+                      />
+                    )}
                   </div>
                   
                   <Button 

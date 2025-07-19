@@ -1,6 +1,6 @@
 
 import { Github, LinkedinIcon, Mail, MapPin, Phone } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -16,6 +16,24 @@ export default function Contact() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [siteKey, setSiteKey] = useState<string>("");
+  const [loadingConfig, setLoadingConfig] = useState(true);
+
+  useEffect(() => {
+    const getTurnstileConfig = async () => {
+      try {
+        const { data, error } = await supabase.functions.invoke('get-turnstile-config');
+        if (error) throw error;
+        setSiteKey(data.siteKey);
+      } catch (error) {
+        console.error('Error fetching Turnstile config:', error);
+      } finally {
+        setLoadingConfig(false);
+      }
+    };
+
+    getTurnstileConfig();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -160,13 +178,16 @@ export default function Contact() {
               
               {/* Turnstile Widget */}
               <div className="py-2">
-                <TurnstileWidget
-                  onVerify={setTurnstileToken}
-                  onError={() => setTurnstileToken(null)}
-                  onExpire={() => setTurnstileToken(null)}
-                  theme="auto"
-                  size="normal"
-                />
+                {!loadingConfig && siteKey && (
+                  <TurnstileWidget
+                    siteKey={siteKey}
+                    onVerify={setTurnstileToken}
+                    onError={() => setTurnstileToken(null)}
+                    onExpire={() => setTurnstileToken(null)}
+                    theme="auto"
+                    size="normal"
+                  />
+                )}
               </div>
               
               <button
