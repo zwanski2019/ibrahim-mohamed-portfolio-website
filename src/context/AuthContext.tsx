@@ -10,7 +10,7 @@ type AuthContextType = {
   isLoading: boolean;
   isAuthenticated: boolean;
   signUp: (email: string, password: string, userData?: any) => Promise<{ error: any }>;
-  signIn: (email: string, password: string) => Promise<{ error: any }>;
+  signIn: (email: string, password: string, captchaToken?: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ error: any }>;
 };
@@ -74,10 +74,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   // Sign in function
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (email: string, password: string, captchaToken?: string) => {
     const { error } = await supabase.auth.signInWithPassword({
       email,
-      password
+      password,
+      options: captchaToken ? { captchaToken } : undefined
     });
     return { error };
   };

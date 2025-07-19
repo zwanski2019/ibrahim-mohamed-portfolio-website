@@ -33,6 +33,7 @@ const Auth = () => {
   const [userRoles, setUserRoles] = useState<string[]>(["student"]);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [signinTurnstileToken, setSigninTurnstileToken] = useState<string | null>(null);
 
   // Redirect authenticated users
   useEffect(() => {
@@ -55,7 +56,13 @@ const Auth = () => {
     setLoading(true);
     setError("");
 
-    const { error } = await signIn(email, password);
+    if (!signinTurnstileToken) {
+      setError("Please complete the security verification");
+      setLoading(false);
+      return;
+    }
+
+    const { error } = await signIn(email, password, signinTurnstileToken);
     
     if (error) {
       setError(error.message);
@@ -242,7 +249,18 @@ const Auth = () => {
                   </div>
                 </div>
 
-                <Button type="submit" className="w-full" disabled={loading}>
+                {/* Turnstile Widget for Sign In */}
+                <div className="py-2">
+                  <TurnstileWidget
+                    onVerify={setSigninTurnstileToken}
+                    onError={() => setSigninTurnstileToken(null)}
+                    onExpire={() => setSigninTurnstileToken(null)}
+                    theme="auto"
+                    size="compact"
+                  />
+                </div>
+
+                <Button type="submit" className="w-full" disabled={loading || !signinTurnstileToken}>
                   {loading ? "Signing In..." : "Sign In"}
                 </Button>
               </form>
