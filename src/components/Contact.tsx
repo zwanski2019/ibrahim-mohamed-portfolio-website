@@ -1,4 +1,3 @@
-
 import { Github, LinkedinIcon, Mail, MapPin, Phone } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -18,15 +17,28 @@ export default function Contact() {
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [siteKey, setSiteKey] = useState<string>("");
   const [loadingConfig, setLoadingConfig] = useState(true);
+  const [turnstileEnabled, setTurnstileEnabled] = useState(false);
 
   useEffect(() => {
     const getTurnstileConfig = async () => {
       try {
+        console.log('Fetching Turnstile config...');
         const { data, error } = await supabase.functions.invoke('get-turnstile-config');
-        if (error) throw error;
-        setSiteKey(data.siteKey);
+        
+        if (error) {
+          console.warn('Error fetching Turnstile config:', error);
+          setTurnstileEnabled(false);
+        } else if (data?.siteKey) {
+          console.log('Turnstile config loaded successfully');
+          setSiteKey(data.siteKey);
+          setTurnstileEnabled(true);
+        } else {
+          console.warn('No site key returned, Turnstile disabled');
+          setTurnstileEnabled(false);
+        }
       } catch (error) {
-        console.error('Error fetching Turnstile config:', error);
+        console.warn('Failed to fetch Turnstile config:', error);
+        setTurnstileEnabled(false);
       } finally {
         setLoadingConfig(false);
       }
@@ -45,7 +57,8 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!turnstileToken) {
+    // Only require Turnstile token if Turnstile is enabled
+    if (turnstileEnabled && !turnstileToken) {
       toast({
         title: "Security verification required",
         description: "Please complete the security check.",
@@ -57,13 +70,15 @@ export default function Contact() {
     setIsSubmitting(true);
     
     try {
-      // Verify Turnstile token with edge function
-      const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-turnstile', {
-        body: { token: turnstileToken }
-      });
+      // Only verify Turnstile token if it's enabled and we have a token
+      if (turnstileEnabled && turnstileToken) {
+        const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-turnstile', {
+          body: { token: turnstileToken }
+        });
 
-      if (verificationError || !verificationData?.success) {
-        throw new Error('Security verification failed');
+        if (verificationError || !verificationData?.success) {
+          throw new Error('Security verification failed');
+        }
       }
 
       const { error } = await supabase
@@ -176,9 +191,9 @@ export default function Contact() {
                 ></textarea>
               </div>
               
-              {/* Turnstile Widget */}
-              <div className="py-2">
-                {!loadingConfig && siteKey && (
+              {/* Turnstile Widget - Only show if enabled */}
+              {turnstileEnabled && !loadingConfig && siteKey && (
+                <div className="py-2">
                   <TurnstileWidget
                     siteKey={siteKey}
                     onVerify={setTurnstileToken}
@@ -187,12 +202,18 @@ export default function Contact() {
                     theme="auto"
                     size="normal"
                   />
-                )}
-              </div>
+                </div>
+              )}
+              
+              {!turnstileEnabled && !loadingConfig && (
+                <div className="py-2 text-sm text-muted-foreground">
+                  Security verification is currently unavailable
+                </div>
+              )}
               
               <button
                 type="submit"
-                disabled={isSubmitting || !turnstileToken}
+                disabled={isSubmitting || (turnstileEnabled && !turnstileToken)}
                 className="w-full py-3 px-6 rounded-lg bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-xl transition-all hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? "Sending..." : "Send Message"}

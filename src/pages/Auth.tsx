@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
@@ -34,22 +35,32 @@ const Auth = () => {
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [signinTurnstileToken, setSigninTurnstileToken] = useState<string | null>(null);
   const [turnstileSiteKey, setTurnstileSiteKey] = useState<string>("");
+  const [turnstileEnabled, setTurnstileEnabled] = useState(false);
+  const [loadingTurnstile, setLoadingTurnstile] = useState(true);
 
   // Fetch Turnstile site key
   useEffect(() => {
     const fetchTurnstileConfig = async () => {
       try {
+        console.log('Auth: Fetching Turnstile config...');
         const { data, error } = await supabase.functions.invoke('get-turnstile-config');
+        
         if (error) {
-          console.error('Error fetching Turnstile config:', error);
-          setError('Failed to load security verification');
+          console.warn('Auth: Error fetching Turnstile config:', error);
+          setTurnstileEnabled(false);
         } else if (data?.siteKey) {
+          console.log('Auth: Turnstile config loaded successfully');
           setTurnstileSiteKey(data.siteKey);
-          console.log('Turnstile site key loaded successfully');
+          setTurnstileEnabled(true);
+        } else {
+          console.warn('Auth: No site key returned, Turnstile disabled');
+          setTurnstileEnabled(false);
         }
       } catch (err) {
-        console.error('Error invoking Turnstile config function:', err);
-        setError('Failed to load security verification');
+        console.warn('Auth: Error invoking Turnstile config function:', err);
+        setTurnstileEnabled(false);
+      } finally {
+        setLoadingTurnstile(false);
       }
     };
 
@@ -77,7 +88,8 @@ const Auth = () => {
     setLoading(true);
     setError("");
 
-    if (!signinTurnstileToken) {
+    // Only require Turnstile if it's enabled
+    if (turnstileEnabled && !signinTurnstileToken) {
       setError("Please complete the security verification");
       setLoading(false);
       return;
@@ -109,20 +121,23 @@ const Auth = () => {
       return;
     }
 
-    if (!turnstileToken) {
+    // Only require Turnstile if it's enabled
+    if (turnstileEnabled && !turnstileToken) {
       setError("Please complete the security verification");
       setLoading(false);
       return;
     }
 
     try {
-      // Verify Turnstile token first
-      const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-turnstile', {
-        body: { token: turnstileToken }
-      });
+      // Only verify Turnstile token if it's enabled
+      if (turnstileEnabled && turnstileToken) {
+        const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-turnstile', {
+          body: { token: turnstileToken }
+        });
 
-      if (verificationError || !verificationData?.success) {
-        throw new Error('Security verification failed');
+        if (verificationError || !verificationData?.success) {
+          throw new Error('Security verification failed');
+        }
       }
 
       const { error } = await signUp(email, password, {
@@ -270,8 +285,8 @@ const Auth = () => {
                   </div>
                 </div>
 
-                {/* Turnstile Widget for Sign In */}
-                {turnstileSiteKey && (
+                {/* Turnstile Widget for Sign In - Only show if enabled */}
+                {turnstileEnabled && !loadingTurnstile && turnstileSiteKey && (
                   <div className="py-2">
                     <TurnstileWidget
                       siteKey={turnstileSiteKey}
@@ -284,7 +299,17 @@ const Auth = () => {
                   </div>
                 )}
 
-                <Button type="submit" className="w-full" disabled={loading || !signinTurnstileToken}>
+                {!turnstileEnabled && !loadingTurnstile && (
+                  <div className="py-2 text-sm text-muted-foreground">
+                    Security verification is currently unavailable
+                  </div>
+                )}
+
+                <Button 
+                  type="submit" 
+                  className="w-full" 
+                  disabled={loading || (turnstileEnabled && !signinTurnstileToken)}
+                >
                   {loading ? "Signing In..." : "Sign In"}
                 </Button>
               </form>
@@ -417,8 +442,8 @@ const Auth = () => {
                   </Label>
                 </div>
 
-                {/* Turnstile Widget */}
-                {turnstileSiteKey && (
+                {/* Turnstile Widget - Only show if enabled */}
+                {turnstileEnabled && !loadingTurnstile && turnstileSiteKey && (
                   <div className="py-2">
                     <TurnstileWidget
                       siteKey={turnstileSiteKey}
@@ -431,7 +456,17 @@ const Auth = () => {
                   </div>
                 )}
 
-                <Button type="submit" className="w-full" disabled={loading || !turnstileToken}>
+                {!turnstileEnabled && !loadingTurnstile && (
+                  <div className="py-2 text-sm text-muted-foreground">
+                    Security verification is currently unavailable
+                  </div>
+                )}
+
+                <Button 
+                  type="submit" 
+                  className="w-full" 
+                  disabled={loading || (turnstileEnabled && !turnstileToken)}
+                >
                   {loading ? "Creating Account..." : "Create Account"}
                 </Button>
               </form>

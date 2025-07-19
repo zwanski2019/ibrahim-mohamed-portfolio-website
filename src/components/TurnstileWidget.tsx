@@ -35,9 +35,12 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
 
   useEffect(() => {
     if (!siteKey) {
+      console.warn('TurnstileWidget: No site key provided');
       setError('Site key is required');
       return;
     }
+
+    console.log('TurnstileWidget: Loading with site key:', siteKey);
 
     // Load Turnstile script
     const script = document.createElement('script');
@@ -46,17 +49,23 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
     script.defer = true;
     
     script.onload = () => {
-      console.log('Turnstile script loaded successfully');
+      console.log('TurnstileWidget: Script loaded successfully');
       setIsLoaded(true);
     };
 
     script.onerror = () => {
-      console.error('Failed to load Turnstile script');
+      console.error('TurnstileWidget: Failed to load script');
       setError('Failed to load CAPTCHA');
       if (onError) onError();
     };
 
-    document.head.appendChild(script);
+    // Check if script is already loaded
+    if (window.turnstile) {
+      console.log('TurnstileWidget: Script already loaded');
+      setIsLoaded(true);
+    } else {
+      document.head.appendChild(script);
+    }
 
     return () => {
       // Cleanup
@@ -64,7 +73,7 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
         try {
           window.turnstile.remove(widgetId);
         } catch (err) {
-          console.warn('Error removing Turnstile widget:', err);
+          console.warn('TurnstileWidget: Error removing widget:', err);
         }
       }
       if (script.parentNode) {
@@ -76,29 +85,29 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
   useEffect(() => {
     if (isLoaded && containerRef.current && window.turnstile && siteKey && !widgetId) {
       try {
-        console.log('Rendering Turnstile widget with site key:', siteKey);
+        console.log('TurnstileWidget: Rendering widget with site key:', siteKey);
         const id = window.turnstile.render(containerRef.current, {
           sitekey: siteKey,
           theme,
           size,
           callback: (token: string) => {
-            console.log('Turnstile verification successful');
+            console.log('TurnstileWidget: Verification successful');
             onVerify(token);
           },
           'error-callback': () => {
-            console.error('Turnstile verification error');
+            console.error('TurnstileWidget: Verification error');
             setError('CAPTCHA verification failed');
             if (onError) onError();
           },
           'expired-callback': () => {
-            console.warn('Turnstile token expired');
+            console.warn('TurnstileWidget: Token expired');
             if (onExpire) onExpire();
           },
         });
         setWidgetId(id);
-        console.log('Turnstile widget rendered with ID:', id);
+        console.log('TurnstileWidget: Widget rendered with ID:', id);
       } catch (err) {
-        console.error('Error rendering Turnstile widget:', err);
+        console.error('TurnstileWidget: Error rendering widget:', err);
         setError('Failed to initialize CAPTCHA');
         if (onError) onError();
       }
