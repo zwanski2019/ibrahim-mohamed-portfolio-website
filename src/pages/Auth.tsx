@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
@@ -34,6 +33,28 @@ const Auth = () => {
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [signinTurnstileToken, setSigninTurnstileToken] = useState<string | null>(null);
+  const [turnstileSiteKey, setTurnstileSiteKey] = useState<string>("");
+
+  // Fetch Turnstile site key
+  useEffect(() => {
+    const fetchTurnstileConfig = async () => {
+      try {
+        const { data, error } = await supabase.functions.invoke('get-turnstile-config');
+        if (error) {
+          console.error('Error fetching Turnstile config:', error);
+          setError('Failed to load security verification');
+        } else if (data?.siteKey) {
+          setTurnstileSiteKey(data.siteKey);
+          console.log('Turnstile site key loaded successfully');
+        }
+      } catch (err) {
+        console.error('Error invoking Turnstile config function:', err);
+        setError('Failed to load security verification');
+      }
+    };
+
+    fetchTurnstileConfig();
+  }, []);
 
   // Redirect authenticated users
   useEffect(() => {
@@ -250,15 +271,18 @@ const Auth = () => {
                 </div>
 
                 {/* Turnstile Widget for Sign In */}
-                <div className="py-2">
-                  <TurnstileWidget
-                    onVerify={setSigninTurnstileToken}
-                    onError={() => setSigninTurnstileToken(null)}
-                    onExpire={() => setSigninTurnstileToken(null)}
-                    theme="auto"
-                    size="compact"
-                  />
-                </div>
+                {turnstileSiteKey && (
+                  <div className="py-2">
+                    <TurnstileWidget
+                      siteKey={turnstileSiteKey}
+                      onVerify={setSigninTurnstileToken}
+                      onError={() => setSigninTurnstileToken(null)}
+                      onExpire={() => setSigninTurnstileToken(null)}
+                      theme="auto"
+                      size="compact"
+                    />
+                  </div>
+                )}
 
                 <Button type="submit" className="w-full" disabled={loading || !signinTurnstileToken}>
                   {loading ? "Signing In..." : "Sign In"}
@@ -394,15 +418,18 @@ const Auth = () => {
                 </div>
 
                 {/* Turnstile Widget */}
-                <div className="py-2">
-                  <TurnstileWidget
-                    onVerify={setTurnstileToken}
-                    onError={() => setTurnstileToken(null)}
-                    onExpire={() => setTurnstileToken(null)}
-                    theme="auto"
-                    size="compact"
-                  />
-                </div>
+                {turnstileSiteKey && (
+                  <div className="py-2">
+                    <TurnstileWidget
+                      siteKey={turnstileSiteKey}
+                      onVerify={setTurnstileToken}
+                      onError={() => setTurnstileToken(null)}
+                      onExpire={() => setTurnstileToken(null)}
+                      theme="auto"
+                      size="compact"
+                    />
+                  </div>
+                )}
 
                 <Button type="submit" className="w-full" disabled={loading || !turnstileToken}>
                   {loading ? "Creating Account..." : "Create Account"}
