@@ -22,22 +22,22 @@ export default function Contact() {
   useEffect(() => {
     const getTurnstileConfig = async () => {
       try {
-        console.log('Fetching Turnstile config...');
+        console.log('Contact: Fetching Turnstile config...');
         const { data, error } = await supabase.functions.invoke('get-turnstile-config');
         
         if (error) {
-          console.warn('Error fetching Turnstile config:', error);
+          console.warn('Contact: Error fetching Turnstile config:', error);
           setTurnstileEnabled(false);
         } else if (data?.siteKey) {
-          console.log('Turnstile config loaded successfully');
+          console.log('Contact: Turnstile config loaded successfully');
           setSiteKey(data.siteKey);
           setTurnstileEnabled(true);
         } else {
-          console.warn('No site key returned, Turnstile disabled');
+          console.warn('Contact: No site key returned, Turnstile disabled');
           setTurnstileEnabled(false);
         }
       } catch (error) {
-        console.warn('Failed to fetch Turnstile config:', error);
+        console.warn('Contact: Failed to fetch Turnstile config:', error);
         setTurnstileEnabled(false);
       } finally {
         setLoadingConfig(false);
@@ -52,6 +52,14 @@ export default function Contact() {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleTurnstileError = () => {
+    toast({
+      title: "Security verification failed",
+      description: "Please try refreshing the page or contact support if the issue persists.",
+      variant: "destructive"
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -191,23 +199,17 @@ export default function Contact() {
                 ></textarea>
               </div>
               
-              {/* Turnstile Widget - Only show if enabled */}
+              {/* Enhanced Turnstile Widget */}
               {turnstileEnabled && !loadingConfig && siteKey && (
                 <div className="py-2">
                   <TurnstileWidget
                     siteKey={siteKey}
                     onVerify={setTurnstileToken}
-                    onError={() => setTurnstileToken(null)}
+                    onError={handleTurnstileError}
                     onExpire={() => setTurnstileToken(null)}
                     theme="auto"
                     size="normal"
                   />
-                </div>
-              )}
-              
-              {!turnstileEnabled && !loadingConfig && (
-                <div className="py-2 text-sm text-muted-foreground">
-                  Security verification is currently unavailable
                 </div>
               )}
               
