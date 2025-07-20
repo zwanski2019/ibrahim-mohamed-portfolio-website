@@ -45,11 +45,13 @@ const Auth = () => {
         console.log('Auth: Fetching Turnstile config...');
         const { data, error } = await supabase.functions.invoke('get-turnstile-config');
         
+        console.log('Auth: Turnstile response:', { data, error });
+        
         if (error) {
           console.warn('Auth: Error fetching Turnstile config:', error);
           setTurnstileEnabled(false);
         } else if (data?.siteKey) {
-          console.log('Auth: Turnstile config loaded successfully');
+          console.log('Auth: Turnstile config loaded successfully, site key:', data.siteKey);
           setTurnstileSiteKey(data.siteKey);
           setTurnstileEnabled(true);
         } else {
@@ -60,6 +62,11 @@ const Auth = () => {
         console.warn('Auth: Error invoking Turnstile config function:', err);
         setTurnstileEnabled(false);
       } finally {
+        console.log('Auth: Turnstile config fetch complete. State:', {
+          turnstileEnabled,
+          turnstileSiteKey,
+          loadingTurnstile: false
+        });
         setLoadingTurnstile(false);
       }
     };
