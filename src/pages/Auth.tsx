@@ -366,6 +366,14 @@ const Auth = () => {
                   </div>
                 )}
 
+                {/* Debug info - temporary */}
+                {process.env.NODE_ENV === 'development' && (
+                  <div className="text-xs text-muted-foreground p-2 bg-gray-100 rounded">
+                    Debug: enabled={String(turnstileEnabled)}, loading={String(loadingTurnstile)}, 
+                    siteKey={turnstileSiteKey ? 'present' : 'missing'}
+                  </div>
+                )}
+
                 <Button 
                   type="submit" 
                   className="w-full" 
@@ -516,6 +524,14 @@ const Auth = () => {
                       theme="auto"
                       size="compact"
                     />
+                  </div>
+                )}
+
+                {/* Debug info - temporary */}
+                {process.env.NODE_ENV === 'development' && (
+                  <div className="text-xs text-muted-foreground p-2 bg-gray-100 rounded">
+                    Debug: enabled={String(turnstileEnabled)}, loading={String(loadingTurnstile)}, 
+                    siteKey={turnstileSiteKey ? 'present' : 'missing'}
                   </div>
                 )}
 

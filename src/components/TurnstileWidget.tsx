@@ -41,7 +41,10 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
 
   // Load Turnstile script and render widget
   useEffect(() => {
+    console.log('TurnstileWidget: useEffect triggered with siteKey:', siteKey);
+    
     if (!siteKey) {
+      console.error('TurnstileWidget: No site key provided');
       setHasError(true);
       setErrorMessage('No site key provided');
       setIsLoading(false);
