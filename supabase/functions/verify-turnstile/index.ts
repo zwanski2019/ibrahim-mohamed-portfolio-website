@@ -21,9 +21,11 @@ serve(async (req) => {
   }
 
   try {
+    console.log('Turnstile verification request received');
     const { token } = await req.json();
 
     if (!token) {
+      console.error('No token provided in request');
       return new Response(
         JSON.stringify({ success: false, error: 'Token is required' }),
         {
@@ -46,19 +48,36 @@ serve(async (req) => {
       );
     }
 
-    // Verify the token with Cloudflare
+    console.log('Sending verification request to Cloudflare');
+
+    // Verify the token with Cloudflare with timeout
     const formData = new FormData();
     formData.append('secret', TURNSTILE_SECRET);
     formData.append('response', token);
 
-    const verifyResponse = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      method: 'POST',
-      body: formData,
-    });
+    const verifyResponse = await Promise.race([
+      fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+        method: 'POST',
+        body: formData,
+      }),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Verification timeout')), 10000)
+      )
+    ]);
+
+    if (!verifyResponse.ok) {
+      console.error('Cloudflare verification request failed:', verifyResponse.status);
+      throw new Error(`Verification request failed: ${verifyResponse.status}`);
+    }
 
     const result: TurnstileResponse = await verifyResponse.json();
 
-    console.log('Turnstile verification result:', result);
+    console.log('Turnstile verification result:', {
+      success: result.success,
+      errors: result['error-codes'] || [],
+      hostname: result.hostname,
+      action: result.action
+    });
 
     return new Response(
       JSON.stringify({
@@ -72,9 +91,19 @@ serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('Error verifying Turnstile token:', error);
+    console.error('Error verifying Turnstile token:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    });
+    
     return new Response(
-      JSON.stringify({ success: false, error: 'Verification failed' }),
+      JSON.stringify({ 
+        success: false, 
+        error: error.message === 'Verification timeout' 
+          ? 'Verification timeout - please try again' 
+          : 'Verification failed - please try again'
+      }),
       {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
