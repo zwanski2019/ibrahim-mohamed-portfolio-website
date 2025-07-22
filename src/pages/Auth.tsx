@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
@@ -9,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Eye, EyeOff, Mail, Lock, User, Github, AlertCircle, Wifi } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User, Github, AlertCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import TurnstileWidget from "@/components/TurnstileWidget";
 
@@ -33,74 +34,9 @@ const Auth = () => {
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [signinTurnstileToken, setSigninTurnstileToken] = useState<string | null>(null);
-  const [turnstileSiteKey, setTurnstileSiteKey] = useState<string>("");
-  const [turnstileEnabled, setTurnstileEnabled] = useState(false);
-  const [loadingTurnstile, setLoadingTurnstile] = useState(true);
-  const [turnstileConfigError, setTurnstileConfigError] = useState<string | null>(null);
 
-  // Fetch Turnstile site key with enhanced error handling
-  useEffect(() => {
-    const fetchTurnstileConfig = async () => {
-      try {
-        console.log('Auth: Fetching Turnstile config...');
-        
-        // Add network connectivity check
-        if (!navigator.onLine) {
-          console.warn('Auth: No internet connection');
-          setTurnstileConfigError('No internet connection');
-          setTurnstileEnabled(false);
-          return;
-        }
-
-        const { data, error } = await supabase.functions.invoke('get-turnstile-config');
-        
-        console.log('Auth: Turnstile response:', { data, error });
-        
-        if (error) {
-          console.warn('Auth: Error fetching Turnstile config:', error);
-          setTurnstileConfigError(`Configuration error: ${error.message || 'Unknown error'}`);
-          setTurnstileEnabled(false);
-        } else if (data?.siteKey) {
-          console.log('Auth: Turnstile config loaded successfully, site key:', data.siteKey);
-          setTurnstileSiteKey(data.siteKey);
-          setTurnstileEnabled(true);
-          setTurnstileConfigError(null);
-        } else if (data?.fallback) {
-          console.warn('Auth: Turnstile in fallback mode:', data.error);
-          setTurnstileConfigError(data.error || 'Configuration unavailable');
-          setTurnstileEnabled(false);
-        } else {
-          console.warn('Auth: No site key returned, Turnstile disabled');
-          setTurnstileConfigError('No configuration available');
-          setTurnstileEnabled(false);
-        }
-      } catch (err) {
-        console.warn('Auth: Error invoking Turnstile config function:', err);
-        setTurnstileConfigError(`Network error: ${err instanceof Error ? err.message : 'Unknown error'}`);
-        setTurnstileEnabled(false);
-      } finally {
-        console.log('Auth: Turnstile config fetch complete. State:', {
-          turnstileEnabled,
-          turnstileSiteKey,
-          loadingTurnstile: false,
-          configError: turnstileConfigError
-        });
-        setLoadingTurnstile(false);
-      }
-    };
-
-    fetchTurnstileConfig();
-
-    // Listen for online/offline events
-    const handleOnline = () => {
-      console.log('Auth: Network back online, retrying Turnstile config');
-      setLoadingTurnstile(true);
-      fetchTurnstileConfig();
-    };
-
-    window.addEventListener('online', handleOnline);
-    return () => window.removeEventListener('online', handleOnline);
-  }, []);
+  // Simplified Turnstile configuration - use the provided site key directly
+  const turnstileSiteKey = "0x4AAAAAABhxuYUdORnhPKDe";
 
   // Redirect authenticated users
   useEffect(() => {
@@ -127,8 +63,7 @@ const Auth = () => {
     setLoading(true);
     setError("");
 
-    // Only require Turnstile if it's enabled and working
-    if (turnstileEnabled && !signinTurnstileToken) {
+    if (!signinTurnstileToken) {
       setError("Please complete the security verification");
       setLoading(false);
       return;
@@ -164,23 +99,20 @@ const Auth = () => {
       return;
     }
 
-    // Only require Turnstile if it's enabled and working
-    if (turnstileEnabled && !turnstileToken) {
+    if (!turnstileToken) {
       setError("Please complete the security verification");
       setLoading(false);
       return;
     }
 
     try {
-      // Only verify Turnstile token if it's enabled
-      if (turnstileEnabled && turnstileToken) {
-        const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-turnstile', {
-          body: { token: turnstileToken }
-        });
+      // Verify Turnstile token
+      const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-turnstile', {
+        body: { token: turnstileToken }
+      });
 
-        if (verificationError || !verificationData?.success) {
-          throw new Error('Security verification failed');
-        }
+      if (verificationError || !verificationData?.success) {
+        throw new Error('Security verification failed');
       }
 
       const { error } = await signUp(email, password, {
@@ -302,15 +234,6 @@ const Auth = () => {
               </Alert>
             )}
 
-            {turnstileConfigError && !turnstileEnabled && (
-              <Alert className="mt-4 border-yellow-500">
-                <Wifi className="h-4 w-4" />
-                <AlertDescription className="text-yellow-600">
-                  Security verification: {turnstileConfigError}
-                </AlertDescription>
-              </Alert>
-            )}
-
             <TabsContent value="signin" className="space-y-4 mt-6">
               <form onSubmit={handleSignIn} className="space-y-4">
                 <div className="space-y-2">
@@ -352,38 +275,24 @@ const Auth = () => {
                   </div>
                 </div>
 
-                {/* Enhanced Turnstile Widget for Sign In */}
-                {turnstileEnabled && !loadingTurnstile && turnstileSiteKey && (
-                  <div className="py-2">
-                    <TurnstileWidget
-                      siteKey={turnstileSiteKey}
-                      onVerify={setSigninTurnstileToken}
-                      onError={handleTurnstileError}
-                      onExpire={() => setSigninTurnstileToken(null)}
-                      theme="auto"
-                      size="compact"
-                    />
-                  </div>
-                )}
-
-                {/* Debug info - temporary */}
-                {process.env.NODE_ENV === 'development' && (
-                  <div className="text-xs text-muted-foreground p-2 bg-gray-100 rounded">
-                    Debug: enabled={String(turnstileEnabled)}, loading={String(loadingTurnstile)}, 
-                    siteKey={turnstileSiteKey ? 'present' : 'missing'}
-                  </div>
-                )}
+                <TurnstileWidget
+                  siteKey={turnstileSiteKey}
+                  onVerify={setSigninTurnstileToken}
+                  onError={handleTurnstileError}
+                  onExpire={() => setSigninTurnstileToken(null)}
+                  theme="auto"
+                  size="compact"
+                />
 
                 <Button 
                   type="submit" 
                   className="w-full" 
-                  disabled={loading || (turnstileEnabled && !signinTurnstileToken)}
+                  disabled={loading || !signinTurnstileToken}
                 >
                   {loading ? "Signing In..." : "Sign In"}
                 </Button>
               </form>
 
-              
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
                   <span className="w-full border-t" />
@@ -407,7 +316,6 @@ const Auth = () => {
 
             <TabsContent value="signup" className="space-y-4 mt-6">
               <form onSubmit={handleSignUp} className="space-y-4">
-                
                 <div className="space-y-2">
                   <Label htmlFor="signup-name">Full Name</Label>
                   <div className="relative">
@@ -513,32 +421,19 @@ const Auth = () => {
                   </Label>
                 </div>
 
-                {/* Enhanced Turnstile Widget for Sign Up */}
-                {turnstileEnabled && !loadingTurnstile && turnstileSiteKey && (
-                  <div className="py-2">
-                    <TurnstileWidget
-                      siteKey={turnstileSiteKey}
-                      onVerify={setTurnstileToken}
-                      onError={handleTurnstileError}
-                      onExpire={() => setTurnstileToken(null)}
-                      theme="auto"
-                      size="compact"
-                    />
-                  </div>
-                )}
-
-                {/* Debug info - temporary */}
-                {process.env.NODE_ENV === 'development' && (
-                  <div className="text-xs text-muted-foreground p-2 bg-gray-100 rounded">
-                    Debug: enabled={String(turnstileEnabled)}, loading={String(loadingTurnstile)}, 
-                    siteKey={turnstileSiteKey ? 'present' : 'missing'}
-                  </div>
-                )}
+                <TurnstileWidget
+                  siteKey={turnstileSiteKey}
+                  onVerify={setTurnstileToken}
+                  onError={handleTurnstileError}
+                  onExpire={() => setTurnstileToken(null)}
+                  theme="auto"
+                  size="compact"
+                />
 
                 <Button 
                   type="submit" 
                   className="w-full" 
-                  disabled={loading || (turnstileEnabled && !turnstileToken)}
+                  disabled={loading || !turnstileToken}
                 >
                   {loading ? "Creating Account..." : "Create Account"}
                 </Button>

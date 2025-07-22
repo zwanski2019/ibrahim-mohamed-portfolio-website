@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { AlertCircle, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -17,7 +18,6 @@ declare global {
       render: (container: string | HTMLElement, options: any) => string;
       remove: (widgetId: string) => void;
       reset: (widgetId: string) => void;
-      ready?: (callback: () => void) => void;
     };
   }
 }
@@ -38,41 +38,49 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
   const [retryCount, setRetryCount] = useState(0);
   const maxRetries = 3;
 
-  // Load Turnstile script and render widget
   useEffect(() => {
-    console.log('TurnstileWidget: useEffect triggered with siteKey:', siteKey);
+    console.log('TurnstileWidget: Starting initialization with siteKey:', siteKey);
     
     if (!siteKey) {
       console.error('TurnstileWidget: No site key provided');
       setHasError(true);
-      setErrorMessage('No site key provided');
+      setErrorMessage('Configuration error');
       setIsLoading(false);
       return;
     }
 
     const renderWidget = () => {
       if (!containerRef.current) {
-        console.error('TurnstileWidget: Container not available');
+        console.error('TurnstileWidget: Container ref not available');
         return;
       }
 
-      // Wait for Turnstile to be available
+      // Check if Turnstile is available
+      let attempts = 0;
+      const maxAttempts = 50; // 5 seconds with 100ms intervals
+      
       const checkTurnstile = () => {
+        attempts++;
+        console.log('TurnstileWidget: Checking for Turnstile, attempt:', attempts);
+        
         if (window.turnstile) {
-          console.log('TurnstileWidget: Turnstile available, rendering widget');
+          console.log('TurnstileWidget: Turnstile found, rendering widget');
           try {
             const id = window.turnstile.render(containerRef.current, {
               sitekey: siteKey,
               theme,
               size,
               callback: (token: string) => {
-                console.log('TurnstileWidget: Verification successful, token received');
+                console.log('TurnstileWidget: Verification successful');
+                setIsLoading(false);
+                setHasError(false);
                 onVerify(token);
               },
               'error-callback': (error: any) => {
                 console.error('TurnstileWidget: Verification error:', error);
                 setHasError(true);
                 setErrorMessage('Verification failed');
+                setIsLoading(false);
                 if (onError) onError();
               },
               'expired-callback': () => {
@@ -83,6 +91,7 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
                 console.warn('TurnstileWidget: Widget timeout');
                 setHasError(true);
                 setErrorMessage('Verification timed out');
+                setIsLoading(false);
                 if (onError) onError();
               }
             });
@@ -98,20 +107,23 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
             setIsLoading(false);
             if (onError) onError();
           }
-        } else {
-          console.log('TurnstileWidget: Turnstile not available yet, retrying...');
+        } else if (attempts < maxAttempts) {
+          console.log('TurnstileWidget: Turnstile not ready, retrying...');
           setTimeout(checkTurnstile, 100);
+        } else {
+          console.error('TurnstileWidget: Turnstile script failed to load after', maxAttempts, 'attempts');
+          setHasError(true);
+          setErrorMessage('Security verification unavailable');
+          setIsLoading(false);
+          if (onError) onError();
         }
       };
       
       checkTurnstile();
     };
 
-    setIsLoading(true);
-    setHasError(false);
-    
-    // Since script is loaded in HTML head, just render the widget
-    renderWidget();
+    // Small delay to ensure DOM is ready
+    setTimeout(renderWidget, 100);
 
     return () => {
       if (widgetId && window.turnstile) {
@@ -127,9 +139,12 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
 
   const handleRetry = () => {
     if (retryCount < maxRetries) {
+      console.log('TurnstileWidget: Retrying widget render');
       setRetryCount(prev => prev + 1);
       setHasError(false);
       setIsLoading(true);
+      setErrorMessage('');
+      
       if (widgetId && window.turnstile) {
         try {
           window.turnstile.remove(widgetId);
@@ -162,7 +177,7 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
           <span className="text-sm text-red-800">Security Verification Error</span>
         </div>
         <p className="text-xs text-red-700 text-center mb-3">
-          {errorMessage || 'Security verification unavailable. Try Again'}
+          {errorMessage || 'Security verification unavailable'}
         </p>
         {canRetry ? (
           <Button
