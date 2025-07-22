@@ -216,7 +216,7 @@
               if (node.nodeType === 1 && 
                   (node.classList?.contains('axeptio_widget') || 
                    node.id?.includes('axeptio') || 
-                   node.className?.includes('axeptio'))) {
+                   (node.className && node.className.toString().includes('axeptio')))) {
                 setTimeout(enhanceAxeptioBanner, 100);
               }
             });
