@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { AlertCircle, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -51,119 +50,68 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
       return;
     }
 
-    const loadScript = () => {
-      return new Promise<void>((resolve, reject) => {
-        // Check if script is already loaded
-        if (window.turnstile) {
-          console.log('TurnstileWidget: Script already loaded');
-          resolve();
-          return;
-        }
-
-        // Check if script is already being loaded
-        const existingScript = document.querySelector('script[src*="turnstile"]');
-        if (existingScript) {
-          console.log('TurnstileWidget: Script already loading');
-          existingScript.addEventListener('load', () => resolve());
-          existingScript.addEventListener('error', reject);
-          return;
-        }
-
-        console.log('TurnstileWidget: Loading Turnstile script...');
-        const script = document.createElement('script');
-        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
-        script.async = true;
-        script.defer = true;
-
-        script.onload = () => {
-          console.log('TurnstileWidget: Script loaded successfully');
-          resolve();
-        };
-
-        script.onerror = (error) => {
-          console.error('TurnstileWidget: Script load error:', error);
-          reject(new Error('Failed to load Turnstile script'));
-        };
-
-        document.head.appendChild(script);
-      });
-    };
-
     const renderWidget = () => {
-      if (!containerRef.current || !window.turnstile) {
-        console.error('TurnstileWidget: Container or turnstile not available');
+      if (!containerRef.current) {
+        console.error('TurnstileWidget: Container not available');
         return;
       }
 
-      try {
-        console.log('TurnstileWidget: Rendering widget with site key:', siteKey);
-        
-        const id = window.turnstile.render(containerRef.current, {
-          sitekey: siteKey,
-          theme,
-          size,
-          callback: (token: string) => {
-            console.log('TurnstileWidget: Verification successful, token received');
-            onVerify(token);
-          },
-          'error-callback': (error: any) => {
-            console.error('TurnstileWidget: Verification error:', error);
-            setHasError(true);
-            setErrorMessage('Verification failed');
-            if (onError) onError();
-          },
-          'expired-callback': () => {
-            console.warn('TurnstileWidget: Token expired');
-            if (onExpire) onExpire();
-          },
-          'timeout-callback': () => {
-            console.warn('TurnstileWidget: Widget timeout');
-            setHasError(true);
-            setErrorMessage('Verification timed out');
-            if (onError) onError();
-          }
-        });
-        
-        setWidgetId(id);
-        setIsLoading(false);
-        setHasError(false);
-        console.log('TurnstileWidget: Widget rendered successfully with ID:', id);
-      } catch (err) {
-        console.error('TurnstileWidget: Error rendering widget:', err);
-        setHasError(true);
-        setErrorMessage('Failed to render verification');
-        setIsLoading(false);
-        if (onError) onError();
-      }
-    };
-
-    const initializeWidget = async () => {
-      try {
-        setIsLoading(true);
-        setHasError(false);
-        
-        await loadScript();
-        
-        // Use a small delay to ensure the script is fully initialized
-        setTimeout(() => {
-          if (window.turnstile?.ready) {
-            window.turnstile.ready(() => {
-              renderWidget();
+      // Wait for Turnstile to be available
+      const checkTurnstile = () => {
+        if (window.turnstile) {
+          console.log('TurnstileWidget: Turnstile available, rendering widget');
+          try {
+            const id = window.turnstile.render(containerRef.current, {
+              sitekey: siteKey,
+              theme,
+              size,
+              callback: (token: string) => {
+                console.log('TurnstileWidget: Verification successful, token received');
+                onVerify(token);
+              },
+              'error-callback': (error: any) => {
+                console.error('TurnstileWidget: Verification error:', error);
+                setHasError(true);
+                setErrorMessage('Verification failed');
+                if (onError) onError();
+              },
+              'expired-callback': () => {
+                console.warn('TurnstileWidget: Token expired');
+                if (onExpire) onExpire();
+              },
+              'timeout-callback': () => {
+                console.warn('TurnstileWidget: Widget timeout');
+                setHasError(true);
+                setErrorMessage('Verification timed out');
+                if (onError) onError();
+              }
             });
-          } else {
-            renderWidget();
+            
+            setWidgetId(id);
+            setIsLoading(false);
+            setHasError(false);
+            console.log('TurnstileWidget: Widget rendered successfully with ID:', id);
+          } catch (err) {
+            console.error('TurnstileWidget: Error rendering widget:', err);
+            setHasError(true);
+            setErrorMessage('Failed to render verification');
+            setIsLoading(false);
+            if (onError) onError();
           }
-        }, 100);
-        
-      } catch (error) {
-        console.error('TurnstileWidget: Initialization failed:', error);
-        setHasError(true);
-        setErrorMessage('Failed to load security verification');
-        setIsLoading(false);
-      }
+        } else {
+          console.log('TurnstileWidget: Turnstile not available yet, retrying...');
+          setTimeout(checkTurnstile, 100);
+        }
+      };
+      
+      checkTurnstile();
     };
 
-    initializeWidget();
+    setIsLoading(true);
+    setHasError(false);
+    
+    // Since script is loaded in HTML head, just render the widget
+    renderWidget();
 
     return () => {
       if (widgetId && window.turnstile) {
