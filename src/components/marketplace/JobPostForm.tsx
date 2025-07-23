@@ -14,7 +14,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { X, Plus, AlertCircle } from "lucide-react";
 import { useCreateJobPost } from "@/hooks/useJobPosts";
 import { useCategories } from "@/hooks/useCategories";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
 import { useLanguage } from "@/context/LanguageContext";
 import { geocodeLocation } from "@/utils/geocoding";

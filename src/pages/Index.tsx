@@ -18,7 +18,7 @@ import { SEOHelmet } from "@/components/SEOHelmet";
 import { organizationStructuredData, localBusinessStructuredData, websiteStructuredData, faqStructuredData } from "@/data/structuredData";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { Link } from "react-router-dom";
 

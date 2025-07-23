@@ -8,7 +8,7 @@ import AcademyHero from "@/components/academy/AcademyHero";
 import CourseGrid from "@/components/academy/CourseGrid";
 import CategoryFilter from "@/components/academy/CategoryFilter";
 import { SearchBar } from "@/components/SearchBar";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
 
 const Academy = () => {

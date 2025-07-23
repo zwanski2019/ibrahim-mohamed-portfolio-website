@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { useCreateJobPost } from "@/hooks/useJobPosts";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 import { MapPin, DollarSign, Briefcase, Clock, AlertCircle } from "lucide-react";
 
 const PostJob = () => {
