@@ -31,181 +31,205 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
   size = 'normal'
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [widgetId, setWidgetId] = useState<string | null>(null);
-  const [retryCount, setRetryCount] = useState(0);
-  const maxRetries = 3;
+  const [scriptLoaded, setScriptLoaded] = useState(false);
 
+  // Load Turnstile script dynamically if not present
   useEffect(() => {
-    console.log('TurnstileWidget: Starting initialization with siteKey:', siteKey);
-    
-    if (!siteKey) {
-      console.error('TurnstileWidget: No site key provided');
-      setHasError(true);
-      setErrorMessage('Configuration error');
-      setIsLoading(false);
-      return;
-    }
-
-    const renderWidget = () => {
-      if (!containerRef.current) {
-        console.error('TurnstileWidget: Container ref not available');
+    const loadScript = () => {
+      // Check if script already exists
+      if (document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]')) {
+        setScriptLoaded(true);
         return;
       }
 
-      // Check if Turnstile is available
-      let attempts = 0;
-      const maxAttempts = 50; // 5 seconds with 100ms intervals
+      // Create and load script
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+      script.async = true;
+      script.defer = true;
       
-      const checkTurnstile = () => {
-        attempts++;
-        console.log('TurnstileWidget: Checking for Turnstile, attempt:', attempts);
-        
-        if (window.turnstile) {
-          console.log('TurnstileWidget: Turnstile found, rendering widget');
-          try {
-            const id = window.turnstile.render(containerRef.current, {
-              sitekey: siteKey,
-              theme,
-              size,
-              callback: (token: string) => {
-                console.log('TurnstileWidget: Verification successful');
-                setIsLoading(false);
-                setHasError(false);
-                onVerify(token);
-              },
-              'error-callback': (error: any) => {
-                console.error('TurnstileWidget: Verification error:', error);
-                setHasError(true);
-                setErrorMessage('Verification failed');
-                setIsLoading(false);
-                if (onError) onError();
-              },
-              'expired-callback': () => {
-                console.warn('TurnstileWidget: Token expired');
-                if (onExpire) onExpire();
-              },
-              'timeout-callback': () => {
-                console.warn('TurnstileWidget: Widget timeout');
-                setHasError(true);
-                setErrorMessage('Verification timed out');
-                setIsLoading(false);
-                if (onError) onError();
-              }
-            });
-            
-            setWidgetId(id);
-            setIsLoading(false);
-            setHasError(false);
-            console.log('TurnstileWidget: Widget rendered successfully with ID:', id);
-          } catch (err) {
-            console.error('TurnstileWidget: Error rendering widget:', err);
-            setHasError(true);
-            setErrorMessage('Failed to render verification');
-            setIsLoading(false);
-            if (onError) onError();
-          }
-        } else if (attempts < maxAttempts) {
-          console.log('TurnstileWidget: Turnstile not ready, retrying...');
-          setTimeout(checkTurnstile, 100);
-        } else {
-          console.error('TurnstileWidget: Turnstile script failed to load after', maxAttempts, 'attempts');
-          setHasError(true);
-          setErrorMessage('Security verification unavailable');
-          setIsLoading(false);
-          if (onError) onError();
-        }
+      script.onload = () => {
+        console.log('Turnstile script loaded successfully');
+        setScriptLoaded(true);
       };
       
-      checkTurnstile();
+      script.onerror = () => {
+        console.error('Failed to load Turnstile script');
+        setHasError(true);
+        setErrorMessage('Failed to load security verification');
+        setIsLoading(false);
+      };
+      
+      document.head.appendChild(script);
     };
 
-    // Small delay to ensure DOM is ready
-    setTimeout(renderWidget, 100);
+    loadScript();
+  }, []);
 
-    return () => {
-      if (widgetId && window.turnstile) {
-        try {
-          window.turnstile.remove(widgetId);
-          console.log('TurnstileWidget: Widget cleaned up');
-        } catch (err) {
-          console.warn('TurnstileWidget: Error removing widget:', err);
+  // Render widget when script is loaded
+  useEffect(() => {
+    if (!scriptLoaded || !siteKey || !containerRef.current) return;
+
+    let attempts = 0;
+    const maxAttempts = 30;
+
+    const renderWidget = () => {
+      attempts++;
+      
+      if (window.turnstile && containerRef.current) {
+        // Clean up any existing widget
+        if (widgetIdRef.current) {
+          try {
+            window.turnstile.remove(widgetIdRef.current);
+          } catch (err) {
+            console.warn('Error removing previous widget:', err);
+          }
+          widgetIdRef.current = null;
         }
+
+        try {
+          const widgetId = window.turnstile.render(containerRef.current, {
+            sitekey: siteKey,
+            theme: theme,
+            size: size,
+            action: 'login',
+            'response-field': false,
+            'response-field-name': 'cf-turnstile-response',
+            callback: (token: string) => {
+              console.log('Turnstile verification successful');
+              setIsLoading(false);
+              setHasError(false);
+              onVerify(token);
+            },
+            'error-callback': (error: any) => {
+              console.error('Turnstile verification error:', error);
+              setHasError(true);
+              setErrorMessage('Security verification failed');
+              setIsLoading(false);
+              onError?.();
+            },
+            'expired-callback': () => {
+              console.warn('Turnstile token expired');
+              onExpire?.();
+            },
+            'timeout-callback': () => {
+              console.warn('Turnstile verification timeout');
+              setHasError(true);
+              setErrorMessage('Verification timed out');
+              setIsLoading(false);
+              onError?.();
+            }
+          });
+
+          widgetIdRef.current = widgetId;
+          setIsLoading(false);
+          setHasError(false);
+          console.log('Turnstile widget rendered with ID:', widgetId);
+        } catch (err) {
+          console.error('Error rendering Turnstile widget:', err);
+          setHasError(true);
+          setErrorMessage('Failed to render security verification');
+          setIsLoading(false);
+        }
+      } else if (attempts < maxAttempts) {
+        console.log(`Waiting for Turnstile API... attempt ${attempts}/${maxAttempts}`);
+        setTimeout(renderWidget, 200);
+      } else {
+        console.error('Turnstile API not available after maximum attempts');
+        setHasError(true);
+        setErrorMessage('Security verification unavailable');
+        setIsLoading(false);
       }
     };
-  }, [siteKey, theme, size, onVerify, onError, onExpire, retryCount]);
+
+    setIsLoading(true);
+    setHasError(false);
+    renderWidget();
+
+    // Cleanup function
+    return () => {
+      if (widgetIdRef.current && window.turnstile) {
+        try {
+          window.turnstile.remove(widgetIdRef.current);
+          console.log('Turnstile widget cleaned up');
+        } catch (err) {
+          console.warn('Error cleaning up Turnstile widget:', err);
+        }
+        widgetIdRef.current = null;
+      }
+    };
+  }, [scriptLoaded, siteKey, theme, size, onVerify, onError, onExpire]);
 
   const handleRetry = () => {
-    if (retryCount < maxRetries) {
-      console.log('TurnstileWidget: Retrying widget render');
-      setRetryCount(prev => prev + 1);
-      setHasError(false);
-      setIsLoading(true);
-      setErrorMessage('');
-      
-      if (widgetId && window.turnstile) {
-        try {
-          window.turnstile.remove(widgetId);
-        } catch (err) {
-          console.warn('TurnstileWidget: Error removing widget during retry:', err);
+    setHasError(false);
+    setIsLoading(true);
+    setErrorMessage('');
+    
+    // Trigger re-render by changing key state
+    setTimeout(() => {
+      if (containerRef.current && window.turnstile) {
+        // Clean up and re-render
+        if (widgetIdRef.current) {
+          try {
+            window.turnstile.remove(widgetIdRef.current);
+          } catch (err) {
+            console.warn('Error removing widget during retry:', err);
+          }
+          widgetIdRef.current = null;
         }
+        
+        // Force re-render
+        setScriptLoaded(false);
+        setTimeout(() => setScriptLoaded(true), 100);
       }
-      setWidgetId(null);
-    }
+    }, 100);
   };
 
-  // Loading state
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-[65px] space-x-2">
-        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div>
-        <span className="text-sm text-muted-foreground">Loading security verification...</span>
+      <div className="flex justify-center items-center min-h-[78px] p-4">
+        <div className="flex items-center space-x-2">
+          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div>
+          <span className="text-sm text-muted-foreground">Loading security verification...</span>
+        </div>
       </div>
     );
   }
 
-  // Error state
   if (hasError) {
-    const canRetry = retryCount < maxRetries;
-    
     return (
-      <div className="flex flex-col items-center justify-center min-h-[65px] p-4 border border-red-200 rounded-lg bg-red-50">
+      <div className="flex flex-col items-center justify-center min-h-[78px] p-4 border border-destructive/20 rounded-lg bg-destructive/5">
         <div className="flex items-center space-x-2 mb-2">
-          <AlertCircle className="h-4 w-4 text-red-600" />
-          <span className="text-sm text-red-800">Security Verification Error</span>
+          <AlertCircle className="h-4 w-4 text-destructive" />
+          <span className="text-sm font-medium text-destructive">Security Verification Error</span>
         </div>
-        <p className="text-xs text-red-700 text-center mb-3">
+        <p className="text-xs text-muted-foreground text-center mb-3">
           {errorMessage || 'Security verification unavailable'}
         </p>
-        {canRetry ? (
-          <Button
-            onClick={handleRetry}
-            size="sm"
-            variant="outline"
-            className="text-xs"
-          >
-            <RefreshCw className="h-3 w-3 mr-1" />
-            Try Again ({maxRetries - retryCount} left)
-          </Button>
-        ) : (
-          <div className="text-xs text-red-600 text-center">
-            <p>Maximum retries reached.</p>
-            <p className="mt-1">Please refresh the page or contact support.</p>
-          </div>
-        )}
+        <Button
+          onClick={handleRetry}
+          size="sm"
+          variant="outline"
+          className="text-xs"
+        >
+          <RefreshCw className="h-3 w-3 mr-1" />
+          Try Again
+        </Button>
       </div>
     );
   }
 
-  // Success state - render the widget container
   return (
-    <div className="flex justify-center items-center min-h-[65px]">
+    <div className="flex justify-center items-center min-h-[78px] w-full">
       <div 
+        id="turnstile-container"
         ref={containerRef} 
-        className="w-full flex justify-center"
-        aria-label="Cloudflare Turnstile verification"
+        className="cf-turnstile w-full max-w-sm"
+        aria-label="Cloudflare Turnstile security verification"
       />
     </div>
   );

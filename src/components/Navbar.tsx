@@ -145,21 +145,20 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-between h-16 min-h-16">
+          {/* Logo - Fixed width to prevent layout shift */}
+          <div className="flex items-center flex-shrink-0 min-w-0">
             <ZwanskiLogo onClick={handleLogoClick} />
           </div>
 
-          {/* Right Side */}
-          <div className="flex items-center space-x-4">
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-6">
-              {mainNavItems.map((item) => {
+          {/* Center Navigation - Hidden on smaller screens to prevent overlap */}
+          <div className="hidden xl:flex items-center justify-center flex-1 px-8">
+            <div className="flex items-center space-x-4">
+              {mainNavItems.slice(0, 4).map((item) => {
                 const Icon = item.icon;
                 const showItem = !(item as any).authRequired || isAuthenticated;
                 
-                // Hide Home button on desktop since logo serves as home button
+                // Hide Home button since logo serves as home button
                 if (item.path === "/" || !showItem) return null;
                 
                 return (
@@ -168,25 +167,55 @@ const Navbar = () => {
                     variant={isActivePath(item.path) ? "default" : "ghost"}
                     size="sm"
                     onClick={() => navigate(item.path)}
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 text-xs"
                   >
-                    <Icon className="h-4 w-4" />
+                    <Icon className="h-3 w-3" />
                     {item.label}
                   </Button>
                 );
               })}
             </div>
+          </div>
+
+          {/* Right Side - Flexible layout */}
+          <div className="flex items-center space-x-2 lg:space-x-3 flex-shrink-0">
+            {/* Compact Desktop Navigation for medium screens */}
+            <div className="hidden lg:flex xl:hidden items-center space-x-2">
+              {mainNavItems.slice(0, 3).map((item) => {
+                const Icon = item.icon;
+                const showItem = !(item as any).authRequired || isAuthenticated;
+                
+                if (item.path === "/" || !showItem) return null;
+                
+                return (
+                  <Button
+                    key={item.path}
+                    variant={isActivePath(item.path) ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => navigate(item.path)}
+                    className="p-2"
+                    title={item.label}
+                  >
+                    <Icon className="h-4 w-4" />
+                  </Button>
+                );
+              })}
+            </div>
             
-            {/* Global Search - Hidden on small screens */}
-            <div className="hidden md:block w-64">
+            {/* Global Search - Responsive width */}
+            <div className="hidden lg:block w-48 xl:w-64">
               <GlobalSearchBar placeholder="Search..." compact />
             </div>
             
             {/* Theme Toggle */}
-            <ThemeToggle />
+            <div className="flex-shrink-0">
+              <ThemeToggle />
+            </div>
             
             {/* Language Selector */}
-            <LanguageSelector />
+            <div className="flex-shrink-0">
+              <LanguageSelector />
+            </div>
 
             {/* Authentication Section */}
             {isAuthenticated && user ? (
@@ -250,17 +279,19 @@ const Navbar = () => {
                 </DropdownMenu>
               </div>
             ) : (
-              <div className="hidden lg:flex items-center space-x-2">
+              <div className="hidden md:flex items-center space-x-2 flex-shrink-0">
                 <Button 
                   variant="ghost" 
                   size="sm"
                   onClick={() => navigate("/auth?tab=signin")}
+                  className="text-xs px-3"
                 >
                   Sign In
                 </Button>
                 <Button 
                   size="sm"
                   onClick={() => navigate("/auth?tab=signup")}
+                  className="text-xs px-3"
                 >
                   Sign Up
                 </Button>
@@ -271,7 +302,7 @@ const Navbar = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="lg:hidden"
+              className="md:hidden flex-shrink-0"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -281,7 +312,7 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden border-t border-border/50 py-4">
+          <div className="md:hidden border-t border-border/50 py-4">
             <div className="flex flex-col space-y-2">
               {/* Mobile Search */}
               <div className="px-4 pb-4">
