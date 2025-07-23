@@ -44,6 +44,11 @@ npm run dev
 
 Visit [http://localhost:3000](http://localhost:3000) to view the app.
 
+### Environment Variables
+
+Set `CLOUDFLARE_TURNSTILE_SECRET_KEY` with your Cloudflare Turnstile secret so the
+`verify-turnstile` Supabase function can validate tokens.
+
 ---
 
 ## 📚 Main Sections
