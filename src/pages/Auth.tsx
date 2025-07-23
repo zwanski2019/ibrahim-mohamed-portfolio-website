@@ -35,8 +35,31 @@ const Auth = () => {
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [signinTurnstileToken, setSigninTurnstileToken] = useState<string | null>(null);
 
-  // Simplified Turnstile configuration - use the provided site key directly
-  const turnstileSiteKey = "0x4AAAAAABhxuYUdORnhPKDe";
+  const [siteKey, setSiteKey] = useState<string>("");
+  const [loadingConfig, setLoadingConfig] = useState(true);
+
+  useEffect(() => {
+    const getTurnstileConfig = async () => {
+      try {
+        console.log('Auth: Fetching Turnstile config...');
+        const { data, error } = await supabase.functions.invoke('get-turnstile-config');
+
+        if (error) {
+          console.warn('Auth: Error fetching Turnstile config:', error);
+        } else if (data?.siteKey) {
+          setSiteKey(data.siteKey);
+        } else {
+          console.warn('Auth: No site key returned, Turnstile disabled');
+        }
+      } catch (error) {
+        console.warn('Auth: Failed to fetch Turnstile config:', error);
+      } finally {
+        setLoadingConfig(false);
+      }
+    };
+
+    getTurnstileConfig();
+  }, []);
 
   // Redirect authenticated users
   useEffect(() => {
@@ -275,14 +298,16 @@ const Auth = () => {
                   </div>
                 </div>
 
-                <TurnstileWidget
-                  siteKey={turnstileSiteKey}
-                  onVerify={setSigninTurnstileToken}
-                  onError={handleTurnstileError}
-                  onExpire={() => setSigninTurnstileToken(null)}
-                  theme="auto"
-                  size="compact"
-                />
+                {!loadingConfig && siteKey && (
+                  <TurnstileWidget
+                    siteKey={siteKey}
+                    onVerify={setSigninTurnstileToken}
+                    onError={handleTurnstileError}
+                    onExpire={() => setSigninTurnstileToken(null)}
+                    theme="auto"
+                    size="compact"
+                  />
+                )}
 
                 <Button 
                   type="submit" 
@@ -421,14 +446,16 @@ const Auth = () => {
                   </Label>
                 </div>
 
-                <TurnstileWidget
-                  siteKey={turnstileSiteKey}
-                  onVerify={setTurnstileToken}
-                  onError={handleTurnstileError}
-                  onExpire={() => setTurnstileToken(null)}
-                  theme="auto"
-                  size="compact"
-                />
+                {!loadingConfig && siteKey && (
+                  <TurnstileWidget
+                    siteKey={siteKey}
+                    onVerify={setTurnstileToken}
+                    onError={handleTurnstileError}
+                    onExpire={() => setTurnstileToken(null)}
+                    theme="auto"
+                    size="compact"
+                  />
+                )}
 
                 <Button 
                   type="submit" 
