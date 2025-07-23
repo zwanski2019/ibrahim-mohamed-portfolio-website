@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { AlertCircle, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -27,171 +26,175 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
   onVerify,
   onError,
   onExpire,
-  theme = 'auto',
+  theme = 'dark',
   size = 'normal'
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const widgetIdRef = useRef<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const widgetIdRef = useRef<string | null>(null);
+  const containerIdRef = useRef<string>(`turnstile-container-${Math.random().toString(36).substr(2, 9)}`);
 
-  // Load Turnstile script dynamically if not present
   useEffect(() => {
-    const loadScript = () => {
-      // Check if script already exists
-      if (document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]')) {
-        setScriptLoaded(true);
-        return;
+    console.log('🔧 TurnstileWidget: Initializing with siteKey:', siteKey);
+    
+    // Clean up any existing widget first
+    if (widgetIdRef.current && window.turnstile) {
+      try {
+        console.log('🧹 Cleaning up existing widget:', widgetIdRef.current);
+        window.turnstile.remove(widgetIdRef.current);
+        widgetIdRef.current = null;
+      } catch (err) {
+        console.warn('⚠️ Error removing existing widget:', err);
       }
+    }
 
-      // Create and load script
-      const script = document.createElement('script');
-      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
-      script.async = true;
-      script.defer = true;
-      
-      script.onload = () => {
-        console.log('Turnstile script loaded successfully');
-        setScriptLoaded(true);
-      };
-      
-      script.onerror = () => {
-        console.error('Failed to load Turnstile script');
-        setHasError(true);
-        setErrorMessage('Failed to load security verification');
-        setIsLoading(false);
-      };
-      
-      document.head.appendChild(script);
-    };
-
-    loadScript();
-  }, []);
-
-  // Render widget when script is loaded
-  useEffect(() => {
-    if (!scriptLoaded || !siteKey || !containerRef.current) return;
-
-    let attempts = 0;
-    const maxAttempts = 30;
-
-    const renderWidget = () => {
-      attempts++;
-      
-      if (window.turnstile && containerRef.current) {
-        // Clean up any existing widget
-        if (widgetIdRef.current) {
-          try {
-            window.turnstile.remove(widgetIdRef.current);
-          } catch (err) {
-            console.warn('Error removing previous widget:', err);
-          }
-          widgetIdRef.current = null;
-        }
-
-        try {
-          const widgetId = window.turnstile.render(containerRef.current, {
-            sitekey: siteKey,
-            theme: theme,
-            size: size,
-            action: 'login',
-            'response-field': false,
-            'response-field-name': 'cf-turnstile-response',
-            callback: (token: string) => {
-              console.log('Turnstile verification successful');
-              setIsLoading(false);
-              setHasError(false);
-              onVerify(token);
-            },
-            'error-callback': (error: any) => {
-              console.error('Turnstile verification error:', error);
-              setHasError(true);
-              setErrorMessage('Security verification failed');
-              setIsLoading(false);
-              onError?.();
-            },
-            'expired-callback': () => {
-              console.warn('Turnstile token expired');
-              onExpire?.();
-            },
-            'timeout-callback': () => {
-              console.warn('Turnstile verification timeout');
-              setHasError(true);
-              setErrorMessage('Verification timed out');
-              setIsLoading(false);
-              onError?.();
-            }
-          });
-
-          widgetIdRef.current = widgetId;
-          setIsLoading(false);
-          setHasError(false);
-          console.log('Turnstile widget rendered with ID:', widgetId);
-        } catch (err) {
-          console.error('Error rendering Turnstile widget:', err);
+    const ensureScriptAndRender = () => {
+      // Check if script exists, if not create it
+      if (!document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]')) {
+        console.log('📡 Loading Turnstile script...');
+        const script = document.createElement('script');
+        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+        script.async = true;
+        script.defer = true;
+        
+        script.onload = () => {
+          console.log('✅ Turnstile script loaded successfully');
+          attemptRender();
+        };
+        
+        script.onerror = () => {
+          console.error('❌ Failed to load Turnstile script');
           setHasError(true);
-          setErrorMessage('Failed to render security verification');
+          setErrorMessage('Failed to load security verification script');
           setIsLoading(false);
-        }
-      } else if (attempts < maxAttempts) {
-        console.log(`Waiting for Turnstile API... attempt ${attempts}/${maxAttempts}`);
-        setTimeout(renderWidget, 200);
+        };
+        
+        document.head.appendChild(script);
       } else {
-        console.error('Turnstile API not available after maximum attempts');
-        setHasError(true);
-        setErrorMessage('Security verification unavailable');
-        setIsLoading(false);
+        console.log('✅ Turnstile script already present');
+        attemptRender();
       }
     };
 
-    setIsLoading(true);
-    setHasError(false);
-    renderWidget();
+    const attemptRender = () => {
+      let attempts = 0;
+      const maxAttempts = 50; // 10 seconds with 200ms intervals
+      
+      const tryRender = () => {
+        attempts++;
+        console.log(`🎯 Render attempt ${attempts}/${maxAttempts}`);
+        
+        if (window.turnstile) {
+          console.log('🚀 Turnstile API available, rendering widget...');
+          
+          const container = document.getElementById(containerIdRef.current);
+          if (!container) {
+            console.error('❌ Container not found:', containerIdRef.current);
+            setHasError(true);
+            setErrorMessage('Widget container not found');
+            setIsLoading(false);
+            return;
+          }
+
+          try {
+            const widgetId = window.turnstile.render(container, {
+              sitekey: siteKey,
+              theme: theme,
+              size: size,
+              callback: (token: string) => {
+                console.log('✅ Turnstile verification successful, token received:', token.substring(0, 20) + '...');
+                setIsLoading(false);
+                setHasError(false);
+                onVerify(token);
+              },
+              'error-callback': (error: any) => {
+                console.error('❌ Turnstile verification error:', error);
+                setHasError(true);
+                setErrorMessage('Verification failed');
+                setIsLoading(false);
+                onError?.();
+              },
+              'expired-callback': () => {
+                console.warn('⚠️ Turnstile token expired');
+                onExpire?.();
+              },
+              'timeout-callback': () => {
+                console.warn('⏰ Turnstile verification timeout');
+                setHasError(true);
+                setErrorMessage('Verification timed out');
+                setIsLoading(false);
+                onError?.();
+              }
+            });
+            
+            widgetIdRef.current = widgetId;
+            setIsLoading(false);
+            setHasError(false);
+            console.log('🎉 Turnstile widget rendered successfully with ID:', widgetId);
+            
+          } catch (err) {
+            console.error('❌ Error rendering Turnstile widget:', err);
+            setHasError(true);
+            setErrorMessage('Failed to render widget');
+            setIsLoading(false);
+          }
+        } else if (attempts < maxAttempts) {
+          console.log(`⏳ Turnstile API not ready, retrying in 200ms... (${attempts}/${maxAttempts})`);
+          setTimeout(tryRender, 200);
+        } else {
+          console.error('❌ Turnstile API not available after maximum attempts');
+          setHasError(true);
+          setErrorMessage('Security verification not available');
+          setIsLoading(false);
+        }
+      };
+      
+      // Small delay to ensure DOM is ready
+      setTimeout(tryRender, 100);
+    };
+
+    ensureScriptAndRender();
 
     // Cleanup function
     return () => {
       if (widgetIdRef.current && window.turnstile) {
         try {
+          console.log('🧹 Cleaning up widget on unmount:', widgetIdRef.current);
           window.turnstile.remove(widgetIdRef.current);
-          console.log('Turnstile widget cleaned up');
+          widgetIdRef.current = null;
         } catch (err) {
-          console.warn('Error cleaning up Turnstile widget:', err);
+          console.warn('⚠️ Error cleaning up widget:', err);
         }
-        widgetIdRef.current = null;
       }
     };
-  }, [scriptLoaded, siteKey, theme, size, onVerify, onError, onExpire]);
+  }, [siteKey, theme, size]);
 
   const handleRetry = () => {
+    console.log('🔄 Retrying Turnstile widget...');
     setHasError(false);
     setIsLoading(true);
     setErrorMessage('');
     
-    // Trigger re-render by changing key state
+    // Generate new container ID to avoid conflicts
+    containerIdRef.current = `turnstile-container-${Math.random().toString(36).substr(2, 9)}`;
+    
+    // Force re-render by updating component state
     setTimeout(() => {
-      if (containerRef.current && window.turnstile) {
-        // Clean up and re-render
-        if (widgetIdRef.current) {
-          try {
-            window.turnstile.remove(widgetIdRef.current);
-          } catch (err) {
-            console.warn('Error removing widget during retry:', err);
-          }
+      if (widgetIdRef.current && window.turnstile) {
+        try {
+          window.turnstile.remove(widgetIdRef.current);
           widgetIdRef.current = null;
+        } catch (err) {
+          console.warn('⚠️ Error removing widget during retry:', err);
         }
-        
-        // Force re-render
-        setScriptLoaded(false);
-        setTimeout(() => setScriptLoaded(true), 100);
       }
     }, 100);
   };
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-[78px] p-4">
+      <div className="flex justify-center items-center min-h-[78px] p-4 border border-border rounded-lg bg-muted/10">
         <div className="flex items-center space-x-2">
           <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div>
           <span className="text-sm text-muted-foreground">Loading security verification...</span>
@@ -224,11 +227,10 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
   }
 
   return (
-    <div className="flex justify-center items-center min-h-[78px] w-full">
+    <div className="flex justify-center items-center min-h-[78px] w-full p-4">
       <div 
-        id="turnstile-container"
-        ref={containerRef} 
-        className="cf-turnstile w-full max-w-sm"
+        id={containerIdRef.current}
+        className="turnstile-widget w-full max-w-sm"
         aria-label="Cloudflare Turnstile security verification"
       />
     </div>
