@@ -40,7 +40,7 @@ serve(async (req) => {
     if (!TURNSTILE_SECRET) {
       console.error('CLOUDFLARE_TURNSTILE_SECRET_KEY not found in environment');
       return new Response(
-        JSON.stringify({ success: false, error: 'Server configuration error' }),
+        JSON.stringify({ success: false, error: 'Server config missing' }),
         {
           status: 500,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
