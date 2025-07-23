@@ -13,7 +13,7 @@ import { useJobPosts } from "@/hooks/useJobPosts";
 import { Loader2, Map, List } from "lucide-react";
 import { JobPost } from "@/types/marketplace";
 import { useLanguage } from "@/context/LanguageContext";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 import { PlusCircle, Users, MapPin } from "lucide-react";
 
 const Jobs = () => {
