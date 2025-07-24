@@ -67,6 +67,7 @@ const Tools = lazy(() => import("./pages/Tools"));
 const Blog = lazy(() => import("./pages/Blog"));
 const RSS = lazy(() => import("./pages/RSS"));
 const Search = lazy(() => import("./pages/Search"));
+const AIAssistantPage = lazy(() => import("./pages/ai"));
 
 // Admin pages - separate chunk
 const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
@@ -183,6 +184,7 @@ function App() {
                           <Route path="/infrastructure" element={<Infrastructure />} />
                           <Route path="/imei-check" element={<IMEICheck />} />
                           <Route path="/tools" element={<Tools />} />
+                          <Route path="/ai" element={<AIAssistantPage />} />
                           <Route path="/search" element={<Search />} />
                           <Route path="/rss" element={<RSS />} />
                           <Route path="/feed" element={<RSS />} />

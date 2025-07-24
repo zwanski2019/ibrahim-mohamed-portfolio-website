@@ -17,6 +17,7 @@ import {
   LogOut, 
   Bell,
   MessageSquare,
+  Bot,
   GraduationCap,
   Briefcase,
   Users,
@@ -140,6 +141,7 @@ const Navbar = () => {
     { label: "Jobs", path: "/jobs", icon: Briefcase },
     { label: "Blog", path: "/blog", icon: FileText },
     { label: "Chat", path: "/chat", icon: MessageSquare },
+    { label: "AI", path: "/ai", icon: Bot },
   ];
 
   return (

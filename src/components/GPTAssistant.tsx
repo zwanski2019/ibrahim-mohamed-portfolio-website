@@ -1,81 +1,101 @@
-// components/GPTAssistant.tsx
-
 "use client";
+
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Loader2 } from "lucide-react";
 
 const TOOLS = [
-  { id: "chatbot", label: "💬 Chatbot" },
-  { id: "resume", label: "📝 Resume Enhancer" },
-  { id: "blog", label: "📰 Blog Intro Generator" },
-  { id: "code", label: "💡 Code Explainer" },
+  { id: "chatbot", label: "General Chatbot" },
+  { id: "resume", label: "Resume Enhancer" },
+  { id: "blog", label: "Blog Intro Generator" },
+  { id: "code", label: "Code Explainer" },
 ];
 
 export default function GPTAssistant() {
   const [tool, setTool] = useState("chatbot");
   const [input, setInput] = useState("");
-  const [response, setResponse] = useState("");
+  const [result, setResult] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setResponse("Thinking...");
-
-    const res = await fetch(`https://api.zwanski.org/api/ai-tools`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ tool, prompt: input }),
-    });
-
-    const data = await res.json();
-    setResponse(data.result || "No response received.");
+    setLoading(true);
+    setResult("");
+    try {
+      const res = await fetch("https://api.zwanski.org/api/ai-tools", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tool, prompt: input }),
+      });
+      const data = await res.json();
+      setResult(data.result || "No response received.");
+    } catch (err) {
+      setResult("Failed to generate response.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
-    <div className="max-w-2xl mx-auto my-8 p-4 bg-white rounded-lg shadow space-y-4">
-      <h1 className="text-xl font-bold text-center">Zwanski AI Assistant</h1>
+    <Card className="max-w-2xl mx-auto my-8">
+      <CardHeader>
+        <CardTitle>Zwanski AI Assistant</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <div>
+            <label className="block mb-1 text-sm font-medium">Select Tool</label>
+            <Select value={tool} onValueChange={setTool}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {TOOLS.map((t) => (
+                  <SelectItem key={t.id} value={t.id}>
+                    {t.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
-      <div className="flex gap-2 justify-center">
-        {TOOLS.map((t) => (
-          <button
-            key={t.id}
-            className={`px-3 py-1 rounded ${
-              tool === t.id ? "bg-blue-600 text-white" : "bg-gray-200"
-            }`}
-            onClick={() => setTool(t.id)}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
+          <div>
+            <label className="block mb-1 text-sm font-medium">Prompt</label>
+            <Textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Type your prompt here"
+              rows={5}
+            />
+          </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-        <textarea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={
-            tool === "chatbot"
-              ? "Ask a question..."
-              : tool === "resume"
-              ? "Paste your resume text..."
-              : tool === "blog"
-              ? "What's your blog topic?"
-              : "Paste your code here..."
-          }
-          rows={5}
-          className="w-full p-2 border rounded"
-        />
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded"
-        >
-          Generate
-        </button>
-      </form>
+          <Button type="submit" disabled={loading} className="flex items-center">
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {loading ? "Generating..." : "Generate"}
+          </Button>
+        </form>
 
-      {response && (
-        <div className="bg-gray-100 p-3 rounded whitespace-pre-wrap">
-          {response}
-        </div>
-      )}
-    </div>
+        {result && (
+          <div className="prose max-w-none bg-muted/50 p-4 rounded">
+            <ReactMarkdown>{result}</ReactMarkdown>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }
