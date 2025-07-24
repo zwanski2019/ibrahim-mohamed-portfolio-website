@@ -1,0 +1,104 @@
+name: Zwanski AI Media Machine
+
+on:
+  schedule:
+    - cron: '0 12 * * *' # Every day at 12:00 UTC
+  workflow_dispatch:
+    inputs:
+      title:
+        description: 'Blog Title'
+        required: true
+      topic:
+        description: 'What should the blog be about?'
+        required: true
+
+jobs:
+  generate-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install deps
+        run: npm install openai axios @vitalets/google-translate-api dotenv
+
+      - name: Generate Blog
+        id: generate
+        run: |
+          node <<'EOF'
+          const { Configuration, OpenAIApi } = require("openai");
+          const fs = require("fs");
+          require("dotenv").config();
+
+          const configuration = new Configuration({
+            apiKey: process.env.OPENAI_API_KEY,
+          });
+          const openai = new OpenAIApi(configuration);
+
+          (async () => {
+            const response = await openai.createChatCompletion({
+              model: "gpt-4",
+              messages: [{
+                role: "user",
+                content: `Write an SEO-optimized professional blog article about: "${process.env.TOPIC}"`
+              }],
+              temperature: 0.7,
+            });
+
+            const content = response.data.choices[0].message.content;
+            fs.writeFileSync("post.md", content);
+          })();
+          EOF
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TOPIC: ${{ github.event.inputs.topic || 'Latest tech trends in AI and freelancing for developers' }}
+
+      - name: Translate Blog to Arabic & French
+        run: |
+          node <<'EOF'
+          const fs = require("fs");
+          const translate = require("@vitalets/google-translate-api");
+
+          const content = fs.readFileSync("post.md", "utf-8");
+
+          (async () => {
+            const ar = await translate(content, { to: 'ar' });
+            fs.writeFileSync("post.ar.md", ar.text);
+
+            const fr = await translate(content, { to: 'fr' });
+            fs.writeFileSync("post.fr.md", fr.text);
+          })();
+          EOF
+
+      - name: Post to Medium
+        run: |
+          node <<'EOF'
+          const fs = require("fs");
+          const axios = require("axios");
+
+          const content = fs.readFileSync("post.md", "utf-8");
+          const title = "${{ github.event.inputs.title || 'Zwanski AI Update' }}";
+
+          axios.post("https://api.medium.com/v1/users/${{ secrets.MEDIUM_USER_ID }}/posts", {
+            title,
+            contentFormat: "markdown",
+            content,
+            publishStatus: "public",
+            tags: ["Zwanski", "AI", "GPT", "Tech", "Coding"]
+          }, {
+            headers: {
+              Authorization: `Bearer ${{ secrets.MEDIUM_INTEGRATION_TOKEN }}`,
+              "Content-Type": "application/json"
+            }
+          }).then(res => console.log("✅ Posted to Medium: " + res.data.data.url))
+            .catch(err => console.error("❌ Medium error:", err.response?.data || err));
+          EOF
+
+      - name: Auto-post to Twitter
+        run: echo "TODO: Post Medium link with topic to Twitter"
+
+      - name: Auto-post to Facebook
+        run: echo "TODO: Use Facebook Graph API to post blog snippet"
+
+      - name: Save backup to repo
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "📝 New blog post published by AI bot"
+          file_pattern: post*.md
