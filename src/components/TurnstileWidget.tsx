@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AlertCircle, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -14,7 +14,10 @@ interface TurnstileWidgetProps {
 declare global {
   interface Window {
     turnstile?: {
-      render: (container: string | HTMLElement, options: any) => string;
+      render: (
+        container: string | HTMLElement,
+        options: Record<string, unknown>,
+      ) => string;
       remove: (widgetId: string) => void;
       reset: (widgetId: string) => void;
     };
@@ -37,7 +40,7 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
     `turnstile-container-${Math.random().toString(36).substr(2, 9)}`,
   );
 
-  const initializeTurnstile = () => {
+  const initializeTurnstile = useCallback(() => {
     // Clean up any existing widget first
     if (widgetIdRef.current && window.turnstile) {
       try {
@@ -111,7 +114,7 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
                 setHasError(false);
                 onVerify(token);
               },
-              'error-callback': (error: any) => {
+              'error-callback': (error: unknown) => {
                 console.error('❌ Turnstile verification error:', error);
                 setHasError(true);
                 setErrorMessage('Verification failed');
@@ -159,7 +162,7 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
     };
 
     ensureScriptAndRender();
-  };
+  }, [siteKey, theme, size, onVerify, onError, onExpire]);
 
   useEffect(() => {
     console.log('🔧 TurnstileWidget: Initializing with siteKey:', siteKey);
@@ -177,7 +180,7 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
         }
       }
     };
-  }, [siteKey, theme, size]);
+  }, [siteKey, theme, size, initializeTurnstile]);
 
   const handleRetry = () => {
     console.log('🔄 Retrying Turnstile widget...');
