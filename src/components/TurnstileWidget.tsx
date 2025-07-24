@@ -33,11 +33,11 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const widgetIdRef = useRef<string | null>(null);
-  const containerIdRef = useRef<string>(`turnstile-container-${Math.random().toString(36).substr(2, 9)}`);
+  const containerIdRef = useRef<string>(
+    `turnstile-container-${Math.random().toString(36).substr(2, 9)}`,
+  );
 
-  useEffect(() => {
-    console.log('🔧 TurnstileWidget: Initializing with siteKey:', siteKey);
-    
+  const initializeTurnstile = () => {
     // Clean up any existing widget first
     if (widgetIdRef.current && window.turnstile) {
       try {
@@ -57,19 +57,19 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
         script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
         script.async = true;
         script.defer = true;
-        
+
         script.onload = () => {
           console.log('✅ Turnstile script loaded successfully');
           attemptRender();
         };
-        
+
         script.onerror = () => {
           console.error('❌ Failed to load Turnstile script');
           setHasError(true);
           setErrorMessage('Failed to load security verification script');
           setIsLoading(false);
         };
-        
+
         document.head.appendChild(script);
       } else {
         console.log('✅ Turnstile script already present');
@@ -80,14 +80,14 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
     const attemptRender = () => {
       let attempts = 0;
       const maxAttempts = 50; // 10 seconds with 200ms intervals
-      
+
       const tryRender = () => {
         attempts++;
         console.log(`🎯 Render attempt ${attempts}/${maxAttempts}`);
-        
+
         if (window.turnstile) {
           console.log('🚀 Turnstile API available, rendering widget...');
-          
+
           const container = document.getElementById(containerIdRef.current);
           if (!container) {
             console.error('❌ Container not found:', containerIdRef.current);
@@ -103,7 +103,10 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
               theme: theme,
               size: size,
               callback: (token: string) => {
-                console.log('✅ Turnstile verification successful, token received:', token.substring(0, 20) + '...');
+                console.log(
+                  '✅ Turnstile verification successful, token received:',
+                  token.substring(0, 20) + '...',
+                );
                 setIsLoading(false);
                 setHasError(false);
                 onVerify(token);
@@ -125,14 +128,13 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
                 setErrorMessage('Verification timed out');
                 setIsLoading(false);
                 onError?.();
-              }
+              },
             });
-            
+
             widgetIdRef.current = widgetId;
             setIsLoading(false);
             setHasError(false);
             console.log('🎉 Turnstile widget rendered successfully with ID:', widgetId);
-            
           } catch (err) {
             console.error('❌ Error rendering Turnstile widget:', err);
             setHasError(true);
@@ -140,7 +142,9 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
             setIsLoading(false);
           }
         } else if (attempts < maxAttempts) {
-          console.log(`⏳ Turnstile API not ready, retrying in 200ms... (${attempts}/${maxAttempts})`);
+          console.log(
+            `⏳ Turnstile API not ready, retrying in 200ms... (${attempts}/${maxAttempts})`,
+          );
           setTimeout(tryRender, 200);
         } else {
           console.error('❌ Turnstile API not available after maximum attempts');
@@ -149,12 +153,17 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
           setIsLoading(false);
         }
       };
-      
+
       // Small delay to ensure DOM is ready
       setTimeout(tryRender, 100);
     };
 
     ensureScriptAndRender();
+  };
+
+  useEffect(() => {
+    console.log('🔧 TurnstileWidget: Initializing with siteKey:', siteKey);
+    initializeTurnstile();
 
     // Cleanup function
     return () => {
@@ -189,89 +198,8 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
           console.warn('⚠️ Error removing widget during retry:', err);
         }
       }
-      
-      // Re-run the Turnstile render logic to re-initialize the widget
-      const ensureScriptAndRender = () => {
-        const attemptRender = () => {
-          let attempts = 0;
-          const maxAttempts = 50;
-          
-          const tryRender = () => {
-            attempts++;
-            console.log(`🎯 Retry render attempt ${attempts}/${maxAttempts}`);
-            
-            if (window.turnstile) {
-              console.log('🚀 Turnstile API available, rendering widget...');
-              
-              const container = document.getElementById(containerIdRef.current);
-              if (!container) {
-                console.error('❌ Container not found:', containerIdRef.current);
-                setHasError(true);
-                setErrorMessage('Widget container not found');
-                setIsLoading(false);
-                return;
-              }
 
-              try {
-                const widgetId = window.turnstile.render(container, {
-                  sitekey: siteKey,
-                  theme: theme,
-                  size: size,
-                  callback: (token: string) => {
-                    console.log('✅ Turnstile verification successful, token received:', token.substring(0, 20) + '...');
-                    setIsLoading(false);
-                    setHasError(false);
-                    onVerify(token);
-                  },
-                  'error-callback': (error: any) => {
-                    console.error('❌ Turnstile verification error:', error);
-                    setHasError(true);
-                    setErrorMessage('Verification failed');
-                    setIsLoading(false);
-                    onError?.();
-                  },
-                  'expired-callback': () => {
-                    console.warn('⚠️ Turnstile token expired');
-                    onExpire?.();
-                  },
-                  'timeout-callback': () => {
-                    console.warn('⏰ Turnstile verification timeout');
-                    setHasError(true);
-                    setErrorMessage('Verification timed out');
-                    setIsLoading(false);
-                    onError?.();
-                  }
-                });
-                
-                widgetIdRef.current = widgetId;
-                setIsLoading(false);
-                setHasError(false);
-                console.log('🎉 Turnstile widget re-rendered successfully with ID:', widgetId);
-                
-              } catch (err) {
-                console.error('❌ Error rendering Turnstile widget:', err);
-                setHasError(true);
-                setErrorMessage('Failed to render widget');
-                setIsLoading(false);
-              }
-            } else if (attempts < maxAttempts) {
-              console.log(`⏳ Turnstile API not ready, retrying in 200ms... (${attempts}/${maxAttempts})`);
-              setTimeout(tryRender, 200);
-            } else {
-              console.error('❌ Turnstile API not available after maximum attempts');
-              setHasError(true);
-              setErrorMessage('Security verification not available');
-              setIsLoading(false);
-            }
-          };
-          
-          setTimeout(tryRender, 100);
-        };
-
-        attemptRender();
-      };
-
-      ensureScriptAndRender();
+      initializeTurnstile();
     }, 100);
   };
 
