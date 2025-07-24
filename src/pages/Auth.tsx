@@ -47,13 +47,15 @@ const Auth = () => {
         if (error) {
           console.warn('Auth: Error fetching Turnstile config:', error);
         } else if (data?.siteKey) {
+          console.log('Auth: Site key received:', data.siteKey);
           setSiteKey(data.siteKey);
         } else {
-          console.warn('Auth: No site key returned, Turnstile disabled');
+          console.warn('Auth: No site key returned, Turnstile disabled. Data:', data);
         }
       } catch (error) {
         console.warn('Auth: Failed to fetch Turnstile config:', error);
       } finally {
+        console.log('Auth: Config loading finished. Site key set:', !!siteKey);
         setLoadingConfig(false);
       }
     };
@@ -298,15 +300,27 @@ const Auth = () => {
                   </div>
                 </div>
 
-                {!loadingConfig && siteKey && (
-                  <TurnstileWidget
-                    siteKey={siteKey}
-                    onVerify={setSigninTurnstileToken}
-                    onError={handleTurnstileError}
-                    onExpire={() => setSigninTurnstileToken(null)}
-                    theme="auto"
-                    size="compact"
-                  />
+                {!loadingConfig && siteKey ? (
+                  <div>
+                    <div className="text-xs text-muted-foreground mb-2">
+                      Security verification required
+                    </div>
+                    <TurnstileWidget
+                      siteKey={siteKey}
+                      onVerify={(token) => {
+                        console.log('Sign-in Turnstile token received:', token.substring(0, 20) + '...');
+                        setSigninTurnstileToken(token);
+                      }}
+                      onError={handleTurnstileError}
+                      onExpire={() => setSigninTurnstileToken(null)}
+                      theme="auto"
+                      size="compact"
+                    />
+                  </div>
+                ) : (
+                  <div className="text-xs text-muted-foreground text-center py-4">
+                    {loadingConfig ? 'Loading security verification...' : 'Security verification unavailable'}
+                  </div>
                 )}
 
                 <Button 
@@ -446,15 +460,27 @@ const Auth = () => {
                   </Label>
                 </div>
 
-                {!loadingConfig && siteKey && (
-                  <TurnstileWidget
-                    siteKey={siteKey}
-                    onVerify={setTurnstileToken}
-                    onError={handleTurnstileError}
-                    onExpire={() => setTurnstileToken(null)}
-                    theme="auto"
-                    size="compact"
-                  />
+                {!loadingConfig && siteKey ? (
+                  <div>
+                    <div className="text-xs text-muted-foreground mb-2">
+                      Security verification required
+                    </div>
+                    <TurnstileWidget
+                      siteKey={siteKey}
+                      onVerify={(token) => {
+                        console.log('Sign-up Turnstile token received:', token.substring(0, 20) + '...');
+                        setTurnstileToken(token);
+                      }}
+                      onError={handleTurnstileError}
+                      onExpire={() => setTurnstileToken(null)}
+                      theme="auto"
+                      size="compact"
+                    />
+                  </div>
+                ) : (
+                  <div className="text-xs text-muted-foreground text-center py-4">
+                    {loadingConfig ? 'Loading security verification...' : 'Security verification unavailable'}
+                  </div>
                 )}
 
                 <Button 
