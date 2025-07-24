@@ -46,8 +46,14 @@ Visit [http://localhost:3000](http://localhost:3000) to view the app.
 
 ### Environment Variables
 
-Set `CLOUDFLARE_TURNSTILE_SECRET_KEY` with your Cloudflare Turnstile secret so the
-`verify-turnstile` Supabase function can validate tokens.
+Required for Cloudflare Turnstile security verification:
+
+```bash
+CLOUDFLARE_TURNSTILE_SITE_KEY=your-public-site-key-here
+CLOUDFLARE_TURNSTILE_SECRET_KEY=your-secret-key-here
+```
+
+Set these in your Supabase project secrets so the `get-turnstile-config` and `verify-turnstile` edge functions can work properly.
 
 ---
 
