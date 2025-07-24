@@ -17,7 +17,7 @@ import { MapPin, DollarSign, Briefcase, Clock, AlertCircle } from "lucide-react"
 const PostJob = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { user, loading } = useAuth();
+  const { user, isLoading: loading } = useAuth();
   const createJobPost = useCreateJobPost();
 
   const [formData, setFormData] = useState({

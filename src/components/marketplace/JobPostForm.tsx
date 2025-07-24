@@ -45,7 +45,7 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
   const [newRequirement, setNewRequirement] = useState("");
   const [newBenefit, setNewBenefit] = useState("");
 
-  const { user, loading: authLoading } = useAuth();
+  const { user, isLoading: authLoading } = useAuth();
   const { data: categories = [], isLoading: categoriesLoading, error: categoriesError } = useCategories();
   const createJobPost = useCreateJobPost();
 
