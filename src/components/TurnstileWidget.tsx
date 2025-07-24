@@ -38,6 +38,11 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
   useEffect(() => {
     console.log('🔧 TurnstileWidget: Initializing with siteKey:', siteKey);
     
+    // Reset state
+    setIsLoading(true);
+    setHasError(false);
+    setErrorMessage('');
+    
     // Clean up any existing widget first
     if (widgetIdRef.current && window.turnstile) {
       try {
@@ -79,23 +84,29 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
 
     const attemptRender = () => {
       let attempts = 0;
-      const maxAttempts = 50; // 10 seconds with 200ms intervals
+      const maxAttempts = 30; // Reduced from 50 to 30
       
       const tryRender = () => {
         attempts++;
         console.log(`🎯 Render attempt ${attempts}/${maxAttempts}`);
         
-        if (window.turnstile) {
-          console.log('🚀 Turnstile API available, rendering widget...');
-          
-          const container = document.getElementById(containerIdRef.current);
-          if (!container) {
-            console.error('❌ Container not found:', containerIdRef.current);
+        const container = document.getElementById(containerIdRef.current);
+        if (!container) {
+          console.error('❌ Container not found:', containerIdRef.current);
+          if (attempts < 10) {
+            // Retry a few times for container to be ready
+            setTimeout(tryRender, 100);
+            return;
+          } else {
             setHasError(true);
             setErrorMessage('Widget container not found');
             setIsLoading(false);
             return;
           }
+        }
+        
+        if (window.turnstile) {
+          console.log('🚀 Turnstile API available, rendering widget...');
 
           try {
             const widgetId = window.turnstile.render(container, {
@@ -140,8 +151,8 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
             setIsLoading(false);
           }
         } else if (attempts < maxAttempts) {
-          console.log(`⏳ Turnstile API not ready, retrying in 200ms... (${attempts}/${maxAttempts})`);
-          setTimeout(tryRender, 200);
+          console.log(`⏳ Turnstile API not ready, retrying in 300ms... (${attempts}/${maxAttempts})`);
+          setTimeout(tryRender, 300);
         } else {
           console.error('❌ Turnstile API not available after maximum attempts');
           setHasError(true);
@@ -151,7 +162,7 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
       };
       
       // Small delay to ensure DOM is ready
-      setTimeout(tryRender, 100);
+      setTimeout(tryRender, 200);
     };
 
     ensureScriptAndRender();
