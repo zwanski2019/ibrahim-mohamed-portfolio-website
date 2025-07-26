@@ -66,6 +66,18 @@ verify_jwt = false
 verify_jwt = false
 ```
 
+## 🔐 Authentication Test
+
+You can verify Supabase sign-in and sign-out using the helper script:
+
+```bash
+TEST_EMAIL=your@email \
+TEST_PASSWORD=yourpassword \
+node scripts/test-login.js
+```
+
+The script attempts to sign in with the provided credentials and then signs out, reporting any errors.
+
 ---
 
 ## 📚 Main Sections
