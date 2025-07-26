@@ -46,14 +46,14 @@ Visit [http://localhost:3000](http://localhost:3000) to view the app.
 
 ### Environment Variables
 
-Required for Cloudflare Turnstile security verification:
+Required for hCaptcha security verification:
 
 ```bash
-CLOUDFLARE_TURNSTILE_SITE_KEY=your-public-site-key-here
-CLOUDFLARE_TURNSTILE_SECRET_KEY=your-secret-key-here
+HCAPTCHA_SITE_KEY=your-public-site-key-here
+HCAPTCHA_SECRET_KEY=your-secret-key-here
 ```
 
-Set these in your Supabase project secrets so the `get-turnstile-config` and `verify-turnstile` edge functions can work properly.
+Set these in your Supabase project secrets so the `get-hcaptcha-config` and `verify-hcaptcha` edge functions can work properly.
 
 ---
 

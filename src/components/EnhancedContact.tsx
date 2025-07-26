@@ -7,7 +7,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import TurnstileWidget from "./TurnstileWidget";
+import HCaptchaWidget from "./HCaptchaWidget";
 
 const EnhancedContact = () => {
   const { language } = useLanguage();
@@ -19,10 +19,10 @@ const EnhancedContact = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [siteKey, setSiteKey] = useState<string>("");
   const [loadingConfig, setLoadingConfig] = useState(true);
-  const [turnstileEnabled, setTurnstileEnabled] = useState(false);
+  const [captchaEnabled, setCaptchaEnabled] = useState(false);
 
   const content = {
     en: {
@@ -87,38 +87,38 @@ const EnhancedContact = () => {
   const currentContent = content[language];
 
   useEffect(() => {
-    const getTurnstileConfig = async () => {
+    const getCaptchaConfig = async () => {
       try {
-        console.log('EnhancedContact: Fetching Turnstile config...');
-        const { data, error } = await supabase.functions.invoke('get-turnstile-config');
+        console.log('EnhancedContact: Fetching hCaptcha config...');
+        const { data, error } = await supabase.functions.invoke('get-hcaptcha-config');
         
         if (error) {
-          console.warn('EnhancedContact: Error fetching Turnstile config:', error);
-          setTurnstileEnabled(false);
+          console.warn('EnhancedContact: Error fetching hCaptcha config:', error);
+          setCaptchaEnabled(false);
         } else if (data?.siteKey) {
-          console.log('EnhancedContact: Turnstile config loaded successfully');
+          console.log('EnhancedContact: hCaptcha config loaded successfully');
           setSiteKey(data.siteKey);
-          setTurnstileEnabled(true);
+          setCaptchaEnabled(true);
         } else {
-          console.warn('EnhancedContact: No site key returned, Turnstile disabled');
-          setTurnstileEnabled(false);
+          console.warn('EnhancedContact: No site key returned, hCaptcha disabled');
+          setCaptchaEnabled(false);
         }
       } catch (error) {
-        console.warn('EnhancedContact: Failed to fetch Turnstile config:', error);
-        setTurnstileEnabled(false);
+        console.warn('EnhancedContact: Failed to fetch hCaptcha config:', error);
+        setCaptchaEnabled(false);
       } finally {
         setLoadingConfig(false);
       }
     };
 
-    getTurnstileConfig();
+    getCaptchaConfig();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Only require Turnstile token if Turnstile is enabled
-    if (turnstileEnabled && !turnstileToken) {
+    // Only require hCaptcha token if hCaptcha is enabled
+    if (captchaEnabled && !captchaToken) {
       toast({
         title: "Security verification required",
         description: "Please complete the security check.",
@@ -130,10 +130,10 @@ const EnhancedContact = () => {
     setIsSubmitting(true);
     
     try {
-      // Only verify Turnstile token if it's enabled and we have a token
-      if (turnstileEnabled && turnstileToken) {
-        const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-turnstile', {
-          body: { token: turnstileToken }
+      // Only verify hCaptcha token if it's enabled and we have a token
+      if (captchaEnabled && captchaToken) {
+        const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-hcaptcha', {
+          body: { token: captchaToken }
         });
 
         if (verificationError || !verificationData?.success) {
@@ -159,7 +159,7 @@ const EnhancedContact = () => {
         description: "We'll get back to you soon.",
       });
       setFormData({ name: '', email: '', service: '', message: '' });
-      setTurnstileToken(null);
+      setCaptchaToken(null);
     } catch (error) {
       console.error('Error sending message:', error);
       toast({
@@ -259,21 +259,21 @@ const EnhancedContact = () => {
                     className="w-full resize-none"
                   />
                   
-                  {/* Turnstile Widget - Only show if enabled */}
-                  {turnstileEnabled && !loadingConfig && siteKey && (
+                  {/* hCaptcha Widget - Only show if enabled */}
+                  {captchaEnabled && !loadingConfig && siteKey && (
                     <div className="py-2">
-                      <TurnstileWidget
+                      <HCaptchaWidget
                         siteKey={siteKey}
-                        onVerify={setTurnstileToken}
-                        onError={() => setTurnstileToken(null)}
-                        onExpire={() => setTurnstileToken(null)}
+                        onVerify={setCaptchaToken}
+                        onError={() => setCaptchaToken(null)}
+                        onExpire={() => setCaptchaToken(null)}
                         theme="auto"
                         size="normal"
                       />
                     </div>
                   )}
 
-                  {!turnstileEnabled && !loadingConfig && (
+                  {!captchaEnabled && !loadingConfig && (
                     <div className="py-2 text-sm text-muted-foreground">
                       Security verification is currently unavailable
                     </div>
@@ -283,7 +283,7 @@ const EnhancedContact = () => {
                     type="submit"
                     size="lg"
                     className="w-full axeptio-button-primary flex items-center justify-center gap-2"
-                    disabled={isSubmitting || (turnstileEnabled && !turnstileToken)}
+                    disabled={isSubmitting || (captchaEnabled && !captchaToken)}
                   >
                     <span>{isSubmitting ? 'Sending...' : currentContent.form.submit}</span>
                     <Send className="h-4 w-4" />

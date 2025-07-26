@@ -5,7 +5,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-interface TurnstileResponse {
+interface HCaptchaResponse {
   success: boolean;
   challenge_ts?: string;
   hostname?: string;
@@ -21,7 +21,7 @@ serve(async (req) => {
   }
 
   try {
-    console.log('Turnstile verification request received');
+  console.log('hCaptcha verification request received');
     const { token } = await req.json();
 
     if (!token) {
@@ -35,10 +35,10 @@ serve(async (req) => {
       );
     }
 
-    const TURNSTILE_SECRET = Deno.env.get('CLOUDFLARE_TURNSTILE_SECRET_KEY');
+    const HCAPTCHA_SECRET = Deno.env.get('HCAPTCHA_SECRET_KEY');
     
-    if (!TURNSTILE_SECRET) {
-      console.error('CLOUDFLARE_TURNSTILE_SECRET_KEY not found in environment');
+    if (!HCAPTCHA_SECRET) {
+      console.error('HCAPTCHA_SECRET_KEY not found in environment');
       return new Response(
         JSON.stringify({ success: false, error: 'Server config missing' }),
         {
@@ -48,15 +48,15 @@ serve(async (req) => {
       );
     }
 
-    console.log('Sending verification request to Cloudflare');
+    console.log('Sending verification request to hCaptcha');
 
     // Verify the token with Cloudflare with timeout
     const formData = new FormData();
-    formData.append('secret', TURNSTILE_SECRET);
+    formData.append('secret', HCAPTCHA_SECRET);
     formData.append('response', token);
 
     const verifyResponse = await Promise.race([
-      fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      fetch('https://hcaptcha.com/siteverify', {
         method: 'POST',
         body: formData,
       }),
@@ -70,9 +70,9 @@ serve(async (req) => {
       throw new Error(`Verification request failed: ${verifyResponse.status}`);
     }
 
-    const result: TurnstileResponse = await verifyResponse.json();
+    const result: HCaptchaResponse = await verifyResponse.json();
 
-    console.log('Turnstile verification result:', {
+    console.log('hCaptcha verification result:', {
       success: result.success,
       errors: result['error-codes'] || [],
       hostname: result.hostname,
@@ -91,7 +91,7 @@ serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('Error verifying Turnstile token:', {
+    console.error('Error verifying hCaptcha token:', {
       message: error.message,
       stack: error.stack,
       name: error.name

@@ -12,7 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Eye, EyeOff, Mail, Lock, User, Github, AlertCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import TurnstileWidget from "@/components/TurnstileWidget";
+import HCaptchaWidget from "@/components/HCaptchaWidget";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -32,35 +32,35 @@ const Auth = () => {
   const [fullName, setFullName] = useState("");
   const [userRoles, setUserRoles] = useState<string[]>(["student"]);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  const [signinTurnstileToken, setSigninTurnstileToken] = useState<string | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [signinCaptchaToken, setSigninCaptchaToken] = useState<string | null>(null);
 
   const [siteKey, setSiteKey] = useState<string>("");
   const [loadingConfig, setLoadingConfig] = useState(true);
 
   useEffect(() => {
-    const getTurnstileConfig = async () => {
+    const getCaptchaConfig = async () => {
       try {
-        console.log('Auth: Fetching Turnstile config...');
-        const { data, error } = await supabase.functions.invoke('get-turnstile-config');
+        console.log('Auth: Fetching hCaptcha config...');
+        const { data, error } = await supabase.functions.invoke('get-hcaptcha-config');
 
         if (error) {
-          console.warn('Auth: Error fetching Turnstile config:', error);
+          console.warn('Auth: Error fetching hCaptcha config:', error);
         } else if (data?.siteKey) {
           console.log('Auth: Site key received:', data.siteKey);
           setSiteKey(data.siteKey);
         } else {
-          console.warn('Auth: No site key returned, Turnstile disabled. Data:', data);
+          console.warn('Auth: No site key returned, hCaptcha disabled. Data:', data);
         }
       } catch (error) {
-        console.warn('Auth: Failed to fetch Turnstile config:', error);
+        console.warn('Auth: Failed to fetch hCaptcha config:', error);
       } finally {
         console.log('Auth: Config loading finished. Site key set:', !!siteKey);
         setLoadingConfig(false);
       }
     };
 
-    getTurnstileConfig();
+    getCaptchaConfig();
   }, []);
 
   // Redirect authenticated users
@@ -79,7 +79,7 @@ const Auth = () => {
     }
   }, [searchParams]);
 
-  const handleTurnstileError = () => {
+  const handleCaptchaError = () => {
     setError("Security verification failed. Please try again or refresh the page.");
   };
 
@@ -88,14 +88,14 @@ const Auth = () => {
     setLoading(true);
     setError("");
 
-    if (!signinTurnstileToken) {
+    if (!signinCaptchaToken) {
       setError("Please complete the security verification");
       setLoading(false);
       return;
     }
 
     try {
-      const { error } = await signIn(email, password, signinTurnstileToken);
+      const { error } = await signIn(email, password, signinCaptchaToken);
       
       if (error) {
         setError(error.message);
@@ -124,16 +124,16 @@ const Auth = () => {
       return;
     }
 
-    if (!turnstileToken) {
+    if (!captchaToken) {
       setError("Please complete the security verification");
       setLoading(false);
       return;
     }
 
     try {
-      // Verify Turnstile token
-      const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-turnstile', {
-        body: { token: turnstileToken }
+      // Verify hCaptcha token
+      const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-hcaptcha', {
+        body: { token: captchaToken }
       });
 
       if (verificationError || !verificationData?.success) {
@@ -305,14 +305,14 @@ const Auth = () => {
                     <div className="text-xs text-muted-foreground mb-2">
                       Security verification required
                     </div>
-                    <TurnstileWidget
+                    <HCaptchaWidget
                       siteKey={siteKey}
                       onVerify={(token) => {
-                        console.log('Sign-in Turnstile token received:', token.substring(0, 20) + '...');
-                        setSigninTurnstileToken(token);
+                        console.log('Sign-in hCaptcha token received:', token.substring(0, 20) + '...');
+                        setSigninCaptchaToken(token);
                       }}
-                      onError={handleTurnstileError}
-                      onExpire={() => setSigninTurnstileToken(null)}
+                      onError={handleCaptchaError}
+                      onExpire={() => setSigninCaptchaToken(null)}
                       theme="auto"
                       size="compact"
                     />
@@ -326,7 +326,7 @@ const Auth = () => {
                 <Button 
                   type="submit" 
                   className="w-full" 
-                  disabled={loading || !signinTurnstileToken}
+                  disabled={loading || !signinCaptchaToken}
                 >
                   {loading ? "Signing In..." : "Sign In"}
                 </Button>
@@ -465,14 +465,14 @@ const Auth = () => {
                     <div className="text-xs text-muted-foreground mb-2">
                       Security verification required
                     </div>
-                    <TurnstileWidget
+                    <HCaptchaWidget
                       siteKey={siteKey}
                       onVerify={(token) => {
-                        console.log('Sign-up Turnstile token received:', token.substring(0, 20) + '...');
-                        setTurnstileToken(token);
+                        console.log('Sign-up hCaptcha token received:', token.substring(0, 20) + '...');
+                        setCaptchaToken(token);
                       }}
-                      onError={handleTurnstileError}
-                      onExpire={() => setTurnstileToken(null)}
+                      onError={handleCaptchaError}
+                      onExpire={() => setCaptchaToken(null)}
                       theme="auto"
                       size="compact"
                     />
@@ -486,7 +486,7 @@ const Auth = () => {
                 <Button 
                   type="submit" 
                   className="w-full" 
-                  disabled={loading || !turnstileToken}
+                  disabled={loading || !captchaToken}
                 >
                   {loading ? "Creating Account..." : "Create Account"}
                 </Button>
