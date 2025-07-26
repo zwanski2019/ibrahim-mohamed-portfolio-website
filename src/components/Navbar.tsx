@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { 
   Menu,
   X,
+  Home,
   Wrench,
   Shield,
   GraduationCap,
@@ -97,6 +98,7 @@ const Navbar = () => {
   };
 
   const mainNavItems = [
+    { label: "Home", path: "/", icon: Home },
     { 
       label: "Fix", 
       path: "/services?category=repair", 
