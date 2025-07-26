@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
+    "dev:admin": "vite --config admin/vite.config.ts --root admin",
+    "build:admin": "vite build --config admin/vite.config.ts --root admin",
     "lint": "eslint .",
     "preview": "vite preview"
   },
