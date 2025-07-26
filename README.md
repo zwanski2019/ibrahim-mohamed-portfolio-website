@@ -46,12 +46,14 @@ Visit [http://localhost:3000](http://localhost:3000) to view the app.
 
 ### Environment Variables
 
-Required for hCaptcha security verification:
+Optional variables for hCaptcha security verification:
 
 ```bash
 HCAPTCHA_SITE_KEY=your-public-site-key-here
 HCAPTCHA_SECRET_KEY=your-secret-key-here
 ```
+
+If `HCAPTCHA_SITE_KEY` is not set, security verification is skipped and users can sign in or sign up without completing hCaptcha.
 
 Set these in your Supabase project secrets so the `get-hcaptcha-config` and `verify-hcaptcha` edge functions can work properly.
 Additionally, update `supabase/config.toml` to allow unauthenticated access to these functions:
