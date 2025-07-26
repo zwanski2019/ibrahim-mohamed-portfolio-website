@@ -67,6 +67,17 @@ Set these in your Supabase project secrets so the `get-hcaptcha-config` and `ver
 
 ---
 
+## 📝 Contribution Guidelines
+
+We welcome pull requests! To contribute:
+
+1. Fork this repository and create a new branch for your changes.
+2. If your update relates to the recent migration from **Turnstile** to **hCaptcha**, mention this in your commit messages.
+3. Run `npm run lint` and ensure the project builds successfully with `npm run build`.
+4. Open a pull request describing your improvements.
+
+---
+
 ## 🤝 Contributing & Support
 
 - **Contact:** [support@zwanski.org](mailto:support@zwanski.org)
