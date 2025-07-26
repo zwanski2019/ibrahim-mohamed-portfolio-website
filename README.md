@@ -54,6 +54,15 @@ HCAPTCHA_SECRET_KEY=your-secret-key-here
 ```
 
 Set these in your Supabase project secrets so the `get-hcaptcha-config` and `verify-hcaptcha` edge functions can work properly.
+Additionally, update `supabase/config.toml` to allow unauthenticated access to these functions:
+
+```toml
+[functions.verify-hcaptcha]
+verify_jwt = false
+
+[functions.get-hcaptcha-config]
+verify_jwt = false
+```
 
 ---
 
