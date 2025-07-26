@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Eye, EyeOff, Mail, Lock, User, Github, AlertCircle } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User, AlertCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import HCaptchaWidget from "@/components/HCaptchaWidget";
 
@@ -181,60 +181,7 @@ const Auth = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleGoogleSignIn = async () => {
-    setLoading(true);
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}${searchParams.get("redirect") || "/"}`
-        }
-      });
-      
-      if (error) {
-        setError(error.message);
-      }
-    } catch (err) {
-      setError("Google sign in failed. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleGithubSignIn = async () => {
-    setLoading(true);
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'github',
-        options: {
-          redirectTo: `${window.location.origin}${searchParams.get("redirect") || "/"}`
-        }
-      });
-      
-      if (error) {
-        setError(error.message);
-      }
-    } catch (err) {
-      setError("GitHub sign in failed. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  return (
+  };  return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
@@ -338,25 +285,7 @@ const Auth = () => {
                 </Button>
               </form>
 
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <Button variant="outline" onClick={handleGoogleSignIn} disabled={loading}>
-                  <Mail className="mr-2 h-4 w-4" />
-                  Google
-                </Button>
-                <Button variant="outline" onClick={handleGithubSignIn} disabled={loading}>
-                  <Github className="mr-2 h-4 w-4" />
-                  GitHub
-                </Button>
-              </div>
+              {/* OAuth login methods removed */}
             </TabsContent>
 
             <TabsContent value="signup" className="space-y-4 mt-6">
