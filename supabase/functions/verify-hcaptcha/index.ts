@@ -1,3 +1,4 @@
+// Supabase Edge Function to verify hCaptcha tokens
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 
 const corsHeaders = {
@@ -50,7 +51,7 @@ serve(async (req) => {
 
     console.log('Sending verification request to hCaptcha');
 
-    // Verify the token with Cloudflare with timeout
+    // Verify the token with hCaptcha with timeout
     const formData = new FormData();
     formData.append('secret', HCAPTCHA_SECRET);
     formData.append('response', token);
@@ -66,7 +67,7 @@ serve(async (req) => {
     ]);
 
     if (!verifyResponse.ok) {
-      console.error('Cloudflare verification request failed:', verifyResponse.status);
+      console.error('hCaptcha verification request failed:', verifyResponse.status);
       throw new Error(`Verification request failed: ${verifyResponse.status}`);
     }
 
