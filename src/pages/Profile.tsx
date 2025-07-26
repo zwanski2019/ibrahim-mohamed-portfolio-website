@@ -5,12 +5,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { User, Mail, Calendar, MapPin } from "lucide-react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
 export default function Profile() {
   const { user, isAuthenticated } = useAuth();
+  const location = useLocation();
 
   // Fetch user activity stats
   const { data: userStats } = useQuery({
@@ -36,7 +37,12 @@ export default function Profile() {
   });
 
   if (!isAuthenticated) {
-    return <Navigate to="/auth" replace />;
+    return (
+      <Navigate
+        to={`/auth?redirect=${encodeURIComponent(location.pathname)}`}
+        replace
+      />
+    );
   }
 
   return (
