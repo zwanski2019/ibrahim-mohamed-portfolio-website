@@ -21,6 +21,7 @@ export const haTranslations = {
   "nav.freeImeiCheck": "Binciken IMEI Kyauta",
   "nav.joinTelegram": "Shiga Telegram",
   "nav.liveChat": "Hira kai tsaye",
+  "nav.threatMap": "Taswirar Barazana",
 
   // Hero Section
   "hero.title": "Abokin hulɗar ku wajen Ginawa, Gyarawa da Kare Makomar Dijital",
@@ -263,6 +264,10 @@ export const haTranslations = {
   "imei.features.instantDesc": "Sami sakamako nan take",
   "imei.features.free": "Kyauta",
   "imei.features.freeDesc": "Hidima ta gaba ɗaya kyauta",
+
+  // Threat Map
+  "threatMap.title": "Taswirar Barazana Kai Tsaye",
+  "threatMap.description": "Kallon hare-haren yanar gizo kai tsaye a duniya daga Radware.",
 
   // Footer
   "footer.rights": "Duk haƙƙoƙi an kiyaye su.",
