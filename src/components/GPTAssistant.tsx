@@ -45,14 +45,16 @@ export default function GPTAssistant() {
       const data = await res.json();
       setResult(data.result || "No response received.");
     } catch (err) {
-      setResult("Failed to generate response.");
+      setResult(
+        "Failed to generate response. Please check your connection and try again later."
+      );
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <Card className="max-w-2xl mx-auto my-8">
+    <Card className="w-full max-w-2xl mx-auto my-8 px-4">
       <CardHeader>
         <CardTitle>Zwanski AI Assistant</CardTitle>
       </CardHeader>
