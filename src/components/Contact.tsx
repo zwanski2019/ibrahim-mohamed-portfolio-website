@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import TurnstileWidget from "./TurnstileWidget";
+import HCaptchaWidget from "./HCaptchaWidget";
 
 export default function Contact() {
   const { toast } = useToast();
@@ -14,37 +14,37 @@ export default function Contact() {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [siteKey, setSiteKey] = useState<string>("");
   const [loadingConfig, setLoadingConfig] = useState(true);
-  const [turnstileEnabled, setTurnstileEnabled] = useState(false);
+  const [captchaEnabled, setCaptchaEnabled] = useState(false);
 
   useEffect(() => {
-    const getTurnstileConfig = async () => {
+    const getCaptchaConfig = async () => {
       try {
-        console.log('Contact: Fetching Turnstile config...');
-        const { data, error } = await supabase.functions.invoke('get-turnstile-config');
+        console.log('Contact: Fetching hCaptcha config...');
+        const { data, error } = await supabase.functions.invoke('get-hcaptcha-config');
         
         if (error) {
-          console.warn('Contact: Error fetching Turnstile config:', error);
-          setTurnstileEnabled(false);
+          console.warn('Contact: Error fetching hCaptcha config:', error);
+          setCaptchaEnabled(false);
         } else if (data?.siteKey) {
-          console.log('Contact: Turnstile config loaded successfully');
+          console.log('Contact: hCaptcha config loaded successfully');
           setSiteKey(data.siteKey);
-          setTurnstileEnabled(true);
+          setCaptchaEnabled(true);
         } else {
-          console.warn('Contact: No site key returned, Turnstile disabled');
-          setTurnstileEnabled(false);
+          console.warn('Contact: No site key returned, hCaptcha disabled');
+          setCaptchaEnabled(false);
         }
       } catch (error) {
-        console.warn('Contact: Failed to fetch Turnstile config:', error);
-        setTurnstileEnabled(false);
+        console.warn('Contact: Failed to fetch hCaptcha config:', error);
+        setCaptchaEnabled(false);
       } finally {
         setLoadingConfig(false);
       }
     };
 
-    getTurnstileConfig();
+    getCaptchaConfig();
   }, []);
 
   const handleChange = (
@@ -54,7 +54,7 @@ export default function Contact() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleTurnstileError = () => {
+  const handleCaptchaError = () => {
     toast({
       title: "Security verification failed",
       description: "Please try refreshing the page or contact support if the issue persists.",
@@ -65,8 +65,8 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Only require Turnstile token if Turnstile is enabled
-    if (turnstileEnabled && !turnstileToken) {
+    // Only require hCaptcha token if hCaptcha is enabled
+    if (captchaEnabled && !captchaToken) {
       toast({
         title: "Security verification required",
         description: "Please complete the security check.",
@@ -78,10 +78,10 @@ export default function Contact() {
     setIsSubmitting(true);
     
     try {
-      // Only verify Turnstile token if it's enabled and we have a token
-      if (turnstileEnabled && turnstileToken) {
-        const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-turnstile', {
-          body: { token: turnstileToken }
+      // Only verify hCaptcha token if it's enabled and we have a token
+      if (captchaEnabled && captchaToken) {
+        const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-hcaptcha', {
+          body: { token: captchaToken }
         });
 
         if (verificationError || !verificationData?.success) {
@@ -107,7 +107,7 @@ export default function Contact() {
         description: "Thanks for reaching out. I'll get back to you soon.",
       });
       setFormData({ name: "", email: "", subject: "", message: "" });
-      setTurnstileToken(null);
+      setCaptchaToken(null);
     } catch (error) {
       console.error('Error sending message:', error);
       toast({
@@ -199,14 +199,14 @@ export default function Contact() {
                 ></textarea>
               </div>
               
-              {/* Enhanced Turnstile Widget */}
-              {turnstileEnabled && !loadingConfig && siteKey && (
+              {/* hCaptcha Widget */}
+              {captchaEnabled && !loadingConfig && siteKey && (
                 <div className="py-2">
-                  <TurnstileWidget
+                  <HCaptchaWidget
                     siteKey={siteKey}
-                    onVerify={setTurnstileToken}
-                    onError={handleTurnstileError}
-                    onExpire={() => setTurnstileToken(null)}
+                    onVerify={setCaptchaToken}
+                    onError={handleCaptchaError}
+                    onExpire={() => setCaptchaToken(null)}
                     theme="auto"
                     size="normal"
                   />
@@ -215,7 +215,7 @@ export default function Contact() {
               
               <button
                 type="submit"
-                disabled={isSubmitting || (turnstileEnabled && !turnstileToken)}
+                disabled={isSubmitting || (captchaEnabled && !captchaToken)}
                 className="w-full py-3 px-6 rounded-lg bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-xl transition-all hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? "Sending..." : "Send Message"}

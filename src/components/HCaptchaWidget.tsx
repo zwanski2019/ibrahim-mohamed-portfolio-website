@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AlertCircle, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-interface TurnstileWidgetProps {
+interface HCaptchaWidgetProps {
   siteKey: string;
   onVerify: (token: string) => void;
   onError?: () => void;
@@ -13,7 +13,7 @@ interface TurnstileWidgetProps {
 
 declare global {
   interface Window {
-    turnstile?: {
+    hcaptcha?: {
       render: (container: string | HTMLElement, options: any) => string;
       remove: (widgetId: string) => void;
       reset: (widgetId: string) => void;
@@ -21,7 +21,7 @@ declare global {
   }
 }
 
-const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
+const HCaptchaWidget: React.FC<HCaptchaWidgetProps> = ({
   siteKey,
   onVerify,
   onError,
@@ -33,10 +33,10 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const widgetIdRef = useRef<string | null>(null);
-  const containerIdRef = useRef<string>(`turnstile-container-${Math.random().toString(36).substr(2, 9)}`);
+  const containerIdRef = useRef<string>(`hcaptcha-container-${Math.random().toString(36).substr(2, 9)}`);
 
   useEffect(() => {
-    console.log('🔧 TurnstileWidget: Initializing with siteKey:', siteKey);
+    console.log('🔧 HCaptchaWidget: Initializing with siteKey:', siteKey);
     
     // Reset state
     setIsLoading(true);
@@ -44,10 +44,10 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
     setErrorMessage('');
     
     // Clean up any existing widget first
-    if (widgetIdRef.current && window.turnstile) {
+  if (widgetIdRef.current && window.hcaptcha) {
       try {
         console.log('🧹 Cleaning up existing widget:', widgetIdRef.current);
-        window.turnstile.remove(widgetIdRef.current);
+        window.hcaptcha.remove(widgetIdRef.current);
         widgetIdRef.current = null;
       } catch (err) {
         console.warn('⚠️ Error removing existing widget:', err);
@@ -56,20 +56,20 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
 
     const ensureScriptAndRender = () => {
       // Check if script exists, if not create it
-      if (!document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]')) {
-        console.log('📡 Loading Turnstile script...');
+      if (!document.querySelector('script[src*="hcaptcha.com/1/api.js"]')) {
+        console.log('📡 Loading hCaptcha script...');
         const script = document.createElement('script');
-        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+        script.src = 'https://js.hcaptcha.com/1/api.js?render=explicit';
         script.async = true;
         script.defer = true;
         
         script.onload = () => {
-          console.log('✅ Turnstile script loaded successfully');
+          console.log('✅ hCaptcha script loaded successfully');
           attemptRender();
         };
         
         script.onerror = () => {
-          console.error('❌ Failed to load Turnstile script');
+          console.error('❌ Failed to load hCaptcha script');
           setHasError(true);
           setErrorMessage('Failed to load security verification script');
           setIsLoading(false);
@@ -77,7 +77,7 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
         
         document.head.appendChild(script);
       } else {
-        console.log('✅ Turnstile script already present');
+        console.log('✅ hCaptcha script already present');
         attemptRender();
       }
     };
@@ -105,33 +105,33 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
           }
         }
         
-        if (window.turnstile) {
-          console.log('🚀 Turnstile API available, rendering widget...');
+        if (window.hcaptcha) {
+          console.log('🚀 hCaptcha API available, rendering widget...');
 
           try {
-            const widgetId = window.turnstile.render(container, {
+            const widgetId = window.hcaptcha.render(container, {
               sitekey: siteKey,
               theme: theme,
               size: size,
               callback: (token: string) => {
-                console.log('✅ Turnstile verification successful, token received:', token.substring(0, 20) + '...');
+                console.log('✅ hCaptcha verification successful, token received:', token.substring(0, 20) + '...');
                 setIsLoading(false);
                 setHasError(false);
                 onVerify(token);
               },
               'error-callback': (error: any) => {
-                console.error('❌ Turnstile verification error:', error);
+                console.error('❌ hCaptcha verification error:', error);
                 setHasError(true);
                 setErrorMessage('Verification failed');
                 setIsLoading(false);
                 onError?.();
               },
               'expired-callback': () => {
-                console.warn('⚠️ Turnstile token expired');
+                console.warn('⚠️ hCaptcha token expired');
                 onExpire?.();
               },
               'timeout-callback': () => {
-                console.warn('⏰ Turnstile verification timeout');
+                console.warn('⏰ hCaptcha verification timeout');
                 setHasError(true);
                 setErrorMessage('Verification timed out');
                 setIsLoading(false);
@@ -142,19 +142,19 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
             widgetIdRef.current = widgetId;
             setIsLoading(false);
             setHasError(false);
-            console.log('🎉 Turnstile widget rendered successfully with ID:', widgetId);
+            console.log('🎉 hCaptcha widget rendered successfully with ID:', widgetId);
             
           } catch (err) {
-            console.error('❌ Error rendering Turnstile widget:', err);
+            console.error('❌ Error rendering hCaptcha widget:', err);
             setHasError(true);
             setErrorMessage('Failed to render widget');
             setIsLoading(false);
           }
         } else if (attempts < maxAttempts) {
-          console.log(`⏳ Turnstile API not ready, retrying in 300ms... (${attempts}/${maxAttempts})`);
+          console.log(`⏳ hCaptcha API not ready, retrying in 300ms... (${attempts}/${maxAttempts})`);
           setTimeout(tryRender, 300);
         } else {
-          console.error('❌ Turnstile API not available after maximum attempts');
+          console.error('❌ hCaptcha API not available after maximum attempts');
           setHasError(true);
           setErrorMessage('Security verification not available');
           setIsLoading(false);
@@ -169,10 +169,10 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
 
     // Cleanup function
     return () => {
-      if (widgetIdRef.current && window.turnstile) {
+      if (widgetIdRef.current && window.hcaptcha) {
         try {
           console.log('🧹 Cleaning up widget on unmount:', widgetIdRef.current);
-          window.turnstile.remove(widgetIdRef.current);
+          window.hcaptcha.remove(widgetIdRef.current);
           widgetIdRef.current = null;
         } catch (err) {
           console.warn('⚠️ Error cleaning up widget:', err);
@@ -182,26 +182,26 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
   }, [siteKey, theme, size]);
 
   const handleRetry = () => {
-    console.log('🔄 Retrying Turnstile widget...');
+    console.log('🔄 Retrying hCaptcha widget...');
     setHasError(false);
     setIsLoading(true);
     setErrorMessage('');
     
     // Generate new container ID to avoid conflicts
-    containerIdRef.current = `turnstile-container-${Math.random().toString(36).substr(2, 9)}`;
+    containerIdRef.current = `hcaptcha-container-${Math.random().toString(36).substr(2, 9)}`;
     
     // Clean up existing widget and re-initialize
     setTimeout(() => {
-      if (widgetIdRef.current && window.turnstile) {
+      if (widgetIdRef.current && window.hcaptcha) {
         try {
-          window.turnstile.remove(widgetIdRef.current);
+          window.hcaptcha.remove(widgetIdRef.current);
           widgetIdRef.current = null;
         } catch (err) {
           console.warn('⚠️ Error removing widget during retry:', err);
         }
       }
       
-      // Re-run the Turnstile render logic to re-initialize the widget
+      // Re-run the hCaptcha render logic to re-initialize the widget
       const ensureScriptAndRender = () => {
         const attemptRender = () => {
           let attempts = 0;
@@ -211,8 +211,8 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
             attempts++;
             console.log(`🎯 Retry render attempt ${attempts}/${maxAttempts}`);
             
-            if (window.turnstile) {
-              console.log('🚀 Turnstile API available, rendering widget...');
+            if (window.hcaptcha) {
+              console.log('🚀 hCaptcha API available, rendering widget...');
               
               const container = document.getElementById(containerIdRef.current);
               if (!container) {
@@ -224,29 +224,29 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
               }
 
               try {
-                const widgetId = window.turnstile.render(container, {
+                const widgetId = window.hcaptcha.render(container, {
                   sitekey: siteKey,
                   theme: theme,
                   size: size,
                   callback: (token: string) => {
-                    console.log('✅ Turnstile verification successful, token received:', token.substring(0, 20) + '...');
+                    console.log('✅ hCaptcha verification successful, token received:', token.substring(0, 20) + '...');
                     setIsLoading(false);
                     setHasError(false);
                     onVerify(token);
                   },
                   'error-callback': (error: any) => {
-                    console.error('❌ Turnstile verification error:', error);
+                    console.error('❌ hCaptcha verification error:', error);
                     setHasError(true);
                     setErrorMessage('Verification failed');
                     setIsLoading(false);
                     onError?.();
                   },
                   'expired-callback': () => {
-                    console.warn('⚠️ Turnstile token expired');
+                    console.warn('⚠️ hCaptcha token expired');
                     onExpire?.();
                   },
                   'timeout-callback': () => {
-                    console.warn('⏰ Turnstile verification timeout');
+                    console.warn('⏰ hCaptcha verification timeout');
                     setHasError(true);
                     setErrorMessage('Verification timed out');
                     setIsLoading(false);
@@ -257,19 +257,19 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
                 widgetIdRef.current = widgetId;
                 setIsLoading(false);
                 setHasError(false);
-                console.log('🎉 Turnstile widget re-rendered successfully with ID:', widgetId);
+                console.log('🎉 hCaptcha widget re-rendered successfully with ID:', widgetId);
                 
               } catch (err) {
-                console.error('❌ Error rendering Turnstile widget:', err);
+                console.error('❌ Error rendering hCaptcha widget:', err);
                 setHasError(true);
                 setErrorMessage('Failed to render widget');
                 setIsLoading(false);
               }
             } else if (attempts < maxAttempts) {
-              console.log(`⏳ Turnstile API not ready, retrying in 200ms... (${attempts}/${maxAttempts})`);
+              console.log(`⏳ hCaptcha API not ready, retrying in 200ms... (${attempts}/${maxAttempts})`);
               setTimeout(tryRender, 200);
             } else {
-              console.error('❌ Turnstile API not available after maximum attempts');
+              console.error('❌ hCaptcha API not available after maximum attempts');
               setHasError(true);
               setErrorMessage('Security verification not available');
               setIsLoading(false);
@@ -324,11 +324,11 @@ const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
     <div className="flex justify-center items-center min-h-[78px] w-full p-4">
       <div 
         id={containerIdRef.current}
-        className="turnstile-widget w-full max-w-sm"
-        aria-label="Cloudflare Turnstile security verification"
+        className="hcaptcha-widget w-full max-w-sm"
+        aria-label="hCaptcha security verification"
       />
     </div>
   );
 };
 
-export default TurnstileWidget;
+export default HCaptchaWidget;

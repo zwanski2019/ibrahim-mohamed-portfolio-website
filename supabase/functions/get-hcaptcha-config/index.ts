@@ -7,7 +7,7 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
-  console.log('get-turnstile-config function called:', req.method);
+  console.log('get-hcaptcha-config function called:', req.method);
   
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -15,18 +15,18 @@ serve(async (req) => {
   }
 
   try {
-    const TURNSTILE_SITE_KEY = Deno.env.get('CLOUDFLARE_TURNSTILE_SITE_KEY');
-    
-    console.log('TURNSTILE_SITE_KEY found:', !!TURNSTILE_SITE_KEY);
-    
-    if (!TURNSTILE_SITE_KEY) {
-      console.error('CLOUDFLARE_TURNSTILE_SITE_KEY not found in environment');
+    const HCAPTCHA_SITE_KEY = Deno.env.get('HCAPTCHA_SITE_KEY');
+
+    console.log('HCAPTCHA_SITE_KEY found:', !!HCAPTCHA_SITE_KEY);
+
+    if (!HCAPTCHA_SITE_KEY) {
+      console.error('HCAPTCHA_SITE_KEY not found in environment');
       
       // Return a fallback response instead of error to prevent blocking
       return new Response(
         JSON.stringify({ 
           siteKey: null,
-          error: 'Turnstile configuration not available',
+          error: 'hCaptcha configuration not available',
           fallback: true 
         }),
         {
@@ -39,7 +39,7 @@ serve(async (req) => {
     console.log('Returning site key successfully');
     return new Response(
       JSON.stringify({
-        siteKey: TURNSTILE_SITE_KEY,
+        siteKey: HCAPTCHA_SITE_KEY,
         success: true
       }),
       {
@@ -49,13 +49,13 @@ serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('Error getting Turnstile config:', error);
+    console.error('Error getting hCaptcha config:', error);
     
     // Return fallback instead of error to prevent blocking
     return new Response(
       JSON.stringify({ 
         siteKey: null,
-        error: 'Failed to get Turnstile configuration',
+        error: 'Failed to get hCaptcha configuration',
         fallback: true 
       }),
       {
