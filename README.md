@@ -78,6 +78,20 @@ node scripts/test-login.js
 
 The script attempts to sign in with the provided credentials and then signs out, reporting any errors.
 
+### Add Admin User
+
+You can grant a new account admin privileges with:
+
+```bash
+NEW_ADMIN_EMAIL=user@example.com \
+NEW_ADMIN_PASSWORD=strongpassword \
+SUPABASE_URL=your-url \
+SUPABASE_SERVICE_ROLE_KEY=service-role-key \
+node scripts/add-admin.js
+```
+
+This script creates the user via the Supabase Admin API and sets their `user_type` to `admin`.
+
 ---
 
 ## 📚 Main Sections

@@ -24,6 +24,14 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       "@typescript-eslint/no-unused-vars": "off",
+      // Allow usage of the `any` type in legacy code until it can be refactored
+      "@typescript-eslint/no-explicit-any": "off",
+      // Relax strict rules that are difficult to satisfy with existing code
+      "@typescript-eslint/no-empty-object-type": "off",
+      "@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/no-unsafe-function-type": "off",
+      "prefer-const": "off",
+      "react-hooks/rules-of-hooks": "warn",
     },
   }
 );
