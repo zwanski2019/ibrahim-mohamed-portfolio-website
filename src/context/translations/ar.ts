@@ -21,6 +21,7 @@ export const arTranslations = {
   "nav.freeImeiCheck": "فحص IMEI مجاني",
   "nav.joinTelegram": "انضم إلى تلغرام",
   "nav.liveChat": "دردشة مباشرة",
+  "nav.threatMap": "خريطة التهديدات",
 
   // Hero Section
   "hero.title": "شريكك في بناء وإصلاح وتأمين المستقبل الرقمي",
@@ -263,6 +264,10 @@ export const arTranslations = {
   "imei.features.instantDesc": "احصل على النتائج فوراً",
   "imei.features.free": "مجاني",
   "imei.features.freeDesc": "خدمة مجانية تماماً",
+
+  // Threat Map
+  "threatMap.title": "خريطة التهديدات الحية",
+  "threatMap.description": "شاهد الهجمات السيبرانية حول العالم مباشرةً من Radware.",
 
   // Footer
   "footer.rights": "جميع الحقوق محفوظة.",

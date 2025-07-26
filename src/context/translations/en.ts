@@ -21,6 +21,7 @@ export const enTranslations = {
   "nav.freeImeiCheck": "Free IMEI Check",
   "nav.joinTelegram": "Join Telegram",
   "nav.liveChat": "Live Chat",
+  "nav.threatMap": "Threat Map",
 
   // Hero Section
   "hero.title": "Your Partner in Building, Repairing & Securing Digital Futures",
@@ -263,6 +264,10 @@ export const enTranslations = {
   "imei.features.instantDesc": "Get results immediately",
   "imei.features.free": "Free",
   "imei.features.freeDesc": "Completely free service",
+
+  // Threat Map
+  "threatMap.title": "Live Threat Map",
+  "threatMap.description": "Observe real-time cyber attacks around the world powered by Radware.",
 
   // Footer
   "footer.rights": "All rights reserved.",

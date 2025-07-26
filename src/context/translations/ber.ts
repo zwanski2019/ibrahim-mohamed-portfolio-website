@@ -21,6 +21,7 @@ export const berTranslations = {
   "nav.freeImeiCheck": "Asenqed IMEI Ilelelli",
   "nav.joinTelegram": "Ddu ɣer Telegram",
   "nav.liveChat": "Adiwenni Usrid",
+  "nav.threatMap": "Tawant n Wugur",
 
   // Hero Section
   "hero.title": "Ameddakel-nwen di Usali, Aseɣru d Uḥraz n Ukra Umḍin",
@@ -263,6 +264,10 @@ export const berTranslations = {
   "imei.features.instantDesc": "Awi igmaḍ deg tallit",
   "imei.features.free": "Ilelelli",
   "imei.features.freeDesc": "Ameẓlu ilelelli s tlelli",
+
+  // Threat Map
+  "threatMap.title": "Tawant n Wugur Srid",
+  "threatMap.description": "Mukkneḍ iḍelli n tuccfa-iddan deg umaḍal s Radware.",
 
   // Footer
   "footer.rights": "Akk izerfan ḥerzen.",

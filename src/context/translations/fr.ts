@@ -21,6 +21,7 @@ export const frTranslations = {
   "nav.freeImeiCheck": "Vérification IMEI Gratuite",
   "nav.joinTelegram": "Rejoindre Telegram",
   "nav.liveChat": "Chat en Direct",
+  "nav.threatMap": "Carte des Menaces",
 
   // Hero Section
   "hero.title": "Votre Partenaire pour Construire, Réparer et Sécuriser l'Avenir Numérique",
@@ -263,6 +264,10 @@ export const frTranslations = {
   "imei.features.instantDesc": "Obtenez des résultats immédiatement",
   "imei.features.free": "Gratuit",
   "imei.features.freeDesc": "Service complètement gratuit",
+
+  // Threat Map
+  "threatMap.title": "Carte des Menaces en Direct",
+  "threatMap.description": "Observez les cyberattaques en temps réel dans le monde grâce à Radware.",
 
   // Footer
   "footer.rights": "Tous droits réservés.",
