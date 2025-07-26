@@ -51,6 +51,8 @@ Required for hCaptcha security verification:
 ```bash
 HCAPTCHA_SITE_KEY=your-public-site-key-here
 HCAPTCHA_SECRET_KEY=your-secret-key-here
+SUPABASE_URL=your-supabase-url
+SUPABASE_ANON_KEY=your-supabase-anon-key
 ```
 
 Set these in your Supabase project secrets so the `get-hcaptcha-config` and `verify-hcaptcha` edge functions can work properly.
