@@ -88,14 +88,18 @@ const Auth = () => {
     setLoading(true);
     setError("");
 
-    if (!signinCaptchaToken) {
+    if (siteKey && !signinCaptchaToken) {
       setError("Please complete the security verification");
       setLoading(false);
       return;
     }
 
     try {
-      const { error } = await signIn(email, password, signinCaptchaToken);
+      const { error } = await signIn(
+        email,
+        password,
+        siteKey ? signinCaptchaToken || undefined : undefined
+      );
       
       if (error) {
         setError(error.message);
@@ -124,20 +128,22 @@ const Auth = () => {
       return;
     }
 
-    if (!captchaToken) {
+    if (siteKey && !captchaToken) {
       setError("Please complete the security verification");
       setLoading(false);
       return;
     }
 
     try {
-      // Verify hCaptcha token
-      const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-hcaptcha', {
-        body: { token: captchaToken }
-      });
+      // Verify hCaptcha token when enabled
+      if (siteKey && captchaToken) {
+        const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-hcaptcha', {
+          body: { token: captchaToken }
+        });
 
-      if (verificationError || !verificationData?.success) {
-        throw new Error('Security verification failed');
+        if (verificationError || !verificationData?.success) {
+          throw new Error('Security verification failed');
+        }
       }
 
       const { error } = await signUp(email, password, {
@@ -319,14 +325,14 @@ const Auth = () => {
                   </div>
                 ) : (
                   <div className="text-xs text-muted-foreground text-center py-4">
-                    {loadingConfig ? 'Loading security verification...' : 'Security verification unavailable'}
+                    {loadingConfig ? 'Loading security verification...' : 'Security verification optional (disabled)'}
                   </div>
                 )}
 
                 <Button 
                   type="submit" 
                   className="w-full" 
-                  disabled={loading || !signinCaptchaToken}
+                  disabled={loading || (siteKey && !signinCaptchaToken)}
                 >
                   {loading ? "Signing In..." : "Sign In"}
                 </Button>
@@ -479,14 +485,14 @@ const Auth = () => {
                   </div>
                 ) : (
                   <div className="text-xs text-muted-foreground text-center py-4">
-                    {loadingConfig ? 'Loading security verification...' : 'Security verification unavailable'}
+                    {loadingConfig ? 'Loading security verification...' : 'Security verification optional (disabled)'}
                   </div>
                 )}
 
                 <Button 
                   type="submit" 
                   className="w-full" 
-                  disabled={loading || !captchaToken}
+                  disabled={loading || (siteKey && !captchaToken)}
                 >
                   {loading ? "Creating Account..." : "Create Account"}
                 </Button>
