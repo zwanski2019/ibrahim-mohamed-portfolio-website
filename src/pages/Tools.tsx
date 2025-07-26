@@ -4,7 +4,17 @@ import Footer from "@/components/Footer";
 import IMEIChecker from "@/components/IMEIChecker";
 import { useLanguage } from "@/context/LanguageContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Smartphone, Wrench, Zap, Globe, Shield, Code } from "lucide-react";
+import {
+  Smartphone,
+  Wrench,
+  Zap,
+  Globe,
+  Shield,
+  Code,
+  FileText,
+  Clock,
+  Image
+} from "lucide-react";
 
 const Tools = () => {
   console.log("Tools component is loading successfully");
@@ -48,6 +58,27 @@ const Tools = () => {
       title: "Color Picker & Palette Generator",
       description: "Pick colors and generate beautiful color palettes",
       icon: Zap,
+      comingSoon: true
+    },
+    {
+      id: "json-formatter",
+      title: "JSON Formatter",
+      description: "Easily format and validate JSON data",
+      icon: FileText,
+      comingSoon: true
+    },
+    {
+      id: "timezone-converter",
+      title: "Time Zone Converter",
+      description: "Quickly convert times between different zones",
+      icon: Clock,
+      comingSoon: true
+    },
+    {
+      id: "image-compressor",
+      title: "Image Compressor",
+      description: "Reduce image file size without losing quality",
+      icon: Image,
       comingSoon: true
     }
   ];
