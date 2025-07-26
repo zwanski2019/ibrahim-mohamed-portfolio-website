@@ -6,11 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { Moon, Sun, Bell, Shield, User } from "lucide-react";
 
 export default function Settings() {
   const { user, isAuthenticated } = useAuth();
+  const location = useLocation();
   const { theme, toggleTheme } = useTheme();
   const [notifications, setNotifications] = useState({
     email: true,
@@ -19,7 +20,12 @@ export default function Settings() {
   });
 
   if (!isAuthenticated) {
-    return <Navigate to="/auth" replace />;
+    return (
+      <Navigate
+        to={`/auth?redirect=${encodeURIComponent(location.pathname)}`}
+        replace
+      />
+    );
   }
 
   return (
