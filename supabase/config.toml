@@ -6,3 +6,6 @@ verify_jwt = false
 
 [functions.verify-hcaptcha]
 verify_jwt = false
+
+[functions.get-hcaptcha-config]
+verify_jwt = false
