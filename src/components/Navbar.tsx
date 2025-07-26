@@ -2,39 +2,24 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
 import { 
-  User, 
-  Settings, 
-  LogOut, 
-  Bell,
-  MessageSquare,
-  Bot,
-  GraduationCap,
-  Briefcase,
-  Users,
-  Home,
-  Wrench,
-  Shield,
-  Info,
   Menu,
   X,
-  PenTool,
+  Wrench,
+  Shield,
+  GraduationCap,
+  Briefcase,
   Settings2,
-  FileText
+  FileText,
+  MessageSquare,
+  Bot
 } from "lucide-react";
 import ZwanskiLogo from "./ZwanskiLogo";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageSelector } from "./LanguageSelector";
 import { GlobalSearchBar } from "./search/GlobalSearchBar";
+import { UserMenu } from "./navbar/UserMenu";
+import { NotificationButton } from "./navbar/NotificationButton";
 import { supabase } from "@/integrations/supabase/client";
 
 const Navbar = () => {
@@ -112,7 +97,6 @@ const Navbar = () => {
   };
 
   const mainNavItems = [
-    { label: "Home", path: "/", icon: Home },
     { 
       label: "Fix", 
       path: "/services?category=repair", 
@@ -153,15 +137,14 @@ const Navbar = () => {
             <ZwanskiLogo onClick={handleLogoClick} />
           </div>
 
-          {/* Center Navigation - Hidden on smaller screens to prevent overlap */}
-          <div className="hidden xl:flex items-center justify-center flex-1 px-8">
-            <div className="flex items-center space-x-4">
-              {mainNavItems.slice(0, 4).map((item) => {
+          {/* Center Navigation - Show all main buttons */}
+          <div className="hidden lg:flex items-center justify-center flex-1 px-4">
+            <div className="flex items-center space-x-2">
+              {mainNavItems.map((item) => {
                 const Icon = item.icon;
                 const showItem = !(item as any).authRequired || isAuthenticated;
                 
-                // Hide Home button since logo serves as home button
-                if (item.path === "/" || !showItem) return null;
+                if (!showItem) return null;
                 
                 return (
                   <Button
@@ -169,10 +152,10 @@ const Navbar = () => {
                     variant={isActivePath(item.path) ? "default" : "ghost"}
                     size="sm"
                     onClick={() => navigate(item.path)}
-                    className="flex items-center gap-2 text-xs"
+                    className="flex items-center gap-1 text-xs"
                   >
                     <Icon className="h-3 w-3" />
-                    {item.label}
+                    <span className="hidden xl:inline">{item.label}</span>
                   </Button>
                 );
               })}
@@ -181,31 +164,8 @@ const Navbar = () => {
 
           {/* Right Side - Flexible layout */}
           <div className="flex items-center space-x-2 lg:space-x-3 flex-shrink-0">
-            {/* Compact Desktop Navigation for medium screens */}
-            <div className="hidden lg:flex xl:hidden items-center space-x-2">
-              {mainNavItems.slice(0, 3).map((item) => {
-                const Icon = item.icon;
-                const showItem = !(item as any).authRequired || isAuthenticated;
-                
-                if (item.path === "/" || !showItem) return null;
-                
-                return (
-                  <Button
-                    key={item.path}
-                    variant={isActivePath(item.path) ? "default" : "ghost"}
-                    size="sm"
-                    onClick={() => navigate(item.path)}
-                    className="p-2"
-                    title={item.label}
-                  >
-                    <Icon className="h-4 w-4" />
-                  </Button>
-                );
-              })}
-            </div>
-            
             {/* Global Search - Responsive width */}
-            <div className="hidden lg:block w-48 xl:w-64">
+            <div className="hidden md:block w-40 lg:w-48 xl:w-64">
               <GlobalSearchBar placeholder="Search..." compact />
             </div>
             
@@ -223,62 +183,10 @@ const Navbar = () => {
             {isAuthenticated && user ? (
               <div className="flex items-center space-x-3">
                 {/* Notifications */}
-                <Button variant="ghost" size="sm" className="relative">
-                  <Bell className="h-4 w-4" />
-                  {unreadNotifications > 0 && (
-                    <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs">
-                      {unreadNotifications > 9 ? "9+" : unreadNotifications}
-                    </Badge>
-                  )}
-                </Button>
+                <NotificationButton unreadCount={unreadNotifications} />
 
                 {/* User Menu */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="h-8 w-8 rounded-full p-0">
-                      <Avatar className="h-8 w-8">
-                        <AvatarImage src={userProfile?.avatar_url || ""} />
-                        <AvatarFallback>
-                          {userProfile?.full_name?.split(" ").map((n: string) => n[0]).join("") || 
-                           user.email?.charAt(0).toUpperCase() || "U"}
-                        </AvatarFallback>
-                      </Avatar>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
-                    <div className="flex items-center justify-start gap-2 p-2">
-                      <Avatar className="h-8 w-8">
-                        <AvatarImage src={userProfile?.avatar_url || ""} />
-                        <AvatarFallback>
-                          {userProfile?.full_name?.split(" ").map((n: string) => n[0]).join("") || 
-                           user.email?.charAt(0).toUpperCase() || "U"}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium">
-                          {userProfile?.full_name || user.email}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {user.email}
-                        </p>
-                      </div>
-                    </div>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => navigate("/profile")}>
-                      <User className="mr-2 h-4 w-4" />
-                      Profile
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/settings")}>
-                      <Settings className="mr-2 h-4 w-4" />
-                      Settings
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleSignOut}>
-                      <LogOut className="mr-2 h-4 w-4" />
-                      Sign Out
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <UserMenu userProfile={userProfile} />
               </div>
             ) : (
               <div className="hidden md:flex items-center space-x-2 flex-shrink-0">
@@ -304,7 +212,7 @@ const Navbar = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="md:hidden flex-shrink-0"
+              className="lg:hidden flex-shrink-0"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -314,10 +222,10 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-border/50 py-4">
+          <div className="lg:hidden border-t border-border/50 py-4">
             <div className="flex flex-col space-y-2">
               {/* Mobile Search */}
-              <div className="px-4 pb-4">
+              <div className="px-4 pb-4 md:hidden">
                 <GlobalSearchBar placeholder="Search..." />
               </div>
               
