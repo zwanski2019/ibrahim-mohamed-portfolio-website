@@ -106,6 +106,48 @@ The script attempts to sign in with the provided credentials and then signs out,
 
 ---
 
+## 📰 Weekly Newsletter Script
+
+Automate sending your latest blog post to newsletter subscribers. The script
+`scripts/send-weekly-newsletter.js` fetches the newest entry from your Blogger
+RSS feed, loads subscriber emails from Supabase and sends an HTML email via
+Resend.
+
+### Usage
+
+1. Copy `.env.example` to `.env` and fill in the variables for Supabase and
+   Resend.
+2. Run the script manually with:
+
+   ```bash
+   node scripts/send-weekly-newsletter.js
+   ```
+
+3. Schedule weekly execution with cron or a GitHub Actions workflow. Below is a
+   simple GitHub Actions example:
+
+   ```yaml
+   on:
+     schedule:
+       - cron: '0 9 * * 1'
+   jobs:
+     send-newsletter:
+       runs-on: ubuntu-latest
+       steps:
+         - uses: actions/checkout@v4
+         - run: npm ci
+         - run: node scripts/send-weekly-newsletter.js
+           env:
+             SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+             SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+             RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+   ```
+
+The script keeps a log in the `newsletter_logs` table to avoid sending the same
+post more than once in a week.
+
+---
+
 ## 📚 Main Sections
 
 - **Academy:** Free programming courses, interactive tutorials, certificates
