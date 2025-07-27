@@ -121,8 +121,10 @@ serve(async (req) => {
     );
   } catch (err) {
     console.error("chatgpt-tools error", err);
+    const isDevelopment = Deno.env.get("NODE_ENV") === "development";
+    const message = isDevelopment && err instanceof Error ? err.message : "Internal server error";
     return new Response(
-      JSON.stringify({ error: "Internal server error" }),
+      JSON.stringify({ error: message }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
