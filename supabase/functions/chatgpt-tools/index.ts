@@ -17,6 +17,7 @@ serve(async (req) => {
   try {
     const { prompt, tool } = await req.json();
     console.log("chatgpt-tools request tool", tool);
+
     if (!prompt) {
       console.log("chatgpt-tools response sent (missing prompt)");
       return new Response(
@@ -131,9 +132,13 @@ serve(async (req) => {
   } catch (err) {
     console.error("chatgpt-tools error", err);
     const isDevelopment = Deno.env.get("NODE_ENV") === "development";
-    const message = isDevelopment && err instanceof Error ? err.message : "Internal server error";
+    const errorPayload =
+      isDevelopment && err instanceof Error
+        ? { error: err.message }
+        : { error: "Internal server error" };
+
     const res = new Response(
-      JSON.stringify({ error: message }),
+      JSON.stringify(errorPayload),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
     console.log("chatgpt-tools response sent (error)");
