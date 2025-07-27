@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import ReactMarkdown from "react-markdown";
 import {
   Card,
@@ -18,12 +19,16 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const TOOLS = [
   { id: "chatbot", label: "General Chatbot" },
   { id: "resume", label: "Resume Enhancer" },
   { id: "blog", label: "Blog Intro Generator" },
   { id: "code", label: "Code Explainer" },
+  { id: "student", label: "Student Tutor" },
+  { id: "game", label: "Text Adventure" },
+  { id: "bugfix", label: "Bug Fix Assistant" },
 ];
 
 export default function GPTAssistant() {
@@ -37,12 +42,10 @@ export default function GPTAssistant() {
     setLoading(true);
     setResult("");
     try {
-      const res = await fetch("https://api.zwanski.org/api/ai-tools", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tool, prompt: input }),
+      const { data, error } = await supabase.functions.invoke("chatgpt-tools", {
+        body: { tool, prompt: input },
       });
-      const data = await res.json();
+      if (error) throw error;
       setResult(data.result || "No response received.");
     } catch (err) {
       setResult(

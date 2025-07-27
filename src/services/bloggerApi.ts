@@ -1,6 +1,6 @@
 const BLOGGER_API_URL = 'https://www.googleapis.com/blogger/v3';
-const BLOG_ID = '1865195035349515836'; // Your actual blog ID
-const API_KEY = 'AIzaSyD0OTN6ul9ClQSAmgBYjDL5YXoqGPWo-1g'; // Your Blogger API key
+const BLOG_ID = import.meta.env.VITE_BLOGGER_BLOG_ID as string;
+const API_KEY = import.meta.env.VITE_BLOGGER_API_KEY as string;
 
 export interface BlogPost {
   id: string;

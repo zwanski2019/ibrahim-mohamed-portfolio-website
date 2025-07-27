@@ -33,6 +33,8 @@ const PostJob = () => {
     benefits: [] as string[],
     urgency: "medium" as "low" | "medium" | "high",
     expires_at: "",
+    contact_name: "",
+    contact_email: "",
   });
 
   const [requirementInput, setRequirementInput] = useState("");
@@ -79,16 +81,6 @@ const PostJob = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!user?.id) {
-      toast({
-        title: "Authentication Required",
-        description: "Please sign in to post a job.",
-        variant: "destructive"
-      });
-      navigate("/auth");
-      return;
-    }
-    
     if (!formData.title || !formData.description || !formData.category || !formData.location) {
       toast({
         title: "Missing Information",
@@ -112,7 +104,9 @@ const PostJob = () => {
         benefits: formData.benefits,
         urgency: formData.urgency,
         expires_at: formData.expires_at || undefined,
-        employer_id: user.id
+        employer_id: user?.id,
+        contact_name: formData.contact_name || undefined,
+        contact_email: formData.contact_email || undefined
       });
 
       toast({
@@ -146,30 +140,7 @@ const PostJob = () => {
     );
   }
 
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navbar />
-        <div className="container mx-auto px-4 py-8">
-          <Card className="max-w-md mx-auto">
-            <CardContent className="pt-6">
-              <div className="text-center">
-                <AlertCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h2 className="text-xl font-semibold mb-2">Sign In Required</h2>
-                <p className="text-muted-foreground mb-4">
-                  You need to be signed in to post a job.
-                </p>
-                <Button asChild>
-                  <a href="/auth">Sign In / Register</a>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -193,6 +164,29 @@ const PostJob = () => {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
+                {!user && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <Label htmlFor="contact_name">Your Name *</Label>
+                      <Input
+                        id="contact_name"
+                        value={formData.contact_name}
+                        onChange={(e) => handleInputChange("contact_name", e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="contact_email">Email *</Label>
+                      <Input
+                        id="contact_email"
+                        type="email"
+                        value={formData.contact_email}
+                        onChange={(e) => handleInputChange("contact_email", e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+                )}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <Label htmlFor="title">Job Title *</Label>

@@ -1,6 +1,6 @@
 
 // YouTube API configuration
-const YOUTUBE_API_KEY = 'AIzaSyAWgvpdwH4pKPlakAPTp9aRY2YYbAcViE0';
+const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY as string;
 const YOUTUBE_API_BASE_URL = 'https://www.googleapis.com/youtube/v3';
 
 // Your channel handle is @zwanski.m, we'll need to get the channel ID first
