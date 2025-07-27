@@ -1,3 +1,7 @@
 # 🧭 Wiki Zwanski-Tech (FR)
 
-... (trimmed)
+- [À propos](About.md)
+- [Académie](Academy.md)
+- [Services](Services.md)
+- [Outils](Tools.md)
+- [FAQ](FAQ.md)
