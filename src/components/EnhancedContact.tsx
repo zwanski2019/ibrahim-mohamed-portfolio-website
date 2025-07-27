@@ -4,10 +4,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { MessageCircle, Phone, Mail, MapPin, Clock, Send, Zap, MessageSquare } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import HCaptchaWidget from "./HCaptchaWidget";
+import Turnstile from "./Turnstile";
+import { verifyTurnstile } from "@/lib/verifyTurnstile";
 
 const EnhancedContact = () => {
   const { language } = useLanguage();
@@ -20,9 +21,8 @@ const EnhancedContact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const [siteKey, setSiteKey] = useState<string>("");
-  const [loadingConfig, setLoadingConfig] = useState(true);
-  const [captchaEnabled, setCaptchaEnabled] = useState(false);
+  const siteKey = import.meta.env.VITE_CF_TURNSTILE_SITE_KEY;
+  const captchaEnabled = !!siteKey;
 
   const content = {
     en: {
@@ -86,38 +86,11 @@ const EnhancedContact = () => {
 
   const currentContent = content[language];
 
-  useEffect(() => {
-    const getCaptchaConfig = async () => {
-      try {
-        console.log('EnhancedContact: Fetching hCaptcha config...');
-        const { data, error } = await supabase.functions.invoke('get-hcaptcha-config');
-        
-        if (error) {
-          console.warn('EnhancedContact: Error fetching hCaptcha config:', error);
-          setCaptchaEnabled(false);
-        } else if (data?.siteKey) {
-          console.log('EnhancedContact: hCaptcha config loaded successfully');
-          setSiteKey(data.siteKey);
-          setCaptchaEnabled(true);
-        } else {
-          console.warn('EnhancedContact: No site key returned, hCaptcha disabled');
-          setCaptchaEnabled(false);
-        }
-      } catch (error) {
-        console.warn('EnhancedContact: Failed to fetch hCaptcha config:', error);
-        setCaptchaEnabled(false);
-      } finally {
-        setLoadingConfig(false);
-      }
-    };
-
-    getCaptchaConfig();
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Only require hCaptcha token if hCaptcha is enabled
+    // Only require Turnstile token if enabled
     if (captchaEnabled && !captchaToken) {
       toast({
         title: "Security verification required",
@@ -130,13 +103,10 @@ const EnhancedContact = () => {
     setIsSubmitting(true);
     
     try {
-      // Only verify hCaptcha token if it's enabled and we have a token
+      // Verify Turnstile token when enabled
       if (captchaEnabled && captchaToken) {
-        const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-hcaptcha', {
-          body: { token: captchaToken }
-        });
-
-        if (verificationError || !verificationData?.success) {
+        const result = await verifyTurnstile(captchaToken);
+        if (!result.success) {
           throw new Error('Security verification failed');
         }
       }
@@ -259,21 +229,19 @@ const EnhancedContact = () => {
                     className="w-full resize-none"
                   />
                   
-                  {/* hCaptcha Widget - Only show if enabled */}
-                  {captchaEnabled && !loadingConfig && siteKey && (
+                  {/* Turnstile Widget */}
+                  {captchaEnabled && siteKey && (
                     <div className="py-2">
-                      <HCaptchaWidget
+                      <Turnstile
                         siteKey={siteKey}
                         onVerify={setCaptchaToken}
                         onError={() => setCaptchaToken(null)}
                         onExpire={() => setCaptchaToken(null)}
-                        theme="auto"
-                        size="normal"
                       />
                     </div>
                   )}
 
-                  {!captchaEnabled && !loadingConfig && (
+                  {!captchaEnabled && (
                     <div className="py-2 text-sm text-muted-foreground">
                       Security verification is currently unavailable
                     </div>
