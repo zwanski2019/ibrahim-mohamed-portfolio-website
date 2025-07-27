@@ -1,6 +1,6 @@
 
 // Enhanced YouTube API service with better error handling and caching
-const YOUTUBE_API_KEY = 'AIzaSyAWgvpdwH4pKPlakAPTp9aRY2YYbAcViE0';
+const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY as string;
 const YOUTUBE_API_BASE_URL = 'https://www.googleapis.com/youtube/v3';
 
 // Direct channel ID instead of searching by handle to reduce API calls
