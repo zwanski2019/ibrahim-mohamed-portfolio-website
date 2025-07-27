@@ -19,12 +19,16 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const TOOLS = [
   { id: "chatbot", label: "General Chatbot" },
   { id: "resume", label: "Resume Enhancer" },
   { id: "blog", label: "Blog Intro Generator" },
   { id: "code", label: "Code Explainer" },
+  { id: "student", label: "Student Tutor" },
+  { id: "game", label: "Text Adventure" },
+  { id: "bugfix", label: "Bug Fix Assistant" },
 ];
 
 export default function GPTAssistant() {

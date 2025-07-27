@@ -16,7 +16,7 @@ serve(async (req) => {
 
   try {
     const { prompt, tool } = await req.json();
-    console.log("chatgpt-tools request tool", tool);
+    console.log("chatgpt-tools request tool:", tool);
 
     if (!prompt) {
       console.log("chatgpt-tools response sent (missing prompt)");
@@ -40,6 +40,7 @@ serve(async (req) => {
       { role: "user", content: prompt },
     ];
 
+    // Merged tool handling with all new prompts
     switch (tool) {
       case "cv":
         messages.unshift({
@@ -62,42 +63,43 @@ serve(async (req) => {
       case "student":
         messages.unshift({
           role: "system",
-          content:
-            "Act as a helpful tutor and answer the student's question in a clear and concise manner.",
+          content: "You are a patient instructor. Offer step-by-step explanations for the user's question.",
         });
         break;
       case "code":
         messages.unshift({
           role: "system",
-          content: "Explain the provided code snippet in clear, simple terms.",
+          content: "Explain what the following code does in simple terms.",
         });
         break;
       case "game":
         messages.unshift({
           role: "system",
-          content:
-            "Generate a short concept or instructions for a simple text-based mini-game based on the user's idea.",
+          content: "You are a text adventure game master. Continue the story based on user input.",
+        });
+        break;
+      case "bugfix":
+        messages.unshift({
+          role: "system",
+          content: "Provide a concise vulnerability assessment and suggest fixes for the given code or description.",
         });
         break;
       case "vuln":
         messages.unshift({
           role: "system",
-          content:
-            "Identify potential security vulnerabilities in the provided text and suggest improvements.",
+          content: "Identify potential security vulnerabilities in the provided text and suggest improvements.",
         });
         break;
       case "language":
         messages.unshift({
           role: "system",
-          content:
-            "Assist with language learning queries, providing grammar explanations and examples.",
+          content: "Assist with language learning queries, providing grammar explanations and examples.",
         });
         break;
       case "video":
         messages.unshift({
           role: "system",
-          content:
-            "Suggest educational video topics or titles related to the user's query.",
+          content: "Suggest educational video topics or titles related to the user's query.",
         });
         break;
       default:
