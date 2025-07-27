@@ -6,6 +6,11 @@ import Turnstile from "./Turnstile";
 import { verifyTurnstile } from "@/lib/verifyTurnstile";
 import { supabase } from "@/integrations/supabase/client";
 
+interface ValidationResult {
+  valid: boolean;
+  errors: string[];
+}
+
 export default function Contact() {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
@@ -37,6 +42,54 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Input validation
+    if (!formData.name.trim() || formData.name.length < 2) {
+      toast({
+        title: "Invalid name",
+        description: "Name must be at least 2 characters long.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!formData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!formData.message.trim() || formData.message.length < 10) {
+      toast({
+        title: "Invalid message",
+        description: "Message must be at least 10 characters long.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (formData.message.length > 5000) {
+      toast({
+        title: "Message too long",
+        description: "Message must be less than 5000 characters.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Check for suspicious content
+    const suspiciousPatterns = /(script|javascript|<iframe|<object|<embed|onclick|onerror)/i;
+    if (suspiciousPatterns.test(formData.message)) {
+      toast({
+        title: "Invalid content",
+        description: "Message contains potentially harmful content.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
     // Only require Turnstile token if enabled
     if (captchaEnabled && !captchaToken) {
       toast({
@@ -50,6 +103,23 @@ export default function Contact() {
     setIsSubmitting(true);
     
     try {
+      // Check rate limit
+      const { data: rateLimitCheck, error: rateLimitError } = await supabase.rpc('check_rate_limit', {
+        p_identifier: formData.email,
+        p_action: 'contact_form',
+        p_max_requests: 3,
+        p_window_minutes: 60
+      });
+
+      if (rateLimitError || !rateLimitCheck) {
+        toast({
+          title: "Rate limit exceeded",
+          description: "Please wait before sending another message.",
+          variant: "destructive"
+        });
+        return;
+      }
+
       // Verify Turnstile token when enabled
       if (captchaEnabled && captchaToken) {
         const result = await verifyTurnstile(captchaToken);
@@ -58,18 +128,47 @@ export default function Contact() {
         }
       }
 
+      // Validate input on server side
+      const { data: validationResult, error: validationError } = await supabase.rpc('validate_contact_input', {
+        p_name: formData.name,
+        p_email: formData.email,
+        p_message: formData.message
+      });
+
+      const validation = validationResult as unknown as ValidationResult;
+      if (validationError || !validation?.valid) {
+        const errors = validation?.errors || ['Validation failed'];
+        toast({
+          title: "Validation error",
+          description: errors[0],
+          variant: "destructive"
+        });
+        return;
+      }
+
       const { error } = await supabase
         .from('contact_messages')
         .insert([
           {
-            name: formData.name,
-            email: formData.email,
-            subject: formData.subject || 'General Inquiry',
-            message: formData.message
+            name: formData.name.trim(),
+            email: formData.email.trim().toLowerCase(),
+            subject: formData.subject?.trim() || 'General Inquiry',
+            message: formData.message.trim()
           }
         ]);
 
       if (error) throw error;
+
+      // Log successful contact
+      await supabase.from('security_events').insert({
+        event_type: 'contact_form_submission',
+        event_data: {
+          email: formData.email,
+          subject: formData.subject || 'General Inquiry',
+          name_length: formData.name.length,
+          message_length: formData.message.length
+        }
+      });
 
       toast({
         title: "Message sent!",

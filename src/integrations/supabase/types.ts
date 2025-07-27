@@ -1362,6 +1362,45 @@ export type Database = {
           },
         ]
       }
+      hcaptcha_sites: {
+        Row: {
+          behavior_description: string | null
+          behavior_mode: string | null
+          created_at: string | null
+          domain: string | null
+          id: number
+          name: string
+          sitekey: string
+          status: string | null
+          type: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          behavior_description?: string | null
+          behavior_mode?: string | null
+          created_at?: string | null
+          domain?: string | null
+          id?: never
+          name: string
+          sitekey: string
+          status?: string | null
+          type?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          behavior_description?: string | null
+          behavior_mode?: string | null
+          created_at?: string | null
+          domain?: string | null
+          id?: never
+          name?: string
+          sitekey?: string
+          status?: string | null
+          type?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       job_posts: {
         Row: {
           benefits: string[] | null
@@ -2171,6 +2210,33 @@ export type Database = {
         }
         Relationships: []
       }
+      rate_limits: {
+        Row: {
+          action: string
+          count: number
+          expires_at: string
+          id: string
+          identifier: string
+          window_start: string
+        }
+        Insert: {
+          action: string
+          count?: number
+          expires_at?: string
+          id?: string
+          identifier: string
+          window_start?: string
+        }
+        Update: {
+          action?: string
+          count?: number
+          expires_at?: string
+          id?: string
+          identifier?: string
+          window_start?: string
+        }
+        Relationships: []
+      }
       reviews: {
         Row: {
           comment: string | null
@@ -2222,6 +2288,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      security_events: {
+        Row: {
+          created_at: string
+          event_data: Json | null
+          event_type: string
+          id: string
+          ip_address: unknown | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_data?: Json | null
+          event_type: string
+          id?: string
+          ip_address?: unknown | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_data?: Json | null
+          event_type?: string
+          id?: string
+          ip_address?: unknown | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
       }
       skills: {
         Row: {
@@ -2295,6 +2391,36 @@ export type Database = {
           position?: string | null
           rating?: number | null
           sort_order?: number | null
+        }
+        Relationships: []
+      }
+      turnstile_logs: {
+        Row: {
+          challenge_ts: string | null
+          created_at: string
+          errors: string[] | null
+          hostname: string | null
+          id: string
+          success: boolean
+          token: string
+        }
+        Insert: {
+          challenge_ts?: string | null
+          created_at?: string
+          errors?: string[] | null
+          hostname?: string | null
+          id?: string
+          success: boolean
+          token: string
+        }
+        Update: {
+          challenge_ts?: string | null
+          created_at?: string
+          errors?: string[] | null
+          hostname?: string | null
+          id?: string
+          success?: boolean
+          token?: string
         }
         Relationships: []
       }
@@ -2524,6 +2650,19 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_rate_limit: {
+        Args: {
+          p_identifier: string
+          p_action: string
+          p_max_requests?: number
+          p_window_minutes?: number
+        }
+        Returns: boolean
+      }
+      get_hcaptcha_secret: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       hook_password_verification_attempt: {
         Args: { event: Json }
         Returns: Json
@@ -2532,8 +2671,16 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: boolean
       }
+      is_admin_enhanced: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
       make_user_admin: {
         Args: { user_id: string }
+        Returns: Json
+      }
+      validate_contact_input: {
+        Args: { p_name: string; p_email: string; p_message: string }
         Returns: Json
       }
     }

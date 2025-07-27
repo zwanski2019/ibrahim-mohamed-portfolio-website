@@ -16,17 +16,14 @@ export const useAdmin = () => {
       }
 
       try {
-        const { data, error } = await supabase
-          .from("profiles")
-          .select("user_type")
-          .eq("id", user.id)
-          .single();
+        // Use the enhanced admin check function
+        const { data, error } = await supabase.rpc('is_admin_enhanced');
 
         if (error) {
           console.error("Error checking admin status:", error);
           setIsAdmin(false);
         } else {
-          setIsAdmin(data?.user_type === "admin");
+          setIsAdmin(!!data);
         }
       } catch (error) {
         console.error("Admin check error:", error);

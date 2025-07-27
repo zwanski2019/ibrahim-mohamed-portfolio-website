@@ -3,12 +3,15 @@ import { TurnstileVerifyResponse } from './verifyTurnstile';
 
 export async function logTurnstile(token: string, result: TurnstileVerifyResponse) {
   try {
-    await supabase.from('turnstile_logs').insert({
-      token,
-      success: result.success,
-      errors: result['error-codes'] || null,
-      hostname: result.hostname || null,
-      challenge_ts: result.challenge_ts || null
+    // Log security event instead of direct turnstile log (handled by edge function)
+    await supabase.from('security_events').insert({
+      event_type: 'turnstile_client_verification',
+      event_data: {
+        success: result.success,
+        errors: result['error-codes'] || [],
+        hostname: result.hostname,
+        token_prefix: token.substring(0, 8) + '...' // Only log prefix for privacy
+      }
     });
   } catch (error) {
     console.warn('Failed to log Turnstile result', error);

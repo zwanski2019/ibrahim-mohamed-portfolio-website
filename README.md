@@ -66,6 +66,18 @@ verify_jwt = false
 verify_jwt = false
 ```
 
+## 🔐 Security Features
+
+✅ **Row Level Security (RLS)** - All tables have proper RLS policies  
+✅ **Authentication** - Supabase Auth with email verification  
+✅ **Enhanced Input Validation** - Client and server-side validation with XSS protection  
+✅ **Rate Limiting** - Contact forms and API endpoints protected from abuse  
+✅ **Secure CAPTCHA** - Turnstile verification through secure edge functions  
+✅ **Enhanced Admin System** - Multi-layer admin validation with audit logging  
+✅ **Security Event Logging** - Comprehensive security monitoring and alerts  
+✅ **Password Protection** - Leaked password detection enabled  
+✅ **Safe Secret Management** - No secrets exposed in frontend code
+
 ## 🔐 Authentication Test
 
 You can verify Supabase sign-in and sign-out using the helper script:
