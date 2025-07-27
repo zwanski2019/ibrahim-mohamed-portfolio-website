@@ -10,6 +10,7 @@ import Testimonials from "@/components/Testimonials";
 import QuickContact from "@/components/QuickContact";
 import YouTubeVideos from "@/components/YouTubeVideos";
 import EnhancedContact from "@/components/EnhancedContact";
+import NewsletterForm from "@/components/NewsletterForm";
 import Footer from "@/components/Footer";
 import AcademyHero from "@/components/academy/AcademyHero";
 import CourseGrid from "@/components/academy/CourseGrid";
@@ -399,6 +400,15 @@ const Index = () => {
         
         <section className="animate-on-scroll">
           <EnhancedContact />
+        </section>
+
+        {/* Newsletter Section */}
+        <section className="py-24 animate-on-scroll">
+          <div className="container mx-auto px-4">
+            <div className="max-w-xl mx-auto">
+              <NewsletterForm />
+            </div>
+          </div>
         </section>
 
             <Footer />
