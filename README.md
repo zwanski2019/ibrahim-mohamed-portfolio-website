@@ -19,6 +19,7 @@ Welcome to the Zwanski Tech platform! This project powers [zwanski.org](https://
 - 🧑‍💻 Community: forums, live chat, Telegram integration
 - 📱 Free IMEI checker & device tools
 - 🖥️ Interactive 3D computer model (React Three Fiber)
+- 🤖 AI utilities powered by Supabase edge functions
 - 🌙 Dark & light mode, responsive design
 - 🔒 GDPR-ready, privacy-focused
 
