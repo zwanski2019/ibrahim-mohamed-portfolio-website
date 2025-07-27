@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import ReactMarkdown from "react-markdown";
 import {
   Card,
@@ -37,12 +38,10 @@ export default function GPTAssistant() {
     setLoading(true);
     setResult("");
     try {
-      const res = await fetch("https://api.zwanski.org/api/ai-tools", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tool, prompt: input }),
+      const { data, error } = await supabase.functions.invoke("chatgpt-tools", {
+        body: { tool, prompt: input },
       });
-      const data = await res.json();
+      if (error) throw error;
       setResult(data.result || "No response received.");
     } catch (err) {
       setResult(
