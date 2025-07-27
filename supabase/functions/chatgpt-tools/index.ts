@@ -1,5 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 
+console.log("chatgpt-tools worker starting");
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -7,12 +9,17 @@ const corsHeaders = {
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
+    const res = new Response(null, { headers: corsHeaders });
+    console.log("chatgpt-tools response sent (options)");
+    return res;
   }
 
   try {
     const { prompt, tool } = await req.json();
+    console.log("chatgpt-tools request tool", tool);
+
     if (!prompt) {
+      console.log("chatgpt-tools response sent (missing prompt)");
       return new Response(
         JSON.stringify({ error: "Prompt is required" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -21,6 +28,7 @@ serve(async (req) => {
 
     const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
     if (!OPENAI_API_KEY) {
+      console.log("chatgpt-tools response sent (config error)");
       return new Response(
         JSON.stringify({ error: "Server configuration error" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -115,10 +123,12 @@ serve(async (req) => {
     const result = await response.json();
     const answer = result.choices?.[0]?.message?.content || "";
 
-    return new Response(
+    const res = new Response(
       JSON.stringify({ result: answer }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
+    console.log("chatgpt-tools response sent");
+    return res;
   } catch (err) {
     console.error("chatgpt-tools error", err);
     const isDevelopment = Deno.env.get("NODE_ENV") === "development";
@@ -126,9 +136,12 @@ serve(async (req) => {
       isDevelopment && err instanceof Error
         ? { error: err.message }
         : { error: "Internal server error" };
-    return new Response(
+
+    const res = new Response(
       JSON.stringify(errorPayload),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
+    console.log("chatgpt-tools response sent (error)");
+    return res;
   }
 });
