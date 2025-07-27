@@ -13,6 +13,7 @@ import {
   Settings2,
   FileText,
   MessageSquare,
+  Mail,
   Bot,
   Activity
 } from "lucide-react";
@@ -128,6 +129,7 @@ const Navbar = () => {
     { label: "Jobs", path: "/jobs", icon: Briefcase },
     { label: "Blog", path: "/blog", icon: FileText },
     { label: "Chat", path: "/chat", icon: MessageSquare },
+    { label: "Contact", path: "/contact", icon: Mail },
     { label: "Threat Map", path: "/threat-map", icon: Activity },
     { label: "AI", path: "/ai", icon: Bot },
   ];
