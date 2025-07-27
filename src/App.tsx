@@ -65,6 +65,7 @@ const IMEICheck = lazy(() => import("./pages/IMEICheck"));
 const Infrastructure = lazy(() => import("./pages/Infrastructure"));
 const Tools = lazy(() => import("./pages/Tools"));
 const Blog = lazy(() => import("./pages/Blog"));
+const ContactPage = lazy(() => import("./pages/Contact"));
 const RSS = lazy(() => import("./pages/RSS"));
 const Search = lazy(() => import("./pages/Search"));
 const AIAssistantPage = lazy(() => import("./pages/ai"));
@@ -163,8 +164,9 @@ function App() {
                            <Route path="/login" element={<Auth />} />
                            <Route path="/register" element={<Auth />} />
                            <Route path="/signup" element={<Auth />} />
-                           <Route path="/blog" element={<Blog />} />
-                          
+                          <Route path="/blog" element={<Blog />} />
+                          <Route path="/contact" element={<ContactPage />} />
+
                           {/* Admin Routes */}
                           <Route path="/admin" element={<AdminDashboard />} />
                           <Route path="/admin/users" element={<AdminUsers />} />
