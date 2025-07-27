@@ -11,8 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Eye, EyeOff, Mail, Lock, User, AlertCircle } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import HCaptchaWidget from "@/components/HCaptchaWidget";
+import Turnstile from "@/components/Turnstile";
+import { verifyTurnstile } from "@/lib/verifyTurnstile";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -35,33 +35,7 @@ const Auth = () => {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [signinCaptchaToken, setSigninCaptchaToken] = useState<string | null>(null);
 
-  const [siteKey, setSiteKey] = useState<string>("");
-  const [loadingConfig, setLoadingConfig] = useState(true);
-
-  useEffect(() => {
-    const getCaptchaConfig = async () => {
-      try {
-        console.log('Auth: Fetching hCaptcha config...');
-        const { data, error } = await supabase.functions.invoke('get-hcaptcha-config');
-
-        if (error) {
-          console.warn('Auth: Error fetching hCaptcha config:', error);
-        } else if (data?.siteKey) {
-          console.log('Auth: Site key received:', data.siteKey);
-          setSiteKey(data.siteKey);
-        } else {
-          console.warn('Auth: No site key returned, hCaptcha disabled. Data:', data);
-        }
-      } catch (error) {
-        console.warn('Auth: Failed to fetch hCaptcha config:', error);
-      } finally {
-        console.log('Auth: Config loading finished. Site key set:', !!siteKey);
-        setLoadingConfig(false);
-      }
-    };
-
-    getCaptchaConfig();
-  }, []);
+  const siteKey = import.meta.env.VITE_CF_TURNSTILE_SITE_KEY;
 
   // Redirect authenticated users
   useEffect(() => {
@@ -95,10 +69,17 @@ const Auth = () => {
     }
 
     try {
+      if (siteKey && signinCaptchaToken) {
+        const result = await verifyTurnstile(signinCaptchaToken);
+        if (!result.success) {
+          throw new Error('Security verification failed');
+        }
+      }
+
       const { error } = await signIn(
         email,
         password,
-        siteKey ? signinCaptchaToken || undefined : undefined
+        undefined
       );
       
       if (error) {
@@ -135,13 +116,10 @@ const Auth = () => {
     }
 
     try {
-      // Verify hCaptcha token when enabled
+      // Verify Turnstile token when enabled
       if (siteKey && captchaToken) {
-        const { data: verificationData, error: verificationError } = await supabase.functions.invoke('verify-hcaptcha', {
-          body: { token: captchaToken }
-        });
-
-        if (verificationError || !verificationData?.success) {
+        const result = await verifyTurnstile(captchaToken);
+        if (!result.success) {
           throw new Error('Security verification failed');
         }
       }
@@ -253,26 +231,21 @@ const Auth = () => {
                   </div>
                 </div>
 
-                {!loadingConfig && siteKey ? (
+                {siteKey ? (
                   <div>
                     <div className="text-xs text-muted-foreground mb-2">
                       Security verification required
                     </div>
-                    <HCaptchaWidget
+                    <Turnstile
                       siteKey={siteKey}
-                      onVerify={(token) => {
-                        console.log('Sign-in hCaptcha token received:', token.substring(0, 20) + '...');
-                        setSigninCaptchaToken(token);
-                      }}
+                      onVerify={(token) => setSigninCaptchaToken(token)}
                       onError={handleCaptchaError}
                       onExpire={() => setSigninCaptchaToken(null)}
-                      theme="auto"
-                      size="compact"
                     />
                   </div>
                 ) : (
                   <div className="text-xs text-muted-foreground text-center py-4">
-                    {loadingConfig ? 'Loading security verification...' : 'Security verification optional (disabled)'}
+                    Security verification optional (disabled)
                   </div>
                 )}
 
@@ -395,26 +368,21 @@ const Auth = () => {
                   </Label>
                 </div>
 
-                {!loadingConfig && siteKey ? (
+                {siteKey ? (
                   <div>
                     <div className="text-xs text-muted-foreground mb-2">
                       Security verification required
                     </div>
-                    <HCaptchaWidget
+                    <Turnstile
                       siteKey={siteKey}
-                      onVerify={(token) => {
-                        console.log('Sign-up hCaptcha token received:', token.substring(0, 20) + '...');
-                        setCaptchaToken(token);
-                      }}
+                      onVerify={(token) => setCaptchaToken(token)}
                       onError={handleCaptchaError}
                       onExpire={() => setCaptchaToken(null)}
-                      theme="auto"
-                      size="compact"
                     />
                   </div>
                 ) : (
                   <div className="text-xs text-muted-foreground text-center py-4">
-                    {loadingConfig ? 'Loading security verification...' : 'Security verification optional (disabled)'}
+                    Security verification optional (disabled)
                   </div>
                 )}
 
