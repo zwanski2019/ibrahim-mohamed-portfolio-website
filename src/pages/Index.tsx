@@ -139,7 +139,10 @@ const Index = () => {
   ];
 
   // Render with error boundary and fallback
-  const renderPageContent = () => {
+const renderPageContent = () => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('renderPageContent called');
+    }
     try {
       return (
         <>
@@ -421,7 +424,7 @@ const Index = () => {
       );
     } catch (error) {
       if (process.env.NODE_ENV === 'development') {
-        console.error('Homepage rendering error:', error);
+        console.error('renderPageContent error:', error);
       }
       return (
         <div className="min-h-screen flex items-center justify-center bg-background">

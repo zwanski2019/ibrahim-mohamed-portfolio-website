@@ -96,6 +96,9 @@ import "./styles/animations.css";
 const queryClient = new QueryClient(); // Force refresh for Tools import
 
 function App() {
+  if (process.env.NODE_ENV === 'development') {
+    console.log('App component rendering');
+  }
   // Performance monitoring hooks - moved to top level to follow React Rules of Hooks
   usePerformanceMonitoring();
   useMemoryMonitoring();
