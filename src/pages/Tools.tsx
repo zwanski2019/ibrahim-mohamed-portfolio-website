@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { SEOHelmet } from "@/components/SEOHelmet";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import IMEIChecker from "@/components/IMEIChecker";
@@ -85,11 +85,11 @@ const Tools = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Free Tools - ZWANSKI TECH</title>
-        <meta name="description" content="Free online tools including IMEI checker, password generator, QR code generator and more. Professional utility tools for developers and users." />
-        <meta name="keywords" content="free tools, IMEI checker, password generator, QR code, online tools, utilities" />
-      </Helmet>
+      <SEOHelmet
+        title="Free Tools - ZWANSKI TECH"
+        description="Free online tools including IMEI checker, password generator, QR code generator and more. Professional utility tools for developers and users."
+        canonical="https://zwanski.org/tools"
+      />
       
       <div className="flex flex-col min-h-screen">
         <Navbar />
