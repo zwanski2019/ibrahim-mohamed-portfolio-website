@@ -94,15 +94,18 @@ npm install --legacy-peer-deps
 
 ## 🔐 Authentication Test
 
-You can verify Supabase sign-in and sign-out using the helper script:
+You can verify Supabase sign-in and sign-out using the helper script. Set the
+following environment variables with your Supabase credentials and a test user:
 
 ```bash
+SUPABASE_URL=your-supabase-url \
+SUPABASE_ANON_KEY=your-supabase-anon-key \
 TEST_EMAIL=your@email \
 TEST_PASSWORD=yourpassword \
 node scripts/test-login.js
 ```
 
-The script attempts to sign in with the provided credentials and then signs out, reporting any errors.
+The script attempts to sign in with the provided credentials and then signs out, reporting any errors. `SUPABASE_URL` and `SUPABASE_ANON_KEY` are mandatory and must point to your Supabase project.
 
 ---
 
