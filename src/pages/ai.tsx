@@ -9,6 +9,11 @@ import CVGenerator from "@/components/CVGenerator";
 import NewsGenerator from "@/components/NewsGenerator";
 import SEOScanner from "@/components/SEOScanner";
 import MentalHealthBot from "@/components/MentalHealthBot";
+import GameGenerator from "@/components/GameGenerator";
+import StudentAssistant from "@/components/StudentAssistant";
+import VulnerabilityScanner from "@/components/VulnerabilityScanner";
+import LanguageHelper from "@/components/LanguageHelper";
+import VideoFinder from "@/components/VideoFinder";
 
 export default function AIDashboardPage() {
   const navigate = useNavigate();
@@ -30,11 +35,16 @@ export default function AIDashboardPage() {
           <ArrowLeft className="h-4 w-4" /> Home
         </Button>
         <Tabs defaultValue="cv" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-4 md:grid-cols-5">
             <TabsTrigger value="cv">CV Generator</TabsTrigger>
             <TabsTrigger value="news">News</TabsTrigger>
             <TabsTrigger value="seo">SEO Scanner</TabsTrigger>
             <TabsTrigger value="mental">Mental Health</TabsTrigger>
+            <TabsTrigger value="game">Mini-Game</TabsTrigger>
+            <TabsTrigger value="student">Student Assistant</TabsTrigger>
+            <TabsTrigger value="vuln">Vulnerability Scan</TabsTrigger>
+            <TabsTrigger value="language">Language Helper</TabsTrigger>
+            <TabsTrigger value="video">Video Finder</TabsTrigger>
           </TabsList>
           <TabsContent value="cv" className="mt-6">
             <CVGenerator />
@@ -47,6 +57,21 @@ export default function AIDashboardPage() {
           </TabsContent>
           <TabsContent value="mental" className="mt-6">
             <MentalHealthBot />
+          </TabsContent>
+          <TabsContent value="game" className="mt-6">
+            <GameGenerator />
+          </TabsContent>
+          <TabsContent value="student" className="mt-6">
+            <StudentAssistant />
+          </TabsContent>
+          <TabsContent value="vuln" className="mt-6">
+            <VulnerabilityScanner />
+          </TabsContent>
+          <TabsContent value="language" className="mt-6">
+            <LanguageHelper />
+          </TabsContent>
+          <TabsContent value="video" className="mt-6">
+            <VideoFinder />
           </TabsContent>
         </Tabs>
       </main>

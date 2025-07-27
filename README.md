@@ -19,6 +19,7 @@ Welcome to the Zwanski Tech platform! This project powers [zwanski.org](https://
 - 🧑‍💻 Community: forums, live chat, Telegram integration
 - 📱 Free IMEI checker & device tools
 - 🖥️ Interactive 3D computer model (React Three Fiber)
+- 🤖 AI utilities powered by Supabase edge functions
 - 🌙 Dark & light mode, responsive design
 - 🔒 GDPR-ready, privacy-focused
 
@@ -93,15 +94,60 @@ npm install --legacy-peer-deps
 
 ## 🔐 Authentication Test
 
-You can verify Supabase sign-in and sign-out using the helper script:
+You can verify Supabase sign-in and sign-out using the helper script. Set the
+following environment variables with your Supabase credentials and a test user:
 
 ```bash
+SUPABASE_URL=your-supabase-url \
+SUPABASE_ANON_KEY=your-supabase-anon-key \
 TEST_EMAIL=your@email \
 TEST_PASSWORD=yourpassword \
 node scripts/test-login.js
 ```
 
-The script attempts to sign in with the provided credentials and then signs out, reporting any errors.
+The script attempts to sign in with the provided credentials and then signs out, reporting any errors. `SUPABASE_URL` and `SUPABASE_ANON_KEY` are mandatory and must point to your Supabase project.
+
+---
+
+## 📰 Weekly Newsletter Script
+
+Automate sending your latest blog post to newsletter subscribers. The script
+`scripts/send-weekly-newsletter.js` fetches the newest entry from your Blogger
+RSS feed, loads subscriber emails from Supabase and sends an HTML email via
+Resend.
+
+### Usage
+
+1. Copy `.env.example` to `.env` and fill in the variables for Supabase and
+   Resend.
+2. Run the script manually with:
+
+   ```bash
+   node scripts/send-weekly-newsletter.js
+   ```
+
+3. Schedule weekly execution with cron or a GitHub Actions workflow. Below is a
+   simple GitHub Actions example:
+
+   ```yaml
+   on:
+     schedule:
+       - cron: '0 9 * * 1'
+   jobs:
+     send-newsletter:
+       runs-on: ubuntu-latest
+       steps:
+         - uses: actions/checkout@v4
+         - run: npm ci
+         - run: node scripts/send-weekly-newsletter.js
+           env:
+             SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+             SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+             RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+   ```
+
+The script keeps a log in the `newsletter_logs` table to avoid sending the same
+post more than once in a week.
 
 ---
 
