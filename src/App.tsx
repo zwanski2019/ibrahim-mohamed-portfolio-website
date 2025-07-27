@@ -158,9 +158,12 @@ function App() {
                           <Route path="/jobs" element={<Jobs />} />
                           <Route path="/jobs/:id" element={<JobDetail />} />
                           <Route path="/post-job" element={<PostJob />} />
-                          <Route path="/freelancers" element={<Freelancers />} />
-                          <Route path="/auth" element={<Auth />} />
-                          <Route path="/blog" element={<Blog />} />
+                           <Route path="/freelancers" element={<Freelancers />} />
+                           <Route path="/auth" element={<Auth />} />
+                           <Route path="/login" element={<Auth />} />
+                           <Route path="/register" element={<Auth />} />
+                           <Route path="/signup" element={<Auth />} />
+                           <Route path="/blog" element={<Blog />} />
                           
                           {/* Admin Routes */}
                           <Route path="/admin" element={<AdminDashboard />} />
