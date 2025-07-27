@@ -150,7 +150,11 @@ const Index = () => {
             structuredData={structuredDataItems}
           />
           
-          <div className="min-h-screen bg-background text-foreground homepage-content" style={{opacity: 1, visibility: 'visible', display: 'block'}}>
+          <main
+            id="main-content"
+            className="min-h-screen bg-background text-foreground homepage-content"
+            style={{ opacity: 1, visibility: 'visible', display: 'block' }}
+          >
         <Navbar />
         
         {/* Hero Section */}
@@ -402,7 +406,7 @@ const Index = () => {
         </section>
 
             <Footer />
-          </div>
+          </main>
         </>
       );
     } catch (error) {
