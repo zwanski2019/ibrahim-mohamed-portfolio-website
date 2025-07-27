@@ -66,6 +66,19 @@ verify_jwt = false
 verify_jwt = false
 ```
 
+## 💻 Development Setup
+
+Some React and Vite packages depend on slightly different peer versions. This
+can cause `npm install` to fail with an **ERESOLVE** dependency tree error. If
+you encounter this issue, install packages using the legacy peer dependency
+mode:
+
+```bash
+npm install --legacy-peer-deps
+```
+
+`--force` can also be used if your package manager supports it.
+
 ## 🔐 Security Features
 
 ✅ **Row Level Security (RLS)** - All tables have proper RLS policies  
