@@ -15,7 +15,9 @@ export interface User {
 
 export interface JobPost {
   id: string;
-  employer_id: string;
+  employer_id?: string;
+  contact_name?: string | null;
+  contact_email?: string | null;
   title: string;
   description: string;
   category: string;
