@@ -12,9 +12,10 @@ import {
   Clock, 
   Eye, 
   MapPin, 
-  DollarSign, 
+  DollarSign,
   Users,
-  Loader2
+  Loader2,
+  Mail
 } from "lucide-react";
 import { JobPost } from "@/types/marketplace";
 import { Profile } from "@/types/profile";
@@ -90,8 +91,14 @@ const AdminJobs = () => {
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <span className="flex items-center">
                 <Users className="h-4 w-4 mr-1" />
-                {job.employer?.full_name || 'Unknown Employer'}
+                {job.employer?.full_name || job.contact_name || 'Unknown Employer'}
               </span>
+              {!job.employer_id && job.contact_email && (
+                <span className="flex items-center">
+                  <Mail className="h-4 w-4 mr-1" />
+                  {job.contact_email}
+                </span>
+              )}
               <span className="flex items-center">
                 <MapPin className="h-4 w-4 mr-1" />
                 {job.location}
