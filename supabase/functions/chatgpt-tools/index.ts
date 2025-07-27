@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 
 const ALLOWED_ORIGINS = Deno.env.get("ALLOWED_ORIGINS") ?? "https://zwanski.org";
+console.log("chatgpt-tools worker starting");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": ALLOWED_ORIGINS,
@@ -9,12 +10,17 @@ const corsHeaders = {
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
+    const res = new Response(null, { headers: corsHeaders });
+    console.log("chatgpt-tools response sent (options)");
+    return res;
   }
 
   try {
     const { prompt, tool } = await req.json();
+    console.log("chatgpt-tools request tool:", tool);
+
     if (!prompt) {
+      console.log("chatgpt-tools response sent (missing prompt)");
       return new Response(
         JSON.stringify({ error: "Prompt is required" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -23,6 +29,7 @@ serve(async (req) => {
 
     const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
     if (!OPENAI_API_KEY) {
+      console.log("chatgpt-tools response sent (config error)");
       return new Response(
         JSON.stringify({ error: "Server configuration error" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -56,42 +63,43 @@ serve(async (req) => {
       case "student":
         messages.unshift({
           role: "system",
-          content:
-            "Act as a helpful tutor and answer the student's question in a clear and concise manner.",
+          content: "You are a patient instructor. Offer step-by-step explanations for the user's question.",
         });
         break;
       case "code":
         messages.unshift({
           role: "system",
-          content: "Explain the provided code snippet in clear, simple terms.",
+          content: "Explain what the following code does in simple terms.",
         });
         break;
       case "game":
         messages.unshift({
           role: "system",
-          content:
-            "Generate a short concept or instructions for a simple text-based mini-game based on the user's idea.",
+          content: "You are a text adventure game master. Continue the story based on user input.",
+        });
+        break;
+      case "bugfix":
+        messages.unshift({
+          role: "system",
+          content: "Provide a concise vulnerability assessment and suggest fixes for the given code or description.",
         });
         break;
       case "vuln":
         messages.unshift({
           role: "system",
-          content:
-            "Identify potential security vulnerabilities in the provided text and suggest improvements.",
+          content: "Identify potential security vulnerabilities in the provided text and suggest improvements.",
         });
         break;
       case "language":
         messages.unshift({
           role: "system",
-          content:
-            "Assist with language learning queries, providing grammar explanations and examples.",
+          content: "Assist with language learning queries, providing grammar explanations and examples.",
         });
         break;
       case "video":
         messages.unshift({
           role: "system",
-          content:
-            "Suggest educational video topics or titles related to the user's query.",
+          content: "Suggest educational video topics or titles related to the user's query.",
         });
         break;
       default:
@@ -117,10 +125,12 @@ serve(async (req) => {
     const result = await response.json();
     const answer = result.choices?.[0]?.message?.content || "";
 
-    return new Response(
+    const res = new Response(
       JSON.stringify({ result: answer }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
+    console.log("chatgpt-tools response sent");
+    return res;
   } catch (err) {
     console.error("chatgpt-tools error", err);
     const isDevelopment = Deno.env.get("NODE_ENV") === "development";
@@ -128,9 +138,12 @@ serve(async (req) => {
       isDevelopment && err instanceof Error
         ? { error: err.message }
         : { error: "Internal server error" };
-    return new Response(
+
+    const res = new Response(
       JSON.stringify(errorPayload),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
+    console.log("chatgpt-tools response sent (error)");
+    return res;
   }
 });
