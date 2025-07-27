@@ -11,7 +11,7 @@
     "build:admin": "vite build --config admin/vite.config.ts --root admin",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "echo \"No tests specified\" && exit 0"
+    "test": "echo \"No tests configured\" && exit 0"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
