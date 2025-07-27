@@ -160,7 +160,7 @@ const Index = () => {
         </section>
 
         {/* Value Proposition */}
-        <section className="animate-on-scroll">
+        <section id="next-section" className="animate-on-scroll">
           <ValueProposition />
         </section>
 
