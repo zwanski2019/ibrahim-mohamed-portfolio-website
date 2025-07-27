@@ -68,7 +68,7 @@ export const CookieConsent: React.FC = () => {
       
       <Sheet open={showSheet} onOpenChange={setShowSheet}>
         <SheetTrigger asChild>
-          <button className="hidden" />
+          <button className="hidden" aria-label="Open cookie settings" />
         </SheetTrigger>
         <SheetContent className="sm:max-w-md">
           <SheetHeader className="space-y-3">
