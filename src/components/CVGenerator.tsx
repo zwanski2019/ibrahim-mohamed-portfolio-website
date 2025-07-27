@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ export default function CVGenerator() {
   const [input, setInput] = useState("");
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -26,6 +27,29 @@ export default function CVGenerator() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    async function generatePdf(text: string) {
+      const { data, error } = await supabase.functions.invoke("generate-pdf", {
+        body: { text },
+      });
+      if (error) {
+        console.error(error);
+        return;
+      }
+      if (data?.pdf) {
+        const binary = Uint8Array.from(atob(data.pdf), (c) => c.charCodeAt(0));
+        const blob = new Blob([binary], { type: "application/pdf" });
+        setPdfUrl(URL.createObjectURL(blob));
+      }
+    }
+
+    if (result) {
+      generatePdf(result);
+    } else {
+      setPdfUrl(null);
+    }
+  }, [result]);
 
   return (
     <Card className="w-full">
@@ -55,6 +79,11 @@ export default function CVGenerator() {
           <div className="prose max-w-none bg-muted/50 p-4 rounded" aria-live="polite">
             {result}
           </div>
+        )}
+        {pdfUrl && (
+          <a href={pdfUrl} download="cv.pdf">
+            <Button variant="secondary">Download PDF</Button>
+          </a>
         )}
       </CardContent>
     </Card>
