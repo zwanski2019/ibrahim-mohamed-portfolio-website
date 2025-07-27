@@ -32,37 +32,68 @@ serve(async (req) => {
       { role: "user", content: prompt },
     ];
 
-    if (tool === "cv") {
-      messages.unshift({ role: "system", content: "Generate a concise professional CV based on the user input." });
-    } else if (tool === "seo") {
-      messages.unshift({ role: "system", content: "Act as an SEO expert and analyse the provided text." });
-    } else if (tool === "mental") {
-      messages.unshift({ role: "system", content: "Provide supportive mental health advice." });
-    } else if (tool === "game") {
-      messages.unshift({
-        role: "system",
-        content: "Generate a short concept or instructions for a simple text-based mini-game based on the user's idea.",
-      });
-    } else if (tool === "student") {
-      messages.unshift({
-        role: "system",
-        content: "Act as a helpful tutor and answer the student's question in a clear and concise manner.",
-      });
-    } else if (tool === "vuln") {
-      messages.unshift({
-        role: "system",
-        content: "Identify potential security vulnerabilities in the provided text and suggest improvements.",
-      });
-    } else if (tool === "language") {
-      messages.unshift({
-        role: "system",
-        content: "Assist with language learning queries, providing grammar explanations and examples.",
-      });
-    } else if (tool === "video") {
-      messages.unshift({
-        role: "system",
-        content: "Suggest educational video topics or titles related to the user's query.",
-      });
+    switch (tool) {
+      case "cv":
+        messages.unshift({
+          role: "system",
+          content: "Generate a concise professional CV based on the user input.",
+        });
+        break;
+      case "seo":
+        messages.unshift({
+          role: "system",
+          content: "Act as an SEO expert and analyse the provided text.",
+        });
+        break;
+      case "mental":
+        messages.unshift({
+          role: "system",
+          content: "Provide supportive mental health advice.",
+        });
+        break;
+      case "student":
+        messages.unshift({
+          role: "system",
+          content:
+            "Act as a helpful tutor and answer the student's question in a clear and concise manner.",
+        });
+        break;
+      case "code":
+        messages.unshift({
+          role: "system",
+          content: "Explain the provided code snippet in clear, simple terms.",
+        });
+        break;
+      case "game":
+        messages.unshift({
+          role: "system",
+          content:
+            "Generate a short concept or instructions for a simple text-based mini-game based on the user's idea.",
+        });
+        break;
+      case "vuln":
+        messages.unshift({
+          role: "system",
+          content:
+            "Identify potential security vulnerabilities in the provided text and suggest improvements.",
+        });
+        break;
+      case "language":
+        messages.unshift({
+          role: "system",
+          content:
+            "Assist with language learning queries, providing grammar explanations and examples.",
+        });
+        break;
+      case "video":
+        messages.unshift({
+          role: "system",
+          content:
+            "Suggest educational video topics or titles related to the user's query.",
+        });
+        break;
+      default:
+        break;
     }
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
