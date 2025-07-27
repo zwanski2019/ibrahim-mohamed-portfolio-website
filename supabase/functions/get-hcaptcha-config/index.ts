@@ -1,8 +1,10 @@
 
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 
+const ALLOWED_ORIGINS = Deno.env.get('ALLOWED_ORIGINS') ?? 'https://zwanski.org';
+
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': ALLOWED_ORIGINS,
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
