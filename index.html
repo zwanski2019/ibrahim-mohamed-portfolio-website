@@ -28,7 +28,7 @@
     
     <!-- Security Headers -->
     <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://static.axept.io https://cdn.gpteng.co https://widget.trustpilot.com https://js.hcaptcha.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: https://*.trustpilot.com; connect-src 'self' https: wss: https://*.trustpilot.com https://hcaptcha.com; frame-src 'self' https: https://hcaptcha.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://static.axept.io https://cdn.gpteng.co https://js.hcaptcha.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https: wss: https://hcaptcha.com; frame-src 'self' https: https://hcaptcha.com;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
@@ -109,33 +109,8 @@
     <!-- hCaptcha -->
     <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     
-    <!-- TrustBox script - deferred for performance -->
-    <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async defer></script>
-    <!-- End TrustBox script -->
 
     <style>
-      /* Hide Trustpilot floating badges completely */
-      .tp-widget-floating,
-      .tp-widget-floating-button,
-      .tp-widget-corner,
-      .tp-widget-badge,
-      [data-testid="trustpilot-floating-button"],
-      [class*="trustpilot-floating"],
-      [id*="trustpilot-floating"] {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-      }
-
-      /* Dark theme styling for embedded Trustpilot widgets */
-      .trustpilot-widget iframe {
-        filter: brightness(0.9) contrast(1.1);
-      }
-
-      .trustpilot-widget {
-        background: transparent !important;
-      }
 
       /* Ensure cookie banners always stay above other widgets */
       .axeptio_widget,

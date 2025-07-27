@@ -96,23 +96,6 @@ export default function Footer() {
                   </div>
                 </div>
               </div>
-              
-              {/* Trustpilot Review Section */}
-              <div className="mt-6 p-4 bg-background/50 rounded-lg border border-border/50">
-                <div className="mb-3">
-                  <h4 className="text-sm font-medium text-foreground mb-1">
-                    Review us on Trustpilot
-                  </h4>
-                  <p className="text-xs text-muted-foreground">
-                    Share your experience with our services
-                  </p>
-                </div>
-                <div className="trustpilot-widget" data-locale="en-US" data-template-id="5419b6a8b0d04a076446a9ad" data-businessunit-id="68784b58bb280230abe24fa8" data-style-height="52px" data-style-width="100%">
-                  <a href="https://www.trustpilot.com/review/zwanski.org" target="_blank" rel="noopener" className="text-xs text-muted-foreground hover:text-primary transition-colors font-medium">
-                    Leave a Review on Trustpilot →
-                  </a>
-                </div>
-              </div>
             </div>
 
             {/* Company Links */}

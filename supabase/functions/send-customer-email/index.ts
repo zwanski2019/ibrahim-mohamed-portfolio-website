@@ -17,7 +17,7 @@ interface CustomerEmailRequest {
   from?: string;
 }
 
-const TRUSTPILOT_BCC = "zwanski.org+7beee01bb3@invite.trustpilot.com";
+
 const SUPPORT_EMAIL = "support@zwanski.org";
 const CONTACT_EMAIL = "contact@zwanski.org";
 
@@ -50,8 +50,6 @@ const handler = async (req: Request): Promise<Response> => {
 
     const senderEmail = getSenderEmail(type, from);
 
-    // Determine if this should include Trustpilot BCC (only for customer-facing emails)
-    const shouldBccTrustpilot = type !== 'internal';
     
     const emailConfig: any = {
       from: senderEmail,
@@ -60,20 +58,13 @@ const handler = async (req: Request): Promise<Response> => {
       html,
     };
 
-    // Add Trustpilot BCC for customer-facing emails to trigger review invitations
-    if (shouldBccTrustpilot) {
-      emailConfig.bcc = [TRUSTPILOT_BCC];
-      console.log(`Adding Trustpilot BCC for ${type} email`);
-    }
-
     const emailResponse = await resend.emails.send(emailConfig);
 
     console.log("Email sent successfully:", emailResponse);
 
     return new Response(JSON.stringify({ 
       success: true, 
-      emailId: emailResponse.data?.id,
-      trustpilotTriggered: shouldBccTrustpilot 
+      emailId: emailResponse.data?.id
     }), {
       status: 200,
       headers: {

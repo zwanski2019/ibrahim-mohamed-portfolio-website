@@ -22,7 +22,7 @@ export const useContact = () => {
       
       if (error) throw error;
 
-      // Send confirmation email with Trustpilot BCC integration
+      // Send confirmation email
       try {
         const emailHtml = `
           <div style="font-family: Inter, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -74,7 +74,7 @@ export const useContact = () => {
           },
         });
 
-        console.log('Confirmation email sent with Trustpilot BCC');
+        console.log('Confirmation email sent');
       } catch (emailError) {
         console.warn('Failed to send confirmation email:', emailError);
         // Don't throw here - the contact form submission was successful
