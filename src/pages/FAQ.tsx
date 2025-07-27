@@ -1,5 +1,5 @@
 
-import { Helmet } from "react-helmet-async";
+import { SEOHelmet } from "@/components/SEOHelmet";
 import { useLanguage } from "@/context/LanguageContext";
 import { 
   Accordion,
@@ -118,10 +118,11 @@ export default function FAQ() {
 
   return (
     <>
-      <Helmet>
-        <title>Frequently Asked Questions - Zwanski Tech</title>
-        <meta name="description" content="Find answers to common questions about Zwanski Tech services, academy, job marketplace, and technical support." />
-      </Helmet>
+      <SEOHelmet
+        title="Frequently Asked Questions - Zwanski Tech"
+        description="Find answers to common questions about Zwanski Tech services, academy, job marketplace, and technical support."
+        canonical="https://zwanski.org/faq"
+      />
 
       <div className="flex flex-col min-h-screen bg-background">
         <Navbar />

@@ -1,5 +1,5 @@
 
-import { Helmet } from "react-helmet-async";
+import { SEOHelmet } from "@/components/SEOHelmet";
 import { useLanguage } from "@/context/LanguageContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Eye, Cookie, Database, Mail } from "lucide-react";
@@ -11,10 +11,11 @@ export default function PrivacyPolicy() {
 
   return (
     <>
-      <Helmet>
-        <title>Privacy Policy - Zwanski Tech</title>
-        <meta name="description" content="Learn how Zwanski Tech protects your privacy and handles your personal data." />
-      </Helmet>
+      <SEOHelmet
+        title="Privacy Policy - Zwanski Tech"
+        description="Learn how Zwanski Tech protects your privacy and handles your personal data."
+        canonical="https://zwanski.org/privacy-policy"
+      />
 
       <div className="flex flex-col min-h-screen">
         <Navbar />

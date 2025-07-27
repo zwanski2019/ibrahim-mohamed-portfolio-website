@@ -1,5 +1,5 @@
 
-import { Helmet } from "react-helmet-async";
+import { SEOHelmet } from "@/components/SEOHelmet";
 import { useLanguage } from "@/context/LanguageContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText, Users, Shield, AlertTriangle, Gavel } from "lucide-react";
@@ -11,10 +11,11 @@ export default function TermsOfService() {
 
   return (
     <>
-      <Helmet>
-        <title>Terms of Service - Zwanski Tech</title>
-        <meta name="description" content="Terms and conditions for using Zwanski Tech services and platform." />
-      </Helmet>
+      <SEOHelmet
+        title="Terms of Service - Zwanski Tech"
+        description="Terms and conditions for using Zwanski Tech services and platform."
+        canonical="https://zwanski.org/terms-of-service"
+      />
 
       <div className="flex flex-col min-h-screen">
         <Navbar />
