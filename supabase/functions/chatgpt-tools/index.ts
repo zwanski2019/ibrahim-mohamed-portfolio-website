@@ -33,11 +33,43 @@ serve(async (req) => {
     ];
 
     if (tool === "cv") {
-      messages.unshift({ role: "system", content: "Generate a concise professional CV based on the user input." });
+      messages.unshift({
+        role: "system",
+        content: "Generate a concise professional CV based on the user input.",
+      });
     } else if (tool === "seo") {
-      messages.unshift({ role: "system", content: "Act as an SEO expert and analyse the provided text." });
+      messages.unshift({
+        role: "system",
+        content: "Act as an SEO expert and analyse the provided text.",
+      });
     } else if (tool === "mental") {
-      messages.unshift({ role: "system", content: "Provide supportive mental health advice." });
+      messages.unshift({
+        role: "system",
+        content: "Provide supportive mental health advice.",
+      });
+    } else if (tool === "student") {
+      messages.unshift({
+        role: "system",
+        content:
+          "You are a patient instructor. Offer step-by-step explanations for the user's question.",
+      });
+    } else if (tool === "code") {
+      messages.unshift({
+        role: "system",
+        content: "Explain what the following code does in simple terms.",
+      });
+    } else if (tool === "game") {
+      messages.unshift({
+        role: "system",
+        content:
+          "You are a text adventure game master. Continue the story based on user input.",
+      });
+    } else if (tool === "bugfix") {
+      messages.unshift({
+        role: "system",
+        content:
+          "Provide a concise vulnerability assessment and suggest fixes for the given code or description.",
+      });
     }
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
