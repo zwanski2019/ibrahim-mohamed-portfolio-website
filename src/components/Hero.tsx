@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, Shield, Globe, Zap, Users, MessageSquare, Star, Sparkles, Monitor, Award, Clock } from "lucide-react";
+import { ArrowRight, Play, Shield, Globe, Zap, Users, MessageSquare, Star, Sparkles, Monitor, Award, Clock, ArrowDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/context/LanguageContext";
 import heroImage from "@/assets/hero-it-services-optimized.webp";
@@ -278,6 +278,13 @@ const Hero = () => {
           </div>
         </div>
       </div>
+      <a
+        href="#next-section"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-foreground/70 hover:text-foreground animate-bounce"
+        aria-label="Scroll to next section"
+      >
+        <ArrowDown className="h-8 w-8" />
+      </a>
     </section>
   );
 };
