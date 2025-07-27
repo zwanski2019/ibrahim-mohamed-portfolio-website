@@ -8,14 +8,13 @@ import AcademyHero from "@/components/academy/AcademyHero";
 import CourseGrid from "@/components/academy/CourseGrid";
 import CategoryFilter from "@/components/academy/CategoryFilter";
 import { SearchBar } from "@/components/SearchBar";
-import { useAuth } from "@/context/AuthContext";
+import { useUserEnrollments } from "@/hooks/useAcademy";
 import { useLanguage } from "@/context/LanguageContext";
 
 const Academy = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [difficulty, setDifficulty] = useState<string>("all");
-  const { user } = useAuth();
   const { t } = useLanguage();
 
   const { data: categories } = useQuery({
@@ -65,21 +64,7 @@ const Academy = () => {
     }
   });
 
-  const { data: userEnrollments } = useQuery({
-    queryKey: ['user-enrollments', user?.id],
-    queryFn: async () => {
-      if (!user) return [];
-      
-      const { data, error } = await supabase
-        .from('course_enrollments')
-        .select('course_id')
-        .eq('user_id', user.id);
-      
-      if (error) throw error;
-      return data.map(e => e.course_id);
-    },
-    enabled: !!user
-  });
+  const { data: userEnrollments } = useUserEnrollments();
 
   return (
     <ThemeProvider>
