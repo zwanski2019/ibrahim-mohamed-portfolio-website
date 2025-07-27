@@ -151,6 +151,7 @@ const Index = () => {
           />
           
           <div className="min-h-screen bg-background text-foreground homepage-content" style={{opacity: 1, visibility: 'visible', display: 'block'}}>
+        <main className="flex flex-col min-h-screen">
         <Navbar />
         
         {/* Hero Section */}
@@ -402,6 +403,7 @@ const Index = () => {
         </section>
 
             <Footer />
+        </main>
           </div>
         </>
       );
