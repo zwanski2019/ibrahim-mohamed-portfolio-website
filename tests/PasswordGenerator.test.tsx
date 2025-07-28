@@ -8,6 +8,7 @@ describe('PasswordGenerator', () => {
     const lengthInput = screen.getByRole('spinbutton');
     fireEvent.change(lengthInput, { target: { value: '8' } });
     fireEvent.click(screen.getByText(/generate/i));
-    expect(screen.getByTestId('result').textContent).toHaveLength(8);
+    const output = screen.getByRole('textbox');
+    expect((output as HTMLInputElement).value).toHaveLength(8);
   });
 });
