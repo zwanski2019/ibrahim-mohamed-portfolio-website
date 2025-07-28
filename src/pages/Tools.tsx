@@ -14,6 +14,7 @@ const TimeZoneConverter = () => {
 
   const convertTime = () => {
     try {
+      // Parse the input as UTC by appending 'Z', then format into the target zone
       const date = new Date(`${fromTime}Z`);
       const options: Intl.DateTimeFormatOptions = {
         timeZone: toZone,
@@ -66,7 +67,9 @@ const TimeZoneConverter = () => {
         </div>
         <Button type="button" onClick={convertTime}>Convert</Button>
         {convertedTime && (
-          <div className="p-4 bg-muted/50 rounded font-mono">Converted Time: {convertedTime}</div>
+          <div className="p-4 bg-muted/50 rounded font-mono">
+            Converted Time: {convertedTime}
+          </div>
         )}
       </CardContent>
     </Card>
