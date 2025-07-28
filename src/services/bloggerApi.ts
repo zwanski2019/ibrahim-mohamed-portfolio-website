@@ -2,11 +2,14 @@ const BLOGGER_API_URL = 'https://www.googleapis.com/blogger/v3';
 const BLOG_ID: string | undefined = import.meta.env.VITE_BLOGGER_BLOG_ID;
 const API_KEY: string | undefined = import.meta.env.VITE_BLOGGER_API_KEY;
 
+const missingConfigError =
+  !API_KEY || !BLOG_ID
+    ? new Error('Blogger API key or Blog ID not configured')
+    : null;
+
 function ensureEnv() {
-  if (!API_KEY || !BLOG_ID) {
-    throw new Error(
-      'Missing Blogger configuration. Please set VITE_BLOGGER_API_KEY and VITE_BLOGGER_BLOG_ID.'
-    );
+  if (missingConfigError) {
+    throw missingConfigError;
   }
 }
 
