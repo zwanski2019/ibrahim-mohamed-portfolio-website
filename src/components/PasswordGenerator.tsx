@@ -35,7 +35,9 @@ const PasswordGenerator = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
-          <label className="block text-sm font-medium" htmlFor="length">Length</label>
+          <label className="block text-sm font-medium" htmlFor="length">
+            Length
+          </label>
           <Input
             id="length"
             type="number"
@@ -46,17 +48,29 @@ const PasswordGenerator = () => {
           />
         </div>
         <div className="flex items-center space-x-2">
-          <Checkbox id="numbers" checked={includeNumbers} onCheckedChange={(v) => setIncludeNumbers(!!v)} />
-          <label htmlFor="numbers" className="text-sm">Include Numbers</label>
+          <Checkbox
+            id="numbers"
+            checked={includeNumbers}
+            onCheckedChange={(v) => setIncludeNumbers(!!v)}
+          />
+          <label htmlFor="numbers" className="text-sm">
+            Include Numbers
+          </label>
         </div>
         <div className="flex items-center space-x-2">
-          <Checkbox id="symbols" checked={includeSymbols} onCheckedChange={(v) => setIncludeSymbols(!!v)} />
-          <label htmlFor="symbols" className="text-sm">Include Symbols</label>
+          <Checkbox
+            id="symbols"
+            checked={includeSymbols}
+            onCheckedChange={(v) => setIncludeSymbols(!!v)}
+          />
+          <label htmlFor="symbols" className="text-sm">
+            Include Symbols
+          </label>
         </div>
-        <Button type="button" onClick={generatePassword}>Generate</Button>
-        {password && (
-          <Input readOnly value={password} className="font-mono" />
-        )}
+        <Button type="button" onClick={generatePassword}>
+          Generate
+        </Button>
+        {password && <Input readOnly value={password} className="font-mono" />}
       </CardContent>
     </Card>
   );

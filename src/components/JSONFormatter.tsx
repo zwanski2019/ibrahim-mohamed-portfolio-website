@@ -31,11 +31,11 @@ const JSONFormatter = () => {
           placeholder="Paste JSON here"
           rows={5}
         />
-        <Button type="button" onClick={format}>Format</Button>
+        <Button type="button" onClick={format}>
+          Format
+        </Button>
         {error && <p className="text-destructive text-sm">{error}</p>}
-        {output && (
-          <Textarea readOnly value={output} rows={5} className="font-mono" />
-        )}
+        {output && <Textarea readOnly value={output} rows={5} className="font-mono" />}
       </CardContent>
     </Card>
   );
