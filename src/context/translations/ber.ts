@@ -265,9 +265,10 @@ export const berTranslations = {
   "imei.features.free": "Ilelelli",
   "imei.features.freeDesc": "Ameẓlu ilelelli s tlelli",
 
-  // Ixfawen
-  "tools.passwordGenerator": "Generator n wawal uffir",
-  "tools.passwordGeneratorDesc": "Sirew awalen ufiren imaynuten s tferkit",
-  "tools.qrGenerator": "Generator n QR",
-  "tools.qrGeneratorDesc": "Rnu tiddyin QR i tansaḍ, tutlayt akked isefka nniḍen",
-  "tools.urlShortener": "Ase
+  // Threat Map
+  "threatMap.title": "Tawant n Wugur Srid",
+  "threatMap.description": "Mukkneḍ iḍelli n tuccfa-iddan deg umaḍal s Radware.",
+
+  // Footer
+  "footer.rights": "Akk izerfan ḥerzen.",
+};
