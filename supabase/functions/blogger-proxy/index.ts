@@ -8,32 +8,34 @@ const BLOGGER_API_URL = "https://www.googleapis.com/blogger/v3";
 const corsHeaders = {
   "Access-Control-Allow-Origin": ALLOWED_ORIGINS,
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Content-Type": "application/json",
 };
 
-function buildError(status: number, message: string) {
+function buildError(status: number, message: string): Response {
   return new Response(JSON.stringify({ error: message }), {
     status,
-    headers: { ...corsHeaders, "Content-Type": "application/json" },
+    headers: corsHeaders,
   });
 }
 
-async function fetchFromBlogger(path: string, params: URLSearchParams) {
+async function fetchFromBlogger(path: string, params: URLSearchParams): Promise<Response> {
   if (!BLOGGER_API_KEY || !BLOGGER_BLOG_ID) {
     return buildError(500, "Server configuration error");
   }
   params.set("key", BLOGGER_API_KEY);
-  const url = `${BLOGGER_API_URL}/blogs/${BLOGGER_BLOG_ID}${path}?${params}`;
+  const url = `${BLOGGER_API_URL}/blogs/${BLOGGER_BLOG_ID}${path}?${params.toString()}`;
   const res = await fetch(url);
   if (!res.ok) {
-    throw new Error(`HTTP error! status: ${res.status}`);
+    return buildError(res.status, `Blogger API error: ${res.status}`);
   }
   const data = await res.json();
   return new Response(JSON.stringify(data), {
-    headers: { ...corsHeaders, "Content-Type": "application/json" },
+    headers: corsHeaders,
   });
 }
 
 serve(async (req) => {
+  // Handle CORS preflight
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -45,6 +47,7 @@ serve(async (req) => {
   }
 
   try {
+    // List posts: GET /blogger-proxy/posts?maxResults=...&pageToken=...
     if (path === "/posts") {
       const params = new URLSearchParams({
         maxResults: url.searchParams.get("maxResults") ?? "12",
@@ -57,19 +60,24 @@ serve(async (req) => {
       return await fetchFromBlogger("/posts", params);
     }
 
+    // Get single post: GET /blogger-proxy/posts/{postId}
     const postMatch = path.match(/^\/posts\/(.+)$/);
     if (postMatch) {
-      const params = new URLSearchParams({ fetchImages: "true", fetchBodies: "true" });
+      const params = new URLSearchParams({
+        fetchImages: "true",
+        fetchBodies: "true",
+      });
       return await fetchFromBlogger(`/posts/${postMatch[1]}`, params);
     }
 
+    // Search posts: GET /blogger-proxy/search?q=...&maxResults=...
     if (path === "/search") {
-      const query = url.searchParams.get("q");
-      if (!query) {
+      const q = url.searchParams.get("q");
+      if (!q) {
         return buildError(400, "Missing search query");
       }
       const params = new URLSearchParams({
-        q: query,
+        q,
         maxResults: url.searchParams.get("maxResults") ?? "12",
         orderBy: "published",
         fetchImages: "true",
@@ -78,10 +86,10 @@ serve(async (req) => {
       return await fetchFromBlogger("/posts/search", params);
     }
 
+    // Not found
     return buildError(404, "Not found");
   } catch (err) {
     console.error("blogger-proxy error", err);
     return buildError(500, "Internal server error");
   }
 });
-
