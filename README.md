@@ -63,8 +63,20 @@ Additionally, update `supabase/config.toml` to allow unauthenticated access to t
 [functions.verify-hcaptcha]
 verify_jwt = false
 
+
 [functions.get-hcaptcha-config]
 verify_jwt = false
+
+### Blogger API Configuration
+
+Copy `.env.example` to `.env` and fill in the variables required for the blog page:
+
+```bash
+VITE_BLOGGER_API_KEY=your-api-key
+VITE_BLOGGER_BLOG_ID=your-blog-id
+```
+
+If these are missing, the blog page will not be able to load posts.
 
 ### AI Tools Configuration
 
