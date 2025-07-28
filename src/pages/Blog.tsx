@@ -12,9 +12,11 @@ import { Search, RefreshCw, BookOpen, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function Blog() {
-  const { posts, loading, error, searchPosts, loadMore, refreshPosts, hasMore } = useBlogger();
+  const { posts, loading, error, searchPosts, loadMore, refreshPosts, hasMore } =
+    useBlogger();
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+  const isConfigError = error?.includes('Missing Blogger API configuration');
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,14 +90,26 @@ export default function Blog() {
           {/* Error State */}
           {error && (
             <Card className="mb-8 border-destructive">
-              <CardContent className="flex items-center gap-3 p-6">
-                <AlertCircle className="h-5 w-5 text-destructive" />
-                <div>
-                  <h3 className="font-medium text-destructive">Failed to load blog posts</h3>
-                  <p className="text-sm text-muted-foreground">{error}</p>
+              <CardContent className="flex items-start gap-3 p-6">
+                <AlertCircle className="h-5 w-5 text-destructive mt-0.5" />
+                <div className="flex-1">
+                  {isConfigError ? (
+                    <>
+                      <h3 className="font-medium text-destructive">Blogger API Not Configured</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Please set <code>VITE_BLOGGER_API_KEY</code> and <code>VITE_BLOGGER_BLOG_ID</code>
+                        in your environment then reload the page.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <h3 className="font-medium text-destructive">Failed to load blog posts</h3>
+                      <p className="text-sm text-muted-foreground">{error}</p>
+                    </>
+                  )}
                 </div>
                 <Button variant="outline" onClick={handleRefresh} className="ml-auto">
-                  Try Again
+                  Retry
                 </Button>
               </CardContent>
             </Card>
@@ -173,3 +187,4 @@ export default function Blog() {
     </BlogLayout>
   );
 }
+
