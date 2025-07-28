@@ -91,6 +91,17 @@ VITE_BLOGGER_BLOG_ID=your-blog-id
 Use the `.env` file for local development. In production these variables must be
 provided by your hosting platform's environment settings.
 
+They need to be present in your environment when you run `npm run build` so Vite
+can inject them into the generated site. If you're deploying straight from
+Supabase without building locally, you can instead call the `blogger-proxy` edge
+function to hide the API key from the browser.
+
+#### Example Supabase setup
+1. Open **Settings → Secrets** in your Supabase project and add `VITE_BLOGGER_API_KEY`
+   and `VITE_BLOGGER_BLOG_ID`.
+2. Trigger a redeploy from **Deployments** so the new secrets are included when
+   the site builds.
+
 ### AI Tools Configuration
 
 The AI utilities rely on OpenAI and Gemini APIs. Set these secrets in your
