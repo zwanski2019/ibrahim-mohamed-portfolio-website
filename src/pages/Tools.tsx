@@ -17,7 +17,9 @@ import {
 } from "lucide-react";
 
 const Tools = () => {
-  console.log("Tools component is loading successfully");
+  if (process.env.NODE_ENV === "development") {
+    console.log("Tools component is loading successfully");
+  }
   const { t } = useLanguage();
 
   const featuredTools = [
