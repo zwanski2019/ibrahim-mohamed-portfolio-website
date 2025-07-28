@@ -3,12 +3,12 @@ import createDOMPurify from 'dompurify';
 // Initialize DOMPurify with the available Window implementation.
 // When running in Node (tests), fall back to jsdom. This avoids using
 // Node's `module` API which breaks browser builds.
-let windowRef: Window;
+let windowRef: any;
 
 if (typeof window === 'undefined') {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { JSDOM } = eval('require')("jsdom");
-  windowRef = new JSDOM('').window as unknown as Window;
+  windowRef = new JSDOM('').window;
 } else {
   windowRef = window;
 }
