@@ -164,6 +164,18 @@ Resend.
 The script keeps a log in the `newsletter_logs` table to avoid sending the same
 post more than once in a week.
 
+## 🤖 AI Tools Configuration
+
+Supabase edge functions like `chatgpt-tools` and `gemini-tools` require a few secrets:
+
+```bash
+OPENAI_API_KEY=your-openai-key
+GEMINI_API_KEY=your-gemini-key
+ALLOWED_ORIGINS=http://localhost:3000,https://yourdomain.com
+```
+
+Add these variables in the **Project Settings → Environment Variables** section of the Supabase dashboard. Make sure `ALLOWED_ORIGINS` includes `http://localhost:3000` when developing locally.
+
 ---
 
 ## 📚 Main Sections
