@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 function adjustLightness(hex: string, percent: number) {
   const num = parseInt(hex.replace("#", ""), 16);
@@ -13,8 +14,10 @@ function adjustLightness(hex: string, percent: number) {
   return `#${(b | (g << 8) | (r << 16)).toString(16).padStart(6, "0")}`;
 }
 
-export default function ColorPicker() {
+const ColorPicker = () => {
   const [color, setColor] = useState("#008cff");
+  const [copied, setCopied] = useState(false);
+
   const palette = [
     adjustLightness(color, -40),
     adjustLightness(color, -20),
@@ -23,6 +26,12 @@ export default function ColorPicker() {
     adjustLightness(color, 40),
   ];
 
+  const copy = async () => {
+    await navigator.clipboard.writeText(color);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1000);
+  };
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -30,15 +39,30 @@ export default function ColorPicker() {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center gap-4">
-          <Input type="color" value={color} onChange={(e) => setColor(e.target.value)} className="w-16 h-16 p-0 border-none" />
+          <Input
+            type="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+            className="w-16 h-16 p-0 border-none"
+          />
           <span className="font-mono">{color}</span>
+          <Button type="button" onClick={copy}>
+            {copied ? "Copied" : "Copy"}
+          </Button>
         </div>
         <div className="flex gap-2">
           {palette.map((c) => (
-            <div key={c} className="w-10 h-10 rounded" style={{ backgroundColor: c }} title={c} />
+            <div
+              key={c}
+              className="w-10 h-10 rounded"
+              style={{ backgroundColor: c }}
+              title={c}
+            />
           ))}
         </div>
       </CardContent>
     </Card>
   );
-}
+};
+
+export default ColorPicker;

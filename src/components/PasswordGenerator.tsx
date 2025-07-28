@@ -2,25 +2,31 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 
-export default function PasswordGenerator() {
+const PasswordGenerator = () => {
   const [length, setLength] = useState(12);
+  const [includeNumbers, setIncludeNumbers] = useState(true);
+  const [includeSymbols, setIncludeSymbols] = useState(true);
   const [password, setPassword] = useState("");
 
-  function generate(len: number) {
-    const chars =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
-    let pass = "";
-    for (let i = 0; i < len; i++) {
-      pass += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return pass;
-  }
+  const generatePassword = () => {
+    const letters = "abcdefghijklmnopqrstuvwxyz";
+    const upper = letters.toUpperCase();
+    const numbers = "0123456789";
+    const symbols = "!@#$%^&*()-_=+[]{}";
+    let chars = letters + upper;
+    if (includeNumbers) chars += numbers;
+    if (includeSymbols) chars += symbols;
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setPassword(generate(length));
-  }
+    let result = "";
+    const array = new Uint32Array(length);
+    crypto.getRandomValues(array);
+    for (let i = 0; i < length; i++) {
+      result += chars[array[i] % chars.length];
+    }
+    setPassword(result);
+  };
 
   return (
     <Card className="w-full">
@@ -28,28 +34,46 @@ export default function PasswordGenerator() {
         <CardTitle>Password Generator</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <div>
-            <label htmlFor="pass-length" className="block mb-1 text-sm font-medium">
-              Length
-            </label>
-            <Input
-              id="pass-length"
-              type="number"
-              min={4}
-              max={64}
-              value={length}
-              onChange={(e) => setLength(Number(e.target.value))}
-            />
-          </div>
-          <Button type="submit">Generate</Button>
-        </form>
-        {password && (
-          <div className="p-4 bg-muted/50 rounded font-mono break-all" aria-live="polite">
-            {password}
-          </div>
-        )}
+        <div className="space-y-2">
+          <label className="block text-sm font-medium" htmlFor="length">
+            Length
+          </label>
+          <Input
+            id="length"
+            type="number"
+            min={4}
+            max={64}
+            value={length}
+            onChange={(e) => setLength(Number(e.target.value))}
+          />
+        </div>
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="numbers"
+            checked={includeNumbers}
+            onCheckedChange={(v) => setIncludeNumbers(!!v)}
+          />
+          <label htmlFor="numbers" className="text-sm">
+            Include Numbers
+          </label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="symbols"
+            checked={includeSymbols}
+            onCheckedChange={(v) => setIncludeSymbols(!!v)}
+          />
+          <label htmlFor="symbols" className="text-sm">
+            Include Symbols
+          </label>
+        </div>
+        <Button type="button" onClick={generatePassword}>
+          Generate
+        </Button>
+        {password && <Input readOnly value={password} className="font-mono" />}
       </CardContent>
     </Card>
   );
-}
+};
+
+export default PasswordGenerator;
