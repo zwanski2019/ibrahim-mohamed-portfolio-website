@@ -1,3 +1,15 @@
+import { SEOHelmet } from "@/components/SEOHelmet";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import IMEIChecker from "@/components/IMEIChecker";
+import PasswordGenerator from "@/components/PasswordGenerator";
+import QRCodeGenerator from "@/components/QRCodeGenerator";
+import URLShortener from "@/components/URLShortener";
+import ColorPicker from "@/components/ColorPicker";
+import JSONFormatter from "@/components/JSONFormatter";
+import TimezoneConverter from "@/components/TimezoneConverter";
+import ImageCompressor from "@/components/ImageCompressor";
+import { useLanguage } from "@/context/LanguageContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Smartphone,
@@ -8,94 +20,80 @@ import {
   Code,
   FileText,
   Clock,
-  Image,
-  LucideIcon
+  Image
 } from "lucide-react";
-import { useLanguage } from "@/hooks/useLanguage";
-import SEOHelmet from "@/components/SEOHelmet";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import IMEIChecker from "@/components/IMEIChecker";
-
-interface ToolItem {
-  id: string;
-  title: string;
-  description: string;
-  icon: LucideIcon;
-  component?: JSX.Element;
-  featured?: boolean;
-  comingSoon?: boolean;
-}
 
 const Tools = () => {
-  if (process.env.NODE_ENV === "development") {
-    console.log("Tools component is loading successfully");
-  }
-
   const { t } = useLanguage();
 
-  const featuredTools: ToolItem[] = [
+  const featuredTools = [
     {
       id: "imei-checker",
       title: t("nav.freeImeiCheck"),
       description: t("imei.description"),
       icon: Smartphone,
       component: <IMEIChecker />,
-      featured: true,
+      featured: true
     },
-  ];
-
-  const comingSoonTools: ToolItem[] = [
     {
       id: "password-generator",
-      title: t("tools.passwordGenerator"),
-      description: t("tools.passwordGeneratorDesc"),
+      title: "Password Generator",
+      description: "Generate secure, random passwords with customizable options",
       icon: Shield,
-      comingSoon: true,
+      component: <PasswordGenerator />,
+      featured: true
     },
     {
       id: "qr-generator",
-      title: t("tools.qrGenerator"),
-      description: t("tools.qrGeneratorDesc"),
+      title: "QR Code Generator",
+      description: "Create QR codes for URLs, text, and other data",
       icon: Code,
-      comingSoon: true,
+      component: <QRCodeGenerator />,
+      featured: true
     },
     {
       id: "url-shortener",
-      title: t("tools.urlShortener"),
-      description: t("tools.urlShortenerDesc"),
+      title: "URL Shortener",
+      description: "Shorten long URLs for easier sharing",
       icon: Globe,
-      comingSoon: true,
+      component: <URLShortener />,
+      featured: true
     },
     {
       id: "color-picker",
-      title: t("tools.colorPicker"),
-      description: t("tools.colorPickerDesc"),
+      title: "Color Picker & Palette Generator",
+      description: "Pick colors and generate beautiful color palettes",
       icon: Zap,
-      comingSoon: true,
+      component: <ColorPicker />,
+      featured: true
     },
     {
       id: "json-formatter",
-      title: t("tools.jsonFormatter"),
-      description: t("tools.jsonFormatterDesc"),
+      title: "JSON Formatter",
+      description: "Easily format and validate JSON data",
       icon: FileText,
-      comingSoon: true,
+      component: <JSONFormatter />,
+      featured: true
     },
     {
       id: "timezone-converter",
-      title: t("tools.timezoneConverter"),
-      description: t("tools.timezoneConverterDesc"),
+      title: "Time Zone Converter",
+      description: "Quickly convert times between different zones",
       icon: Clock,
-      comingSoon: true,
+      component: <TimezoneConverter />,
+      featured: true
     },
     {
       id: "image-compressor",
-      title: t("tools.imageCompressor"),
-      description: t("tools.imageCompressorDesc"),
+      title: "Image Compressor",
+      description: "Reduce image file size without losing quality",
       icon: Image,
-      comingSoon: true,
-    },
+      component: <ImageCompressor />,
+      featured: true
+    }
   ];
+
+  const comingSoonTools: Array<{ id: string; title: string; description: string; icon: any; comingSoon?: boolean }> = [];
 
   return (
     <>
@@ -104,7 +102,7 @@ const Tools = () => {
         description="Free online tools including IMEI checker, password generator, QR code generator and more. Professional utility tools for developers and users."
         canonical="https://zwanski.org/tools"
       />
-
+      
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow">
@@ -121,7 +119,7 @@ const Tools = () => {
                   </h1>
                 </div>
                 <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  Professional-grade utilities and tools to help you work more efficiently.
+                  Professional-grade utilities and tools to help you work more efficiently. 
                   All tools are free to use and privacy-focused.
                 </p>
               </div>
@@ -129,32 +127,29 @@ const Tools = () => {
           </section>
 
           {/* Featured Tool Section */}
-          {featuredTools.map((tool) => {
-            const Icon = tool.icon;
-            return (
-              <section key={tool.id} className="py-16 bg-primary/5">
-                <div className="container mx-auto px-4">
-                  <div className="text-center mb-12">
-                    <div className="flex items-center justify-center gap-3 mb-4">
-                      <div className="p-2 rounded-full bg-primary/10">
-                        <Icon className="h-6 w-6 text-primary" />
-                      </div>
-                      <h2 className="text-3xl md:text-4xl font-bold">
-                        {tool.title}
-                      </h2>
+          {featuredTools.map((tool) => (
+            <section key={tool.id} className="py-16 bg-primary/5">
+              <div className="container mx-auto px-4">
+                <div className="text-center mb-12">
+                  <div className="flex items-center justify-center gap-3 mb-4">
+                    <div className="p-2 rounded-full bg-primary/10">
+                      <tool.icon className="h-6 w-6 text-primary" />
                     </div>
-                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                      {tool.description}
-                    </p>
+                    <h2 className="text-3xl md:text-4xl font-bold">
+                      {tool.title}
+                    </h2>
                   </div>
-
-                  <div className="max-w-4xl mx-auto">
-                    {tool.component}
-                  </div>
+                  <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                    {tool.description}
+                  </p>
                 </div>
-              </section>
-            );
-          })}
+                
+                <div className="max-w-4xl mx-auto">
+                  {tool.component}
+                </div>
+              </div>
+            </section>
+          ))}
 
           {/* Coming Soon Tools */}
           <section className="py-16">
@@ -164,35 +159,32 @@ const Tools = () => {
                   More Tools <span className="text-gradient">Coming Soon</span>
                 </h2>
                 <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  We're constantly developing new tools to help you be more productive.
+                  We're constantly developing new tools to help you be more productive. 
                   Here's what's coming next.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                {comingSoonTools.map((tool) => {
-                  const Icon = tool.icon;
-                  return (
-                    <Card key={tool.id} className="relative overflow-hidden">
-                      <div className="absolute top-2 right-2 bg-primary/10 text-primary text-xs px-2 py-1 rounded-full font-medium">
-                        Coming Soon
-                      </div>
-                      <CardHeader>
-                        <div className="flex items-center gap-3 mb-2">
-                          <div className="p-2 rounded-lg bg-primary/10">
-                            <Icon className="h-5 w-5 text-primary" />
-                          </div>
-                          <CardTitle className="text-lg">{tool.title}</CardTitle>
+                {comingSoonTools.map((tool) => (
+                  <Card key={tool.id} className="relative overflow-hidden">
+                    <div className="absolute top-2 right-2 bg-primary/10 text-primary text-xs px-2 py-1 rounded-full font-medium">
+                      Coming Soon
+                    </div>
+                    <CardHeader>
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="p-2 rounded-lg bg-primary/10">
+                          <tool.icon className="h-5 w-5 text-primary" />
                         </div>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-muted-foreground text-sm">
-                          {tool.description}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
+                        <CardTitle className="text-lg">{tool.title}</CardTitle>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground text-sm">
+                        {tool.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
 
               <div className="text-center mt-12">
@@ -200,14 +192,14 @@ const Tools = () => {
                   Have a suggestion for a tool? Let us know!
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <a
-                    href="/support"
+                  <a 
+                    href="/support" 
                     className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
                   >
                     Suggest a Tool
                   </a>
-                  <a
-                    href="/newsletter"
+                  <a 
+                    href="/newsletter" 
                     className="inline-flex items-center justify-center px-6 py-3 border border-border rounded-lg hover:bg-muted transition-colors"
                   >
                     Get Notified of New Tools

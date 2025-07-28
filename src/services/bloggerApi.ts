@@ -1,6 +1,17 @@
 const BLOGGER_API_URL = 'https://www.googleapis.com/blogger/v3';
-const BLOG_ID = import.meta.env.VITE_BLOGGER_BLOG_ID as string;
-const API_KEY = import.meta.env.VITE_BLOGGER_API_KEY as string;
+const BLOG_ID: string | undefined = import.meta.env.VITE_BLOGGER_BLOG_ID;
+const API_KEY: string | undefined = import.meta.env.VITE_BLOGGER_API_KEY;
+
+const missingConfigError =
+  !API_KEY || !BLOG_ID
+    ? new Error('Blogger API key or Blog ID not configured')
+    : null;
+
+function ensureEnv() {
+  if (missingConfigError) {
+    throw missingConfigError;
+  }
+}
 
 export interface BlogPost {
   id: string;
@@ -30,6 +41,7 @@ export interface BloggerResponse {
 export const bloggerApi = {
   async getPosts(pageToken?: string, maxResults: number = 12): Promise<BloggerResponse> {
     try {
+      ensureEnv();
       const params = new URLSearchParams({
         key: API_KEY,
         maxResults: maxResults.toString(),
@@ -56,12 +68,13 @@ export const bloggerApi = {
       };
     } catch (error) {
       console.error('Error fetching blog posts:', error);
-      return { items: [] };
+      throw error;
     }
   },
 
   async getPost(postId: string): Promise<BlogPost | null> {
     try {
+      ensureEnv();
       const response = await fetch(
         `${BLOGGER_API_URL}/blogs/${BLOG_ID}/posts/${postId}?key=${API_KEY}&fetchImages=true&fetchBodies=true`
       );
@@ -73,12 +86,13 @@ export const bloggerApi = {
       return await response.json();
     } catch (error) {
       console.error('Error fetching blog post:', error);
-      return null;
+      throw error;
     }
   },
 
   async searchPosts(query: string, maxResults: number = 12): Promise<BloggerResponse> {
     try {
+      ensureEnv();
       const params = new URLSearchParams({
         key: API_KEY,
         q: query,
@@ -102,7 +116,7 @@ export const bloggerApi = {
       };
     } catch (error) {
       console.error('Error searching blog posts:', error);
-      return { items: [] };
+      throw error;
     }
   },
 

@@ -47,21 +47,36 @@ Visit [http://localhost:3000](http://localhost:3000) to view the app.
 
 ### Environment Variables
 
-Optional variables for Turnstile security verification:
-Cloudflare Turnstile is our current CAPTCHA solution for protecting forms.
+Optional variables for hCaptcha security verification:
 
 ```bash
-VITE_CF_TURNSTILE_SITE_KEY=your-public-site-key-here
-CLOUDFLARE_TURNSTILE_SECRET_KEY=your-secret-key-here
+HCAPTCHA_SITE_KEY=your-public-site-key-here
+HCAPTCHA_SECRET_KEY=your-secret-key-here
 ```
 
-If `VITE_CF_TURNSTILE_SITE_KEY` is not set, security verification is skipped and users can sign in or sign up without completing the Cloudflare Turnstile challenge.
+If `HCAPTCHA_SITE_KEY` is not set, security verification is skipped and users can sign in or sign up without completing hCaptcha.
 
-Store `CLOUDFLARE_TURNSTILE_SECRET_KEY` securely in your Supabase project secrets so the `verify-turnstile` edge function can work properly. Update `supabase/config.toml` to allow unauthenticated access to this function:
+Set these in your Supabase project secrets so the `get-hcaptcha-config` and `verify-hcaptcha` edge functions can work properly.
+Additionally, update `supabase/config.toml` to allow unauthenticated access to these functions:
 
 ```toml
-[functions.verify-turnstile]
+[functions.verify-hcaptcha]
 verify_jwt = false
+
+
+[functions.get-hcaptcha-config]
+verify_jwt = false
+
+### Blogger API Configuration
+
+Copy `.env.example` to `.env` and fill in the variables required for the blog page:
+
+```bash
+VITE_BLOGGER_API_KEY=your-api-key
+VITE_BLOGGER_BLOG_ID=your-blog-id
+```
+
+If these are missing, the blog page will not be able to load posts.
 
 ### AI Tools Configuration
 
@@ -98,20 +113,11 @@ npm install --legacy-peer-deps
 ✅ **Authentication** - Supabase Auth with email verification  
 ✅ **Enhanced Input Validation** - Client and server-side validation with XSS protection  
 ✅ **Rate Limiting** - Contact forms and API endpoints protected from abuse  
-✅ **Secure CAPTCHA** - Cloudflare Turnstile verification through secure edge functions
+✅ **Secure CAPTCHA** - Turnstile verification through secure edge functions  
 ✅ **Enhanced Admin System** - Multi-layer admin validation with audit logging  
-✅ **Security Event Logging** - Comprehensive security monitoring and alerts
-✅ **Password Protection** - Leaked password detection enabled
+✅ **Security Event Logging** - Comprehensive security monitoring and alerts  
+✅ **Password Protection** - Leaked password detection enabled  
 ✅ **Safe Secret Management** - No secrets exposed in frontend code
-
-Set the following variables in your `.env` file and Supabase project to enable Cloudflare Turnstile verification:
-
-```bash
-VITE_CF_TURNSTILE_SITE_KEY=your-public-site-key
-CLOUDFLARE_TURNSTILE_SECRET_KEY=your-secret-key
-```
-
-Store `CLOUDFLARE_TURNSTILE_SECRET_KEY` securely in the Supabase dashboard while keeping `VITE_CF_TURNSTILE_SITE_KEY` in your local environment.
 
 ## 🔐 Authentication Test
 
@@ -199,7 +205,7 @@ Add these variables in the **Project Settings → Environment Variables** sectio
 We welcome pull requests! To contribute:
 
 1. Fork this repository and create a new branch for your changes.
-2. If your update modifies the CAPTCHA integration (**Cloudflare Turnstile**), mention this in your commit messages.
+2. If your update relates to the recent migration from **Turnstile** to **hCaptcha**, mention this in your commit messages.
 3. Run `npm run lint` and ensure the project builds successfully with `npm run build`.
 4. Open a pull request describing your improvements.
 
