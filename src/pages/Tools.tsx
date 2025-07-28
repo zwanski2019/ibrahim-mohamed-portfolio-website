@@ -1,7 +1,15 @@
+import React from "react";
 import { SEOHelmet } from "@/components/SEOHelmet";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import IMEIChecker from "@/components/IMEIChecker";
+import PasswordGenerator from "@/components/PasswordGenerator";
+import QRCodeGenerator from "@/components/QRCodeGenerator";
+import URLShortener from "@/components/URLShortener";
+import ColorPicker from "@/components/ColorPicker";
+import JSONFormatter from "@/components/JSONFormatter";
+import TimeZoneConverter from "@/components/TimeZoneConverter";
+import ImageCompressor from "@/components/ImageCompressor";
 import { useLanguage } from "@/context/LanguageContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -28,60 +36,72 @@ const Tools = () => {
       icon: Smartphone,
       component: <IMEIChecker />,
       featured: true
-    }
-  ];
-
-  const comingSoonTools = [
+    },
     {
       id: "password-generator",
       title: "Password Generator",
       description: "Generate secure, random passwords with customizable options",
       icon: Shield,
-      comingSoon: true
+      component: <PasswordGenerator />,
+      featured: true
     },
     {
-      id: "qr-generator", 
+      id: "qr-generator",
       title: "QR Code Generator",
       description: "Create QR codes for URLs, text, and other data",
       icon: Code,
-      comingSoon: true
+      component: <QRCodeGenerator />,
+      featured: true
     },
     {
       id: "url-shortener",
-      title: "URL Shortener", 
+      title: "URL Shortener",
       description: "Shorten long URLs for easier sharing",
       icon: Globe,
-      comingSoon: true
+      component: <URLShortener />,
+      featured: true
     },
     {
       id: "color-picker",
       title: "Color Picker & Palette Generator",
       description: "Pick colors and generate beautiful color palettes",
       icon: Zap,
-      comingSoon: true
+      component: <ColorPicker />,
+      featured: true
     },
     {
       id: "json-formatter",
       title: "JSON Formatter",
       description: "Easily format and validate JSON data",
       icon: FileText,
-      comingSoon: true
+      component: <JSONFormatter />,
+      featured: true
     },
     {
       id: "timezone-converter",
       title: "Time Zone Converter",
       description: "Quickly convert times between different zones",
       icon: Clock,
-      comingSoon: true
+      component: <TimeZoneConverter />,
+      featured: true
     },
     {
       id: "image-compressor",
       title: "Image Compressor",
       description: "Reduce image file size without losing quality",
       icon: Image,
-      comingSoon: true
+      component: <ImageCompressor />,
+      featured: true
     }
   ];
+
+  const comingSoonTools: Array<{
+    id: string;
+    title: string;
+    description: string;
+    icon: React.ElementType;
+    comingSoon: true;
+  }> = [];
 
   return (
     <>
