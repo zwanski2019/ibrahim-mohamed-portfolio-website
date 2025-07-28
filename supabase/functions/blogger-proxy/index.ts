@@ -8,93 +8,88 @@ const BLOGGER_API_URL = "https://www.googleapis.com/blogger/v3";
 const corsHeaders = {
   "Access-Control-Allow-Origin": ALLOWED_ORIGINS,
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Content-Type": "application/json",
 };
 
-async function handleList(body: any) {
-  const params = new URLSearchParams({
-    key: BLOGGER_API_KEY!,
-    orderBy: "published",
-    fetchImages: "true",
-    fetchBodies: "true",
-    maxResults: String(body?.maxResults ?? 12),
+function buildError(status: number, message: string): Response {
+  return new Response(JSON.stringify({ error: message }), {
+    status,
+    headers: corsHeaders,
   });
-  if (body?.pageToken) params.append("pageToken", body.pageToken);
-  const res = await fetch(`${BLOGGER_API_URL}/blogs/${BLOGGER_BLOG_ID}/posts?${params}`);
-  if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
-  const data = await res.json();
-  return {
-    items: data.items || [],
-    nextPageToken: data.nextPageToken,
-    prevPageToken: data.prevPageToken,
-  };
 }
 
-async function handleGet(postId: string) {
-  const params = new URLSearchParams({
-    key: BLOGGER_API_KEY!,
-    fetchImages: "true",
-    fetchBodies: "true",
-  });
-  const res = await fetch(`${BLOGGER_API_URL}/blogs/${BLOGGER_BLOG_ID}/posts/${postId}?${params}`);
-  if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
-  return await res.json();
-}
-
-async function handleSearch(body: any) {
-  const params = new URLSearchParams({
-    key: BLOGGER_API_KEY!,
-    q: body?.query ?? "",
-    orderBy: "published",
-    fetchImages: "true",
-    fetchBodies: "true",
-    maxResults: String(body?.maxResults ?? 12),
-  });
-  const res = await fetch(`${BLOGGER_API_URL}/blogs/${BLOGGER_BLOG_ID}/posts/search?${params}`);
-  if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
+async function fetchFromBlogger(path: string, params: URLSearchParams): Promise<Response> {
+  if (!BLOGGER_API_KEY || !BLOGGER_BLOG_ID) {
+    return buildError(500, "Server configuration error");
+  }
+  params.set("key", BLOGGER_API_KEY);
+  const url = `${BLOGGER_API_URL}/blogs/${BLOGGER_BLOG_ID}${path}?${params.toString()}`;
+  const res = await fetch(url);
+  if (!res.ok) {
+    return buildError(res.status, `Blogger API error: ${res.status}`);
+  }
   const data = await res.json();
-  return {
-    items: data.items || [],
-    nextPageToken: data.nextPageToken,
-    prevPageToken: data.prevPageToken,
-  };
+  return new Response(JSON.stringify(data), {
+    headers: corsHeaders,
+  });
 }
 
 serve(async (req) => {
+  // Handle CORS preflight
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
-  if (!BLOGGER_API_KEY || !BLOGGER_BLOG_ID) {
-    return new Response(
-      JSON.stringify({ error: "Server configuration error" }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-    );
+  const url = new URL(req.url);
+  let path = url.pathname;
+  if (path.startsWith("/blogger-proxy")) {
+    path = path.slice("/blogger-proxy".length);
   }
 
-  const url = new URL(req.url);
-  const segments = url.pathname.replace(/^\/blogger-proxy/, "").split("/").filter(Boolean);
   try {
-    let result;
-    if (segments[0] === "posts" && segments.length === 1) {
-      const body = await req.json().catch(() => ({}));
-      result = await handleList(body);
-    } else if (segments[0] === "posts" && segments.length === 2) {
-      result = await handleGet(segments[1]);
-    } else if (segments[0] === "search") {
-      const body = await req.json().catch(() => ({}));
-      result = await handleSearch(body);
-    } else {
-      return new Response("Not Found", { status: 404, headers: corsHeaders });
+    // List posts: GET /blogger-proxy/posts?maxResults=...&pageToken=...
+    if (path === "/posts") {
+      const params = new URLSearchParams({
+        maxResults: url.searchParams.get("maxResults") ?? "12",
+        orderBy: "published",
+        fetchImages: "true",
+        fetchBodies: "true",
+      });
+      const pageToken = url.searchParams.get("pageToken");
+      if (pageToken) params.set("pageToken", pageToken);
+      return await fetchFromBlogger("/posts", params);
     }
 
-    return new Response(JSON.stringify(result), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    // Get single post: GET /blogger-proxy/posts/{postId}
+    const postMatch = path.match(/^\/posts\/(.+)$/);
+    if (postMatch) {
+      const params = new URLSearchParams({
+        fetchImages: "true",
+        fetchBodies: "true",
+      });
+      return await fetchFromBlogger(`/posts/${postMatch[1]}`, params);
+    }
+
+    // Search posts: GET /blogger-proxy/search?q=...&maxResults=...
+    if (path === "/search") {
+      const q = url.searchParams.get("q");
+      if (!q) {
+        return buildError(400, "Missing search query");
+      }
+      const params = new URLSearchParams({
+        q,
+        maxResults: url.searchParams.get("maxResults") ?? "12",
+        orderBy: "published",
+        fetchImages: "true",
+        fetchBodies: "true",
+      });
+      return await fetchFromBlogger("/posts/search", params);
+    }
+
+    // Not found
+    return buildError(404, "Not found");
   } catch (err) {
     console.error("blogger-proxy error", err);
-    return new Response(
-      JSON.stringify({ error: "Internal server error" }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-    );
+    return buildError(500, "Internal server error");
   }
 });

@@ -1,58 +1,48 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
-vi.mock('@/integrations/supabase/client', () => ({
-  supabase: {
-    functions: {
-      invoke: vi.fn(),
-    },
-  },
-}));
-
-async function getSupabase() {
-  const mod = await import('@/integrations/supabase/client');
-  return mod.supabase;
-}
-
-const originalEnv = { ...process.env };
-
-async function loadApi() {
-  const mod = await import('@/services/bloggerApi');
+async function importApi(vars: Record<string, string | undefined>) {
+  // Set or delete env vars based on test case
+  for (const key of Object.keys(vars)) {
+    if (vars[key] === undefined) delete process.env[key];
+    else process.env[key] = vars[key]!;
+  }
+  vi.resetModules();
+  const mod = await import('../src/services/bloggerApi.ts');
   return mod.bloggerApi;
 }
 
-beforeEach(async () => {
-  Object.assign(process.env, originalEnv);
-  vi.resetModules();
-  const supabase = await getSupabase();
-  (supabase.functions.invoke as any).mockClear();
-});
-
-afterEach(() => {
-  Object.assign(process.env, originalEnv);
-});
-
 describe('bloggerApi', () => {
-  it('falls back to edge function when config missing', async () => {
-    delete (process.env as any).VITE_BLOGGER_API_KEY;
-    delete (process.env as any).VITE_BLOGGER_BLOG_ID;
-    const api = await loadApi();
-    const supabase = await getSupabase();
-    (supabase.functions.invoke as any).mockResolvedValue({ data: { items: [] } });
-    await api.getPosts();
-    expect(supabase.functions.invoke).toHaveBeenCalledWith('blogger-proxy/posts', {
-      body: { maxResults: 12 },
+  it('falls back to proxy endpoint when config missing', async () => {
+    const bloggerApi = await importApi({
+      VITE_BLOGGER_API_KEY: undefined,
+      VITE_BLOGGER_BLOG_ID: undefined,
     });
+
+    const fetchMock = vi.fn(async (url: string) =>
+      new Response(JSON.stringify({ items: [] }), { status: 200 })
+    );
+    (globalThis as any).fetch = fetchMock;
+
+    await bloggerApi.getPosts();
+    expect(fetchMock).toHaveBeenCalled();
+    const calledUrl = fetchMock.mock.calls[0][0] as string;
+    expect(calledUrl).toContain('/functions/v1/blogger-proxy/posts');
   });
 
-  it('uses direct fetch when config present', async () => {
-    process.env.VITE_BLOGGER_API_KEY = 'x';
-    process.env.VITE_BLOGGER_BLOG_ID = 'y';
-    const fetchMock = vi.fn(async () => new Response('{"items":[]}', { status: 200 }));
+  it('uses direct Blogger API when config present', async () => {
+    const bloggerApi = await importApi({
+      VITE_BLOGGER_API_KEY: 'my-key',
+      VITE_BLOGGER_BLOG_ID: 'my-blog',
+    });
+
+    const fetchMock = vi.fn(async (url: string) =>
+      new Response(JSON.stringify({ items: [] }), { status: 200 })
+    );
     (globalThis as any).fetch = fetchMock;
-    const api = await loadApi();
-    const supabase = await getSupabase();
-    await api.getPosts();
+
+    await bloggerApi.getPosts();
     expect(fetchMock).toHaveBeenCalled();
-    expect(supabase.functions.invoke).not.toHaveBeenCalled();
+    const calledUrl = fetchMock.mock.calls[0][0] as string;
+    expect(calledUrl).toContain('https://www.googleapis.com/blogger/v3');
   });
 });
