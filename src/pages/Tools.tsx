@@ -13,14 +13,25 @@ import {
   Code,
   FileText,
   Clock,
-  Image
+  Image,
+  LucideIcon
 } from "lucide-react";
+
+interface ToolItem {
+  id: string;
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  component?: JSX.Element;
+  featured?: boolean;
+  comingSoon?: boolean;
+}
 
 const Tools = () => {
   console.log("Tools component is loading successfully");
   const { t } = useLanguage();
 
-  const featuredTools = [
+  const featuredTools: ToolItem[] = [
     {
       id: "imei-checker",
       title: t("nav.freeImeiCheck"),
@@ -31,7 +42,7 @@ const Tools = () => {
     }
   ];
 
-  const comingSoonTools = [
+  const comingSoonTools: ToolItem[] = [
     {
       id: "password-generator",
       title: "Password Generator",
@@ -115,29 +126,32 @@ const Tools = () => {
           </section>
 
           {/* Featured Tool Section */}
-          {featuredTools.map((tool) => (
-            <section key={tool.id} className="py-16 bg-primary/5">
-              <div className="container mx-auto px-4">
-                <div className="text-center mb-12">
-                  <div className="flex items-center justify-center gap-3 mb-4">
-                    <div className="p-2 rounded-full bg-primary/10">
-                      <tool.icon className="h-6 w-6 text-primary" />
+          {featuredTools.map((tool) => {
+            const Icon = tool.icon;
+            return (
+              <section key={tool.id} className="py-16 bg-primary/5">
+                <div className="container mx-auto px-4">
+                  <div className="text-center mb-12">
+                    <div className="flex items-center justify-center gap-3 mb-4">
+                      <div className="p-2 rounded-full bg-primary/10">
+                        <Icon className="h-6 w-6 text-primary" />
+                      </div>
+                      <h2 className="text-3xl md:text-4xl font-bold">
+                        {tool.title}
+                      </h2>
                     </div>
-                    <h2 className="text-3xl md:text-4xl font-bold">
-                      {tool.title}
-                    </h2>
+                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                      {tool.description}
+                    </p>
                   </div>
-                  <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                    {tool.description}
-                  </p>
+
+                  <div className="max-w-4xl mx-auto">
+                    {tool.component}
+                  </div>
                 </div>
-                
-                <div className="max-w-4xl mx-auto">
-                  {tool.component}
-                </div>
-              </div>
-            </section>
-          ))}
+              </section>
+            );
+          })}
 
           {/* Coming Soon Tools */}
           <section className="py-16">
@@ -153,26 +167,29 @@ const Tools = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                {comingSoonTools.map((tool) => (
-                  <Card key={tool.id} className="relative overflow-hidden">
-                    <div className="absolute top-2 right-2 bg-primary/10 text-primary text-xs px-2 py-1 rounded-full font-medium">
-                      Coming Soon
-                    </div>
-                    <CardHeader>
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="p-2 rounded-lg bg-primary/10">
-                          <tool.icon className="h-5 w-5 text-primary" />
-                        </div>
-                        <CardTitle className="text-lg">{tool.title}</CardTitle>
+                {comingSoonTools.map((tool) => {
+                  const Icon = tool.icon;
+                  return (
+                    <Card key={tool.id} className="relative overflow-hidden">
+                      <div className="absolute top-2 right-2 bg-primary/10 text-primary text-xs px-2 py-1 rounded-full font-medium">
+                        Coming Soon
                       </div>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground text-sm">
-                        {tool.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                ))}
+                      <CardHeader>
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="p-2 rounded-lg bg-primary/10">
+                            <Icon className="h-5 w-5 text-primary" />
+                          </div>
+                          <CardTitle className="text-lg">{tool.title}</CardTitle>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-muted-foreground text-sm">
+                          {tool.description}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
               </div>
 
               <div className="text-center mt-12">
