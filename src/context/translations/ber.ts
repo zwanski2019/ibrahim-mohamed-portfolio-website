@@ -270,4 +270,21 @@ export const berTranslations = {
   "tools.passwordGeneratorDesc": "Sirew awalen ufiren imaynuten s tferkit",
   "tools.qrGenerator": "Generator n QR",
   "tools.qrGeneratorDesc": "Rnu tiddyin QR i tansaḍ, tutlayt akked isefka nniḍen",
-  "tools.urlShortener": "Ase
+  "tools.urlShortener": "Ameqqren n URL",
+  "tools.urlShortenerDesc": "Semẓi URLen ugar i usenqed s yisefraren",
+  "tools.colorPicker": "Amfrey n Initen d Ameskar n Palette",
+  "tools.colorPickerDesc": "Fren initen ad rnu tpalet n yiniten igunan",
+  "tools.jsonFormatter": "Amufater JSON",
+  "tools.jsonFormatterDesc": "Sirew d qqen isefka JSON s heshel",
+  "tools.timezoneConverter": "Amuɣli n Akud n Wakud",
+  "tools.timezoneConverterDesc": "Beddel akud gar yidakken n wakud",
+  "tools.imageCompressor": "Amesẓi n Tugna",
+  "tools.imageCompressorDesc": "Ssedḥed tignitin war aɛraḍ n wannuz",
+
+  // Threat Map
+  "threatMap.title": "Tawant n Wugur Srid",
+  "threatMap.description": "Mukkneḍ iḍelli n tuccfa-iddan deg umaḍal s Radware.",
+
+  // Footer
+  "footer.rights": "Akk izerfan ḥerzen.",
+};
