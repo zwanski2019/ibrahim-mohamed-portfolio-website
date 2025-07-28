@@ -69,14 +69,27 @@ verify_jwt = false
 
 ### Blogger API Configuration
 
-Copy `.env.example` to `.env` and fill in the variables required for the blog page:
+The Blog page fetches posts through the Blogger API and requires two values: an
+API key and your blog ID. Without them the page can't load posts.
+
+#### Obtain your API key and blog ID
+1. Open the [Google Cloud Console](https://console.cloud.google.com/) and create a
+   project.
+2. Enable the **Blogger API** for that project and generate a new API key under
+   **APIs & Services → Credentials**.
+3. In your Blogger dashboard, open **Settings → Basic** and note the numeric
+   **Blog ID** (also visible in the URL as `blogID=...`).
+
+#### Set the variables
+Copy `.env.example` to `.env` and add your values:
 
 ```bash
 VITE_BLOGGER_API_KEY=your-api-key
 VITE_BLOGGER_BLOG_ID=your-blog-id
 ```
 
-If these are missing, the blog page will not be able to load posts.
+Use the `.env` file for local development. In production these variables must be
+provided by your hosting platform's environment settings.
 
 ### AI Tools Configuration
 
