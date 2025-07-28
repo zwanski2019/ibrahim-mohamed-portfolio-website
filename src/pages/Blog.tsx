@@ -16,7 +16,9 @@ export default function Blog() {
     useBlogger();
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
-  const isConfigError = error?.includes('Missing Blogger API configuration');
+  const isConfigError =
+    error?.includes('Missing Blogger API configuration') ||
+    error?.includes('Blogger API key or Blog ID not configured');
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,8 +99,9 @@ export default function Blog() {
                     <>
                       <h3 className="font-medium text-destructive">Blogger API Not Configured</h3>
                       <p className="text-sm text-muted-foreground">
-                        Please set <code>VITE_BLOGGER_API_KEY</code> and <code>VITE_BLOGGER_BLOG_ID</code>
-                        in your environment then reload the page.
+                        Please set <code>VITE_BLOGGER_API_KEY</code> and
+                        <code>VITE_BLOGGER_BLOG_ID</code> in your environment,
+                        then click retry.
                       </p>
                     </>
                   ) : (
