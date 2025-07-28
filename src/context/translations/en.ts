@@ -265,6 +265,15 @@ export const enTranslations = {
   "imei.features.free": "Free",
   "imei.features.freeDesc": "Completely free service",
 
+  // Tools
+  "tools.passwordGenerator": "Password Generator",
+  "tools.qrGenerator": "QR Code Generator",
+  "tools.urlShortener": "URL Shortener",
+  "tools.colorPicker": "Color Picker & Palette Generator",
+  "tools.jsonFormatter": "JSON Formatter",
+  "tools.timezoneConverter": "Time Zone Converter",
+  "tools.imageCompressor": "Image Compressor",
+
   // Threat Map
   "threatMap.title": "Live Threat Map",
   "threatMap.description": "Observe real-time cyber attacks around the world powered by Radware.",
