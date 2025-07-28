@@ -1,6 +1,6 @@
 
 // Enhanced YouTube API service with better error handling and caching
-const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY as string;
+const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY || '';
 const YOUTUBE_API_BASE_URL = 'https://www.googleapis.com/youtube/v3';
 
 // Direct channel ID instead of searching by handle to reduce API calls
@@ -171,7 +171,7 @@ async function fetchWithRetry(url: string, maxRetries = 3): Promise<any> {
   }
 }
 
-export async function fetchYouTubeVideos(forceRefresh = false): Promise<YouTubeVideo[]> {
+export const fetchYouTubeVideos = async (forceRefresh = false): Promise<YouTubeVideo[]> => {
   // Always use cached data first to improve performance
   if (!forceRefresh) {
     const cachedVideos = getCachedVideos();
@@ -182,6 +182,12 @@ export async function fetchYouTubeVideos(forceRefresh = false): Promise<YouTubeV
 
   // Use fallback data immediately to prevent loading delays
   const { fallbackVideos } = await import('@/data/fallbackVideos');
+  
+  // If no API key is configured, return fallback immediately
+  if (!YOUTUBE_API_KEY) {
+    console.warn('YouTube API key not configured, using fallback data');
+    return fallbackVideos;
+  }
   
   try {
     // Attempt to fetch fresh data in background, but don't block UI

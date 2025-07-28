@@ -14,6 +14,7 @@ import { AuthProvider } from "@/context/AuthContext";
 // Lazy load components for better performance with error handling
 import { lazy, Suspense, startTransition } from "react";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import { SafeErrorBoundary } from "@/components/SafeErrorBoundary";
 
 // Enhanced Index import with retry logic
 const Index = lazy(() => 
@@ -140,13 +141,14 @@ function App() {
                 <AuthProvider>
                   <BrowserRouter>
                     <ErrorBoundary>
-                      {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
-                      <ScrollToTop />
-                      <Helmet>
-                        <title>Zwanski Tech - Professional IT Services & Digital Education Platform</title>
-                        <meta name="description" content="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals." />
-                      </Helmet>
-                      <div className="app-content-ready homepage-content">
+                      <SafeErrorBoundary>
+                        {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
+                        <ScrollToTop />
+                        <Helmet>
+                          <title>Zwanski Tech - Professional IT Services & Digital Education Platform</title>
+                          <meta name="description" content="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals." />
+                        </Helmet>
+                        <div className="app-content-ready homepage-content">
                         <Suspense fallback={<MinimalLoader />}>
                           <Routes>
                           <Route path="/" element={<Index />} />
@@ -198,12 +200,13 @@ function App() {
                           <Route path="*" element={<NotFound />} />
                           </Routes>
                         </Suspense>
-                      </div>
-                      
-                      <AccessibilityEnhancer />
-                      <LanguageDetectionNotice />
-                      <ScrollToTopButton />
-                      <Toaster />
+                        </div>
+                        
+                        <AccessibilityEnhancer />
+                        <LanguageDetectionNotice />
+                        <ScrollToTopButton />
+                        <Toaster />
+                      </SafeErrorBoundary>
                     </ErrorBoundary>
                   </BrowserRouter>
                 </AuthProvider>
