@@ -1,11 +1,17 @@
 import createDOMPurify from 'dompurify';
-import { createRequire } from 'module';
 
-// Initialize DOMPurify with either the browser window or jsdom for tests.
-const require = createRequire(import.meta.url);
-const windowRef: Window = typeof window === 'undefined'
-  ? new (require('jsdom').JSDOM)('').window as unknown as Window
-  : window;
+// Initialize DOMPurify with the available Window implementation.
+// When running in Node (tests), fall back to jsdom. This avoids using
+// Node's `module` API which breaks browser builds.
+let windowRef: Window;
+
+if (typeof window === 'undefined') {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { JSDOM } = require('jsdom');
+  windowRef = new JSDOM('').window as unknown as Window;
+} else {
+  windowRef = window;
+}
 
 const DOMPurify = createDOMPurify(windowRef);
 
