@@ -265,6 +265,22 @@ export const haTranslations = {
   "imei.features.free": "Kyauta",
   "imei.features.freeDesc": "Hidima ta gaba ɗaya kyauta",
 
+  // Tools
+  "tools.passwordGenerator": "Mai Ƙirƙirar Kalmar Sirri",
+  "tools.passwordGeneratorDesc": "Ƙirƙiri kalmomin sirri masu ƙarfi tare da zaɓuɓɓuka na musamman",
+  "tools.qrGenerator": "Mai Ƙirƙirar QR",
+  "tools.qrGeneratorDesc": "Ƙirƙiri lambobin QR don hanyoyin haɗi, rubutu, da sauran bayanai",
+  "tools.urlShortener": "Gajarta URL",
+  "tools.urlShortenerDesc": "Gajarta dogayen hanyoyin haɗi don sauƙin rabawa",
+  "tools.colorPicker": "Zaɓin Launi & Gina Palette",
+  "tools.colorPickerDesc": "Zaɓi launuka kuma ƙirƙiri kyawawan palette na launi",
+  "tools.jsonFormatter": "Mai Tsara JSON",
+  "tools.jsonFormatterDesc": "Tsara da tantance bayanan JSON cikin sauƙi",
+  "tools.timezoneConverter": "Mai Canza Yankin Lokaci",
+  "tools.timezoneConverterDesc": "Maida lokaci tsakanin yankuna daban-daban cikin sauri",
+  "tools.imageCompressor": "Mai Rage Girman Hoto",
+  "tools.imageCompressorDesc": "Rage girman fayil ɗin hoto ba tare da rasa inganci ba",
+
   // Threat Map
   "threatMap.title": "Taswirar Barazana Kai Tsaye",
   "threatMap.description": "Kallon hare-haren yanar gizo kai tsaye a duniya daga Radware.",

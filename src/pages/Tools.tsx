@@ -1,8 +1,4 @@
-import { SEOHelmet } from "@/components/SEOHelmet";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import IMEIChecker from "@/components/IMEIChecker";
-import { useLanguage } from "@/context/LanguageContext";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Smartphone,
@@ -16,6 +12,11 @@ import {
   Image,
   LucideIcon
 } from "lucide-react";
+import { useLanguage } from "@/hooks/useLanguage";
+import SEOHelmet from "@/components/SEOHelmet";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import IMEIChecker from "@/components/IMEIChecker";
 
 interface ToolItem {
   id: string;
@@ -51,7 +52,7 @@ const Tools = () => {
       comingSoon: true
     },
     {
-      id: "qr-generator", 
+      id: "qr-generator",
       title: "QR Code Generator",
       description: "Create QR codes for URLs, text, and other data",
       icon: Code,
@@ -59,7 +60,7 @@ const Tools = () => {
     },
     {
       id: "url-shortener",
-      title: "URL Shortener", 
+      title: "URL Shortener",
       description: "Shorten long URLs for easier sharing",
       icon: Globe,
       comingSoon: true
@@ -101,7 +102,7 @@ const Tools = () => {
         description="Free online tools including IMEI checker, password generator, QR code generator and more. Professional utility tools for developers and users."
         canonical="https://zwanski.org/tools"
       />
-      
+
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow">
@@ -118,7 +119,7 @@ const Tools = () => {
                   </h1>
                 </div>
                 <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  Professional-grade utilities and tools to help you work more efficiently. 
+                  Professional-grade utilities and tools to help you work more efficiently.
                   All tools are free to use and privacy-focused.
                 </p>
               </div>
@@ -161,7 +162,7 @@ const Tools = () => {
                   More Tools <span className="text-gradient">Coming Soon</span>
                 </h2>
                 <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  We're constantly developing new tools to help you be more productive. 
+                  We're constantly developing new tools to help you be more productive.
                   Here's what's coming next.
                 </p>
               </div>
@@ -197,14 +198,14 @@ const Tools = () => {
                   Have a suggestion for a tool? Let us know!
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <a 
-                    href="/support" 
+                  <a
+                    href="/support"
                     className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
                   >
                     Suggest a Tool
                   </a>
-                  <a 
-                    href="/newsletter" 
+                  <a
+                    href="/newsletter"
                     className="inline-flex items-center justify-center px-6 py-3 border border-border rounded-lg hover:bg-muted transition-colors"
                   >
                     Get Notified of New Tools
