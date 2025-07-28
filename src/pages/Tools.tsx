@@ -1,218 +1,76 @@
-import { SEOHelmet } from "@/components/SEOHelmet";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import IMEIChecker from "@/components/IMEIChecker";
-import PasswordGenerator from "@/components/PasswordGenerator";
-import QRCodeGenerator from "@/components/QRCodeGenerator";
-import URLShortener from "@/components/URLShortener";
-import ColorPicker from "@/components/ColorPicker";
-import JSONFormatter from "@/components/JSONFormatter";
-import TimezoneConverter from "@/components/TimezoneConverter";
-import ImageCompressor from "@/components/ImageCompressor";
-import { useLanguage } from "@/context/LanguageContext";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Smartphone,
-  Wrench,
-  Zap,
-  Globe,
-  Shield,
-  Code,
-  FileText,
-  Clock,
-  Image
-} from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const Tools = () => {
-  const { t } = useLanguage();
+const TimeZoneConverter = () => {
+  const [fromTime, setFromTime] = useState("");
+  const [fromZone, setFromZone] = useState("UTC");
+  const [toZone, setToZone] = useState("UTC");
+  const [convertedTime, setConvertedTime] = useState("");
 
-  const featuredTools = [
-    {
-      id: "imei-checker",
-      title: t("nav.freeImeiCheck"),
-      description: t("imei.description"),
-      icon: Smartphone,
-      component: <IMEIChecker />,
-      featured: true
-    },
-    {
-      id: "password-generator",
-      title: "Password Generator",
-      description: "Generate secure, random passwords with customizable options",
-      icon: Shield,
-      component: <PasswordGenerator />,
-      featured: true
-    },
-    {
-      id: "qr-generator",
-      title: "QR Code Generator",
-      description: "Create QR codes for URLs, text, and other data",
-      icon: Code,
-      component: <QRCodeGenerator />,
-      featured: true
-    },
-    {
-      id: "url-shortener",
-      title: "URL Shortener",
-      description: "Shorten long URLs for easier sharing",
-      icon: Globe,
-      component: <URLShortener />,
-      featured: true
-    },
-    {
-      id: "color-picker",
-      title: "Color Picker & Palette Generator",
-      description: "Pick colors and generate beautiful color palettes",
-      icon: Zap,
-      component: <ColorPicker />,
-      featured: true
-    },
-    {
-      id: "json-formatter",
-      title: "JSON Formatter",
-      description: "Easily format and validate JSON data",
-      icon: FileText,
-      component: <JSONFormatter />,
-      featured: true
-    },
-    {
-      id: "timezone-converter",
-      title: "Time Zone Converter",
-      description: "Quickly convert times between different zones",
-      icon: Clock,
-      component: <TimezoneConverter />,
-      featured: true
-    },
-    {
-      id: "image-compressor",
-      title: "Image Compressor",
-      description: "Reduce image file size without losing quality",
-      icon: Image,
-      component: <ImageCompressor />,
-      featured: true
+  const timeZones = ["UTC", "America/New_York", "Europe/London", "Asia/Tokyo", "Africa/Tunis"];
+
+  const convertTime = () => {
+    try {
+      const date = new Date(`${fromTime}Z`);
+      const options: Intl.DateTimeFormatOptions = {
+        timeZone: toZone,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      };
+      const converted = new Intl.DateTimeFormat('en-US', options).format(date);
+      setConvertedTime(converted);
+    } catch {
+      setConvertedTime("Invalid time or zone");
     }
-  ];
-
-  const comingSoonTools: Array<{ id: string; title: string; description: string; icon: any; comingSoon?: boolean }> = [];
+  };
 
   return (
-    <>
-      <SEOHelmet
-        title="Free Tools - ZWANSKI TECH"
-        description="Free online tools including IMEI checker, password generator, QR code generator and more. Professional utility tools for developers and users."
-        canonical="https://zwanski.org/tools"
-      />
-      
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow">
-          {/* Hero Section */}
-          <section className="py-20 bg-gradient-to-b from-background to-muted/20">
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <div className="flex items-center justify-center gap-3 mb-6">
-                  <div className="p-3 rounded-full bg-primary/10">
-                    <Wrench className="h-8 w-8 text-primary" />
-                  </div>
-                  <h1 className="text-4xl md:text-5xl font-bold">
-                    Free <span className="text-gradient">Tools</span>
-                  </h1>
-                </div>
-                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  Professional-grade utilities and tools to help you work more efficiently. 
-                  All tools are free to use and privacy-focused.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Featured Tool Section */}
-          {featuredTools.map((tool) => (
-            <section key={tool.id} className="py-16 bg-primary/5">
-              <div className="container mx-auto px-4">
-                <div className="text-center mb-12">
-                  <div className="flex items-center justify-center gap-3 mb-4">
-                    <div className="p-2 rounded-full bg-primary/10">
-                      <tool.icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <h2 className="text-3xl md:text-4xl font-bold">
-                      {tool.title}
-                    </h2>
-                  </div>
-                  <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                    {tool.description}
-                  </p>
-                </div>
-                
-                <div className="max-w-4xl mx-auto">
-                  {tool.component}
-                </div>
-              </div>
-            </section>
-          ))}
-
-          {/* Coming Soon Tools */}
-          <section className="py-16">
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                  More Tools <span className="text-gradient">Coming Soon</span>
-                </h2>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  We're constantly developing new tools to help you be more productive. 
-                  Here's what's coming next.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                {comingSoonTools.map((tool) => (
-                  <Card key={tool.id} className="relative overflow-hidden">
-                    <div className="absolute top-2 right-2 bg-primary/10 text-primary text-xs px-2 py-1 rounded-full font-medium">
-                      Coming Soon
-                    </div>
-                    <CardHeader>
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="p-2 rounded-lg bg-primary/10">
-                          <tool.icon className="h-5 w-5 text-primary" />
-                        </div>
-                        <CardTitle className="text-lg">{tool.title}</CardTitle>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground text-sm">
-                        {tool.description}
-                      </p>
-                    </CardContent>
-                  </Card>
+    <Card className="w-full">
+      <CardHeader>
+        <CardTitle>Time Zone Converter</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <Input
+          type="datetime-local"
+          value={fromTime}
+          onChange={(e) => setFromTime(e.target.value)}
+        />
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">From Time Zone</label>
+            <Select value={fromZone} onValueChange={setFromZone}>
+              <SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
+              <SelectContent>
+                {timeZones.map((tz) => (
+                  <SelectItem key={tz} value={tz}>{tz}</SelectItem>
                 ))}
-              </div>
-
-              <div className="text-center mt-12">
-                <p className="text-muted-foreground mb-4">
-                  Have a suggestion for a tool? Let us know!
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <a 
-                    href="/support" 
-                    className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
-                  >
-                    Suggest a Tool
-                  </a>
-                  <a 
-                    href="/newsletter" 
-                    className="inline-flex items-center justify-center px-6 py-3 border border-border rounded-lg hover:bg-muted transition-colors"
-                  >
-                    Get Notified of New Tools
-                  </a>
-                </div>
-              </div>
-            </div>
-          </section>
-        </main>
-        <Footer />
-      </div>
-    </>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">To Time Zone</label>
+            <Select value={toZone} onValueChange={setToZone}>
+              <SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
+              <SelectContent>
+                {timeZones.map((tz) => (
+                  <SelectItem key={tz} value={tz}>{tz}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+        <Button type="button" onClick={convertTime}>Convert</Button>
+        {convertedTime && (
+          <div className="p-4 bg-muted/50 rounded font-mono">Converted Time: {convertedTime}</div>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 
-export default Tools;
+export default TimeZoneConverter;
