@@ -65,6 +65,21 @@ verify_jwt = false
 
 [functions.get-hcaptcha-config]
 verify_jwt = false
+
+### AI Tools Configuration
+
+The AI utilities rely on OpenAI and Gemini APIs. Set these secrets in your
+Supabase project and optionally in a local `.env` file:
+
+```bash
+OPENAI_API_KEY=your-openai-key
+GEMINI_API_KEY=your-gemini-key
+ALLOWED_ORIGINS=http://localhost:3000,https://zwanski.org
+```
+
+`ALLOWED_ORIGINS` controls which domains may call the edge functions.
+Include `http://localhost:3000` when running the frontend locally to avoid
+CORS errors.
 ```
 
 ## 💻 Development Setup
