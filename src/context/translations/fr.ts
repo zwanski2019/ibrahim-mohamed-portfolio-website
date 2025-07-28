@@ -238,6 +238,14 @@ export const frTranslations = {
   "jobs.medium": "Moyen",
   "jobs.high": "Élevé",
 
+  // Tools Section
+  "tools.passwordGenerator": "Générateur de mots de passe",
+  "tools.passwordGeneratorDesc": "Générez des mots de passe sécurisés et aléatoires",
+  "tools.qrGenerator": "Générateur de QR code",
+  "tools.qrGeneratorDesc": "Créez des QR codes pour vos liens et textes",
+  "tools.urlShortener": "Raccourcisseur d'URL",
+  "tools.urlShortenerDesc": "Raccourcissez facilement les liens longs",
+
   // Common
   "common.search": "Rechercher",
 

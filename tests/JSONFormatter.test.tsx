@@ -7,13 +7,14 @@ describe('JSONFormatter', () => {
     render(<JSONFormatter />);
     fireEvent.change(screen.getByRole('textbox'), { target: { value: '{"a":1}' } });
     fireEvent.click(screen.getByRole('button', { name: /format/i }));
-    expect(screen.getByTestId('result').textContent?.trim()).toBe('{\n  "a": 1\n}');
+    const outputs = screen.getAllByRole('textbox');
+    expect(outputs[1].value.trim()).toBe('{\n  "a": 1\n}');
   });
 
   it('shows error on invalid JSON', () => {
     render(<JSONFormatter />);
     fireEvent.change(screen.getByRole('textbox'), { target: { value: '{a}' } });
     fireEvent.click(screen.getByRole('button', { name: /format/i }));
-    expect(screen.getByRole('alert')).toHaveTextContent('Invalid JSON');
+    expect(screen.getByText('Invalid JSON')).toBeInTheDocument();
   });
 });

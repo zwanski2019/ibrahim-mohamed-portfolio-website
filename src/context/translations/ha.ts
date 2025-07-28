@@ -238,6 +238,14 @@ export const haTranslations = {
   "jobs.medium": "Matsakaici",
   "jobs.high": "Babba",
 
+  // Tools Section
+  "tools.passwordGenerator": "Mai Haifar da Kalmar sirri",
+  "tools.passwordGeneratorDesc": "Ƙirƙiri kalmomin sirri masu ƙarfi",
+  "tools.qrGenerator": "Mai Haifar da Lambar QR",
+  "tools.qrGeneratorDesc": "Ƙirƙiri lambobin QR don hanyoyi da rubutu",
+  "tools.urlShortener": "Takaita URL",
+  "tools.urlShortenerDesc": "Takaita dogayen hanyoyin yanar gizo cikin sauƙi",
+
   // Common
   "common.search": "Bincike",
 

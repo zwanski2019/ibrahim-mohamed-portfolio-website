@@ -238,6 +238,14 @@ export const berTranslations = {
   "jobs.medium": "Alemmas",
   "jobs.high": "Ameqqran",
 
+  // Tools Section
+  "tools.passwordGenerator": "Ameskar n wawalen uffiren",
+  "tools.passwordGeneratorDesc": "Rnu wawalen uffiren s tɣellist",
+  "tools.qrGenerator": "Ameskar QR",
+  "tools.qrGeneratorDesc": "Rnu tangalt QR i yisebtar d uḍris",
+  "tools.urlShortener": "Amezriḍ URL",
+  "tools.urlShortenerDesc": "Sseẓẓer isebtar iqqaren s uselḥi",
+
   // Common
   "common.search": "Anadi",
 
