@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Smartphone,
@@ -29,7 +28,10 @@ interface ToolItem {
 }
 
 const Tools = () => {
-  console.log("Tools component is loading successfully");
+  if (process.env.NODE_ENV === "development") {
+    console.log("Tools component is loading successfully");
+  }
+
   const { t } = useLanguage();
 
   const featuredTools: ToolItem[] = [
@@ -39,60 +41,60 @@ const Tools = () => {
       description: t("imei.description"),
       icon: Smartphone,
       component: <IMEIChecker />,
-      featured: true
-    }
+      featured: true,
+    },
   ];
 
   const comingSoonTools: ToolItem[] = [
     {
       id: "password-generator",
-      title: "Password Generator",
-      description: "Generate secure, random passwords with customizable options",
+      title: t("tools.passwordGenerator"),
+      description: t("tools.passwordGeneratorDesc"),
       icon: Shield,
-      comingSoon: true
+      comingSoon: true,
     },
     {
       id: "qr-generator",
-      title: "QR Code Generator",
-      description: "Create QR codes for URLs, text, and other data",
+      title: t("tools.qrGenerator"),
+      description: t("tools.qrGeneratorDesc"),
       icon: Code,
-      comingSoon: true
+      comingSoon: true,
     },
     {
       id: "url-shortener",
-      title: "URL Shortener",
-      description: "Shorten long URLs for easier sharing",
+      title: t("tools.urlShortener"),
+      description: t("tools.urlShortenerDesc"),
       icon: Globe,
-      comingSoon: true
+      comingSoon: true,
     },
     {
       id: "color-picker",
-      title: "Color Picker & Palette Generator",
-      description: "Pick colors and generate beautiful color palettes",
+      title: t("tools.colorPicker"),
+      description: t("tools.colorPickerDesc"),
       icon: Zap,
-      comingSoon: true
+      comingSoon: true,
     },
     {
       id: "json-formatter",
-      title: "JSON Formatter",
-      description: "Easily format and validate JSON data",
+      title: t("tools.jsonFormatter"),
+      description: t("tools.jsonFormatterDesc"),
       icon: FileText,
-      comingSoon: true
+      comingSoon: true,
     },
     {
       id: "timezone-converter",
-      title: "Time Zone Converter",
-      description: "Quickly convert times between different zones",
+      title: t("tools.timezoneConverter"),
+      description: t("tools.timezoneConverterDesc"),
       icon: Clock,
-      comingSoon: true
+      comingSoon: true,
     },
     {
       id: "image-compressor",
-      title: "Image Compressor",
-      description: "Reduce image file size without losing quality",
+      title: t("tools.imageCompressor"),
+      description: t("tools.imageCompressorDesc"),
       icon: Image,
-      comingSoon: true
-    }
+      comingSoon: true,
+    },
   ];
 
   return (
