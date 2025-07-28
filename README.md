@@ -48,13 +48,14 @@ Visit [http://localhost:3000](http://localhost:3000) to view the app.
 ### Environment Variables
 
 Optional variables for Turnstile security verification:
+Cloudflare Turnstile is our current CAPTCHA solution for protecting forms.
 
 ```bash
 VITE_CF_TURNSTILE_SITE_KEY=your-public-site-key-here
 CLOUDFLARE_TURNSTILE_SECRET_KEY=your-secret-key-here
 ```
 
-If `VITE_CF_TURNSTILE_SITE_KEY` is not set, security verification is skipped and users can sign in or sign up without completing Turnstile.
+If `VITE_CF_TURNSTILE_SITE_KEY` is not set, security verification is skipped and users can sign in or sign up without completing the Cloudflare Turnstile challenge.
 
 Store `CLOUDFLARE_TURNSTILE_SECRET_KEY` securely in your Supabase project secrets so the `verify-turnstile` edge function can work properly. Update `supabase/config.toml` to allow unauthenticated access to this function:
 
@@ -97,7 +98,7 @@ npm install --legacy-peer-deps
 ✅ **Authentication** - Supabase Auth with email verification  
 ✅ **Enhanced Input Validation** - Client and server-side validation with XSS protection  
 ✅ **Rate Limiting** - Contact forms and API endpoints protected from abuse  
-✅ **Secure CAPTCHA** - Turnstile verification through secure edge functions  
+✅ **Secure CAPTCHA** - Cloudflare Turnstile verification through secure edge functions
 ✅ **Enhanced Admin System** - Multi-layer admin validation with audit logging  
 ✅ **Security Event Logging** - Comprehensive security monitoring and alerts  
 ✅ **Password Protection** - Leaked password detection enabled  
@@ -189,7 +190,7 @@ Add these variables in the **Project Settings → Environment Variables** sectio
 We welcome pull requests! To contribute:
 
 1. Fork this repository and create a new branch for your changes.
-2. If your update relates to the recent migration from **Turnstile** to **hCaptcha**, mention this in your commit messages.
+2. If your update modifies the CAPTCHA integration (**Cloudflare Turnstile**), mention this in your commit messages.
 3. Run `npm run lint` and ensure the project builds successfully with `npm run build`.
 4. Open a pull request describing your improvements.
 
