@@ -265,6 +265,22 @@ export const arTranslations = {
   "imei.features.free": "مجاني",
   "imei.features.freeDesc": "خدمة مجانية تماماً",
 
+  // Tools
+  "password.title": "مولد كلمات المرور",
+  "password.description": "إنشاء كلمات مرور عشوائية وآمنة مع خيارات قابلة للتخصيص",
+  "qr.title": "مولد رمز QR",
+  "qr.description": "أنشئ رموز QR للروابط والنصوص وبيانات أخرى",
+  "url.title": "اختصار الروابط",
+  "url.description": "قصّر الروابط الطويلة لسهولة مشاركتها",
+  "color.title": "منتقي الألوان ومنشئ الألواح",
+  "color.description": "اختر الألوان وأنشئ لوحات ألوان جميلة",
+  "json.title": "منسق JSON",
+  "json.description": "نسّق بيانات JSON وتحقق منها بسهولة",
+  "timezone.title": "محول المناطق الزمنية",
+  "timezone.description": "حوّل الوقت بسرعة بين مناطق زمنية مختلفة",
+  "compressor.title": "ضاغط الصور",
+  "compressor.description": "قلل حجم ملفات الصور دون فقدان الجودة",
+
   // Threat Map
   "threatMap.title": "خريطة التهديدات الحية",
   "threatMap.description": "شاهد الهجمات السيبرانية حول العالم مباشرةً من Radware.",

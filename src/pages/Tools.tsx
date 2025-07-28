@@ -34,50 +34,50 @@ const Tools = () => {
   const comingSoonTools = [
     {
       id: "password-generator",
-      title: "Password Generator",
-      description: "Generate secure, random passwords with customizable options",
+      title: t("password.title"),
+      description: t("password.description"),
       icon: Shield,
       comingSoon: true
     },
     {
-      id: "qr-generator", 
-      title: "QR Code Generator",
-      description: "Create QR codes for URLs, text, and other data",
+      id: "qr-generator",
+      title: t("qr.title"),
+      description: t("qr.description"),
       icon: Code,
       comingSoon: true
     },
     {
       id: "url-shortener",
-      title: "URL Shortener", 
-      description: "Shorten long URLs for easier sharing",
+      title: t("url.title"),
+      description: t("url.description"),
       icon: Globe,
       comingSoon: true
     },
     {
       id: "color-picker",
-      title: "Color Picker & Palette Generator",
-      description: "Pick colors and generate beautiful color palettes",
+      title: t("color.title"),
+      description: t("color.description"),
       icon: Zap,
       comingSoon: true
     },
     {
       id: "json-formatter",
-      title: "JSON Formatter",
-      description: "Easily format and validate JSON data",
+      title: t("json.title"),
+      description: t("json.description"),
       icon: FileText,
       comingSoon: true
     },
     {
       id: "timezone-converter",
-      title: "Time Zone Converter",
-      description: "Quickly convert times between different zones",
+      title: t("timezone.title"),
+      description: t("timezone.description"),
       icon: Clock,
       comingSoon: true
     },
     {
       id: "image-compressor",
-      title: "Image Compressor",
-      description: "Reduce image file size without losing quality",
+      title: t("compressor.title"),
+      description: t("compressor.description"),
       icon: Image,
       comingSoon: true
     }
