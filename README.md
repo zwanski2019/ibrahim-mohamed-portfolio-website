@@ -99,9 +99,18 @@ npm install --legacy-peer-deps
 ✅ **Rate Limiting** - Contact forms and API endpoints protected from abuse  
 ✅ **Secure CAPTCHA** - Turnstile verification through secure edge functions  
 ✅ **Enhanced Admin System** - Multi-layer admin validation with audit logging  
-✅ **Security Event Logging** - Comprehensive security monitoring and alerts  
-✅ **Password Protection** - Leaked password detection enabled  
+✅ **Security Event Logging** - Comprehensive security monitoring and alerts
+✅ **Password Protection** - Leaked password detection enabled
 ✅ **Safe Secret Management** - No secrets exposed in frontend code
+
+Set the following variables in your `.env` file and Supabase project to enable Cloudflare Turnstile verification:
+
+```bash
+VITE_CF_TURNSTILE_SITE_KEY=your-public-site-key
+CLOUDFLARE_TURNSTILE_SECRET_KEY=your-secret-key
+```
+
+Store `CLOUDFLARE_TURNSTILE_SECRET_KEY` securely in the Supabase dashboard while keeping `VITE_CF_TURNSTILE_SITE_KEY` in your local environment.
 
 ## 🔐 Authentication Test
 
