@@ -47,23 +47,19 @@ Visit [http://localhost:3000](http://localhost:3000) to view the app.
 
 ### Environment Variables
 
-Optional variables for hCaptcha security verification:
+Optional variables for Turnstile security verification:
 
 ```bash
-HCAPTCHA_SITE_KEY=your-public-site-key-here
-HCAPTCHA_SECRET_KEY=your-secret-key-here
+VITE_CF_TURNSTILE_SITE_KEY=your-public-site-key-here
+CLOUDFLARE_TURNSTILE_SECRET_KEY=your-secret-key-here
 ```
 
-If `HCAPTCHA_SITE_KEY` is not set, security verification is skipped and users can sign in or sign up without completing hCaptcha.
+If `VITE_CF_TURNSTILE_SITE_KEY` is not set, security verification is skipped and users can sign in or sign up without completing Turnstile.
 
-Set these in your Supabase project secrets so the `get-hcaptcha-config` and `verify-hcaptcha` edge functions can work properly.
-Additionally, update `supabase/config.toml` to allow unauthenticated access to these functions:
+Store `CLOUDFLARE_TURNSTILE_SECRET_KEY` securely in your Supabase project secrets so the `verify-turnstile` edge function can work properly. Update `supabase/config.toml` to allow unauthenticated access to this function:
 
 ```toml
-[functions.verify-hcaptcha]
-verify_jwt = false
-
-[functions.get-hcaptcha-config]
+[functions.verify-turnstile]
 verify_jwt = false
 
 ### AI Tools Configuration
