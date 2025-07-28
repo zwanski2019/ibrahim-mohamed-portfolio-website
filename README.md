@@ -87,6 +87,8 @@ Supabase project and optionally in a local `.env` file:
 OPENAI_API_KEY=your-openai-key
 GEMINI_API_KEY=your-gemini-key
 ALLOWED_ORIGINS=http://localhost:3000,https://zwanski.org
+VITE_CF_TURNSTILE_SITE_KEY=your-public-site-key
+CLOUDFLARE_TURNSTILE_SECRET_KEY=your-secret-key
 ```
 
 `ALLOWED_ORIGINS` controls which domains may call the edge functions.
