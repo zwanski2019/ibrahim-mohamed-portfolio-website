@@ -17,38 +17,36 @@ import AcademyHero from "@/components/academy/AcademyHero";
 import CourseGrid from "@/components/academy/CourseGrid";
 import { Button } from "@/components/ui/button";
 import { SEOHelmet } from "@/components/SEOHelmet";
-import {
-  organizationStructuredData,
-  localBusinessStructuredData,
-  websiteStructuredData,
-  faqStructuredData,
-} from "@/data/structuredData";
+import { organizationStructuredData, localBusinessStructuredData, websiteStructuredData, faqStructuredData } from "@/data/structuredData";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { Link } from "react-router-dom";
-
 const Index = () => {
-  const { user } = useAuth();
-  const { t } = useLanguage();
-
-  const { data: courses, isLoading } = useQuery({
+  const {
+    user
+  } = useAuth();
+  const {
+    t
+  } = useLanguage();
+  const {
+    data: courses,
+    isLoading
+  } = useQuery({
     queryKey: ["featured-courses"],
     queryFn: async () => {
       try {
-        const { data, error } = await supabase
-          .from("courses")
-          .select(`
+        const {
+          data,
+          error
+        } = await supabase.from("courses").select(`
             *,
             categories:category_id(name, icon),
             course_enrollments(id)
-          `)
-          .eq("is_active", true)
-          .eq("is_featured", true)
-          .order("enrollment_count", { ascending: false })
-          .limit(6);
-
+          `).eq("is_active", true).eq("is_featured", true).order("enrollment_count", {
+          ascending: false
+        }).limit(6);
         if (error) {
           console.warn("Failed to load courses:", error);
           return [];
@@ -62,22 +60,22 @@ const Index = () => {
     staleTime: 15 * 60 * 1000,
     gcTime: 30 * 60 * 1000,
     retry: 1,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: false
   });
-
-  const { data: userEnrollments } = useQuery({
+  const {
+    data: userEnrollments
+  } = useQuery({
     queryKey: ["user-enrollments", user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
       try {
-        const { data, error } = await supabase
-          .from("course_enrollments")
-          .select(`
+        const {
+          data,
+          error
+        } = await supabase.from("course_enrollments").select(`
             *,
             courses:course_id(*)
-          `)
-          .eq("user_id", user.id);
-
+          `).eq("user_id", user.id);
         if (error) {
           console.warn("Failed to load user enrollments:", error);
           return [];
@@ -92,65 +90,46 @@ const Index = () => {
     staleTime: 10 * 60 * 1000,
     gcTime: 20 * 60 * 1000,
     retry: 1,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: false
   });
-
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const elements = document.querySelectorAll(".animate-on-scroll");
-
     if (prefersReducedMotion) {
-      elements.forEach((element) => {
+      elements.forEach(element => {
         (element as HTMLElement).style.opacity = "1";
         (element as HTMLElement).style.transform = "none";
       });
       return;
     }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-fade-in");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "20px" }
-    );
-
-    elements.forEach((element) => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate-fade-in");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: "20px"
+    });
+    elements.forEach(element => {
       (element as HTMLElement).style.opacity = "1";
       observer.observe(element);
     });
-
     return () => observer.disconnect();
   }, []);
-
-  const structuredDataItems = [
-    organizationStructuredData,
-    localBusinessStructuredData,
-    websiteStructuredData,
-    faqStructuredData,
-  ];
-
+  const structuredDataItems = [organizationStructuredData, localBusinessStructuredData, websiteStructuredData, faqStructuredData];
   const renderPageContent = () => {
     try {
-      return (
-        <>
-          <SEOHelmet
-            title="Zwanski Tech - Professional IT Services & Digital Education Platform"
-            description="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals."
-            keywords="IT services Tunisia, computer repair, cybersecurity, web development, digital education, Zwanski Tech"
-            canonical="https://zwanski.org/"
-            structuredData={structuredDataItems}
-          />
+      return <>
+          <SEOHelmet title="Zwanski Tech - Professional IT Services & Digital Education Platform" description="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals." keywords="IT services Tunisia, computer repair, cybersecurity, web development, digital education, Zwanski Tech" canonical="https://zwanski.org/" structuredData={structuredDataItems} />
 
-          <main
-            id="main-content"
-            className="flex flex-col min-h-screen bg-background text-foreground homepage-content"
-            style={{ opacity: 1, visibility: "visible", display: "block" }}
-          >
+          <main id="main-content" className="flex flex-col min-h-screen bg-background text-foreground homepage-content" style={{
+          opacity: 1,
+          visibility: "visible",
+          display: "block"
+        }}>
             <Navbar />
 
             <section className="animate-on-scroll">
@@ -202,11 +181,7 @@ const Index = () => {
 
                 <div className="mb-12">
                   <h3 className="text-2xl font-bold mb-8 text-center">Featured Courses</h3>
-                  <CourseGrid
-                    courses={courses || []}
-                    isLoading={isLoading}
-                    userEnrollments={userEnrollments?.map((enrollment) => enrollment.course_id) || []}
-                  />
+                  <CourseGrid courses={courses || []} isLoading={isLoading} userEnrollments={userEnrollments?.map(enrollment => enrollment.course_id) || []} />
                 </div>
 
                 <div className="text-center">
@@ -222,20 +197,11 @@ const Index = () => {
               </div>
             </section>
 
-            <section className="py-24 bg-background animate-on-scroll">
-              {/* SEO section retained as is */}
-              {/* ... */}
-            </section>
+            
 
-            <section className="py-24 bg-secondary/5 animate-on-scroll">
-              {/* FAQ section retained as is */}
-              {/* ... */}
-            </section>
+            
 
-            <section className="py-24 bg-background animate-on-scroll">
-              {/* Benefits section retained as is */}
-              {/* ... */}
-            </section>
+            
 
             <section className="animate-on-scroll">
               <QuickContact />
@@ -255,25 +221,20 @@ const Index = () => {
 
             <Footer />
           </main>
-        </>
-      );
+        </>;
     } catch (error) {
       if (process.env.NODE_ENV === "development") {
         console.error("renderPageContent error:", error);
       }
-      return (
-        <div className="min-h-screen flex items-center justify-center bg-background">
+      return <div className="min-h-screen flex items-center justify-center bg-background">
           <div className="text-center p-8">
             <h1 className="text-2xl font-bold mb-4">Welcome to Zwanski Tech</h1>
             <p className="text-muted-foreground mb-4">Loading our services...</p>
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
           </div>
-        </div>
-      );
+        </div>;
     }
   };
-
   return renderPageContent();
 };
-
 export default Index;
