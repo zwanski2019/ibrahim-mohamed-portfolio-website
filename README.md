@@ -109,6 +109,18 @@ Include `http://localhost:3000` when running the frontend locally to avoid
 CORS errors.
 ```
 
+## Supabase Blogger Proxy
+
+If the frontend doesn't have direct Blogger API credentials, it falls back to a
+Supabase edge function that proxies requests. Set these secrets in your Supabase
+project so the `blogger-proxy` function can operate:
+
+```bash
+BLOGGER_API_KEY=your-blogger-key
+BLOGGER_BLOG_ID=your-blog-id
+ALLOWED_ORIGINS=http://localhost:3000,https://zwanski.org
+```
+
 ## 💻 Development Setup
 
 Some React and Vite packages depend on slightly different peer versions. This

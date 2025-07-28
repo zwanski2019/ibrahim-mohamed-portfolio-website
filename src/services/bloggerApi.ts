@@ -1,20 +1,24 @@
 const BLOGGER_API_URL = 'https://www.googleapis.com/blogger/v3';
 const BLOG_ID: string | undefined = import.meta.env.VITE_BLOGGER_BLOG_ID;
 const API_KEY: string | undefined = import.meta.env.VITE_BLOGGER_API_KEY;
+const SUPABASE_URL =
+  import.meta.env.VITE_SUPABASE_URL || 'https://ceihcnfngpmrtqunhaey.supabase.co';
 
-const missingConfigError = (() => {
-  const missing: string[] = [];
-  if (!API_KEY) missing.push('VITE_BLOGGER_API_KEY');
-  if (!BLOG_ID) missing.push('VITE_BLOGGER_BLOG_ID');
-  return missing.length
-    ? new Error(`Missing Blogger API configuration: ${missing.join(', ')}`)
-    : null;
-})();
+const useProxy = !BLOG_ID || !API_KEY;
 
-function ensureEnv() {
-  if (missingConfigError) {
-    throw missingConfigError;
+async function proxyFetch(
+  path: string,
+  params: Record<string, string | undefined>
+) {
+  const url = new URL(`${SUPABASE_URL}/functions/v1/blogger-proxy${path}`);
+  for (const [k, v] of Object.entries(params)) {
+    if (v) url.searchParams.append(k, v);
   }
+  const res = await fetch(url.toString());
+  if (!res.ok) {
+    throw new Error(`HTTP error! status: ${res.status}`);
+  }
+  return await res.json();
 }
 
 export interface BlogPost {
@@ -45,7 +49,12 @@ export interface BloggerResponse {
 export const bloggerApi = {
   async getPosts(pageToken?: string, maxResults: number = 12): Promise<BloggerResponse> {
     try {
-      ensureEnv();
+      if (useProxy) {
+        return (proxyFetch('/posts', {
+          pageToken,
+          maxResults: String(maxResults),
+        }) as Promise<BloggerResponse>);
+      }
       const params = new URLSearchParams({
         key: API_KEY,
         maxResults: maxResults.toString(),
@@ -78,7 +87,9 @@ export const bloggerApi = {
 
   async getPost(postId: string): Promise<BlogPost | null> {
     try {
-      ensureEnv();
+      if (useProxy) {
+        return (proxyFetch(`/posts/${postId}`, {}) as Promise<BlogPost | null>);
+      }
       const response = await fetch(
         `${BLOGGER_API_URL}/blogs/${BLOG_ID}/posts/${postId}?key=${API_KEY}&fetchImages=true&fetchBodies=true`
       );
@@ -96,7 +107,12 @@ export const bloggerApi = {
 
   async searchPosts(query: string, maxResults: number = 12): Promise<BloggerResponse> {
     try {
-      ensureEnv();
+      if (useProxy) {
+        return (proxyFetch('/search', {
+          q: query,
+          maxResults: String(maxResults),
+        }) as Promise<BloggerResponse>);
+      }
       const params = new URLSearchParams({
         key: API_KEY,
         q: query,
