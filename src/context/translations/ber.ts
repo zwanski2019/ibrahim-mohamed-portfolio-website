@@ -267,17 +267,7 @@ export const berTranslations = {
 
   // Ixfawen
   "tools.passwordGenerator": "Generator n wawal uffir",
+  "tools.passwordGeneratorDesc": "Sirew awalen ufiren imaynuten s tferkit",
   "tools.qrGenerator": "Generator n QR",
-  "tools.urlShortener": "Asensefru n URL",
-  "tools.colorPicker": "Fuɣen n ini & amsawal n yiniten",
-  "tools.jsonFormatter": "Umṣeddad JSON",
-  "tools.timezoneConverter": "Abeddel n akudan n wakud",
-  "tools.imageCompressor": "Asensel n tugna",
-
-  // Threat Map
-  "threatMap.title": "Tawant n Wugur Srid",
-  "threatMap.description": "Mukkneḍ iḍelli n tuccfa-iddan deg umaḍal s Radware.",
-
-  // Footer
-  "footer.rights": "Akk izerfan ḥerzen.",
-};
+  "tools.qrGeneratorDesc": "Rnu tiddyin QR i tansaḍ, tutlayt akked isefka nniḍen",
+  "tools.urlShortener": "Ase

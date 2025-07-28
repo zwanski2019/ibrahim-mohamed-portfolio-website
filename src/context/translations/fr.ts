@@ -222,7 +222,7 @@ export const frTranslations = {
   "jobs.minimumSalary": "Salaire Minimum (TND)",
   "jobs.maximumSalary": "Salaire Maximum (TND) - Optionnel",
   "jobs.addRequirement": "Ajouter une exigence...",
-  "jobs.addBenefit": "Ajouter un avantage...",
+  "jobs.addBenefit": "Ajouter un avantage...",  
   "jobs.postJob": "Publier l'Emploi",
   "jobs.posting": "Publication...",
   "jobs.cancel": "Annuler",
@@ -256,7 +256,7 @@ export const frTranslations = {
   "imei.errorInvalidImei": "Veuillez entrer un numéro IMEI valide à 15 chiffres",
   "imei.errorInvalidImeiDesc": "IMEI Invalide",
   "imei.results": "Résultats de la Vérification IMEI",
-  "imei.whatIsImei": "Qu'est-ce que l'IMEI ?",
+  "imei.whatIsImei": "Qu'est-ce que l'IMEI ?",
   "imei.imeiDescription": "IMEI (International Mobile Equipment Identity) est un identifiant unique pour les appareils mobiles.",
   "imei.features.secure": "Sécurisé",
   "imei.features.secureDesc": "Vos données sont traitées en toute sécurité",
@@ -265,14 +265,21 @@ export const frTranslations = {
   "imei.features.free": "Gratuit",
   "imei.features.freeDesc": "Service complètement gratuit",
 
-  // Outils
+  // Tools
   "tools.passwordGenerator": "Générateur de mots de passe",
+  "tools.passwordGeneratorDesc": "Générez des mots de passe sécurisés et aléatoires avec des options personnalisables",
   "tools.qrGenerator": "Générateur de QR Code",
+  "tools.qrGeneratorDesc": "Créez des codes QR pour des URL, du texte et d'autres données",
   "tools.urlShortener": "Raccourcisseur d'URL",
+  "tools.urlShortenerDesc": "Raccourcissez les longues URLs pour un partage facilité",
   "tools.colorPicker": "Sélecteur de couleur & Générateur de palette",
+  "tools.colorPickerDesc": "Choisissez des couleurs et générez de belles palettes de couleurs",
   "tools.jsonFormatter": "Formateur JSON",
+  "tools.jsonFormatterDesc": "Formatez et validez facilement des données JSON",
   "tools.timezoneConverter": "Convertisseur de fuseaux horaires",
+  "tools.timezoneConverterDesc": "Convertissez rapidement les heures entre différents fuseaux",
   "tools.imageCompressor": "Compresseur d'image",
+  "tools.imageCompressorDesc": "Réduisez la taille des fichiers image sans perte de qualité",
 
   // Threat Map
   "threatMap.title": "Carte des Menaces en Direct",
