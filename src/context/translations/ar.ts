@@ -265,6 +265,15 @@ export const arTranslations = {
   "imei.features.free": "مجاني",
   "imei.features.freeDesc": "خدمة مجانية تماماً",
 
+  // الأدوات
+  "tools.passwordGenerator": "مولد كلمات المرور",
+  "tools.qrGenerator": "مولد رمز الاستجابة السريعة",
+  "tools.urlShortener": "مُختصر الروابط",
+  "tools.colorPicker": "منتقي الألوان ومولد لوحات الألوان",
+  "tools.jsonFormatter": "منسق JSON",
+  "tools.timezoneConverter": "محول المناطق الزمنية",
+  "tools.imageCompressor": "ضاغط الصور",
+
   // Threat Map
   "threatMap.title": "خريطة التهديدات الحية",
   "threatMap.description": "شاهد الهجمات السيبرانية حول العالم مباشرةً من Radware.",

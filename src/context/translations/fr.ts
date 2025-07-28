@@ -265,6 +265,15 @@ export const frTranslations = {
   "imei.features.free": "Gratuit",
   "imei.features.freeDesc": "Service complètement gratuit",
 
+  // Outils
+  "tools.passwordGenerator": "Générateur de mots de passe",
+  "tools.qrGenerator": "Générateur de QR Code",
+  "tools.urlShortener": "Raccourcisseur d'URL",
+  "tools.colorPicker": "Sélecteur de couleur & Générateur de palette",
+  "tools.jsonFormatter": "Formateur JSON",
+  "tools.timezoneConverter": "Convertisseur de fuseaux horaires",
+  "tools.imageCompressor": "Compresseur d'image",
+
   // Threat Map
   "threatMap.title": "Carte des Menaces en Direct",
   "threatMap.description": "Observez les cyberattaques en temps réel dans le monde grâce à Radware.",

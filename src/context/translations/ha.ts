@@ -265,6 +265,15 @@ export const haTranslations = {
   "imei.features.free": "Kyauta",
   "imei.features.freeDesc": "Hidima ta gaba ɗaya kyauta",
 
+  // Kayan Aiki
+  "tools.passwordGenerator": "Mai ƙirƙirar kalmar wucewa",
+  "tools.qrGenerator": "Mai ƙirƙirar lambar QR",
+  "tools.urlShortener": "Mai gajarta URL",
+  "tools.colorPicker": "Zaɓin launi & Mai ƙirƙirar palette",
+  "tools.jsonFormatter": "Mai tsara JSON",
+  "tools.timezoneConverter": "Mai maida yankin lokaci",
+  "tools.imageCompressor": "Mai matse hoto",
+
   // Threat Map
   "threatMap.title": "Taswirar Barazana Kai Tsaye",
   "threatMap.description": "Kallon hare-haren yanar gizo kai tsaye a duniya daga Radware.",
