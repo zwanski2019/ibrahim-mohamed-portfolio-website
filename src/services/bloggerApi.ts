@@ -1,20 +1,22 @@
+import { supabase } from '@/integrations/supabase/client';
+
 const BLOGGER_API_URL = 'https://www.googleapis.com/blogger/v3';
 const BLOG_ID: string | undefined = import.meta.env.VITE_BLOGGER_BLOG_ID;
 const API_KEY: string | undefined = import.meta.env.VITE_BLOGGER_API_KEY;
 
-const missingConfigError = (() => {
-  const missing: string[] = [];
-  if (!API_KEY) missing.push('VITE_BLOGGER_API_KEY');
-  if (!BLOG_ID) missing.push('VITE_BLOGGER_BLOG_ID');
-  return missing.length
-    ? new Error(`Missing Blogger API configuration: ${missing.join(', ')}`)
-    : null;
-})();
+function missingConfig() {
+  return !API_KEY || !BLOG_ID;
+}
 
-function ensureEnv() {
-  if (missingConfigError) {
-    throw missingConfigError;
+async function invokeProxy<T>(path: string, body?: Record<string, any>): Promise<T> {
+  const { data, error } = await supabase.functions.invoke(`blogger-proxy/${path}`, {
+    body,
+  });
+  if (error) {
+    console.error('Edge function error:', error);
+    throw new Error(error.message || 'Blogger proxy error');
   }
+  return data as T;
 }
 
 export interface BlogPost {
@@ -45,9 +47,14 @@ export interface BloggerResponse {
 export const bloggerApi = {
   async getPosts(pageToken?: string, maxResults: number = 12): Promise<BloggerResponse> {
     try {
-      ensureEnv();
+      if (missingConfig()) {
+        const body: Record<string, any> = { maxResults };
+        if (pageToken) body.pageToken = pageToken;
+        return await invokeProxy<BloggerResponse>('posts', body);
+      }
+
       const params = new URLSearchParams({
-        key: API_KEY,
+        key: API_KEY!,
         maxResults: maxResults.toString(),
         orderBy: 'published',
         fetchImages: 'true',
@@ -59,7 +66,7 @@ export const bloggerApi = {
       }
 
       const response = await fetch(`${BLOGGER_API_URL}/blogs/${BLOG_ID}/posts?${params}`);
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -78,11 +85,14 @@ export const bloggerApi = {
 
   async getPost(postId: string): Promise<BlogPost | null> {
     try {
-      ensureEnv();
+      if (missingConfig()) {
+        return await invokeProxy<BlogPost>(`posts/${postId}`);
+      }
+
       const response = await fetch(
         `${BLOGGER_API_URL}/blogs/${BLOG_ID}/posts/${postId}?key=${API_KEY}&fetchImages=true&fetchBodies=true`
       );
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -96,9 +106,12 @@ export const bloggerApi = {
 
   async searchPosts(query: string, maxResults: number = 12): Promise<BloggerResponse> {
     try {
-      ensureEnv();
+      if (missingConfig()) {
+        return await invokeProxy<BloggerResponse>('search', { query, maxResults });
+      }
+
       const params = new URLSearchParams({
-        key: API_KEY,
+        key: API_KEY!,
         q: query,
         maxResults: maxResults.toString(),
         orderBy: 'published',
@@ -107,7 +120,7 @@ export const bloggerApi = {
       });
 
       const response = await fetch(`${BLOGGER_API_URL}/blogs/${BLOG_ID}/posts/search?${params}`);
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
