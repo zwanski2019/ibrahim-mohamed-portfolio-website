@@ -6,7 +6,7 @@ const BLOGGER_BLOG_ID = Deno.env.get("BLOGGER_BLOG_ID");
 const BLOGGER_API_URL = "https://www.googleapis.com/blogger/v3";
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": ALLOWED_ORIGINS,
+  "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Content-Type": "application/json",
 };
