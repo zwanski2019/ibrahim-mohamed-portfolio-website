@@ -60,7 +60,7 @@ export const navItems: NavItem[] = [
   { label: "Freelancers", path: "/freelancers", icon: Users },
   { label: "Chat", path: "/chat", icon: MessageSquare },
   { label: "Newsletter", path: "/newsletter", icon: Mail },
-  { label: "3D Model", path: "/3d", icon: BookOpen },
+  { label: "3D Model", path: "/computer-model", icon: BookOpen },
   { label: "Migrant Support", path: "/migrant-support", icon: Globe },
   { label: "Support", path: "/support", icon: LifeBuoy },
   { label: "Threat Map", path: "/threat-map", icon: Activity },
