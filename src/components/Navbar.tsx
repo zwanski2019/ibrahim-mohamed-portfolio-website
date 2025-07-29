@@ -179,7 +179,7 @@ const Navbar = () => {
           <div className="flex items-center justify-between">
             {/* Main navigation categories */}
             <div className="flex items-center space-x-1">
-              <Button variant="ghost" size="sm" onClick={() => setIsMenuOpen(!isMenuOpen)} className="flex items-center gap-2 text-sm font-medium hover:bg-primary/10">
+              <Button variant="ghost" size="sm" onClick={() => navigate("/services")} className="flex items-center gap-2 text-sm font-medium hover:bg-primary/10">
                 <Menu className="h-4 w-4" />
                 All Services
               </Button>
