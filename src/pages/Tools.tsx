@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import IMEIChecker from "@/components/IMEIChecker";
+import GPTAssistant from "@/components/GPTAssistant";
 import { useLanguage } from "@/context/LanguageContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -13,7 +14,8 @@ import {
   Code,
   FileText,
   Clock,
-  Image
+  Image,
+  Bot
 } from "lucide-react";
 
 const Tools = () => {
@@ -27,6 +29,14 @@ const Tools = () => {
       description: t("imei.description"),
       icon: Smartphone,
       component: <IMEIChecker />,
+      featured: true
+    },
+    {
+      id: "gpt-assistant",
+      title: "AI Assistant",
+      description: "Get help with tasks using AI-powered tools including chatbot, resume enhancer, blog generator, and code explainer",
+      icon: Bot,
+      component: <GPTAssistant />,
       featured: true
     }
   ];
