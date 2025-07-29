@@ -85,9 +85,7 @@ export const useCreateJobPost = () => {
       job_type: 'full-time' | 'part-time' | 'contract' | 'freelance';
       salary_type: 'hourly' | 'fixed' | 'monthly';
       salary_min: number;
-      employer_id?: string;
-      contact_name?: string;
-      contact_email?: string;
+      employer_id: string;
       benefits?: string[];
       requirements?: string[];
       salary_max?: number;
@@ -97,14 +95,12 @@ export const useCreateJobPost = () => {
       longitude?: number;
     }) => {
       // Validate required fields
-      if (!jobData.title || !jobData.description) {
-        throw new Error('Title and description are required');
+      if (!jobData.employer_id) {
+        throw new Error('Employer ID is required');
       }
 
-      if (!jobData.employer_id) {
-        if (!jobData.contact_name || !jobData.contact_email) {
-          throw new Error('Contact name and email are required for guest posts');
-        }
+      if (!jobData.title || !jobData.description) {
+        throw new Error('Title and description are required');
       }
 
       // Set the job status to pending for moderation

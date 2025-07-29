@@ -4,17 +4,19 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { SEOHelmet } from "@/components/SEOHelmet";
+import { Helmet } from "react-helmet-async";
 
 const Support = () => {
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <SEOHelmet
-        title="Support Zwanski Tech - Keep Our Services Free"
-        description="Learn how you can support Zwanski Tech and help us keep our courses, tools, and services completely free for everyone."
-        canonical="https://zwanski.org/support"
-      />
-
+      <Helmet>
+        <title>Support Zwanski Tech - Keep Our Services Free</title>
+        <meta 
+          name="description" 
+          content="Learn how you can support Zwanski Tech and help us keep our courses, tools, and services completely free for everyone."
+        />
+      </Helmet>
+      
       <Navbar />
       
       <main className="flex-grow axeptio-section">

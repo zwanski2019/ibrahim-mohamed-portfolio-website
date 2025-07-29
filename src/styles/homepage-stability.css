@@ -2,49 +2,90 @@
 
 /* Force homepage content to be always visible */
 .homepage-content {
-  min-height: 100vh;
-  opacity: 1;
-  visibility: visible;
-  display: block;
-  background-color: hsl(var(--background));
-  position: relative;
-  z-index: 1;
+  min-height: 100vh !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  transform: none !important;
+  background-color: hsl(var(--background)) !important;
+  position: relative !important;
+  z-index: 1 !important;
+  contain: layout !important;
+}
+
+/* Prevent any conflicting animations on initial load */
+.homepage-content * {
+  animation-play-state: running !important;
 }
 
 /* Ensure sections are properly displayed */
 .homepage-content section {
-  opacity: 1;
-  visibility: visible;
-  display: block;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+/* Override any conflicting CSS that might hide content */
+.homepage-content .animate-on-scroll {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  transform: none !important;
+}
+
+/* Ensure all sections are visible immediately */
+.homepage-content section {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  min-height: auto !important;
 }
 
 /* Critical production render fix */
 .app-content-ready {
-  opacity: 1;
-  visibility: visible;
-  display: block;
-  min-height: 100vh;
-  background-color: hsl(var(--background));
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  min-height: 100vh !important;
+  background-color: hsl(var(--background)) !important;
+}
+
+/* Prevent any React lazy loading issues */
+.app-content-ready {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+/* Prevent white screen during route transitions */
+.homepage-content .min-h-screen {
+  background-color: hsl(var(--background)) !important;
 }
 
 /* Stable gradient cursor */
 .gradient-cursor {
   will-change: transform;
   contain: layout style paint;
-  pointer-events: none;
+  pointer-events: none !important;
 }
 
 /* Ensure navbar is always visible */
 nav {
-  opacity: 1;
-  visibility: visible;
-  display: flex;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
 }
 
-/* Accessibility improvements */
+/* Force content to stay visible during animations */
+@media (prefers-reduced-motion: no-preference) {
+  .homepage-content {
+    animation: none !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .homepage-content * {
-    animation: none;
-    transition: none;
+    animation: none !important;
+    transition: none !important;
   }
 }

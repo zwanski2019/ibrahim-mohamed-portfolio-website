@@ -26,8 +26,7 @@ export function useBlogger() {
       setNextPageToken(response.nextPageToken);
       setPrevPageToken(response.prevPageToken);
     } catch (err) {
-      const message = err instanceof Error ? err.message : String(err);
-      setError(message);
+      setError(err instanceof Error ? err.message : 'Failed to fetch blog posts');
       console.error('Error fetching posts:', err);
     } finally {
       setLoading(false);
@@ -49,8 +48,7 @@ export function useBlogger() {
       setNextPageToken(response.nextPageToken);
       setPrevPageToken(response.prevPageToken);
     } catch (err) {
-      const message = err instanceof Error ? err.message : String(err);
-      setError(message);
+      setError(err instanceof Error ? err.message : 'Failed to search blog posts');
       console.error('Error searching posts:', err);
     } finally {
       setLoading(false);
@@ -100,8 +98,7 @@ export function useBlogPost(postId: string) {
         const postData = await bloggerApi.getPost(postId);
         setPost(postData);
       } catch (err) {
-        const message = err instanceof Error ? err.message : String(err);
-        setError(message);
+        setError(err instanceof Error ? err.message : 'Failed to fetch blog post');
         console.error('Error fetching post:', err);
       } finally {
         setLoading(false);

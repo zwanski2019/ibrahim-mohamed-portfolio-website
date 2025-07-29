@@ -238,14 +238,6 @@ export const arTranslations = {
   "jobs.medium": "متوسط",
   "jobs.high": "عالي",
 
-  // Tools Section
-  "tools.passwordGenerator": "مولد كلمات المرور",
-  "tools.passwordGeneratorDesc": "إنشاء كلمات مرور عشوائية وآمنة",
-  "tools.qrGenerator": "مولد رمز QR",
-  "tools.qrGeneratorDesc": "إنشاء رموز QR للروابط والنصوص",
-  "tools.urlShortener": "أداة تقصير الروابط",
-  "tools.urlShortenerDesc": "قصّر الروابط الطويلة بسهولة",
-
   // Common
   "common.search": "البحث",
 

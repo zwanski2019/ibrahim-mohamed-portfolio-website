@@ -14,7 +14,6 @@ import { AuthProvider } from "@/context/AuthContext";
 // Lazy load components for better performance with error handling
 import { lazy, Suspense, startTransition } from "react";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import { SafeErrorBoundary } from "@/components/SafeErrorBoundary";
 
 // Enhanced Index import with retry logic
 const Index = lazy(() => 
@@ -46,6 +45,7 @@ const Index = lazy(() =>
 );
 const Services = lazy(() => import("./pages/Services"));
 const About = lazy(() => import("./pages/About"));
+const Chat = lazy(() => import("./pages/Chat"));
 const Profile = lazy(() => import("./pages/Profile"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ComputerModel = lazy(() => import("./pages/ComputerModel"));
@@ -65,7 +65,6 @@ const IMEICheck = lazy(() => import("./pages/IMEICheck"));
 const Infrastructure = lazy(() => import("./pages/Infrastructure"));
 const Tools = lazy(() => import("./pages/Tools"));
 const Blog = lazy(() => import("./pages/Blog"));
-const ContactPage = lazy(() => import("./pages/Contact"));
 const RSS = lazy(() => import("./pages/RSS"));
 const Search = lazy(() => import("./pages/Search"));
 const AIAssistantPage = lazy(() => import("./pages/ai"));
@@ -81,6 +80,7 @@ const AdminSettings = lazy(() => import("./pages/admin/AdminSettings"));
 import { LanguageDetectionNotice } from "./components/LanguageDetectionNotice";
 import ScrollToTop from "./components/ScrollToTop";
 import ScrollToTopButton from "./components/ScrollToTopButton";
+import ChatWidget from "./components/ChatWidget";
 import { AccessibilityEnhancer } from "./components/AccessibilityEnhancer";
 import { usePerformanceMonitoring, useMemoryMonitoring } from "./hooks/usePerformanceMonitoring";
 import Preloader from "./components/Preloader";
@@ -97,9 +97,6 @@ import "./styles/animations.css";
 const queryClient = new QueryClient(); // Force refresh for Tools import
 
 function App() {
-  if (process.env.NODE_ENV === 'development') {
-    console.log('App component rendering');
-  }
   // Performance monitoring hooks - moved to top level to follow React Rules of Hooks
   usePerformanceMonitoring();
   useMemoryMonitoring();
@@ -141,14 +138,13 @@ function App() {
                 <AuthProvider>
                   <BrowserRouter>
                     <ErrorBoundary>
-                      <SafeErrorBoundary>
-                        {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
-                        <ScrollToTop />
-                        <Helmet>
-                          <title>Zwanski Tech - Professional IT Services & Digital Education Platform</title>
-                          <meta name="description" content="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals." />
-                        </Helmet>
-                        <div className="app-content-ready homepage-content">
+                      {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
+                      <ScrollToTop />
+                      <Helmet>
+                        <title>Zwanski Tech - Professional IT Services & Digital Education Platform</title>
+                        <meta name="description" content="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals." />
+                      </Helmet>
+                      <div className="app-content-ready homepage-content">
                         <Suspense fallback={<MinimalLoader />}>
                           <Routes>
                           <Route path="/" element={<Index />} />
@@ -156,6 +152,7 @@ function App() {
                           <Route path="/about" element={<About />} />
                           <Route path="/computer-model" element={<ComputerModel />} />
                           <Route path="/3d" element={<ComputerModel />} />
+                          <Route path="/chat" element={<Chat />} />
                           <Route path="/newsletter" element={<Newsletter />} />
                           <Route path="/academy" element={<Academy />} />
                           <Route path="/jobs" element={<Jobs />} />
@@ -166,9 +163,8 @@ function App() {
                            <Route path="/login" element={<Auth />} />
                            <Route path="/register" element={<Auth />} />
                            <Route path="/signup" element={<Auth />} />
-                          <Route path="/blog" element={<Blog />} />
-                          <Route path="/contact" element={<ContactPage />} />
-
+                           <Route path="/blog" element={<Blog />} />
+                          
                           {/* Admin Routes */}
                           <Route path="/admin" element={<AdminDashboard />} />
                           <Route path="/admin/users" element={<AdminUsers />} />
@@ -200,13 +196,13 @@ function App() {
                           <Route path="*" element={<NotFound />} />
                           </Routes>
                         </Suspense>
-                        </div>
-                        
-                        <AccessibilityEnhancer />
-                        <LanguageDetectionNotice />
-                        <ScrollToTopButton />
-                        <Toaster />
-                      </SafeErrorBoundary>
+                      </div>
+                      
+                      <AccessibilityEnhancer />
+                      <LanguageDetectionNotice />
+                      <ScrollToTopButton />
+                      <ChatWidget />
+                      <Toaster />
                     </ErrorBoundary>
                   </BrowserRouter>
                 </AuthProvider>

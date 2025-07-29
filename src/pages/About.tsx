@@ -1,5 +1,5 @@
 
-import { SEOHelmet } from "@/components/SEOHelmet";
+import { Helmet } from "react-helmet-async";
 import { useLanguage } from "@/context/LanguageContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -40,11 +40,10 @@ export default function About() {
 
   return (
     <>
-      <SEOHelmet
-        title="About Us - Zwanski Tech"
-        description="Learn about Zwanski Tech's mission to provide free tech education and quality development services worldwide."
-        canonical="https://zwanski.org/about"
-      />
+      <Helmet>
+        <title>About Us - Zwanski Tech</title>
+        <meta name="description" content="Learn about Zwanski Tech's mission to provide free tech education and quality development services worldwide." />
+      </Helmet>
 
       <div className="flex flex-col min-h-screen bg-background">
         <Navbar />

@@ -37,7 +37,7 @@ export default function OptimizedHomepage({
         <Hero />
       </section>
 
-      <section id="next-section">
+      <section>
         <ValueProposition />
       </section>
 

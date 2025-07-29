@@ -209,12 +209,8 @@ const EnhancedContact = () => {
                       />
                     </div>
                   </div>
-
-                  <label htmlFor="service-select" className="sr-only">
-                    {currentContent.form.service}
-                  </label>
+                  
                   <select
-                    id="service-select"
                     className="w-full p-3 bg-background border border-border rounded-md focus:border-primary text-foreground text-sm sm:text-base"
                     value={formData.service}
                     onChange={(e) => setFormData({...formData, service: e.target.value})}

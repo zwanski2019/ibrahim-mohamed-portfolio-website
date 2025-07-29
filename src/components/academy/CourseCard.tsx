@@ -60,26 +60,15 @@ const CourseCard = ({ course, isEnrolled, viewMode }: CourseCardProps) => {
 
   const enrollMutation = useMutation({
     mutationFn: async () => {
-      if (!user) {
-        const stored = JSON.parse(
-          localStorage.getItem('guestEnrollments') || '[]'
-        ) as string[];
-        if (!stored.includes(course.id)) {
-          stored.push(course.id);
-          localStorage.setItem('guestEnrollments', JSON.stringify(stored));
-        }
-        return;
-      }
-
+      if (!user) throw new Error("Please log in to enroll");
+      
       const { error } = await supabase
         .from('course_enrollments')
-        .insert([
-          {
-            user_id: user.id,
-            course_id: course.id,
-          },
-        ]);
-
+        .insert([{
+          user_id: user.id,
+          course_id: course.id
+        }]);
+      
       if (error) throw error;
 
       // Update enrollment count
@@ -221,7 +210,7 @@ const CourseCard = ({ course, isEnrolled, viewMode }: CourseCardProps) => {
                 <Button
                   size="sm"
                   onClick={() => enrollMutation.mutate()}
-                  disabled={enrollMutation.isPending}
+                  disabled={!user || enrollMutation.isPending}
                 >
                   {enrollMutation.isPending ? "Enrolling..." : "Enroll Free"}
                 </Button>
@@ -319,7 +308,7 @@ const CourseCard = ({ course, isEnrolled, viewMode }: CourseCardProps) => {
           <Button
             className="w-full"
             onClick={() => enrollMutation.mutate()}
-            disabled={enrollMutation.isPending}
+            disabled={!user || enrollMutation.isPending}
           >
             {enrollMutation.isPending ? "Enrolling..." : "Enroll Free"}
           </Button>

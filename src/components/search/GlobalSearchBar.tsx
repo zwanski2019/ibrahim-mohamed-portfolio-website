@@ -7,7 +7,6 @@ import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useGlobalSearch } from '@/hooks/useGlobalSearch';
 import { cn } from '@/lib/utils';
-import { sanitizeHtml } from '@/utils/sanitize';
 
 interface GlobalSearchBarProps {
   placeholder?: string;
@@ -223,13 +222,10 @@ export function GlobalSearchBar({
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <span
+                          <span 
                             className="font-medium text-sm truncate"
-                            dangerouslySetInnerHTML={{
-                              // Sanitize dynamic titles before injecting HTML
-                              __html: sanitizeHtml(
-                                (result as any)._highlightResult?.title?.value || result.title
-                              )
+                            dangerouslySetInnerHTML={{ 
+                              __html: (result as any)._highlightResult?.title?.value || result.title 
                             }}
                           />
                           <Badge 
@@ -244,11 +240,10 @@ export function GlobalSearchBar({
                             </Badge>
                           )}
                         </div>
-                        <p
+                        <p 
                           className="text-xs text-muted-foreground line-clamp-2"
-                          dangerouslySetInnerHTML={{
-                            // Sanitize snippets returned from search
-                            __html: sanitizeHtml(result.snippet || result.description)
+                          dangerouslySetInnerHTML={{ 
+                            __html: result.snippet || result.description 
                           }}
                         />
                       </div>

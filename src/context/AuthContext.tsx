@@ -39,52 +39,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   // Set up auth state listener and check for existing session
   useEffect(() => {
-    let mounted = true;
-
-    const initializeAuth = async () => {
-      try {
-        // Set up auth state listener FIRST
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(
-          (event, session) => {
-            if (mounted) {
-              setSession(session);
-              setUser(session?.user ?? null);
-              setIsLoading(false);
-            }
-          }
-        );
-
-        // THEN check for existing session
-        const { data: { session }, error } = await supabase.auth.getSession();
-        
-        if (error) {
-          console.error('Auth session error:', error);
-        }
-        
-        if (mounted) {
-          setSession(session);
-          setUser(session?.user ?? null);
-          setIsLoading(false);
-        }
-
-        return () => {
-          mounted = false;
-          subscription.unsubscribe();
-        };
-      } catch (error) {
-        console.error('Auth initialization error:', error);
-        if (mounted) {
-          setIsLoading(false);
-        }
+    // Set up auth state listener FIRST
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+        setIsLoading(false);
       }
-    };
+    );
 
-    const cleanup = initializeAuth();
-    
-    return () => {
-      mounted = false;
-      cleanup.then(fn => fn && fn());
-    };
+    // THEN check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      setIsLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   // Sign up function

@@ -14,7 +14,6 @@ const navItems = [
   { label: "Chat", path: "/chat", icon: MessageSquare },
   { label: "Newsletter", path: "/newsletter", icon: Mail },
   { label: "Tools", path: "/tools", icon: Settings },
-  { label: "Contact", path: "/contact", icon: Mail },
   { label: "3D Model", path: "/3d", icon: BookOpen },
   { label: "About", path: "/about", icon: Info },
   { label: "FAQ", path: "/faq", icon: FileText },

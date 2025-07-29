@@ -1,6 +1,6 @@
 
 import React from "react";
-import { SEOHelmet } from "@/components/SEOHelmet";
+import { Helmet } from "react-helmet-async";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import NewsletterForm from "../components/NewsletterForm";
@@ -9,11 +9,13 @@ import { Sparkles, Stars, Wand2 } from "lucide-react";
 export default function Newsletter() {
   return (
     <>
-      <SEOHelmet
-        title="Magic Newsletter - Join the Enchantment"
-        description="Join our magical newsletter and stay updated with the latest enchanted developments and spellbinding news."
-        canonical="https://zwanski.org/newsletter"
-      />
+      <Helmet>
+        <title>Magic Newsletter - Join the Enchantment</title>
+        <meta
+          name="description"
+          content="Join our magical newsletter and stay updated with the latest enchanted developments and spellbinding news."
+        />
+      </Helmet>
 
       <div className="min-h-screen flex flex-col bg-background">
         <Navbar />

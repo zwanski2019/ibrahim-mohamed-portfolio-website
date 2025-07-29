@@ -238,14 +238,6 @@ export const berTranslations = {
   "jobs.medium": "Alemmas",
   "jobs.high": "Ameqqran",
 
-  // Tools Section
-  "tools.passwordGenerator": "Ameskar n wawalen uffiren",
-  "tools.passwordGeneratorDesc": "Rnu wawalen uffiren s tɣellist",
-  "tools.qrGenerator": "Ameskar QR",
-  "tools.qrGeneratorDesc": "Rnu tangalt QR i yisebtar d uḍris",
-  "tools.urlShortener": "Amezriḍ URL",
-  "tools.urlShortenerDesc": "Sseẓẓer isebtar iqqaren s uselḥi",
-
   // Common
   "common.search": "Anadi",
 
@@ -272,14 +264,6 @@ export const berTranslations = {
   "imei.features.instantDesc": "Awi igmaḍ deg tallit",
   "imei.features.free": "Ilelelli",
   "imei.features.freeDesc": "Ameẓlu ilelelli s tlelli",
-  "tools.colorPicker": "Amfrey n Initen",
-  "tools.colorPickerDesc": "Fren initen d rnu tpalet n yiniten igunan",
-  "tools.jsonFormatter": "Amufater JSON",
-  "tools.jsonFormatterDesc": "Sirew d qqen isefka JSON s heshel",
-  "tools.timezoneConverter": "Amuɣli n Akud n Wakud",
-  "tools.timezoneConverterDesc": "Beddel akud gar yidakken n wakud",
-  "tools.imageCompressor": "Amesẓi n Tugna",
-  "tools.imageCompressorDesc": "Ssedḥed tignitin war aɛraḍ n wannuz",
 
   // Threat Map
   "threatMap.title": "Tawant n Wugur Srid",

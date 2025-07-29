@@ -11,26 +11,15 @@ export const useAcademy = () => {
 
   const enrollInCourse = useMutation({
     mutationFn: async (courseId: string) => {
-      if (!user) {
-        const stored = JSON.parse(
-          localStorage.getItem('guestEnrollments') || '[]'
-        ) as string[];
-        if (!stored.includes(courseId)) {
-          stored.push(courseId);
-          localStorage.setItem('guestEnrollments', JSON.stringify(stored));
-        }
-        return;
-      }
-
+      if (!user) throw new Error("Please log in to enroll");
+      
       const { error } = await supabase
         .from('course_enrollments')
-        .insert([
-          {
-            user_id: user.id,
-            course_id: courseId,
-          },
-        ]);
-
+        .insert([{
+          user_id: user.id,
+          course_id: courseId
+        }]);
+      
       if (error) throw error;
     },
     onSuccess: () => {
@@ -79,7 +68,7 @@ export const useAcademy = () => {
       courseId,
       status,
       progressPercentage,
-      timeSpent,
+      timeSpent
     }: {
       lessonId: string;
       courseId: string;
@@ -87,37 +76,20 @@ export const useAcademy = () => {
       progressPercentage: number;
       timeSpent: number;
     }) => {
-      if (!user) {
-        const key = 'guestProgress';
-        const progress = JSON.parse(
-          localStorage.getItem(key) || '{}'
-        ) as Record<string, any>;
-        const courseProgress = progress[courseId] || {};
-        courseProgress[lessonId] = {
-          status,
-          progressPercentage,
-          timeSpent,
-          updatedAt: new Date().toISOString(),
-        };
-        progress[courseId] = courseProgress;
-        localStorage.setItem(key, JSON.stringify(progress));
-        return;
-      }
-
+      if (!user) throw new Error("Please log in to track progress");
+      
       const { error } = await supabase
         .from('user_progress')
-        .upsert([
-          {
-            user_id: user.id,
-            lesson_id: lessonId,
-            course_id: courseId,
-            status,
-            progress_percentage: progressPercentage,
-            time_spent_minutes: timeSpent,
-            completed_at: status === 'completed' ? new Date().toISOString() : null,
-          },
-        ]);
-
+        .upsert([{
+          user_id: user.id,
+          lesson_id: lessonId,
+          course_id: courseId,
+          status,
+          progress_percentage: progressPercentage,
+          time_spent_minutes: timeSpent,
+          completed_at: status === 'completed' ? new Date().toISOString() : null
+        }]);
+      
       if (error) throw error;
     },
     onSuccess: () => {
@@ -172,17 +144,12 @@ export const useCourses = (filters?: {
 
 export const useUserEnrollments = () => {
   const { user } = useAuth();
-
+  
   return useQuery({
-    queryKey: ['user-enrollments', user?.id ?? 'guest'],
+    queryKey: ['user-enrollments', user?.id],
     queryFn: async () => {
-      if (!user) {
-        const stored = JSON.parse(
-          localStorage.getItem('guestEnrollments') || '[]'
-        ) as string[];
-        return stored;
-      }
-
+      if (!user) return [];
+      
       const { data, error } = await supabase
         .from('course_enrollments')
         .select(`
@@ -197,9 +164,10 @@ export const useUserEnrollments = () => {
         `)
         .eq('user_id', user.id)
         .order('enrolled_at', { ascending: false });
-
+      
       if (error) throw error;
-      return data.map((e) => e.course_id);
+      return data;
     },
+    enabled: !!user
   });
 };

@@ -1,10 +1,8 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.50.0';
 
-const ALLOWED_ORIGINS = Deno.env.get('ALLOWED_ORIGINS') ?? 'https://zwanski.org';
-
 const corsHeaders = {
-  'Access-Control-Allow-Origin': ALLOWED_ORIGINS,
+  'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 

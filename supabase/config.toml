@@ -1,11 +1,11 @@
 
 project_id = "ceihcnfngpmrtqunhaey"
 
+[functions.websocket-chat]
+verify_jwt = false
+
 [functions.verify-hcaptcha]
 verify_jwt = false
 
 [functions.get-hcaptcha-config]
-verify_jwt = false
-
-[functions.blogger-proxy]
 verify_jwt = false
