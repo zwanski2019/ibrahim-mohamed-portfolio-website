@@ -12,21 +12,20 @@ export default function DesktopNavigation() {
 
   return (
     <div className="flex gap-1 items-center">
-      {navItems.map((item) => {
-        return (
-          <Button
-            asChild
-            key={item.path}
-            variant={location.pathname === item.path ? "secondary" : "ghost"}
-            className="nav-btn"
-          >
-            <Link to={item.path}>
-              {item.icon && <item.icon className="inline-block mr-1 h-4 w-4" />}
-              {item.label}
-            </Link>
-          </Button>
-        );
-      })}
+      {navItems.map(item => (
+        <Button
+          asChild
+          key={item.path}
+          variant={location.pathname === item.path ? "secondary" : "ghost"}
+          className="nav-btn"
+        >
+          <Link to={item.path}>
+            {item.icon && <item.icon className="inline-block mr-1 h-4 w-4" />}
+            {item.label}
+          </Link>
+        </Button>
+      ))}
+
       {isAdmin && (
         <Button
           asChild

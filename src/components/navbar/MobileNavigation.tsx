@@ -5,7 +5,6 @@ import { useAuth } from "@/context/AuthContext";
 import { Shield } from "lucide-react";
 import { navItems } from "./navItems";
 
-
 export default function MobileNavigation({ onNavigate }: { onNavigate?: () => void }) {
   const { isAuthenticated, user } = useAuth();
   const location = useLocation();
@@ -13,22 +12,21 @@ export default function MobileNavigation({ onNavigate }: { onNavigate?: () => vo
 
   return (
     <div className="flex flex-col gap-2">
-      {navItems.map((item) => {
-        return (
-          <Button
-            asChild
-            key={item.path}
-            variant={location.pathname === item.path ? "secondary" : "ghost"}
-            className="w-full text-left"
-            onClick={onNavigate}
-          >
-            <Link to={item.path}>
-              {item.icon && <item.icon className="inline-block mr-1 h-4 w-4" />}
-              {item.label}
-            </Link>
-          </Button>
-        );
-      })}
+      {navItems.map((item) => (
+        <Button
+          asChild
+          key={item.path}
+          variant={location.pathname === item.path ? "secondary" : "ghost"}
+          className="w-full text-left"
+          onClick={onNavigate}
+        >
+          <Link to={item.path}>
+            {item.icon && <item.icon className="inline-block mr-1 h-4 w-4" />}
+            {item.label}
+          </Link>
+        </Button>
+      ))}
+
       {isAdmin && (
         <Button
           asChild
