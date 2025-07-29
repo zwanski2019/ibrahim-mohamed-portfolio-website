@@ -16,11 +16,11 @@ export default function Footer() {
           title="Zwanski Tech RSS Feed" 
           href="/rss" 
         />
-        <link 
-          rel="alternate" 
-          type="application/rss+xml" 
-          title="Zwanski Tech Feed" 
-          href="/feed" 
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Zwanski Tech Feed"
+          href="/rss"
         />
       </Helmet>
       
@@ -177,7 +177,7 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/3d" className="text-muted-foreground hover:text-primary transition-colors">
+                  <Link to="/computer-model" className="text-muted-foreground hover:text-primary transition-colors">
                     3D Model
                   </Link>
                 </li>
