@@ -1,7 +1,24 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Shield, Home, Wrench, GraduationCap, Briefcase, Users, MessageSquare, Mail, Settings, BookOpen, Info, FileText, LifeBuoy, Rss, PenTool } from "lucide-react";
+import {
+  Shield,
+  Home,
+  Wrench,
+  GraduationCap,
+  Briefcase,
+  Users,
+  MessageSquare,
+  Mail,
+  Settings,
+  BookOpen,
+  Info,
+  FileText,
+  LifeBuoy,
+  Rss,
+  PenTool,
+  Globe
+} from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
 const navItems = [
@@ -17,6 +34,7 @@ const navItems = [
   { label: "3D Model", path: "/3d", icon: BookOpen },
   { label: "About", path: "/about", icon: Info },
   { label: "FAQ", path: "/faq", icon: FileText },
+  { label: "Migrant Support", path: "/migrant-support", icon: Globe },
   { label: "Support", path: "/support", icon: LifeBuoy },
   { label: "Infrastructure", path: "/infrastructure" },
   { label: "Privacy", path: "/privacy-policy" },

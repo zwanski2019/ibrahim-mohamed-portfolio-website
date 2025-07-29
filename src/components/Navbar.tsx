@@ -14,7 +14,8 @@ import {
   FileText,
   MessageSquare,
   Bot,
-  Activity
+  Activity,
+  Globe
 } from "lucide-react";
 import ZwanskiLogo from "./ZwanskiLogo";
 import { ThemeToggle } from "./ThemeToggle";
@@ -127,6 +128,7 @@ const Navbar = () => {
     { label: "Tools", path: "/tools", icon: Settings2 },
     { label: "Jobs", path: "/jobs", icon: Briefcase },
     { label: "Blog", path: "/blog", icon: FileText },
+    { label: "Migrant Support", path: "/migrant-support", icon: Globe },
     { label: "Chat", path: "/chat", icon: MessageSquare },
     { label: "Threat Map", path: "/threat-map", icon: Activity },
     { label: "AI", path: "/ai", icon: Bot },
