@@ -124,30 +124,32 @@ const Tools = () => {
             </div>
           </section>
 
-          {/* Featured Tool Section */}
-          {featuredTools.map((tool) => (
-            <section key={tool.id} className="py-16 bg-primary/5">
-              <div className="container mx-auto px-4">
-                <div className="text-center mb-12">
-                  <div className="flex items-center justify-center gap-3 mb-4">
-                    <div className="p-2 rounded-full bg-primary/10">
-                      <tool.icon className="h-6 w-6 text-primary" />
+          {/* Featured Tools Section */}
+          <section className="py-16 space-y-16">
+            <div className="container mx-auto px-4">
+              {featuredTools.map((tool, index) => (
+                <div key={tool.id} className={`${index > 0 ? 'border-t border-border pt-16' : ''}`}>
+                  <div className="text-center mb-12">
+                    <div className="flex items-center justify-center gap-3 mb-4">
+                      <div className="p-2 rounded-full bg-primary/10">
+                        <tool.icon className="h-6 w-6 text-primary" />
+                      </div>
+                      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold">
+                        {tool.title}
+                      </h2>
                     </div>
-                    <h2 className="text-3xl md:text-4xl font-bold">
-                      {tool.title}
-                    </h2>
+                    <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
+                      {tool.description}
+                    </p>
                   </div>
-                  <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                    {tool.description}
-                  </p>
+                  
+                  <div className="max-w-4xl mx-auto px-4">
+                    {tool.component}
+                  </div>
                 </div>
-                
-                <div className="max-w-4xl mx-auto">
-                  {tool.component}
-                </div>
-              </div>
-            </section>
-          ))}
+              ))}
+            </div>
+          </section>
 
           {/* Coming Soon Tools */}
           <section className="py-16">
@@ -162,7 +164,7 @@ const Tools = () => {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto px-4">
                 {comingSoonTools.map((tool) => (
                   <Card key={tool.id} className="relative overflow-hidden">
                     <div className="absolute top-2 right-2 bg-primary/10 text-primary text-xs px-2 py-1 rounded-full font-medium">
