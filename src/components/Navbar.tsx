@@ -228,10 +228,11 @@ const Navbar = () => {
           <div className="lg:hidden border-t border-border/30 py-4 bg-background/95 backdrop-blur-sm">
             <div className="space-y-4">
               {!isAuthenticated && (
-                <div className="flex gap-2 px-2 sm:hidden">
+                <div className="grid grid-cols-2 gap-1 px-2 sm:hidden">
                   <Button
                     variant="outline"
-                    className="flex-1"
+                    size="sm"
+                    className="flex-1 h-8 px-2 py-1 text-xs"
                     onClick={() => {
                       navigate("/auth?tab=signin");
                       setIsMenuOpen(false);
@@ -240,7 +241,8 @@ const Navbar = () => {
                     Sign In
                   </Button>
                   <Button
-                    className="flex-1"
+                    size="sm"
+                    className="flex-1 h-8 px-2 py-1 text-xs"
                     onClick={() => {
                       navigate("/auth?tab=signup");
                       setIsMenuOpen(false);
@@ -263,7 +265,7 @@ const Navbar = () => {
                       <Button
                         key={item.path}
                         variant={isActivePath(item.path) ? "secondary" : "ghost"}
-                        className="justify-start h-auto p-3 flex-col items-start"
+                        className="justify-start h-auto p-2 flex-col items-start text-xs"
                         onClick={() => {
                           navigate(item.path);
                           setIsMenuOpen(false);
@@ -271,7 +273,7 @@ const Navbar = () => {
                       >
                         <div className="flex items-center gap-2 mb-1">
                           <Icon className="h-4 w-4" />
-                          <span className="font-medium">{item.label}</span>
+                          <span className="font-medium text-xs">{item.label}</span>
                         </div>
                         {item.description && (
                           <span className="text-xs text-muted-foreground">
@@ -296,7 +298,7 @@ const Navbar = () => {
                       <Button
                         key={item.path}
                         variant={isActivePath(item.path) ? "secondary" : "ghost"}
-                        className="justify-start w-full"
+                        className="justify-start w-full text-xs px-3 py-2"
                         onClick={() => {
                           navigate(item.path);
                           setIsMenuOpen(false);
