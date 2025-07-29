@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import MigrantSupport from "./pages/MigrantSupport";
 
 // Context Providers
 import { ThemeProvider } from "@/context/ThemeContext";
@@ -184,6 +185,7 @@ function App() {
                           <Route path="/terms-of-service" element={<TermsOfService />} />
                           
                           <Route path="/support" element={<Support />} />
+                          <Route path="/migrant-support" element={<MigrantSupport />} />
                           <Route path="/faq" element={<FAQ />} />
                           <Route path="/infrastructure" element={<Infrastructure />} />
                           <Route path="/imei-check" element={<IMEICheck />} />
