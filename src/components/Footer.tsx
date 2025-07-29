@@ -26,7 +26,7 @@ export default function Footer() {
       
       <footer className="py-12 bg-secondary/30 border-t border-border">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8">
             {/* Company Info */}
             <div className="md:col-span-2">
               <Link to="/" className="text-xl font-bold text-gradient">
@@ -103,11 +103,6 @@ export default function Footer() {
               <h3 className="font-semibold mb-3">Company</h3>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">
-                    About Us
-                  </Link>
-                </li>
-                <li>
                   <Link to="/services" className="text-muted-foreground hover:text-primary transition-colors">
                     Services
                   </Link>
@@ -120,6 +115,11 @@ export default function Footer() {
                 <li>
                   <Link to="/jobs" className="text-muted-foreground hover:text-primary transition-colors">
                     Job Marketplace
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">
+                    About Us
                   </Link>
                 </li>
                 <li>
@@ -145,13 +145,60 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/privacy" className="text-muted-foreground hover:text-primary transition-colors">
+                  <Link to="/privacy-policy" className="text-muted-foreground hover:text-primary transition-colors">
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link to="/terms" className="text-muted-foreground hover:text-primary transition-colors">
+                  <Link to="/terms-of-service" className="text-muted-foreground hover:text-primary transition-colors">
                     Terms of Service
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Explore */}
+            <div>
+              <h3 className="font-semibold mb-3">Explore</h3>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <Link to="/chat" className="text-muted-foreground hover:text-primary transition-colors">
+                    Chat
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/newsletter" className="text-muted-foreground hover:text-primary transition-colors">
+                    Newsletter
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/tools" className="text-muted-foreground hover:text-primary transition-colors">
+                    Tools
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/3d" className="text-muted-foreground hover:text-primary transition-colors">
+                    3D Model
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/migrant-support" className="text-muted-foreground hover:text-primary transition-colors">
+                    Migrant Support
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/threat-map" className="text-muted-foreground hover:text-primary transition-colors">
+                    Threat Map
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/ai" className="text-muted-foreground hover:text-primary transition-colors">
+                    AI
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/rss" className="text-muted-foreground hover:text-primary transition-colors">
+                    RSS
                   </Link>
                 </li>
               </ul>
@@ -164,14 +211,14 @@ export default function Footer() {
                 &copy; {new Date().getFullYear()} Zwanski Tech. {t('footer.rights')}
               </p>
               <div className="flex items-center gap-4 mt-4 md:mt-0">
-                <Link 
-                  to="/privacy" 
+                <Link
+                  to="/privacy-policy"
                   className="text-xs text-muted-foreground hover:text-primary transition-colors"
                 >
                   Privacy
                 </Link>
-                <Link 
-                  to="/terms" 
+                <Link
+                  to="/terms-of-service"
                   className="text-xs text-muted-foreground hover:text-primary transition-colors"
                 >
                   Terms
