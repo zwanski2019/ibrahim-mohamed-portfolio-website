@@ -111,95 +111,125 @@ const Services = () => {
           ))}
         </div>
 
-        {/* Service Detail Modal */}
+        {/* Enhanced Service Detail Modal */}
         {selectedService && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-background rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="relative">
-                {/* Header */}
-                <div className={`bg-gradient-to-r ${selectedService.color} p-6 text-white rounded-t-xl`}>
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-2 sm:p-4 animate-fade-in">
+            <div className="bg-background rounded-2xl w-full max-w-4xl max-h-[95vh] overflow-hidden shadow-2xl border border-border/50 animate-scale-in">
+              {/* Mobile-friendly header with close button */}
+              <div className="sticky top-0 z-10">
+                <div className={`bg-gradient-to-r ${selectedService.color} relative overflow-hidden`}>
+                  {/* Animated background effects */}
+                  <div className="absolute inset-0 opacity-20">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-2xl animate-pulse" />
+                    <div className="absolute bottom-0 left-0 w-40 h-40 bg-white/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+                  </div>
+                  
+                  {/* Close button - prominent on mobile */}
                   <button
                     onClick={() => setSelectedService(null)}
-                    className="absolute top-4 right-4 text-white hover:bg-white/20 rounded-full p-2 transition-colors"
+                    className="absolute top-3 right-3 sm:top-4 sm:right-4 text-white hover:bg-white/20 rounded-full p-2 sm:p-2.5 transition-all duration-200 hover:scale-110 z-20"
+                    aria-label="Close modal"
                   >
-                    <X className="h-5 w-5" />
+                    <X className="h-5 w-5 sm:h-6 sm:w-6" />
                   </button>
                   
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 bg-white/20 rounded-lg flex items-center justify-center">
-                      <selectedService.icon className="h-8 w-8 text-white" />
-                    </div>
-                    <div>
-                      <h2 className="text-2xl font-bold">{selectedService.title}</h2>
-                      {selectedService.badge && (
-                        <span className="bg-white/20 text-white text-sm px-3 py-1 rounded-full">
-                          {selectedService.badge}
-                        </span>
-                      )}
+                  {/* Header content */}
+                  <div className="relative z-10 p-4 sm:p-6 text-white">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-white/30">
+                        <selectedService.icon className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight mb-2">{selectedService.title}</h2>
+                        {selectedService.badge && (
+                          <span className="inline-block bg-white/20 text-white text-sm px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/30">
+                            {selectedService.badge}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
+              </div>
 
-                {/* Content */}
-                <div className="p-6">
-                  <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
-                    {selectedService.description}
-                  </p>
+              {/* Scrollable content */}
+              <div className="overflow-y-auto max-h-[calc(95vh-180px)] sm:max-h-[calc(95vh-200px)]">
+                <div className="p-4 sm:p-6 lg:p-8">
+                  {/* Description */}
+                  <div className="mb-8">
+                    <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
+                      {selectedService.description}
+                    </p>
+                  </div>
 
-                  {/* Features */}
-                  <div className="mb-6">
-                    <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                      <CheckCircle className="h-5 w-5 text-green-500" />
+                  {/* Features Grid */}
+                  <div className="mb-8">
+                    <h3 className="text-lg sm:text-xl font-semibold mb-6 flex items-center gap-2">
+                      <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-500" />
                       What's Included
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                       {selectedService.features.map((feature, index) => (
-                        <div key={index} className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-primary rounded-full" />
-                          <span className="text-sm">{feature}</span>
+                        <div 
+                          key={index} 
+                          className="flex items-start gap-3 p-3 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors duration-200 group"
+                        >
+                          <div className="w-2 h-2 bg-primary rounded-full mt-2 group-hover:scale-125 transition-transform duration-200" />
+                          <span className="text-sm sm:text-base leading-relaxed">{feature}</span>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  {/* Service Details */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 p-4 bg-secondary/50 rounded-lg">
-                    <div className="text-center">
-                      <Clock className="h-5 w-5 text-primary mx-auto mb-2" />
-                      <div className="text-sm font-medium">Quick Response</div>
-                      <div className="text-xs text-muted-foreground">24-48 hours</div>
-                    </div>
-                    <div className="text-center">
-                      <Star className="h-5 w-5 text-primary mx-auto mb-2" />
-                      <div className="text-sm font-medium">Quality Assured</div>
-                      <div className="text-xs text-muted-foreground">100% Guaranteed</div>
-                    </div>
-                    <div className="text-center">
-                      <Phone className="h-5 w-5 text-primary mx-auto mb-2" />
-                      <div className="text-sm font-medium">Support</div>
-                      <div className="text-xs text-muted-foreground">24/7 Available</div>
+                  {/* Service Highlights */}
+                  <div className="mb-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 sm:p-6 bg-gradient-to-br from-secondary/30 to-secondary/50 rounded-xl border border-border/50">
+                      <div className="text-center group hover:scale-105 transition-transform duration-200">
+                        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                          <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                        </div>
+                        <div className="font-semibold text-sm sm:text-base">Quick Response</div>
+                        <div className="text-xs sm:text-sm text-muted-foreground mt-1">24-48 hours</div>
+                      </div>
+                      <div className="text-center group hover:scale-105 transition-transform duration-200">
+                        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                          <Star className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                        </div>
+                        <div className="font-semibold text-sm sm:text-base">Quality Assured</div>
+                        <div className="text-xs sm:text-sm text-muted-foreground mt-1">100% Guaranteed</div>
+                      </div>
+                      <div className="text-center group hover:scale-105 transition-transform duration-200">
+                        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                          <Phone className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                        </div>
+                        <div className="font-semibold text-sm sm:text-base">24/7 Support</div>
+                        <div className="text-xs sm:text-sm text-muted-foreground mt-1">Always Available</div>
+                      </div>
                     </div>
                   </div>
 
                   {/* Call to Action */}
-                  <div className="text-center">
-                    <h3 className="text-lg font-semibold mb-4">Ready to get started?</h3>
-                    <p className="text-muted-foreground mb-6">
-                      Contact us on WhatsApp for a free consultation and quote.
+                  <div className="text-center bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl p-6 sm:p-8 border border-primary/20">
+                    <h3 className="text-xl sm:text-2xl font-bold mb-4 text-primary">Ready to get started?</h3>
+                    <p className="text-muted-foreground mb-6 text-sm sm:text-base max-w-md mx-auto">
+                      Contact us on WhatsApp for a free consultation and personalized quote.
                     </p>
                     
-                    <a
-                      href={`https://wa.me/21694934141?text=Hi! I'm interested in your ${selectedService.title} service. Can you provide more details?`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
-                    >
-                      <MessageCircle className="h-5 w-5" />
-                      Chat on WhatsApp
-                    </a>
-                    
-                    <div className="mt-4 text-sm text-muted-foreground">
-                      Or call us at: <span className="font-medium">+216 94 934 141</span>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                      <a
+                        href={`https://wa.me/21694934141?text=Hi! I'm interested in your ${selectedService.title} service. Can you provide more details?`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3.5 rounded-xl font-semibold transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl w-full sm:w-auto justify-center"
+                      >
+                        <MessageCircle className="h-5 w-5" />
+                        Chat on WhatsApp
+                      </a>
+                      
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Phone className="h-4 w-4" />
+                        <span>Or call: <span className="font-semibold text-foreground">+216 94 934 141</span></span>
+                      </div>
                     </div>
                   </div>
                 </div>
