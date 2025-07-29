@@ -15,7 +15,8 @@ const ValueProposition = () => {
       description: "Professional repair services for all your devices with data recovery and warranty.",
       color: "from-emerald-400 to-green-500",
       bgColor: "bg-emerald-50 dark:bg-emerald-950/20",
-      services: ["Smartphone Repair", "Laptop Recovery", "Data Retrieval", "Hardware Diagnostics"]
+      services: ["Smartphone Repair", "Laptop Recovery", "Data Retrieval", "Hardware Diagnostics"],
+      link: "/services?category=repair"
     },
     {
       icon: Rocket,
@@ -24,7 +25,8 @@ const ValueProposition = () => {
       description: "Tailored web applications, software solutions, and digital platforms for your business.",
       color: "from-blue-400 to-cyan-500",
       bgColor: "bg-blue-50 dark:bg-blue-950/20",
-      services: ["Web Development", "Custom Software", "Mobile Apps", "Cloud Solutions"]
+      services: ["Web Development", "Custom Software", "Mobile Apps", "Cloud Solutions"],
+      link: "/services?category=development"
     },
     {
       icon: Shield,
@@ -33,7 +35,8 @@ const ValueProposition = () => {
       description: "Comprehensive security audits, penetration testing, and protection strategies.",
       color: "from-red-400 to-orange-500",
       bgColor: "bg-red-50 dark:bg-red-950/20",
-      services: ["Security Audits", "Wazuh Installation", "Threat Detection", "Compliance"]
+      services: ["Security Audits", "Wazuh Installation", "Threat Detection", "Compliance"],
+      link: "/services?category=security"
     },
     {
       icon: GraduationCap,
@@ -42,7 +45,8 @@ const ValueProposition = () => {
       description: "Learn cybersecurity, programming, and IT skills through our comprehensive academy.",
       color: "from-purple-400 to-pink-500",
       bgColor: "bg-purple-50 dark:bg-purple-950/20",
-      services: ["Cybersecurity Courses", "Programming Training", "Certifications", "Workshops"]
+      services: ["Cybersecurity Courses", "Programming Training", "Certifications", "Workshops"],
+      link: "/academy"
     }
   ];
 
@@ -69,57 +73,63 @@ const ValueProposition = () => {
         </div>
 
         {/* Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 mb-12">
           {pillars.map((pillar, index) => {
             const Icon = pillar.icon;
             return (
-              <Card 
-                key={index} 
-                className={`axeptio-card group hover:scale-105 transition-all duration-300 cursor-pointer border-2 hover:border-primary/20 ${pillar.bgColor}`}
+              <Link 
+                key={index}
+                to={pillar.link}
+                className="block w-full"
               >
-                <CardContent className="p-6 text-center">
-                  {/* Icon */}
-                  <div className="mb-4 mx-auto">
-                    <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${pillar.color} text-white`}>
-                      <Icon className="h-8 w-8" />
-                    </div>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-xl font-bold mb-2">
-                    <span className={`bg-gradient-to-r ${pillar.color} bg-clip-text text-transparent`}>
-                      {pillar.title}
-                    </span>
-                  </h3>
-
-                  {/* Subtitle */}
-                  <h4 className="font-semibold text-foreground mb-3">
-                    {pillar.subtitle}
-                  </h4>
-
-                  {/* Description */}
-                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                    {pillar.description}
-                  </p>
-
-                  {/* Services List */}
-                  <div className="space-y-1 mb-4">
-                    {pillar.services.map((service, idx) => (
-                      <div key={idx} className="text-xs text-muted-foreground flex items-center justify-center gap-1">
-                        <span className={`w-1 h-1 rounded-full bg-gradient-to-r ${pillar.color}`} />
-                        {service}
+                <Card 
+                  className={`axeptio-card group hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer border-2 hover:border-primary/30 hover:shadow-xl active:shadow-lg ${pillar.bgColor} h-full`}
+                >
+                  <CardContent className="p-4 sm:p-6 text-center h-full flex flex-col">
+                    {/* Icon */}
+                    <div className="mb-4 mx-auto">
+                      <div className={`inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-xl bg-gradient-to-br ${pillar.color} text-white group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                        <Icon className="h-6 w-6 sm:h-8 sm:w-8" />
                       </div>
-                    ))}
-                  </div>
-
-                  {/* Action */}
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    <div className={`text-xs font-medium bg-gradient-to-r ${pillar.color} bg-clip-text text-transparent`}>
-                      Learn More →
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+
+                    {/* Title */}
+                    <h3 className="text-lg sm:text-xl font-bold mb-2">
+                      <span className={`bg-gradient-to-r ${pillar.color} bg-clip-text text-transparent`}>
+                        {pillar.title}
+                      </span>
+                    </h3>
+
+                    {/* Subtitle */}
+                    <h4 className="font-semibold text-foreground mb-3 text-sm sm:text-base">
+                      {pillar.subtitle}
+                    </h4>
+
+                    {/* Description */}
+                    <p className="text-muted-foreground text-xs sm:text-sm mb-4 leading-relaxed flex-grow">
+                      {pillar.description}
+                    </p>
+
+                    {/* Services List */}
+                    <div className="space-y-1 mb-4">
+                      {pillar.services.map((service, idx) => (
+                        <div key={idx} className="text-xs text-muted-foreground flex items-center justify-center gap-1">
+                          <span className={`w-1 h-1 rounded-full bg-gradient-to-r ${pillar.color} group-hover:scale-125 transition-transform duration-200`} />
+                          <span className="group-hover:text-foreground transition-colors duration-200">{service}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Action */}
+                    <div className="opacity-70 group-hover:opacity-100 transition-opacity duration-200 mt-auto">
+                      <div className={`text-xs sm:text-sm font-medium bg-gradient-to-r ${pillar.color} bg-clip-text text-transparent flex items-center justify-center gap-1`}>
+                        <span>Learn More</span>
+                        <span className="group-hover:translate-x-1 transition-transform duration-200">→</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
             );
           })}
         </div>
