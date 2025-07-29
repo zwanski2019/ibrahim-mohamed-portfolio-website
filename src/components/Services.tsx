@@ -113,8 +113,14 @@ const Services = () => {
 
         {/* Enhanced Service Detail Modal */}
         {selectedService && (
-          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-2 sm:p-4 animate-fade-in">
-            <div className="bg-background rounded-2xl w-full max-w-4xl max-h-[95vh] overflow-hidden shadow-2xl border border-border/50 animate-scale-in">
+          <div 
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-2 sm:p-4 animate-fade-in"
+            onClick={() => setSelectedService(null)}
+          >
+            <div 
+              className="bg-background rounded-2xl w-full max-w-4xl max-h-[95vh] overflow-hidden shadow-2xl border border-border/50 animate-scale-in"
+              onClick={(e) => e.stopPropagation()}
+            >
               {/* Mobile-friendly header with close button */}
               <div className="sticky top-0 z-10">
                 <div className={`bg-gradient-to-r ${selectedService.color} relative overflow-hidden`}>
