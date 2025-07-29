@@ -104,6 +104,8 @@ The script attempts to sign in with the provided credentials and then signs out,
 
 ## 📝 Contribution Guidelines
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
+
 We welcome pull requests! To contribute:
 
 1. Fork this repository and create a new branch for your changes.

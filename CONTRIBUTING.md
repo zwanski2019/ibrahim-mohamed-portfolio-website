@@ -1,1 +1,3 @@
-contributing files here
+# 🧭 Contributing to Zwanski-Tech
+
+... (trimmed)
