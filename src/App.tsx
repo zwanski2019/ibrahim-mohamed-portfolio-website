@@ -2,7 +2,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import MigrantSupport from "./pages/MigrantSupport";
 
@@ -152,7 +152,7 @@ function App() {
                           <Route path="/services" element={<Services />} />
                           <Route path="/about" element={<About />} />
                           <Route path="/computer-model" element={<ComputerModel />} />
-                          <Route path="/3d" element={<ComputerModel />} />
+                          <Route path="/3d" element={<Navigate to="/computer-model" replace />} />
                           <Route path="/chat" element={<Chat />} />
                           <Route path="/newsletter" element={<Newsletter />} />
                           <Route path="/academy" element={<Academy />} />
@@ -179,10 +179,10 @@ function App() {
                           <Route path="/settings" element={<Settings />} />
                           
                           {/* Privacy and Terms Routes */}
-                          <Route path="/privacy" element={<PrivacyPolicy />} />
                           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                          <Route path="/terms" element={<TermsOfService />} />
+                          <Route path="/privacy" element={<Navigate to="/privacy-policy" replace />} />
                           <Route path="/terms-of-service" element={<TermsOfService />} />
+                          <Route path="/terms" element={<Navigate to="/terms-of-service" replace />} />
                           
                           <Route path="/support" element={<Support />} />
                           <Route path="/migrant-support" element={<MigrantSupport />} />

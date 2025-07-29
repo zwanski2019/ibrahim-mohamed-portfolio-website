@@ -145,12 +145,12 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/privacy" className="text-muted-foreground hover:text-primary transition-colors">
+                  <Link to="/privacy-policy" className="text-muted-foreground hover:text-primary transition-colors">
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link to="/terms" className="text-muted-foreground hover:text-primary transition-colors">
+                  <Link to="/terms-of-service" className="text-muted-foreground hover:text-primary transition-colors">
                     Terms of Service
                   </Link>
                 </li>
@@ -165,13 +165,13 @@ export default function Footer() {
               </p>
               <div className="flex items-center gap-4 mt-4 md:mt-0">
                 <Link 
-                  to="/privacy" 
+                  to="/privacy-policy"
                   className="text-xs text-muted-foreground hover:text-primary transition-colors"
                 >
                   Privacy
                 </Link>
                 <Link 
-                  to="/terms" 
+                  to="/terms-of-service"
                   className="text-xs text-muted-foreground hover:text-primary transition-colors"
                 >
                   Terms
