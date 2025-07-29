@@ -2,21 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
 import {
-  Menu,
-  X,
-  Home,
-  Wrench,
-  Shield,
-  GraduationCap,
-  Briefcase,
-  Settings2,
-  FileText,
-  MessageSquare,
-  Bot,
-  Activity,
-  Globe
-} from "lucide-react";
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+import { navItems, NAV_DISPLAY_LIMIT } from "./navbar/navItems";
 import ZwanskiLogo from "./ZwanskiLogo";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageSelector } from "./LanguageSelector";
@@ -92,41 +85,6 @@ const Navbar = () => {
 
   const isActivePath = (path: string) => location.pathname === path;
 
-  const mainNavItems = [
-    { label: "Home", path: "/", icon: Home },
-    {
-      label: "Fix",
-      path: "/services?category=repair",
-      icon: Wrench,
-      description: "Device Repair & Recovery"
-    },
-    {
-      label: "Build",
-      path: "/services?category=development",
-      icon: Briefcase,
-      description: "Custom Development"
-    },
-    {
-      label: "Secure",
-      path: "/services?category=security",
-      icon: Shield,
-      description: "Cybersecurity Solutions"
-    },
-    {
-      label: "Teach",
-      path: "/academy",
-      icon: GraduationCap,
-      description: "Education & Training"
-    },
-    { label: "Tools", path: "/tools", icon: Settings2 },
-    { label: "Jobs", path: "/jobs", icon: Briefcase },
-    { label: "Blog", path: "/blog", icon: FileText },
-    { label: "Migrant Support", path: "/migrant-support", icon: Globe },
-    { label: "Chat", path: "/chat", icon: MessageSquare },
-    { label: "Threat Map", path: "/threat-map", icon: Activity },
-    { label: "AI", path: "/ai", icon: Bot }
-  ];
-
   return (
     <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="container mx-auto px-4">
@@ -201,7 +159,7 @@ const Navbar = () => {
                 <Menu className="h-4 w-4" />
                 All Services
               </Button>
-              {mainNavItems.slice(0, 6).map((item) => {
+              {navItems.slice(0, NAV_DISPLAY_LIMIT).map((item) => {
                 const Icon = item.icon;
                 return (
                   <Button
@@ -221,6 +179,28 @@ const Navbar = () => {
                   </Button>
                 );
               })}
+              {navItems.length > NAV_DISPLAY_LIMIT && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="nav-btn">
+                      More
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    {navItems.slice(NAV_DISPLAY_LIMIT).map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <DropdownMenuItem asChild key={item.path}>
+                          <Link to={item.path} className="flex items-center gap-2">
+                            {Icon && <Icon className="h-4 w-4" />}
+                            {item.label}
+                          </Link>
+                        </DropdownMenuItem>
+                      );
+                    })}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
             </div>
             <div className="flex items-center space-x-2 text-sm">
               <Button
@@ -248,10 +228,11 @@ const Navbar = () => {
           <div className="lg:hidden border-t border-border/30 py-4 bg-background/95 backdrop-blur-sm">
             <div className="space-y-4">
               {!isAuthenticated && (
-                <div className="flex gap-2 px-2 sm:hidden">
+                <div className="grid grid-cols-2 gap-1 px-2 sm:hidden">
                   <Button
                     variant="outline"
-                    className="flex-1"
+                    size="sm"
+                    className="flex-1 h-8 px-2 py-1 text-xs"
                     onClick={() => {
                       navigate("/auth?tab=signin");
                       setIsMenuOpen(false);
@@ -260,7 +241,8 @@ const Navbar = () => {
                     Sign In
                   </Button>
                   <Button
-                    className="flex-1"
+                    size="sm"
+                    className="flex-1 h-8 px-2 py-1 text-xs"
                     onClick={() => {
                       navigate("/auth?tab=signup");
                       setIsMenuOpen(false);
@@ -277,13 +259,13 @@ const Navbar = () => {
                   SERVICES
                 </h3>
                 <div className="grid grid-cols-2 gap-1">
-                  {mainNavItems.slice(1, 5).map((item) => {
+                  {navItems.slice(1, 5).map((item) => {
                     const Icon = item.icon;
                     return (
                       <Button
                         key={item.path}
                         variant={isActivePath(item.path) ? "secondary" : "ghost"}
-                        className="justify-start h-auto p-3 flex-col items-start"
+                        className="justify-start h-auto p-2 flex-col items-start text-xs"
                         onClick={() => {
                           navigate(item.path);
                           setIsMenuOpen(false);
@@ -291,7 +273,7 @@ const Navbar = () => {
                       >
                         <div className="flex items-center gap-2 mb-1">
                           <Icon className="h-4 w-4" />
-                          <span className="font-medium">{item.label}</span>
+                          <span className="font-medium text-xs">{item.label}</span>
                         </div>
                         {item.description && (
                           <span className="text-xs text-muted-foreground">
@@ -310,13 +292,13 @@ const Navbar = () => {
                   EXPLORE
                 </h3>
                 <div className="space-y-1">
-                  {mainNavItems.slice(5).map((item) => {
+                  {navItems.slice(5).map((item) => {
                     const Icon = item.icon;
                     return (
                       <Button
                         key={item.path}
                         variant={isActivePath(item.path) ? "secondary" : "ghost"}
-                        className="justify-start w-full"
+                        className="justify-start w-full text-xs px-3 py-2"
                         onClick={() => {
                           navigate(item.path);
                           setIsMenuOpen(false);

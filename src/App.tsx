@@ -161,9 +161,9 @@ function App() {
                           <Route path="/post-job" element={<PostJob />} />
                            <Route path="/freelancers" element={<Freelancers />} />
                            <Route path="/auth" element={<Auth />} />
-                           <Route path="/login" element={<Auth />} />
-                           <Route path="/register" element={<Auth />} />
-                           <Route path="/signup" element={<Auth />} />
+                           <Route path="/login" element={<Navigate to="/auth" replace />} />
+                           <Route path="/register" element={<Navigate to="/auth" replace />} />
+                           <Route path="/signup" element={<Navigate to="/auth" replace />} />
                            <Route path="/blog" element={<Blog />} />
                           
                           {/* Admin Routes */}
@@ -194,7 +194,7 @@ function App() {
                           <Route path="/ai" element={<AIAssistantPage />} />
                           <Route path="/search" element={<Search />} />
                           <Route path="/rss" element={<RSS />} />
-                          <Route path="/feed" element={<RSS />} />
+                          <Route path="/feed" element={<Navigate to="/rss" replace />} />
                           <Route path="*" element={<NotFound />} />
                           </Routes>
                         </Suspense>

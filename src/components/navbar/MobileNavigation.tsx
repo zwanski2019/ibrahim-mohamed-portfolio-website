@@ -2,45 +2,8 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
-import {
-  Shield,
-  Home,
-  Wrench,
-  GraduationCap,
-  Briefcase,
-  Users,
-  MessageSquare,
-  Mail,
-  Settings,
-  BookOpen,
-  Info,
-  FileText,
-  LifeBuoy,
-  Rss,
-  PenTool,
-  Globe
-} from "lucide-react";
-
-const navItems = [
-  { label: "Home", path: "/", icon: Home },
-  { label: "Services", path: "/services", icon: Wrench },
-  { label: "Academy", path: "/academy", icon: GraduationCap },
-  { label: "Jobs", path: "/jobs", icon: Briefcase },
-  { label: "Freelancers", path: "/freelancers", icon: Users },
-  { label: "Blog", path: "/blog", icon: PenTool },
-  { label: "Chat", path: "/chat", icon: MessageSquare },
-  { label: "Newsletter", path: "/newsletter", icon: Mail },
-  { label: "Tools", path: "/tools", icon: Settings },
-  { label: "3D Model", path: "/computer-model", icon: BookOpen },
-  { label: "About", path: "/about", icon: Info },
-  { label: "FAQ", path: "/faq", icon: FileText },
-  { label: "Migrant Support", path: "/migrant-support", icon: Globe },
-  { label: "Support", path: "/support", icon: LifeBuoy },
-  { label: "Infrastructure", path: "/infrastructure" },
-  { label: "Privacy", path: "/privacy-policy" },
-  { label: "Terms", path: "/terms-of-service" },
-  { label: "RSS", path: "/rss", icon: Rss },
-];
+import { Shield } from "lucide-react";
+import { navItems } from "./navItems";
 
 export default function MobileNavigation({ onNavigate }: { onNavigate?: () => void }) {
   const { isAuthenticated, user } = useAuth();
@@ -49,22 +12,21 @@ export default function MobileNavigation({ onNavigate }: { onNavigate?: () => vo
 
   return (
     <div className="flex flex-col gap-2">
-      {navItems.map((item) => {
-        return (
-          <Button
-            asChild
-            key={item.path}
-            variant={location.pathname === item.path ? "secondary" : "ghost"}
-            className="w-full text-left"
-            onClick={onNavigate}
-          >
-            <Link to={item.path}>
-              {item.icon && <item.icon className="inline-block mr-1 h-4 w-4" />}
-              {item.label}
-            </Link>
-          </Button>
-        );
-      })}
+      {navItems.map((item) => (
+        <Button
+          asChild
+          key={item.path}
+          variant={location.pathname === item.path ? "secondary" : "ghost"}
+          className="w-full text-left"
+          onClick={onNavigate}
+        >
+          <Link to={item.path}>
+            {item.icon && <item.icon className="inline-block mr-1 h-4 w-4" />}
+            {item.label}
+          </Link>
+        </Button>
+      ))}
+
       {isAdmin && (
         <Button
           asChild
