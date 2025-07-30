@@ -139,8 +139,8 @@ function App() {
               <CookiePreferencesProvider>
                 <AuthProvider>
                    <BrowserRouter>
-                     <MobileTouchOptimizer>
-                       <MobilePerformanceWrapper>
+                     {/* <MobileTouchOptimizer>
+                       <MobilePerformanceWrapper> */}
                          <ErrorBoundary>
                            {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
                            <ScrollToTop />
@@ -208,8 +208,8 @@ function App() {
                            <ChatWidget />
                            <Toaster />
                          </ErrorBoundary>
-                       </MobilePerformanceWrapper>
-                     </MobileTouchOptimizer>
+                       {/* </MobilePerformanceWrapper>
+                     </MobileTouchOptimizer> */}
                    </BrowserRouter>
                 </AuthProvider>
               </CookiePreferencesProvider>
