@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useIsMobile } from './use-mobile';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface MobileOptimizations {
   shouldLazyLoad: boolean;
