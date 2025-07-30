@@ -1,0 +1,179 @@
+/* Mobile Performance Optimizations */
+
+/* Touch target optimization */
+@media (max-width: 768px) {
+  /* Ensure minimum touch target size */
+  button, 
+  [role="button"], 
+  a, 
+  input[type="button"], 
+  input[type="submit"],
+  .touch-target {
+    min-height: 44px !important;
+    min-width: 44px !important;
+    padding: 12px 16px !important;
+    touch-action: manipulation;
+  }
+
+  /* Improved form inputs for mobile */
+  input, 
+  textarea, 
+  select {
+    min-height: 44px !important;
+    padding: 12px 16px !important;
+    font-size: 16px !important; /* Prevents zoom on iOS */
+    border-radius: 8px !important;
+    border: 2px solid hsl(var(--border)) !important;
+  }
+
+  /* Focus states for mobile */
+  input:focus, 
+  textarea:focus, 
+  select:focus,
+  button:focus {
+    outline: 3px solid hsl(var(--primary) / 0.5) !important;
+    outline-offset: 2px !important;
+    border-color: hsl(var(--primary)) !important;
+  }
+
+  /* Mobile navigation improvements */
+  nav a, 
+  .nav-item {
+    margin: 8px 0 !important;
+    padding: 16px 20px !important;
+    min-height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+}
+
+/* Mobile-specific animations */
+.mobile-optimized {
+  /* Use GPU acceleration for better performance */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Reduce animations on slow connections or reduced motion */
+.reduce-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Touch feedback */
+@media (hover: none) and (pointer: coarse) {
+  .touch-feedback:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  /* Remove hover effects on touch devices */
+  .hover\\:scale-105:hover {
+    transform: none;
+  }
+  
+  .hover\\:bg-accent:hover {
+    background-color: transparent;
+  }
+}
+
+/* Mobile scrolling optimizations */
+@media (max-width: 768px) {
+  * {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Optimize scroll containers */
+  .scroll-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scroll-container > * {
+    scroll-snap-align: start;
+  }
+}
+
+/* Mobile-specific layout improvements */
+@media (max-width: 640px) {
+  /* Reduce padding on mobile */
+  .container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Mobile-first grid improvements */
+  .grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Mobile typography adjustments */
+  h1, .text-display-1, .text-display-2 {
+    font-size: clamp(2rem, 8vw, 3rem) !important;
+    line-height: 1.2 !important;
+  }
+
+  h2, .text-heading-1 {
+    font-size: clamp(1.5rem, 6vw, 2rem) !important;
+  }
+
+  /* Mobile-specific spacing */
+  .section-padding {
+    padding: 2rem 0 !important;
+  }
+}
+
+/* Performance optimizations for mobile */
+@media (max-width: 768px) {
+  /* Contain layout shifts */
+  .mobile-container {
+    contain: layout style paint;
+    content-visibility: auto;
+  }
+
+  /* Optimize image loading */
+  img {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 200px;
+  }
+
+  /* Lazy loading skeleton for mobile */
+  .mobile-skeleton {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--muted)) 25%,
+      hsl(var(--muted-foreground) / 0.1) 50%,
+      hsl(var(--muted)) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-pulse 1.5s infinite;
+  }
+
+  @keyframes skeleton-pulse {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+}
+
+/* Network-aware optimizations */
+@media (max-width: 768px) and (prefers-reduced-data: reduce) {
+  /* Disable non-essential animations on reduced data */
+  .animate-fade-in,
+  .animate-scale-in,
+  .animate-slide-in-right {
+    animation: none !important;
+  }
+
+  /* Simplify gradients */
+  .bg-gradient-to-r,
+  .bg-gradient-to-b {
+    background: hsl(var(--primary)) !important;
+  }
+}

@@ -82,6 +82,8 @@ import ScrollToTop from "./components/ScrollToTop";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import ChatWidget from "./components/ChatWidget";
 import { AccessibilityEnhancer } from "./components/AccessibilityEnhancer";
+import { MobileTouchOptimizer } from "./components/mobile/MobileTouchOptimizer";
+import { MobilePerformanceWrapper } from "./components/mobile/MobilePerformanceWrapper";
 import { usePerformanceMonitoring, useMemoryMonitoring } from "./hooks/usePerformanceMonitoring";
 import Preloader from "./components/Preloader";
 import { useState, useEffect } from "react";
@@ -136,15 +138,17 @@ function App() {
             <LanguageProvider>
               <CookiePreferencesProvider>
                 <AuthProvider>
-                  <BrowserRouter>
-                    <ErrorBoundary>
-                      {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
-                      <ScrollToTop />
-                      <Helmet>
-                        <title>Zwanski Tech - Professional IT Services & Digital Education Platform</title>
-                        <meta name="description" content="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals." />
-                      </Helmet>
-                      <div className="app-content-ready homepage-content">
+                   <BrowserRouter>
+                     <MobileTouchOptimizer>
+                       <MobilePerformanceWrapper>
+                         <ErrorBoundary>
+                           {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
+                           <ScrollToTop />
+                           <Helmet>
+                             <title>Zwanski Tech - Professional IT Services & Digital Education Platform</title>
+                             <meta name="description" content="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals." />
+                           </Helmet>
+                           <div className="app-content-ready homepage-content mobile-container">
                         <Suspense fallback={<MinimalLoader />}>
                           <Routes>
                           <Route path="/" element={<Index />} />
@@ -195,16 +199,18 @@ function App() {
                           <Route path="/feed" element={<RSS />} />
                           <Route path="*" element={<NotFound />} />
                           </Routes>
-                        </Suspense>
-                      </div>
-                      
-                      <AccessibilityEnhancer />
-                      <LanguageDetectionNotice />
-                      <ScrollToTopButton />
-                      <ChatWidget />
-                      <Toaster />
-                    </ErrorBoundary>
-                  </BrowserRouter>
+                           </Suspense>
+                           </div>
+                           
+                           <AccessibilityEnhancer />
+                           <LanguageDetectionNotice />
+                           <ScrollToTopButton />
+                           <ChatWidget />
+                           <Toaster />
+                         </ErrorBoundary>
+                       </MobilePerformanceWrapper>
+                     </MobileTouchOptimizer>
+                   </BrowserRouter>
                 </AuthProvider>
               </CookiePreferencesProvider>
             </LanguageProvider>
