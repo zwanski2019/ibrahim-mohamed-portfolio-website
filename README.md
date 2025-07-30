@@ -36,7 +36,7 @@ Welcome to the Zwanski Tech platform! This project powers [zwanski.org](https://
 ## 🏁 Getting Started
 
 ```bash
-git clone https://github.com/zwanski2019/ZWANSKI-TECH.git
+git clone https://https://github.com/zwanski2019/ZWANSKI-TECH.git
 cd ZWANSKI-TECH
 npm install
 npm run dev
@@ -103,8 +103,6 @@ The script attempts to sign in with the provided credentials and then signs out,
 ---
 
 ## 📝 Contribution Guidelines
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
 
 We welcome pull requests! To contribute:
 

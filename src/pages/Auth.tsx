@@ -360,11 +360,11 @@ const Auth = () => {
                   />
                   <Label htmlFor="terms" className="text-sm">
                     I agree to the{" "}
-                    <a href="/terms-of-service" className="text-primary underline-offset-4 hover:underline">
+                    <a href="/terms" className="text-primary underline-offset-4 hover:underline">
                       Terms of Service
                     </a>{" "}
                     and{" "}
-                    <a href="/privacy-policy" className="text-primary underline-offset-4 hover:underline">
+                    <a href="/privacy" className="text-primary underline-offset-4 hover:underline">
                       Privacy Policy
                     </a>
                   </Label>

@@ -19,7 +19,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       { phase: 'glow', delay: 1500 }
     ];
 
-    const timeouts: NodeJS.Timeout[] = [];
+    let timeouts: NodeJS.Timeout[] = [];
 
     phases.forEach(({ phase, delay }) => {
       const timeout = setTimeout(() => {
