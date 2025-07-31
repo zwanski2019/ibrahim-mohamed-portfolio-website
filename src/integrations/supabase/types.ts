@@ -2018,6 +2018,7 @@ export type Database = {
           profile_completion_percentage: number | null
           rating: number | null
           reputation_points: number | null
+          subscription_status: "free" | "basic" | "premium" | null
           resume_url: string | null
           service_categories: string[] | null
           skills: string[] | null
@@ -2057,6 +2058,7 @@ export type Database = {
           profile_completion_percentage?: number | null
           rating?: number | null
           reputation_points?: number | null
+          subscription_status?: "free" | "basic" | "premium" | null
           resume_url?: string | null
           service_categories?: string[] | null
           skills?: string[] | null
@@ -2096,6 +2098,7 @@ export type Database = {
           profile_completion_percentage?: number | null
           rating?: number | null
           reputation_points?: number | null
+          subscription_status?: "free" | "basic" | "premium" | null
           resume_url?: string | null
           service_categories?: string[] | null
           skills?: string[] | null

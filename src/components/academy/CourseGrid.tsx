@@ -23,6 +23,7 @@ interface Course {
   enrollment_count: number;
   is_featured: boolean;
   is_active: boolean;
+  is_premium?: boolean | null;
   slug: string;
   created_at: string;
   updated_at: string;
@@ -38,9 +39,10 @@ interface CourseGridProps {
   isLoading: boolean;
   userEnrollments: string[];
   showFeaturedOnly?: boolean;
+  subscriptionStatus?: string | null;
 }
 
-const CourseGrid = ({ courses, isLoading, userEnrollments, showFeaturedOnly = false }: CourseGridProps) => {
+const CourseGrid = ({ courses, isLoading, userEnrollments, showFeaturedOnly = false, subscriptionStatus }: CourseGridProps) => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const { t } = useLanguage();
 
@@ -115,6 +117,7 @@ const CourseGrid = ({ courses, isLoading, userEnrollments, showFeaturedOnly = fa
             course={course}
             isEnrolled={userEnrollments.includes(course.id)}
             viewMode={showFeaturedOnly ? "grid" : viewMode}
+            subscriptionStatus={subscriptionStatus}
           />
         ))}
       </div>
