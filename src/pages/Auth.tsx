@@ -110,14 +110,18 @@ const Auth = () => {
       console.log("Calling Supabase signIn...");
       const { error } = await signIn(email, password, signinCaptchaToken);
       
+      console.log("SignIn result:", { error: error ? error.message : "SUCCESS" });
+      
       if (error) {
         resetTurnstiles();
+        console.error("SignIn error details:", error);
         toast({
           title: "Sign In Failed",
           description: error.message || "Please check your credentials and try again.",
           variant: "destructive",
         });
       } else {
+        console.log("SignIn successful!");
         toast({
           title: "Welcome back!",
           description: "You have successfully signed in.",
@@ -125,6 +129,7 @@ const Auth = () => {
       }
     } catch (err: any) {
       resetTurnstiles();
+      console.error("SignIn exception:", err);
       toast({
         title: "Sign In Error",
         description: err.message || "An unexpected error occurred. Please try again.",
