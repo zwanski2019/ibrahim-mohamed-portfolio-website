@@ -732,6 +732,10 @@ export type Database = {
           instructor_name: string | null
           is_active: boolean | null
           is_featured: boolean | null
+          price_basic: number | null
+          price_premium: number | null
+          content_url: string | null
+          premium_content_url: string | null
           language: string | null
           platform: string | null
           rating: number | null
@@ -755,6 +759,10 @@ export type Database = {
           instructor_name?: string | null
           is_active?: boolean | null
           is_featured?: boolean | null
+          price_basic?: number | null
+          price_premium?: number | null
+          content_url?: string | null
+          premium_content_url?: string | null
           language?: string | null
           platform?: string | null
           rating?: number | null
@@ -778,6 +786,10 @@ export type Database = {
           instructor_name?: string | null
           is_active?: boolean | null
           is_featured?: boolean | null
+          price_basic?: number | null
+          price_premium?: number | null
+          content_url?: string | null
+          premium_content_url?: string | null
           language?: string | null
           platform?: string | null
           rating?: number | null
