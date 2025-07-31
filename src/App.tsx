@@ -56,7 +56,7 @@ const FAQ = lazy(() => import("./pages/FAQ"));
 const Support = lazy(() => import("./pages/Support"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Settings = lazy(() => import("./pages/Settings"));
-const Academy = lazy(() => import("./pages/Academy"));
+const AcademyHomePage = lazy(() => import("./pages/Academy/AcademyHomePage"));
 const Freelancers = lazy(() => import("./pages/Freelancers"));
 const Jobs = lazy(() => import("./pages/Jobs"));
 const PostJob = lazy(() => import("./pages/PostJob"));
@@ -158,7 +158,7 @@ function App() {
                           <Route path="/3d" element={<ComputerModel />} />
                           <Route path="/chat" element={<Chat />} />
                           <Route path="/newsletter" element={<Newsletter />} />
-                          <Route path="/academy" element={<Academy />} />
+                          <Route path="/academy" element={<AcademyHomePage />} />
                           <Route path="/jobs" element={<Jobs />} />
                           <Route path="/jobs/:id" element={<JobDetail />} />
                           <Route path="/post-job" element={<PostJob />} />
