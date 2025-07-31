@@ -9,8 +9,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-// Temporarily disable Turnstile to fix runtime error
-// import { Turnstile, TurnstileInstance } from "@marsidev/react-turnstile";
+import Turnstile from "@/components/Turnstile";
 import { Eye, EyeOff, Mail, Lock, User, AlertCircle, Loader2, CheckCircle } from "lucide-react";
 import { verifyTurnstile } from "@/lib/verifyTurnstile";
 import { toast } from "@/hooks/use-toast";
@@ -78,8 +77,8 @@ const Auth = () => {
     e.preventDefault();
     setLoading(true);
 
-    // Temporarily disable Turnstile validation
-    if (false && siteKey && !signinCaptchaToken) {
+    // Check for Turnstile validation
+    if (siteKey && !signinCaptchaToken) {
       toast({
         title: "Security Check Required",
         description: "Please complete the security verification",
@@ -150,8 +149,8 @@ const Auth = () => {
       return;
     }
 
-    // Temporarily disable Turnstile validation
-    if (false && siteKey && !captchaToken) {
+    // Check for Turnstile validation
+    if (siteKey && !captchaToken) {
       toast({
         title: "Security Check Required",
         description: "Please complete the security verification",
@@ -316,14 +315,18 @@ const Auth = () => {
                   </div>
                 </div>
 
-                {/* Temporarily disabled Turnstile */}
-                {false && siteKey && (
+                {siteKey && (
                   <div className="space-y-2">
                     <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                       <CheckCircle className="h-3 w-3" />
                       <span>Security verification required</span>
                     </div>
-                    {/* Turnstile component temporarily removed */}
+                    <Turnstile
+                      siteKey={siteKey}
+                      onVerify={setSigninCaptchaToken}
+                      onError={handleCaptchaError}
+                      onExpire={() => setSigninCaptchaToken(null)}
+                    />
                   </div>
                 )}
 
@@ -454,14 +457,18 @@ const Auth = () => {
                   </Label>
                 </div>
 
-                {/* Temporarily disabled Turnstile */}
-                {false && siteKey && (
+                {siteKey && (
                   <div className="space-y-2">
                     <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                       <CheckCircle className="h-3 w-3" />
                       <span>Security verification required</span>
                     </div>
-                    {/* Turnstile component temporarily removed */}
+                    <Turnstile
+                      siteKey={siteKey}
+                      onVerify={setCaptchaToken}
+                      onError={handleCaptchaError}
+                      onExpire={() => setCaptchaToken(null)}
+                    />
                   </div>
                 )}
 
