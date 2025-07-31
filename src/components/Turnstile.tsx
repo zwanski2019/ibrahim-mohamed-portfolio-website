@@ -32,41 +32,69 @@ const Turnstile: React.FC<TurnstileProps> = ({
 
   useEffect(() => {
     const loadScript = () => {
+      console.log("Loading Turnstile script...");
+      
       if (
         document.querySelector(
           "script[src='https://challenges.cloudflare.com/turnstile/v0/api.js']"
         )
       ) {
+        console.log("Turnstile script already loaded");
         renderWidget();
         return;
       }
 
+      console.log("Creating new Turnstile script element");
       const script = document.createElement("script");
       script.src =
         "https://challenges.cloudflare.com/turnstile/v0/api.js";
       script.async = true;
-      script.onload = renderWidget;
-      script.onerror = () => onError?.();
+      script.onload = () => {
+        console.log("Turnstile script loaded successfully");
+        renderWidget();
+      };
+      script.onerror = (error) => {
+        console.error("Failed to load Turnstile script:", error);
+        onError?.();
+      };
       document.body.appendChild(script);
     };
 
     const renderWidget = () => {
+      console.log("Attempting to render Turnstile widget...", { 
+        turnstileAvailable: !!window.turnstile,
+        containerId: containerId.current 
+      });
+      
       if (!window.turnstile) {
+        console.log("Turnstile not available, retrying in 200ms...");
         setTimeout(renderWidget, 200);
         return;
       }
 
       try {
+        console.log("Rendering Turnstile with siteKey:", siteKey);
         widgetIdRef.current = window.turnstile!.render(
           `#${containerId.current}`,
           {
             sitekey: siteKey,
-            callback: (token: string) => onVerify(token),
-            "error-callback": onError,
-            "expired-callback": onExpire,
+            callback: (token: string) => {
+              console.log("Turnstile token received:", token ? "TOKEN_RECEIVED" : "NO_TOKEN");
+              onVerify(token);
+            },
+            "error-callback": (error: any) => {
+              console.error("Turnstile error:", error);
+              onError?.();
+            },
+            "expired-callback": () => {
+              console.log("Turnstile token expired");
+              onExpire?.();
+            },
           }
         );
-      } catch {
+        console.log("Turnstile widget rendered with ID:", widgetIdRef.current);
+      } catch (error) {
+        console.error("Error rendering Turnstile widget:", error);
         onError?.();
       }
     };

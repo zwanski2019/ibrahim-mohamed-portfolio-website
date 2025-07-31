@@ -42,6 +42,12 @@ const Auth = () => {
                  import.meta.env.VITE_CF_TURNSTILE_SITE_KEY || 
                  "0x4AAAAAAAz0w3gZFhfX8zGG"; // Demo key for development
 
+  console.log("Turnstile config:", { 
+    siteKey, 
+    env_VITE_TURNSTILE_SITE_KEY: import.meta.env.VITE_TURNSTILE_SITE_KEY,
+    env_VITE_CF_TURNSTILE_SITE_KEY: import.meta.env.VITE_CF_TURNSTILE_SITE_KEY
+  });
+
   // Redirect authenticated users
   useEffect(() => {
     if (isAuthenticated && !isLoading) {
@@ -77,8 +83,16 @@ const Auth = () => {
     e.preventDefault();
     setLoading(true);
 
+    console.log("Sign in attempt:", { 
+      email, 
+      siteKey, 
+      signinCaptchaToken: signinCaptchaToken ? "TOKEN_PRESENT" : "NO_TOKEN",
+      captchaTokenLength: signinCaptchaToken?.length || 0
+    });
+
     // Check for Turnstile validation
     if (siteKey && !signinCaptchaToken) {
+      console.log("Turnstile validation failed - no token");
       toast({
         title: "Security Check Required",
         description: "Please complete the security verification",
@@ -90,14 +104,17 @@ const Auth = () => {
 
     try {
       if (siteKey && signinCaptchaToken) {
+        console.log("Verifying Turnstile token...");
         const result = await verifyTurnstile(signinCaptchaToken);
+        console.log("Turnstile verification result:", result);
         if (!result.success) {
           resetTurnstiles();
           throw new Error('Security verification failed');
         }
       }
 
-      const { error } = await signIn(email, password);
+      console.log("Calling Supabase signIn...");
+      const { error } = await signIn(email, password, signinCaptchaToken);
       
       if (error) {
         resetTurnstiles();
