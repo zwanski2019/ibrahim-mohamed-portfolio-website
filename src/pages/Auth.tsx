@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -9,10 +9,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Eye, EyeOff, Mail, Lock, User, AlertCircle } from "lucide-react";
-import Turnstile from "@/components/Turnstile";
+import { Turnstile, TurnstileInstance } from "@marsidev/react-turnstile";
+import { Eye, EyeOff, Mail, Lock, User, AlertCircle, Loader2, CheckCircle } from "lucide-react";
 import { verifyTurnstile } from "@/lib/verifyTurnstile";
+import { toast } from "@/hooks/use-toast";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -22,8 +22,6 @@ const Auth = () => {
   const [activeTab, setActiveTab] = useState("signin");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   
   // Form states
   const [email, setEmail] = useState("");
@@ -35,7 +33,14 @@ const Auth = () => {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [signinCaptchaToken, setSigninCaptchaToken] = useState<string | null>(null);
 
-  const siteKey = import.meta.env.VITE_CF_TURNSTILE_SITE_KEY;
+  // Turnstile refs for reset functionality
+  const signupTurnstileRef = useRef<TurnstileInstance>(null);
+  const signinTurnstileRef = useRef<TurnstileInstance>(null);
+
+  // Get site key from environment
+  const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY || 
+                 import.meta.env.VITE_CF_TURNSTILE_SITE_KEY || 
+                 "0x4AAAAAAAz0w3gZFhfX8zGG"; // Demo key for development
 
   // Redirect authenticated users
   useEffect(() => {
@@ -54,16 +59,30 @@ const Auth = () => {
   }, [searchParams]);
 
   const handleCaptchaError = () => {
-    setError("Security verification failed. Please try again or refresh the page.");
+    toast({
+      title: "Security Verification Failed",
+      description: "Please try again or refresh the page.",
+      variant: "destructive",
+    });
+  };
+
+  const resetTurnstiles = () => {
+    signupTurnstileRef.current?.reset();
+    signinTurnstileRef.current?.reset();
+    setCaptchaToken(null);
+    setSigninCaptchaToken(null);
   };
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
 
     if (siteKey && !signinCaptchaToken) {
-      setError("Please complete the security verification");
+      toast({
+        title: "Security Check Required",
+        description: "Please complete the security verification",
+        variant: "destructive",
+      });
       setLoading(false);
       return;
     }
@@ -72,21 +91,33 @@ const Auth = () => {
       if (siteKey && signinCaptchaToken) {
         const result = await verifyTurnstile(signinCaptchaToken);
         if (!result.success) {
+          resetTurnstiles();
           throw new Error('Security verification failed');
         }
       }
 
-      const { error } = await signIn(
-        email,
-        password,
-        undefined
-      );
+      const { error } = await signIn(email, password);
       
       if (error) {
-        setError(error.message);
+        resetTurnstiles();
+        toast({
+          title: "Sign In Failed",
+          description: error.message || "Please check your credentials and try again.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Welcome back!",
+          description: "You have successfully signed in.",
+        });
       }
-    } catch (err) {
-      setError("Sign in failed. Please try again.");
+    } catch (err: any) {
+      resetTurnstiles();
+      toast({
+        title: "Sign In Error",
+        description: err.message || "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
@@ -95,22 +126,34 @@ const Auth = () => {
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
 
+    // Validation checks
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      toast({
+        title: "Password Mismatch",
+        description: "Passwords do not match. Please try again.",
+        variant: "destructive",
+      });
       setLoading(false);
       return;
     }
 
     if (!agreedToTerms) {
-      setError("Please agree to the terms and conditions");
+      toast({
+        title: "Terms Required",
+        description: "Please agree to the terms and conditions to continue.",
+        variant: "destructive",
+      });
       setLoading(false);
       return;
     }
 
     if (siteKey && !captchaToken) {
-      setError("Please complete the security verification");
+      toast({
+        title: "Security Check Required",
+        description: "Please complete the security verification",
+        variant: "destructive",
+      });
       setLoading(false);
       return;
     }
@@ -120,6 +163,7 @@ const Auth = () => {
       if (siteKey && captchaToken) {
         const result = await verifyTurnstile(captchaToken);
         if (!result.success) {
+          resetTurnstiles();
           throw new Error('Security verification failed');
         }
       }
@@ -130,12 +174,32 @@ const Auth = () => {
       });
       
       if (error) {
-        setError(error.message);
+        resetTurnstiles();
+        toast({
+          title: "Account Creation Failed",
+          description: error.message || "Failed to create account. Please try again.",
+          variant: "destructive",
+        });
       } else {
-        setSuccess("Check your email for verification link!");
+        toast({
+          title: "Account Created Successfully!",
+          description: "Check your email for the verification link to complete your registration.",
+        });
+        // Clear form on success
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        setFullName("");
+        setAgreedToTerms(false);
+        resetTurnstiles();
       }
-    } catch (error) {
-      setError("Security verification failed. Please try again.");
+    } catch (error: any) {
+      resetTurnstiles();
+      toast({
+        title: "Registration Error",
+        description: error.message || "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
@@ -144,51 +208,68 @@ const Auth = () => {
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
 
     try {
       const { error } = await resetPassword(email);
       
       if (error) {
-        setError(error.message);
+        toast({
+          title: "Reset Failed",
+          description: error.message || "Failed to send reset email. Please try again.",
+          variant: "destructive",
+        });
       } else {
-        setSuccess("Password reset email sent!");
+        toast({
+          title: "Reset Email Sent",
+          description: "Check your email for password reset instructions.",
+        });
+        setEmail("");
       }
-    } catch (err) {
-      setError("Failed to send reset email. Please try again.");
+    } catch (err: any) {
+      toast({
+        title: "Reset Error",
+        description: err.message || "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
-  };  return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-primary">Zwanski Tech</CardTitle>
-          <CardDescription>
+  };
+
+  // Show loading spinner if checking auth state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="flex flex-col items-center space-y-4">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-background to-muted/50 flex items-center justify-center p-4">
+      <Card className="w-full max-w-md shadow-lg border-0 bg-background/95 backdrop-blur-sm">
+        <CardHeader className="text-center space-y-3">
+          <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+            <User className="h-6 w-6 text-primary" />
+          </div>
+          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+            Zwanski Tech
+          </CardTitle>
+          <CardDescription className="text-base">
             Join our community of developers and tech enthusiasts
           </CardDescription>
         </CardHeader>
         
-        <CardContent>
+        <CardContent className="space-y-6">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="signin">Sign In</TabsTrigger>
-              <TabsTrigger value="signup">Sign Up</TabsTrigger>
-              <TabsTrigger value="reset">Reset</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 h-11">
+              <TabsTrigger value="signin" className="text-sm">Sign In</TabsTrigger>
+              <TabsTrigger value="signup" className="text-sm">Sign Up</TabsTrigger>
+              <TabsTrigger value="reset" className="text-sm">Reset</TabsTrigger>
             </TabsList>
-
-            {error && (
-              <Alert className="mt-4 border-destructive">
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription className="text-destructive">{error}</AlertDescription>
-              </Alert>
-            )}
-
-            {success && (
-              <Alert className="mt-4 border-green-500">
-                <AlertDescription className="text-green-600">{success}</AlertDescription>
-              </Alert>
-            )}
 
             <TabsContent value="signin" className="space-y-4 mt-6">
               <form onSubmit={handleSignIn} className="space-y-4">
@@ -232,30 +313,39 @@ const Auth = () => {
                   </div>
                 </div>
 
-                {siteKey ? (
-                  <div>
-                    <div className="text-xs text-muted-foreground mb-2">
-                      Security verification required
+                {siteKey && (
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2 text-xs text-muted-foreground">
+                      <CheckCircle className="h-3 w-3" />
+                      <span>Security verification required</span>
                     </div>
                     <Turnstile
+                      ref={signinTurnstileRef}
                       siteKey={siteKey}
-                      onVerify={(token) => setSigninCaptchaToken(token)}
+                      onSuccess={(token) => setSigninCaptchaToken(token)}
                       onError={handleCaptchaError}
                       onExpire={() => setSigninCaptchaToken(null)}
+                      options={{
+                        theme: 'light',
+                        size: 'normal',
+                      }}
                     />
-                  </div>
-                ) : (
-                  <div className="text-xs text-muted-foreground text-center py-4">
-                    Security verification optional (disabled)
                   </div>
                 )}
 
                 <Button 
                   type="submit" 
-                  className="w-full" 
+                  className="w-full h-11" 
                   disabled={loading || (siteKey && !signinCaptchaToken)}
                 >
-                  {loading ? "Signing In..." : "Sign In"}
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Signing In...
+                    </>
+                  ) : (
+                    "Sign In"
+                  )}
                 </Button>
               </form>
 
@@ -370,30 +460,39 @@ const Auth = () => {
                   </Label>
                 </div>
 
-                {siteKey ? (
-                  <div>
-                    <div className="text-xs text-muted-foreground mb-2">
-                      Security verification required
+                {siteKey && (
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2 text-xs text-muted-foreground">
+                      <CheckCircle className="h-3 w-3" />
+                      <span>Security verification required</span>
                     </div>
                     <Turnstile
+                      ref={signupTurnstileRef}
                       siteKey={siteKey}
-                      onVerify={(token) => setCaptchaToken(token)}
+                      onSuccess={(token) => setCaptchaToken(token)}
                       onError={handleCaptchaError}
                       onExpire={() => setCaptchaToken(null)}
+                      options={{
+                        theme: 'light',
+                        size: 'normal',
+                      }}
                     />
-                  </div>
-                ) : (
-                  <div className="text-xs text-muted-foreground text-center py-4">
-                    Security verification optional (disabled)
                   </div>
                 )}
 
                 <Button 
                   type="submit" 
-                  className="w-full" 
+                  className="w-full h-11" 
                   disabled={loading || (siteKey && !captchaToken)}
                 >
-                  {loading ? "Creating Account..." : "Create Account"}
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Creating Account...
+                    </>
+                  ) : (
+                    "Create Account"
+                  )}
                 </Button>
               </form>
             </TabsContent>
@@ -416,20 +515,27 @@ const Auth = () => {
                   </div>
                 </div>
 
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Sending..." : "Send Reset Email"}
+                <Button type="submit" className="w-full h-11" disabled={loading}>
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    "Send Reset Email"
+                  )}
                 </Button>
               </form>
             </TabsContent>
           </Tabs>
         </CardContent>
 
-        <CardFooter className="text-center text-sm text-muted-foreground">
-          <p>
+        <CardFooter className="text-center text-sm text-muted-foreground border-t pt-6">
+          <p className="w-full">
             {activeTab === "signin" ? "Don't have an account? " : "Already have an account? "}
             <button
               onClick={() => setActiveTab(activeTab === "signin" ? "signup" : "signin")}
-              className="text-primary underline-offset-4 hover:underline"
+              className="text-primary font-medium underline-offset-4 hover:underline transition-colors"
               aria-label={activeTab === "signin" ? "Switch to sign up" : "Switch to sign in"}
             >
               {activeTab === "signin" ? "Sign up" : "Sign in"}
