@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -9,9 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import Turnstile from "@/components/Turnstile";
-import { Eye, EyeOff, Mail, Lock, User, AlertCircle, Loader2, CheckCircle } from "lucide-react";
-import { verifyTurnstile } from "@/lib/verifyTurnstile";
+import { Eye, EyeOff, Mail, Lock, User, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 const Auth = () => {
@@ -30,17 +27,6 @@ const Auth = () => {
   const [fullName, setFullName] = useState("");
   const [userRoles, setUserRoles] = useState<string[]>(["student"]);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const [signinCaptchaToken, setSigninCaptchaToken] = useState<string | null>(null);
-
-  // Turnstile refs for reset functionality (temporarily disabled)
-  // const signupTurnstileRef = useRef<TurnstileInstance>(null);
-  // const signinTurnstileRef = useRef<TurnstileInstance>(null);
-
-  // Get site key from environment - DISABLED for testing
-  const siteKey = ""; // Temporarily disable Turnstile to allow login
-
-  console.log("Turnstile DISABLED for testing - authentication should work without captcha");
 
   // Redirect authenticated users
   useEffect(() => {
@@ -58,56 +44,26 @@ const Auth = () => {
     }
   }, [searchParams]);
 
-  const handleCaptchaError = () => {
-    toast({
-      title: "Security Verification Failed",
-      description: "Please try again or refresh the page.",
-      variant: "destructive",
-    });
-  };
-
-  const resetTurnstiles = () => {
-    // signupTurnstileRef.current?.reset();
-    // signinTurnstileRef.current?.reset();
-    setCaptchaToken(null);
-    setSigninCaptchaToken(null);
-  };
-
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    console.log("Sign in attempt:", { 
-      email, 
-      siteKey, 
-      signinCaptchaToken: signinCaptchaToken ? "TOKEN_PRESENT" : "NO_TOKEN",
-      captchaTokenLength: signinCaptchaToken?.length || 0
-    });
-
     try {
-      console.log("Calling Supabase signIn (CAPTCHA bypassed)...");
       const { error } = await signIn(email, password);
       
-      console.log("SignIn result:", { error: error ? error.message : "SUCCESS" });
-      
       if (error) {
-        resetTurnstiles();
-        console.error("SignIn error details:", error);
         toast({
           title: "Sign In Failed",
           description: error.message || "Please check your credentials and try again.",
           variant: "destructive",
         });
       } else {
-        console.log("SignIn successful!");
         toast({
           title: "Welcome back!",
           description: "You have successfully signed in.",
         });
       }
     } catch (err: any) {
-      resetTurnstiles();
-      console.error("SignIn exception:", err);
       toast({
         title: "Sign In Error",
         description: err.message || "An unexpected error occurred. Please try again.",
@@ -143,34 +99,13 @@ const Auth = () => {
       return;
     }
 
-    // Check for Turnstile validation
-    if (siteKey && !captchaToken) {
-      toast({
-        title: "Security Check Required",
-        description: "Please complete the security verification",
-        variant: "destructive",
-      });
-      setLoading(false);
-      return;
-    }
-
     try {
-      // Verify Turnstile token when enabled
-      if (siteKey && captchaToken) {
-        const result = await verifyTurnstile(captchaToken);
-        if (!result.success) {
-          resetTurnstiles();
-          throw new Error('Security verification failed');
-        }
-      }
-
       const { error } = await signUp(email, password, {
         full_name: fullName,
         user_roles: userRoles
       });
       
       if (error) {
-        resetTurnstiles();
         toast({
           title: "Account Creation Failed",
           description: error.message || "Failed to create account. Please try again.",
@@ -187,10 +122,8 @@ const Auth = () => {
         setConfirmPassword("");
         setFullName("");
         setAgreedToTerms(false);
-        resetTurnstiles();
       }
     } catch (error: any) {
-      resetTurnstiles();
       toast({
         title: "Registration Error",
         description: error.message || "An unexpected error occurred. Please try again.",
@@ -309,21 +242,6 @@ const Auth = () => {
                   </div>
                 </div>
 
-                {siteKey && (
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-2 text-xs text-muted-foreground">
-                      <CheckCircle className="h-3 w-3" />
-                      <span>Security verification required</span>
-                    </div>
-                    <Turnstile
-                      siteKey={siteKey}
-                      onVerify={setSigninCaptchaToken}
-                      onError={handleCaptchaError}
-                      onExpire={() => setSigninCaptchaToken(null)}
-                    />
-                  </div>
-                )}
-
                 <Button 
                   type="submit" 
                   className="w-full h-11" 
@@ -339,8 +257,6 @@ const Auth = () => {
                   )}
                 </Button>
               </form>
-
-              {/* OAuth login methods removed */}
             </TabsContent>
 
             <TabsContent value="signup" className="space-y-4 mt-6">
@@ -450,21 +366,6 @@ const Auth = () => {
                     </a>
                   </Label>
                 </div>
-
-                {siteKey && (
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-2 text-xs text-muted-foreground">
-                      <CheckCircle className="h-3 w-3" />
-                      <span>Security verification required</span>
-                    </div>
-                    <Turnstile
-                      siteKey={siteKey}
-                      onVerify={setCaptchaToken}
-                      onError={handleCaptchaError}
-                      onExpire={() => setCaptchaToken(null)}
-                    />
-                  </div>
-                )}
 
                 <Button 
                   type="submit" 

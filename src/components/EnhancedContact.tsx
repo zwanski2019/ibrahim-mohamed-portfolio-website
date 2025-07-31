@@ -7,8 +7,6 @@ import { useLanguage } from "@/context/LanguageContext";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import Turnstile from "./Turnstile";
-import { verifyTurnstile } from "@/lib/verifyTurnstile";
 
 const EnhancedContact = () => {
   const { language } = useLanguage();
@@ -20,9 +18,6 @@ const EnhancedContact = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const siteKey = import.meta.env.VITE_CF_TURNSTILE_SITE_KEY;
-  const captchaEnabled = !!siteKey;
 
   const content = {
     en: {
@@ -90,26 +85,10 @@ const EnhancedContact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Only require Turnstile token if enabled
-    if (captchaEnabled && !captchaToken) {
-      toast({
-        title: "Security verification required",
-        description: "Please complete the security check.",
-        variant: "destructive"
-      });
-      return;
-    }
     
     setIsSubmitting(true);
     
     try {
-      // Verify Turnstile token when enabled
-      if (captchaEnabled && captchaToken) {
-        const result = await verifyTurnstile(captchaToken);
-        if (!result.success) {
-          throw new Error('Security verification failed');
-        }
-      }
 
       const { error } = await supabase
         .from('contact_messages')
@@ -129,7 +108,6 @@ const EnhancedContact = () => {
         description: "We'll get back to you soon.",
       });
       setFormData({ name: '', email: '', service: '', message: '' });
-      setCaptchaToken(null);
     } catch (error) {
       console.error('Error sending message:', error);
       toast({
@@ -229,29 +207,12 @@ const EnhancedContact = () => {
                     className="w-full resize-none"
                   />
                   
-                  {/* Turnstile Widget */}
-                  {captchaEnabled && siteKey && (
-                    <div className="py-2">
-                      <Turnstile
-                        siteKey={siteKey}
-                        onVerify={setCaptchaToken}
-                        onError={() => setCaptchaToken(null)}
-                        onExpire={() => setCaptchaToken(null)}
-                      />
-                    </div>
-                  )}
-
-                  {!captchaEnabled && (
-                    <div className="py-2 text-sm text-muted-foreground">
-                      Security verification is currently unavailable
-                    </div>
-                  )}
                   
                   <Button 
                     type="submit"
                     size="lg"
                     className="w-full axeptio-button-primary flex items-center justify-center gap-2"
-                    disabled={isSubmitting || (captchaEnabled && !captchaToken)}
+                    disabled={isSubmitting}
                   >
                     <span>{isSubmitting ? 'Sending...' : currentContent.form.submit}</span>
                     <Send className="h-4 w-4" />

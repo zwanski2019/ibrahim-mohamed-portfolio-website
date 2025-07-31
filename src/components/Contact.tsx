@@ -2,8 +2,6 @@ import { Github, LinkedinIcon, Mail, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
-import Turnstile from "./Turnstile";
-import { verifyTurnstile } from "@/lib/verifyTurnstile";
 import { supabase } from "@/integrations/supabase/client";
 
 interface ValidationResult {
@@ -20,9 +18,6 @@ export default function Contact() {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const siteKey = import.meta.env.VITE_CF_TURNSTILE_SITE_KEY;
-  const captchaEnabled = !!siteKey;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -31,13 +26,6 @@ export default function Contact() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleCaptchaError = () => {
-    toast({
-      title: "Security verification failed",
-      description: "Please try refreshing the page or contact support if the issue persists.",
-      variant: "destructive"
-    });
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,15 +78,6 @@ export default function Contact() {
       return;
     }
     
-    // Only require Turnstile token if enabled
-    if (captchaEnabled && !captchaToken) {
-      toast({
-        title: "Security verification required",
-        description: "Please complete the security check.",
-        variant: "destructive"
-      });
-      return;
-    }
     
     setIsSubmitting(true);
     
@@ -120,13 +99,6 @@ export default function Contact() {
         return;
       }
 
-      // Verify Turnstile token when enabled
-      if (captchaEnabled && captchaToken) {
-        const result = await verifyTurnstile(captchaToken);
-        if (!result.success) {
-          throw new Error('Security verification failed');
-        }
-      }
 
       // Validate input on server side
       const { data: validationResult, error: validationError } = await supabase.rpc('validate_contact_input', {
@@ -175,7 +147,6 @@ export default function Contact() {
         description: "Thanks for reaching out. I'll get back to you soon.",
       });
       setFormData({ name: "", email: "", subject: "", message: "" });
-      setCaptchaToken(null);
     } catch (error) {
       console.error('Error sending message:', error);
       toast({
@@ -267,21 +238,10 @@ export default function Contact() {
                 ></textarea>
               </div>
               
-              {/* Turnstile Widget */}
-              {captchaEnabled && siteKey && (
-                <div className="py-2">
-                  <Turnstile
-                    siteKey={siteKey}
-                    onVerify={setCaptchaToken}
-                    onError={handleCaptchaError}
-                    onExpire={() => setCaptchaToken(null)}
-                  />
-                </div>
-              )}
               
               <button
                 type="submit"
-                disabled={isSubmitting || (captchaEnabled && !captchaToken)}
+                disabled={isSubmitting}
                 className="w-full py-3 px-6 rounded-lg bg-primary text-primary-foreground font-medium shadow-lg hover:shadow-xl transition-all hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? "Sending..." : "Send Message"}

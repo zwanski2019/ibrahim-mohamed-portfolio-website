@@ -1362,45 +1362,6 @@ export type Database = {
           },
         ]
       }
-      hcaptcha_sites: {
-        Row: {
-          behavior_description: string | null
-          behavior_mode: string | null
-          created_at: string | null
-          domain: string | null
-          id: number
-          name: string
-          sitekey: string
-          status: string | null
-          type: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          behavior_description?: string | null
-          behavior_mode?: string | null
-          created_at?: string | null
-          domain?: string | null
-          id?: never
-          name: string
-          sitekey: string
-          status?: string | null
-          type?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          behavior_description?: string | null
-          behavior_mode?: string | null
-          created_at?: string | null
-          domain?: string | null
-          id?: never
-          name?: string
-          sitekey?: string
-          status?: string | null
-          type?: string | null
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
       job_posts: {
         Row: {
           benefits: string[] | null
@@ -2394,36 +2355,6 @@ export type Database = {
         }
         Relationships: []
       }
-      turnstile_logs: {
-        Row: {
-          challenge_ts: string | null
-          created_at: string
-          errors: string[] | null
-          hostname: string | null
-          id: string
-          success: boolean
-          token: string
-        }
-        Insert: {
-          challenge_ts?: string | null
-          created_at?: string
-          errors?: string[] | null
-          hostname?: string | null
-          id?: string
-          success: boolean
-          token: string
-        }
-        Update: {
-          challenge_ts?: string | null
-          created_at?: string
-          errors?: string[] | null
-          hostname?: string | null
-          id?: string
-          success?: boolean
-          token?: string
-        }
-        Relationships: []
-      }
       user_achievements: {
         Row: {
           achievement_type: string
@@ -2658,10 +2589,6 @@ export type Database = {
           p_window_minutes?: number
         }
         Returns: boolean
-      }
-      get_hcaptcha_secret: {
-        Args: Record<PropertyKey, never>
-        Returns: string
       }
       hook_password_verification_attempt: {
         Args: { event: Json }
