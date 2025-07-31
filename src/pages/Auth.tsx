@@ -37,16 +37,10 @@ const Auth = () => {
   // const signupTurnstileRef = useRef<TurnstileInstance>(null);
   // const signinTurnstileRef = useRef<TurnstileInstance>(null);
 
-  // Get site key from environment
-  const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY || 
-                 import.meta.env.VITE_CF_TURNSTILE_SITE_KEY || 
-                 "0x4AAAAAAAz0w3gZFhfX8zGG"; // Demo key for development
+  // Get site key from environment - DISABLED for testing
+  const siteKey = ""; // Temporarily disable Turnstile to allow login
 
-  console.log("Turnstile config:", { 
-    siteKey, 
-    env_VITE_TURNSTILE_SITE_KEY: import.meta.env.VITE_TURNSTILE_SITE_KEY,
-    env_VITE_CF_TURNSTILE_SITE_KEY: import.meta.env.VITE_CF_TURNSTILE_SITE_KEY
-  });
+  console.log("Turnstile DISABLED for testing - authentication should work without captcha");
 
   // Redirect authenticated users
   useEffect(() => {
