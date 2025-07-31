@@ -3,6 +3,7 @@ import { MessageSquare, Heart } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import DMCABadge from "@/components/DMCABadge";
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -182,6 +183,7 @@ export default function Footer() {
                 >
                   FAQ
                 </Link>
+                <DMCABadge size="small" className="ml-2" />
               </div>
             </div>
           </div>

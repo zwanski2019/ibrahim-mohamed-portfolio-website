@@ -2,9 +2,10 @@
 import { Helmet } from "react-helmet-async";
 import { useLanguage } from "@/context/LanguageContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, Users, Shield, AlertTriangle, Gavel } from "lucide-react";
+import { FileText, Users, Shield, AlertTriangle, Gavel, Copyright } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import DMCABadge from "@/components/DMCABadge";
 
 export default function TermsOfService() {
   const { t } = useLanguage();
@@ -112,6 +113,47 @@ export default function TermsOfService() {
                     <li>You grant us license to use your content to provide our services</li>
                     <li>Respect third-party intellectual property rights</li>
                   </ul>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Copyright className="h-5 w-5" />
+                    DMCA Copyright Protection
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="prose dark:prose-invert max-w-none">
+                  <div className="flex items-start gap-4 mb-4">
+                    <DMCABadge size="medium" showText />
+                  </div>
+                  
+                  <h3>Copyright Protection Policy</h3>
+                  <p>
+                    Zwanski Tech respects intellectual property rights and is committed to responding to 
+                    notices of alleged copyright infringement that comply with the Digital Millennium Copyright Act (DMCA).
+                  </p>
+                  
+                  <h4>DMCA Takedown Procedure</h4>
+                  <p>If you believe your copyrighted work has been infringed, please provide:</p>
+                  <ul>
+                    <li>A physical or electronic signature of the copyright owner</li>
+                    <li>Identification of the copyrighted work claimed to be infringed</li>
+                    <li>Location of the infringing material on our website</li>
+                    <li>Your contact information (address, phone, email)</li>
+                    <li>A statement of good faith belief that the use is not authorized</li>
+                    <li>A statement that the information is accurate and you are authorized to act</li>
+                  </ul>
+                  
+                  <h4>DMCA Contact Information</h4>
+                  <p>Send DMCA notices to: <strong>dmca@zwanski.org</strong></p>
+                  
+                  <h4>Counter-Notification</h4>
+                  <p>
+                    If you believe content was removed in error, you may submit a counter-notification 
+                    following DMCA procedures. We will restore content after 10 business days unless 
+                    the copyright owner files a court action.
+                  </p>
                 </CardContent>
               </Card>
 
