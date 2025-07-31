@@ -36,6 +36,7 @@ interface Course {
   enrollment_count: number;
   is_featured: boolean;
   is_active: boolean;
+  is_premium?: boolean | null;
   slug: string;
   created_at: string;
   updated_at: string;
@@ -50,13 +51,16 @@ interface CourseCardProps {
   course: Course;
   isEnrolled: boolean;
   viewMode: "grid" | "list";
+  subscriptionStatus?: string | null;
 }
 
-const CourseCard = ({ course, isEnrolled, viewMode }: CourseCardProps) => {
+const CourseCard = ({ course, isEnrolled, viewMode, subscriptionStatus }: CourseCardProps) => {
   const { user } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const hasSubscription = subscriptionStatus === 'premium' || subscriptionStatus === 'basic';
+  const canAccess = !course.is_premium || hasSubscription;
 
   const enrollMutation = useMutation({
     mutationFn: async () => {
@@ -199,20 +203,26 @@ const CourseCard = ({ course, isEnrolled, viewMode }: CourseCardProps) => {
                 {isBookmarked ? <BookmarkCheck className="h-4 w-4" /> : <Bookmark className="h-4 w-4" />}
               </Button>
               
-              {isEnrolled ? (
-                <Button size="sm" asChild>
-                  <a href={course.external_url} target="_blank" rel="noopener noreferrer">
-                    <Play className="h-4 w-4 mr-2" />
-                    Continue
-                  </a>
-                </Button>
+              {canAccess ? (
+                isEnrolled ? (
+                  <Button size="sm" asChild>
+                    <a href={course.external_url} target="_blank" rel="noopener noreferrer">
+                      <Play className="h-4 w-4 mr-2" />
+                      Continue
+                    </a>
+                  </Button>
+                ) : (
+                  <Button
+                    size="sm"
+                    onClick={() => enrollMutation.mutate()}
+                    disabled={!user || enrollMutation.isPending}
+                  >
+                    {enrollMutation.isPending ? "Enrolling..." : "Enroll Free"}
+                  </Button>
+                )
               ) : (
-                <Button
-                  size="sm"
-                  onClick={() => enrollMutation.mutate()}
-                  disabled={!user || enrollMutation.isPending}
-                >
-                  {enrollMutation.isPending ? "Enrolling..." : "Enroll Free"}
+                <Button size="sm" disabled>
+                  Upgrade Required
                 </Button>
               )}
             </div>
@@ -297,20 +307,26 @@ const CourseCard = ({ course, isEnrolled, viewMode }: CourseCardProps) => {
       </CardContent>
       
       <CardFooter className="p-4 pt-0 gap-2">
-        {isEnrolled ? (
-          <Button className="w-full" asChild>
-            <a href={course.external_url} target="_blank" rel="noopener noreferrer">
-              <Play className="h-4 w-4 mr-2" />
-              Continue Learning
-            </a>
-          </Button>
+        {canAccess ? (
+          isEnrolled ? (
+            <Button className="w-full" asChild>
+              <a href={course.external_url} target="_blank" rel="noopener noreferrer">
+                <Play className="h-4 w-4 mr-2" />
+                Continue Learning
+              </a>
+            </Button>
+          ) : (
+            <Button
+              className="w-full"
+              onClick={() => enrollMutation.mutate()}
+              disabled={!user || enrollMutation.isPending}
+            >
+              {enrollMutation.isPending ? "Enrolling..." : "Enroll Free"}
+            </Button>
+          )
         ) : (
-          <Button
-            className="w-full"
-            onClick={() => enrollMutation.mutate()}
-            disabled={!user || enrollMutation.isPending}
-          >
-            {enrollMutation.isPending ? "Enrolling..." : "Enroll Free"}
+          <Button className="w-full" disabled>
+            Upgrade Required
           </Button>
         )}
         

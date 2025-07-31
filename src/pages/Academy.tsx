@@ -40,7 +40,8 @@ const Academy = () => {
         .select(`
           *,
           categories:category_id(name, icon),
-          course_enrollments(id)
+          course_enrollments(id),
+          is_premium
         `)
         .eq('is_active', true);
 
@@ -77,6 +78,23 @@ const Academy = () => {
       
       if (error) throw error;
       return data.map(e => e.course_id);
+    },
+    enabled: !!user
+  });
+
+  const { data: subscriptionStatus } = useQuery({
+    queryKey: ['subscription-status', user?.id],
+    queryFn: async () => {
+      if (!user) return null;
+
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('subscription_status')
+        .eq('id', user.id)
+        .single();
+
+      if (error) throw error;
+      return data?.subscription_status as string | null;
     },
     enabled: !!user
   });
@@ -126,6 +144,7 @@ const Academy = () => {
                 courses={courses || []}
                 isLoading={isLoading}
                 userEnrollments={userEnrollments || []}
+                subscriptionStatus={subscriptionStatus}
               />
             </div>
           </section>
