@@ -16,8 +16,8 @@ export const useAdmin = () => {
       }
 
       try {
-        // Use the enhanced admin check function
-        const { data, error } = await supabase.rpc('is_admin_enhanced');
+        // Use the new secure admin check function
+        const { data, error } = await supabase.rpc('is_admin_secure');
 
         if (error) {
           console.error("Error checking admin status:", error);

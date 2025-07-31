@@ -67,9 +67,9 @@ export default function Contact() {
       return;
     }
 
-    // Check for suspicious content
-    const suspiciousPatterns = /(script|javascript|<iframe|<object|<embed|onclick|onerror)/i;
-    if (suspiciousPatterns.test(formData.message)) {
+    // Check for suspicious content (XSS prevention)
+    const suspiciousPatterns = /(script|javascript|<iframe|<object|<embed|onclick|onerror|<script|javascript:|data:|vbscript:|<style|<link)/i;
+    if (suspiciousPatterns.test(formData.message) || suspiciousPatterns.test(formData.name) || suspiciousPatterns.test(formData.subject || '')) {
       toast({
         title: "Invalid content",
         description: "Message contains potentially harmful content.",
@@ -188,6 +188,7 @@ export default function Contact() {
                   required
                   className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                   placeholder="John Doe"
+                  maxLength={100}
                 />
               </div>
               
@@ -203,6 +204,7 @@ export default function Contact() {
                   onChange={handleChange}
                   className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                   placeholder="What's this about?"
+                  maxLength={200}
                 />
               </div>
               
@@ -219,6 +221,7 @@ export default function Contact() {
                   required
                   className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                   placeholder="john@example.com"
+                  maxLength={320}
                 />
               </div>
               
@@ -235,6 +238,7 @@ export default function Contact() {
                   rows={5}
                   className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
                   placeholder="How can I help you?"
+                  maxLength={5000}
                 ></textarea>
               </div>
               

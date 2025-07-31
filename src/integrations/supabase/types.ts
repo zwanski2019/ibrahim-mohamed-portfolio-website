@@ -2602,6 +2602,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: boolean
       }
+      is_admin_secure: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
       make_user_admin: {
         Args: { user_id: string }
         Returns: Json

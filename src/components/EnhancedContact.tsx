@@ -8,6 +8,11 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
+interface ValidationResult {
+  valid: boolean;
+  errors: string[];
+}
+
 const EnhancedContact = () => {
   const { language } = useLanguage();
   const { toast } = useToast();
@@ -85,23 +90,115 @@ const EnhancedContact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Client-side validation
+    if (!formData.name.trim() || formData.name.length < 2) {
+      toast({
+        title: "Invalid name",
+        description: "Name must be at least 2 characters long.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!formData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!formData.message.trim() || formData.message.length < 10) {
+      toast({
+        title: "Invalid message",
+        description: "Message must be at least 10 characters long.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (formData.message.length > 5000) {
+      toast({
+        title: "Message too long",
+        description: "Message must be less than 5000 characters.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Check for suspicious content (XSS prevention)
+    const suspiciousPatterns = /(script|javascript|<iframe|<object|<embed|onclick|onerror|<script|javascript:|data:|vbscript:)/i;
+    if (suspiciousPatterns.test(formData.message) || suspiciousPatterns.test(formData.name)) {
+      toast({
+        title: "Invalid content",
+        description: "Message contains potentially harmful content.",
+        variant: "destructive"
+      });
+      return;
+    }
     
     setIsSubmitting(true);
     
     try {
+      // Check rate limit
+      const { data: rateLimitCheck, error: rateLimitError } = await supabase.rpc('check_rate_limit', {
+        p_identifier: formData.email,
+        p_action: 'enhanced_contact_form',
+        p_max_requests: 3,
+        p_window_minutes: 60
+      });
+
+      if (rateLimitError || !rateLimitCheck) {
+        toast({
+          title: "Rate limit exceeded",
+          description: "Please wait before sending another message.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Server-side validation
+      const { data: validationResult, error: validationError } = await supabase.rpc('validate_contact_input', {
+        p_name: formData.name,
+        p_email: formData.email,
+        p_message: formData.message
+      });
+
+      const validation = validationResult as unknown as ValidationResult;
+      if (validationError || !validation?.valid) {
+        const errors = validation?.errors || ['Validation failed'];
+        toast({
+          title: "Validation error",
+          description: errors[0],
+          variant: "destructive"
+        });
+        return;
+      }
 
       const { error } = await supabase
         .from('contact_messages')
         .insert([
           {
-            name: formData.name,
-            email: formData.email,
-            subject: formData.service || 'Service Inquiry',
-            message: formData.message
+            name: formData.name.trim(),
+            email: formData.email.trim().toLowerCase(),
+            subject: formData.service?.trim() || 'Service Inquiry',
+            message: formData.message.trim()
           }
         ]);
 
       if (error) throw error;
+
+      // Log successful contact for security monitoring
+      await supabase.from('security_events').insert({
+        event_type: 'enhanced_contact_form_submission',
+        event_data: {
+          email: formData.email,
+          service: formData.service || 'Service Inquiry',
+          name_length: formData.name.length,
+          message_length: formData.message.length
+        }
+      });
 
       toast({
         title: "Message sent!",
@@ -175,6 +272,8 @@ const EnhancedContact = () => {
                         value={formData.name}
                         onChange={(e) => setFormData({...formData, name: e.target.value})}
                         className="w-full"
+                        maxLength={100}
+                        required
                       />
                     </div>
                     <div className="w-full">
@@ -184,6 +283,8 @@ const EnhancedContact = () => {
                         value={formData.email}
                         onChange={(e) => setFormData({...formData, email: e.target.value})}
                         className="w-full"
+                        maxLength={320}
+                        required
                       />
                     </div>
                   </div>
@@ -205,6 +306,8 @@ const EnhancedContact = () => {
                     onChange={(e) => setFormData({...formData, message: e.target.value})}
                     rows={4}
                     className="w-full resize-none"
+                    maxLength={5000}
+                    required
                   />
                   
                   
