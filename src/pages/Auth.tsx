@@ -84,31 +84,9 @@ const Auth = () => {
       captchaTokenLength: signinCaptchaToken?.length || 0
     });
 
-    // Check for Turnstile validation
-    if (siteKey && !signinCaptchaToken) {
-      console.log("Turnstile validation failed - no token");
-      toast({
-        title: "Security Check Required",
-        description: "Please complete the security verification",
-        variant: "destructive",
-      });
-      setLoading(false);
-      return;
-    }
-
     try {
-      if (siteKey && signinCaptchaToken) {
-        console.log("Verifying Turnstile token...");
-        const result = await verifyTurnstile(signinCaptchaToken);
-        console.log("Turnstile verification result:", result);
-        if (!result.success) {
-          resetTurnstiles();
-          throw new Error('Security verification failed');
-        }
-      }
-
-      console.log("Calling Supabase signIn...");
-      const { error } = await signIn(email, password, signinCaptchaToken);
+      console.log("Calling Supabase signIn (CAPTCHA bypassed)...");
+      const { error } = await signIn(email, password);
       
       console.log("SignIn result:", { error: error ? error.message : "SUCCESS" });
       
