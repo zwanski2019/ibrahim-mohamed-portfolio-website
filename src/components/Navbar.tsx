@@ -175,7 +175,7 @@ const Navbar = () => {
         </div>
 
         {/* Secondary navigation bar (Amazon-style departments) */}
-        <div className="hidden lg:block border-t border-border/30 py-2">
+        <div className="hidden md:block border-t border-border/30 py-2">
           <div className="flex items-center justify-between">
             {/* Main navigation categories */}
             <div className="flex items-center space-x-1">
@@ -184,7 +184,7 @@ const Navbar = () => {
                 All Services
               </Button>
               
-              {mainNavItems.slice(0, 6).map(item => {
+              {mainNavItems.slice(0, 7).map(item => {
               const Icon = item.icon;
               const showItem = !(item as any).authRequired || isAuthenticated;
               if (!showItem) return null;
@@ -254,17 +254,19 @@ const Navbar = () => {
               {/* Other Pages */}
               <div className="px-2">
                 <h3 className="text-sm font-semibold text-muted-foreground mb-2 px-2">EXPLORE</h3>
-                <div className="space-y-1">
+                <div className="grid grid-cols-2 gap-1">
                   {mainNavItems.slice(5).map(item => {
                 const Icon = item.icon;
                 const showItem = !(item as any).authRequired || isAuthenticated;
                 if (!showItem) return null;
-                return <Button key={item.path} variant={isActivePath(item.path) ? "secondary" : "ghost"} className="justify-start w-full" onClick={() => {
+                return <Button key={item.path} variant={isActivePath(item.path) ? "secondary" : "ghost"} className="justify-start h-auto p-3 flex-col items-start" onClick={() => {
                   navigate(item.path);
                   setIsMenuOpen(false);
                 }}>
-                        <Icon className="mr-2 h-4 w-4" />
-                        {item.label}
+                        <div className="flex items-center gap-2">
+                          <Icon className="h-4 w-4" />
+                          <span className="font-medium text-sm">{item.label}</span>
+                        </div>
                       </Button>;
               })}
                 </div>
