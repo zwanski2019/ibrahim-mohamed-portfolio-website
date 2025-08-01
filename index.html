@@ -50,7 +50,9 @@
       .hero-text{z-index:10}
       .hero-title{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:700;line-height:1.1;margin-bottom:1.5rem}
       .hero-subtitle{font-size:clamp(1rem,2.5vw,1.5rem);line-height:1.6;margin-bottom:2rem;opacity:0.9}
-      .hero-image-container{position:relative;height:clamp(300px,50vh,600px);width:clamp(250px,50vw,600px);border-radius:1rem;overflow:hidden}
+      .hero-image-container{position:relative;width:100%;max-width:600px;height:auto;border-radius:1rem;overflow:hidden}
+      @media (min-width:1024px){.hero-image-container{max-width:700px}}
+      @media (min-width:1536px){.hero-image-container{max-width:800px}}
       .hero-buttons{display:flex;gap:1rem;flex-wrap:wrap}
       .hero-button{padding:0.75rem 2rem;border-radius:0.5rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.2s ease-in-out}
       :root{--background:0 0% 100%;--foreground:222.2 84% 4.9%;--primary:221 83% 53%;--primary-foreground:210 40% 98%;--muted:210 40% 96%;--muted-foreground:215.4 16.3% 46.9%;--border:214.3 31.8% 91.4%}

@@ -192,7 +192,7 @@ const Hero = () => {
             </div>
 
             {/* Right Column - Hero Image with Trust Signals */}
-            <div className={`relative h-[500px] lg:h-[600px] transition-all duration-500 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div className={`relative h-[60vh] lg:h-[70vh] transition-all duration-500 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               <div className="absolute inset-0 bg-gradient-to-br from-secondary/30 to-secondary/10 rounded-2xl border border-border overflow-hidden">
                 <img 
                   src={heroImage}
