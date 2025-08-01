@@ -4,6 +4,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import DMCABadge from "@/components/DMCABadge";
+import { Container, Spacer } from "@/components/heroui";
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -26,8 +27,8 @@ export default function Footer() {
       </Helmet>
       
       <footer className="py-12 bg-secondary/30 border-t border-border">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-7 gap-8 mb-8">
+        <Container className="px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-7 gap-8">
             {/* Company Info */}
             <div className="sm:col-span-2 md:col-span-3 lg:col-span-2">
               <Link to="/" className="text-xl font-bold text-gradient">
@@ -254,7 +255,7 @@ export default function Footer() {
               </ul>
             </div>
           </div>
-
+          <Spacer y={8} />
           <div className="pt-8 border-t border-border">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <p className="text-sm text-muted-foreground">
@@ -283,7 +284,7 @@ export default function Footer() {
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </footer>
     </>
   );
