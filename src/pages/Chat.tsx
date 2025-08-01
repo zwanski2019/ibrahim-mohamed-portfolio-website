@@ -208,7 +208,7 @@ const Chat = () => {
           {!isAuthenticated ? (
             <LoginForm />
           ) : (
-            <div className="flex flex-col min-h-[60vh]">
+            <div className="flex flex-col h-[600px]">
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {connectionError && (
                   <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
