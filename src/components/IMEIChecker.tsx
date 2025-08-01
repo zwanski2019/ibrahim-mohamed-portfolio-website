@@ -46,7 +46,7 @@ const IMEIChecker = () => {
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full max-w-4xl mx-auto">
       <CardHeader className="text-center">
         <div className="flex items-center justify-center gap-2 mb-2">
           <Smartphone className="h-6 w-6 text-primary" />
