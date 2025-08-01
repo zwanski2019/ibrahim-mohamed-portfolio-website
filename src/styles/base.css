@@ -11,8 +11,8 @@
     --card-foreground: 222 84% 5%;
     --popover: 0 0% 100%;
     --popover-foreground: 222 84% 5%;
-    --primary: 47 96% 53%;
-    --primary-foreground: 222 84% 5%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 98%;
     --secondary-foreground: 222 84% 5%;
     --muted: 210 40% 98%;
@@ -23,8 +23,8 @@
     --destructive-foreground: 210 40% 98%;
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 47 96% 53%;
-    --radius: 0.5rem;
+    --ring: 221 83% 53%;
+    --radius: 0.75rem;
   }
 
   .dark {
@@ -34,7 +34,7 @@
     --card-foreground: 210 40% 98%;
     --popover: 222 84% 5%;
     --popover-foreground: 210 40% 98%;
-    --primary: 47 96% 53%;
+    --primary: 221 83% 53%;
     --primary-foreground: 222 84% 5%;
     --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
@@ -46,7 +46,7 @@
     --destructive-foreground: 210 40% 98%;
     --border: 217 33% 17%;
     --input: 217 33% 17%;
-    --ring: 47 96% 53%;
+    --ring: 221 83% 53%;
   }
 }
 
@@ -58,6 +58,7 @@
   
   body {
     @apply bg-background text-foreground font-sans;
+    line-height: 1.6;
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -117,6 +118,10 @@
   
   p {
     @apply text-body;
+  }
+
+  a {
+    @apply text-primary underline-offset-4 hover:underline transition-colors;
   }
   
   /* Improved form input for better mobile experience */
