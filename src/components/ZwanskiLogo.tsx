@@ -12,7 +12,7 @@ const ZwanskiLogo: React.FC<ZwanskiLogoProps> = ({
 }) => {
   return (
     <div 
-      className={`flex items-center space-x-2 cursor-pointer transition-all duration-200 hover:scale-105 focus:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-lg p-2 -m-2 -ml-36 ${className}`}
+      className={`flex items-center cursor-pointer transition-all duration-200 hover:scale-105 focus:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-lg p-1 ${className}`}
       onClick={onClick}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -24,9 +24,15 @@ const ZwanskiLogo: React.FC<ZwanskiLogoProps> = ({
       role="button"
       aria-label="Navigate to home page"
     >
-      <div className="text-lg sm:text-xl md:text-2xl font-bold text-gradient select-none">
+      {/* Logo icon/symbol */}
+      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary to-primary/70 rounded-lg flex items-center justify-center text-white font-bold text-sm sm:text-base">
+        Z
+      </div>
+      
+      {/* Logo text */}
+      <div className="ml-2 text-base sm:text-lg md:text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent select-none">
         <span className="hidden sm:inline whitespace-nowrap">Zwanski Tech</span>
-        <span className="sm:hidden">ZT</span>
+        <span className="sm:hidden">Tech</span>
       </div>
     </div>
   );
