@@ -20,7 +20,8 @@
     "noUnusedParameters": false,
     "noImplicitAny": false,
     "noFallthroughCasesInSwitch": false,
-
+    "resolveJsonModule": true,
+    
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
