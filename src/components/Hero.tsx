@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState, useCallback } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/heroui";
 import { ArrowRight, Play, Shield, Globe, Zap, Users, MessageSquare, Star, Sparkles, Monitor, Award, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/context/LanguageContext";
@@ -97,7 +97,7 @@ const Hero = () => {
   ];
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
+    <section role="banner" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
       {/* Clean background with subtle elements */}
       <div className="absolute inset-0">
         {/* Subtle gradient for depth */}
