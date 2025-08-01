@@ -37,13 +37,13 @@ export default function NewsTicker() {
 
   return (
     <div className="fixed top-0 left-0 w-full z-50">
-      <div className="bg-primary text-primary-foreground overflow-hidden h-7 sm:h-8">
+      <div className="bg-primary text-primary-foreground h-8 sm:h-9">
         <div className="ticker-animation whitespace-nowrap px-4 font-medium">
           🇵🇸 Free Palestine & 🇺🇦 Free Ukraine
         </div>
       </div>
       <div
-        className="bg-muted/50 text-foreground overflow-hidden h-9 sm:h-10 flex items-center"
+        className="bg-muted/50 text-foreground h-10 sm:h-11 flex items-center"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
