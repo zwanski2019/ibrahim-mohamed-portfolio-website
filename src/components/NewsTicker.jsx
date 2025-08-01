@@ -36,7 +36,7 @@ export default function NewsTicker() {
   }, []);
 
   return (
-    <div className="border-b border-border text-xs sm:text-sm select-none w-full">
+    <div className="fixed top-0 left-0 w-full z-50">
       <div className="bg-primary text-primary-foreground overflow-hidden h-7 sm:h-8">
         <div className="ticker-animation whitespace-nowrap px-4 font-medium">
           🇵🇸 Free Palestine & 🇺🇦 Free Ukraine
