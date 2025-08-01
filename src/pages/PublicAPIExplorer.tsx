@@ -12,6 +12,21 @@ const PublicAPIExplorer = () => {
           name="description"
           content="Browse and discover free public APIs."
         />
+        <meta property="og:title" content="Public API Explorer - Zwanski Tech" />
+        <meta
+          property="og:description"
+          content="Browse and discover free public APIs."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://zwanski.org/api-explorer" />
+        <meta property="og:image" content="https://zwanski.org/og-image.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Public API Explorer - Zwanski Tech" />
+        <meta
+          name="twitter:description"
+          content="Browse and discover free public APIs."
+        />
+        <meta name="twitter:image" content="https://zwanski.org/og-image.png" />
       </Helmet>
       <Navbar />
       <main className="flex-grow container mx-auto p-4 space-y-6">
