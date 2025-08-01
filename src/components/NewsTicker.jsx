@@ -31,7 +31,7 @@ export default function NewsTicker() {
 
   useEffect(() => {
     fetchNews();
-    const id = setInterval(fetchNews, 10 * 60 * 1000);
+    const id = setInterval(fetchNews, 10 * 60 * 1000); // refresh every 10 min
     return () => clearInterval(id);
   }, []);
 
@@ -50,7 +50,7 @@ export default function NewsTicker() {
         {error ? (
           <span className="px-4">Unable to load news</span>
         ) : (
-          <div className={`flex gap-8 px-4 ticker-animation ${paused ? 'ticker-paused' : ''}`}>
+          <div className={`flex gap-8 px-4 ticker-animation ${paused ? "ticker-paused" : ""}`}>
             {articles.concat(articles).map((a, i) => (
               <a
                 key={i}
@@ -59,7 +59,8 @@ export default function NewsTicker() {
                 rel="noopener noreferrer"
                 className="whitespace-nowrap hover:underline"
               >
-                {a.title} <span className="text-muted-foreground">({a.source})</span>
+                {a.title}{" "}
+                <span className="text-muted-foreground">({a.source})</span>
               </a>
             ))}
           </div>
