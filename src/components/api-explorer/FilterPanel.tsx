@@ -40,7 +40,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
         className="px-3 py-2 border rounded-md"
       >
         <option value="">All Auth</option>
-        <option value="">No Auth</option>
+        <option value="none">No Auth</option>
         <option value="apiKey">API Key</option>
         <option value="OAuth">OAuth</option>
       </select>

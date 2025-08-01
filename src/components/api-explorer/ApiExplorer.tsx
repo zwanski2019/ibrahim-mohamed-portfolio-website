@@ -32,9 +32,10 @@ const ApiExplorer: React.FC = () => {
     return apis.filter((entry) => {
       if (httpsOnly && !entry.HTTPS) return false;
       if (category && entry.Category !== category) return false;
-      if (auth) {
-        if (auth === "" && entry.Auth) return false;
-        if (auth && auth.toLowerCase() !== entry.Auth.toLowerCase()) return false;
+      if (auth === "none") {
+        if (entry.Auth) return false;
+      } else if (auth) {
+        if (entry.Auth.toLowerCase() !== auth.toLowerCase()) return false;
       }
       const search = query.toLowerCase();
       return (
