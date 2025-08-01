@@ -164,10 +164,10 @@ const Navbar = () => {
             )}
 
             {/* Mobile Menu Button */}
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="lg:hidden"
+            <Button
+              variant="ghost"
+              size="sm"
+              className="nav-toggle lg:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -186,7 +186,7 @@ const Navbar = () => {
         )}
 
         {/* Desktop Navigation Bar */}
-        <div className="hidden lg:block border-t border-border/30 py-2">
+        <div className="nav-menu hidden lg:block border-t border-border/30 py-2">
           <div className="flex items-center justify-between">
             {/* Main navigation */}
             <div className="flex items-center space-x-1">
@@ -238,7 +238,7 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden border-t border-border/30 py-4 bg-background/95 backdrop-blur-sm">
+          <div className="nav-menu lg:hidden border-t border-border/30 py-4 bg-background/95 backdrop-blur-sm">
             <div className="space-y-4">
               {/* Mobile auth buttons for non-authenticated users */}
               {!isAuthenticated && (

@@ -1,0 +1,47 @@
+/* Mobile-first base styles */
+html {
+  font-size: 16px;
+}
+
+body {
+  line-height: 1.5;
+}
+
+/* Navigation */
+.nav-menu {
+  display: none;
+}
+
+.nav-toggle {
+  display: block;
+}
+
+/* Ensure images and videos don't overflow */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 481px) {
+  .nav-menu {
+    display: flex !important;
+  }
+  .nav-toggle {
+    display: none !important;
+  }
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 769px) {
+  /* desktop enhancements can go here */
+}
