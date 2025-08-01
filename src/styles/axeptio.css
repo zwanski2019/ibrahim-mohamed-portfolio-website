@@ -6,7 +6,7 @@
 }
 
 .axeptio-container {
-  @apply max-w-6xl mx-auto px-6;
+  @apply max-w-screen-2xl mx-auto px-6;
 }
 
 /* Typography system */

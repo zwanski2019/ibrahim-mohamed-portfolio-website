@@ -159,7 +159,7 @@ export default function AdminUsers() {
             />
           </div>
           <Select value={filterType} onValueChange={setFilterType}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-44">
               <SelectValue placeholder="Filter by type" />
             </SelectTrigger>
             <SelectContent>
@@ -213,7 +213,7 @@ export default function AdminUsers() {
                         }
                       }}
                     >
-                      <SelectTrigger className="w-[120px]">
+                      <SelectTrigger className="w-32">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
