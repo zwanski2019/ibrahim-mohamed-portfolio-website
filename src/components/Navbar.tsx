@@ -10,7 +10,6 @@ import { GlobalSearchBar } from "./search/GlobalSearchBar";
 import { UserMenu } from "./navbar/UserMenu";
 import { NotificationButton } from "./navbar/NotificationButton";
 import { supabase } from "@/integrations/supabase/client";
-import NewsTicker from "./NewsTicker";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -104,7 +103,6 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-lg border-b border-border/30 shadow-sm">
-      <NewsTicker />
       <div className="container mx-auto px-4">
         {/* Main header row */}
         <div className="flex items-center justify-between h-16">

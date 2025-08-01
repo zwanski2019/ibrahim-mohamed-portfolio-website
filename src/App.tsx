@@ -83,6 +83,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import ChatWidget from "./components/ChatWidget";
 import { AccessibilityEnhancer } from "./components/AccessibilityEnhancer";
+import NewsTicker from "./components/NewsTicker";
 import { MobileTouchOptimizer } from "./components/mobile/MobileTouchOptimizer";
 import { MobilePerformanceWrapper } from "./components/mobile/MobilePerformanceWrapper";
 import { usePerformanceMonitoring, useMemoryMonitoring } from "./hooks/usePerformanceMonitoring";
@@ -149,6 +150,7 @@ function App() {
                              <title>Zwanski Tech - Professional IT Services & Digital Education Platform</title>
                              <meta name="description" content="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals." />
                            </Helmet>
+                           <NewsTicker />
                            <div className="app-content-ready homepage-content mobile-container">
                         <Suspense fallback={<MinimalLoader />}>
                           <Routes>
