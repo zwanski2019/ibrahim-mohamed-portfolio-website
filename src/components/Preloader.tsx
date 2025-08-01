@@ -38,6 +38,13 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
     }, 2500); // Total preloader duration
     timeouts.push(completeTimeout);
 
+    // Safety timeout in case animations fail
+    const safetyTimeout = setTimeout(() => {
+      setIsVisible(false);
+      onComplete();
+    }, 5000);
+    timeouts.push(safetyTimeout);
+
     return () => {
       timeouts.forEach(clearTimeout);
     };
