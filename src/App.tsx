@@ -69,6 +69,7 @@ const RSS = lazy(() => import("./pages/RSS"));
 const Search = lazy(() => import("./pages/Search"));
 const AIAssistantPage = lazy(() => import("./pages/ai"));
 const ThreatMap = lazy(() => import("./pages/ThreatMap"));
+const PublicAPIExplorer = lazy(() => import("./pages/PublicAPIExplorer"));
 
 // Admin pages - separate chunk
 const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
@@ -192,6 +193,7 @@ function App() {
                           <Route path="/infrastructure" element={<Infrastructure />} />
                           <Route path="/imei-check" element={<IMEICheck />} />
                           <Route path="/tools" element={<Tools />} />
+                          <Route path="/api-explorer" element={<PublicAPIExplorer />} />
                           <Route path="/threat-map" element={<ThreatMap />} />
                           <Route path="/ai" element={<AIAssistantPage />} />
                           <Route path="/search" element={<Search />} />

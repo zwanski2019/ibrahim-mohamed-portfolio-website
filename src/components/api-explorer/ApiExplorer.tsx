@@ -1,0 +1,69 @@
+import React, { useEffect, useMemo, useState } from "react";
+import SearchBar from "./SearchBar";
+import FilterPanel from "./FilterPanel";
+import ApiList from "./ApiList";
+import apis from "@/data/apis.json";
+import { ApiEntry } from "./ApiCard";
+
+const ApiExplorer: React.FC = () => {
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("");
+  const [auth, setAuth] = useState("");
+  const [httpsOnly, setHttpsOnly] = useState(false);
+  const [featured, setFeatured] = useState<ApiEntry[]>([]);
+
+  const categories = useMemo(
+    () => Array.from(new Set((apis as ApiEntry[]).map((a) => a.Category))).sort(),
+    []
+  );
+
+  useEffect(() => {
+    const shuffled = [...(apis as ApiEntry[])].sort(() => Math.random() - 0.5);
+    setFeatured(shuffled.slice(0, 3));
+  }, []);
+
+  const filtered = useMemo(() => {
+    return (apis as ApiEntry[]).filter((entry) => {
+      if (httpsOnly && !entry.HTTPS) return false;
+      if (category && entry.Category !== category) return false;
+      if (auth) {
+        if (auth === "" && entry.Auth) return false;
+        if (auth && auth.toLowerCase() !== entry.Auth.toLowerCase()) return false;
+      }
+      const search = query.toLowerCase();
+      return (
+        entry.API.toLowerCase().includes(search) ||
+        entry.Description.toLowerCase().includes(search)
+      );
+    });
+  }, [query, category, auth, httpsOnly]);
+
+  return (
+    <div className="space-y-6">
+      <div className="sticky top-0 bg-background z-10 py-4 space-y-4">
+        <SearchBar query={query} onChange={setQuery} />
+        <FilterPanel
+          categories={categories}
+          category={category}
+          setCategory={setCategory}
+          auth={auth}
+          setAuth={setAuth}
+          httpsOnly={httpsOnly}
+          setHttpsOnly={setHttpsOnly}
+        />
+      </div>
+
+      <div>
+        {featured.length > 0 && (
+          <div className="mb-8 space-y-2">
+            <h2 className="text-xl font-semibold">Featured APIs</h2>
+            <ApiList entries={featured} />
+          </div>
+        )}
+        <ApiList entries={filtered} />
+      </div>
+    </div>
+  );
+};
+
+export default ApiExplorer;
