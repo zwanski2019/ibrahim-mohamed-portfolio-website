@@ -12,7 +12,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ query, onChange }) => {
       placeholder="Search APIs..."
       value={query}
       onChange={(e) => onChange(e.target.value)}
-      className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-primary"
+      className="w-full px-4 py-2 border border-border rounded-md bg-muted focus:outline-none focus:ring focus:border-primary"
     />
   );
 };
