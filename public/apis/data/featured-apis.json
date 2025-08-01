@@ -1,0 +1,29 @@
+[
+  {
+    "API": "Cat Facts",
+    "Description": "Daily cat facts",
+    "Auth": "",
+    "HTTPS": true,
+    "Cors": "no",
+    "Category": "Animals",
+    "Link": "https://alexwohlbruck.github.io/cat-facts/"
+  },
+  {
+    "API": "Dog Facts",
+    "Description": "Random dog facts",
+    "Auth": "",
+    "HTTPS": true,
+    "Cors": "no",
+    "Category": "Animals",
+    "Link": "https://dog-api.kinduff.com/api/facts"
+  },
+  {
+    "API": "OpenWeatherMap",
+    "Description": "Weather data and forecast",
+    "Auth": "apiKey",
+    "HTTPS": true,
+    "Cors": "yes",
+    "Category": "Weather",
+    "Link": "https://openweathermap.org/api"
+  }
+]

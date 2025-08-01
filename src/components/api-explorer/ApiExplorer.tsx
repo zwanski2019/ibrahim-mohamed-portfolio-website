@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import SearchBar from "./SearchBar";
 import FilterPanel from "./FilterPanel";
 import ApiList from "./ApiList";
-import apis from "@/data/apis.json";
 import { ApiEntry } from "./ApiCard";
 
 const ApiExplorer: React.FC = () => {
@@ -10,20 +9,27 @@ const ApiExplorer: React.FC = () => {
   const [category, setCategory] = useState("");
   const [auth, setAuth] = useState("");
   const [httpsOnly, setHttpsOnly] = useState(false);
+  const [apis, setApis] = useState<ApiEntry[]>([]);
   const [featured, setFeatured] = useState<ApiEntry[]>([]);
 
   const categories = useMemo(
-    () => Array.from(new Set((apis as ApiEntry[]).map((a) => a.Category))).sort(),
-    []
+    () => Array.from(new Set(apis.map((a) => a.Category))).sort(),
+    [apis]
   );
 
   useEffect(() => {
-    const shuffled = [...(apis as ApiEntry[])].sort(() => Math.random() - 0.5);
-    setFeatured(shuffled.slice(0, 3));
+    fetch("/apis/data/all-apis.json")
+      .then((res) => res.json())
+      .then((data: ApiEntry[]) => setApis(data))
+      .catch(() => setApis([]));
+    fetch("/apis/data/featured-apis.json")
+      .then((res) => res.json())
+      .then((data: ApiEntry[]) => setFeatured(data))
+      .catch(() => setFeatured([]));
   }, []);
 
   const filtered = useMemo(() => {
-    return (apis as ApiEntry[]).filter((entry) => {
+    return apis.filter((entry) => {
       if (httpsOnly && !entry.HTTPS) return false;
       if (category && entry.Category !== category) return false;
       if (auth) {
@@ -36,7 +42,7 @@ const ApiExplorer: React.FC = () => {
         entry.Description.toLowerCase().includes(search)
       );
     });
-  }, [query, category, auth, httpsOnly]);
+  }, [apis, query, category, auth, httpsOnly]);
 
   return (
     <div className="space-y-6">
