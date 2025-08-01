@@ -12,7 +12,7 @@ import {
   Database,
   LucideIcon
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, Card } from "@/components/heroui";
 
 type ServiceIconType = "Code" | "LifeBuoy" | "Layout" | "Monitor" | "Search" | "Shield" | "HardDrive" | "Smartphone" | "Database";
 
@@ -41,7 +41,7 @@ const ServiceCard = ({ id, title, description, price, icon, onSelect }: ServiceC
   const IconComponent = IconComponents[icon];
 
   return (
-    <div 
+    <Card
       id={id}
       className="card-transform-3d bg-card rounded-xl p-6 shadow-3d border border-border h-full flex flex-col group"
     >
@@ -67,7 +67,7 @@ const ServiceCard = ({ id, title, description, price, icon, onSelect }: ServiceC
       
       <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-2xl opacity-60 group-hover:opacity-100 transition-opacity"></div>
       <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-secondary/10 rounded-full blur-2xl opacity-60 group-hover:opacity-100 transition-opacity"></div>
-    </div>
+    </Card>
   );
 };
 

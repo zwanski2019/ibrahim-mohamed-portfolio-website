@@ -6,9 +6,8 @@ import * as z from "zod";
 import { toast } from "sonner";
 import { Sparkles } from "lucide-react";
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Button } from "@/components/heroui";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 
 // Form validation schema
 const formSchema = z.object({
@@ -65,7 +64,7 @@ export default function NewsletterForm() {
       <h3 className="text-xl font-semibold mb-4">Subscribe to our Newsletter</h3>
       
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" aria-label="newsletter-signup">
           <FormField
             control={form.control}
             name="name"

@@ -1,9 +1,9 @@
 
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/heroui";
 import { Input } from "@/components/ui/input";
-import { FormControl, FormField, FormItem, FormLabel, Form } from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, Form } from "@/components/heroui";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -76,9 +76,10 @@ const LoginForm = () => {
       </div>
       
       <div className="text-center">
-        <Button 
+        <Button
           onClick={() => window.location.href = '/auth'}
           className="w-full group relative overflow-hidden"
+          aria-label="open-authentication"
         >
           <span className="relative z-10 flex items-center justify-center gap-2">
             <Sparkles className="h-4 w-4 transition-transform group-hover:rotate-12" />
