@@ -36,7 +36,7 @@ interface Course {
   enrollment_count: number;
   is_featured: boolean;
   is_active: boolean;
-  is_premium?: boolean | null;
+  
   slug: string;
   created_at: string;
   updated_at: string;
@@ -60,7 +60,7 @@ const CourseCard = ({ course, isEnrolled, viewMode, subscriptionStatus }: Course
   const queryClient = useQueryClient();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const hasSubscription = subscriptionStatus === 'premium' || subscriptionStatus === 'basic';
-  const canAccess = !course.is_premium || hasSubscription;
+  const canAccess = true; // All courses are accessible for now
 
   const enrollMutation = useMutation({
     mutationFn: async () => {

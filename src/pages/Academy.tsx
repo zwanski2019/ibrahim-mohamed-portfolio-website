@@ -40,8 +40,7 @@ const Academy = () => {
         .select(`
           *,
           categories:category_id(name, icon),
-          course_enrollments(id),
-          is_premium
+          course_enrollments(id)
         `)
         .eq('is_active', true);
 
