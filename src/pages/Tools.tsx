@@ -25,6 +25,14 @@ const Tools = () => {
 
   const featuredTools = [
     {
+      id: "public-api-explorer",
+      title: "Public API Explorer",
+      description: "Search and explore free public APIs",
+      icon: Globe,
+      component: <ApiExplorer />,
+      featured: true
+    },
+    {
       id: "imei-checker",
       title: t("nav.freeImeiCheck"),
       description: t("imei.description"),
@@ -38,14 +46,6 @@ const Tools = () => {
       description: "Get help with tasks using AI-powered tools including chatbot, resume enhancer, blog generator, and code explainer",
       icon: Bot,
       component: <GPTAssistant />,
-      featured: true
-    },
-    {
-      id: "public-api-explorer",
-      title: "Public API Explorer",
-      description: "Search and explore free public APIs",
-      icon: Globe,
-      component: <ApiExplorer />,
       featured: true
     }
   ];
