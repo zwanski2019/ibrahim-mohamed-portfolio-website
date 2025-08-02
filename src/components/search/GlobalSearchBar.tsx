@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Search, X, ArrowRight, Clock, TrendingUp as Trending } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useGlobalSearch } from '@/hooks/useGlobalSearch';
@@ -158,7 +159,11 @@ export function GlobalSearchBar({
     <div className={cn("relative", className)} ref={resultsRef}>
       <div className="relative">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <Label htmlFor="global-search-input" className="sr-only">
+          Global search
+        </Label>
         <Input
+          id="global-search-input"
           ref={inputRef}
           type="text"
           value={query}

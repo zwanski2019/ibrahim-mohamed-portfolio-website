@@ -59,7 +59,10 @@ export default function Profile() {
             <Card className="md:col-span-1">
               <CardHeader className="text-center">
                 <Avatar className="w-24 h-24 mx-auto mb-4">
-                  <AvatarImage src={user?.user_metadata?.avatar_url} />
+                  <AvatarImage
+                    src={user?.user_metadata?.avatar_url}
+                    alt={user?.user_metadata?.full_name || 'User avatar'}
+                  />
                   <AvatarFallback>
                     <User className="w-12 h-12" />
                   </AvatarFallback>

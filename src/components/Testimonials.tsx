@@ -153,7 +153,10 @@ const Testimonials = () => {
               {/* Client Info */}
               <div className="flex flex-col items-center space-y-4">
                 <Avatar className="h-16 w-16">
-                  <AvatarImage src={currentTestimonial.avatar_url || ""} />
+                  <AvatarImage
+                    src={currentTestimonial.avatar_url || ""}
+                    alt={currentTestimonial.name || "Client avatar"}
+                  />
                   <AvatarFallback className="text-lg font-semibold">
                     {currentTestimonial.name.split(' ').map(n => n[0]).join('')}
                   </AvatarFallback>

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { MessageCircle, Phone, Mail, MapPin, Clock, Send, Zap, MessageSquare } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
@@ -267,21 +268,29 @@ const EnhancedContact = () => {
                 <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="w-full">
+                      <Label htmlFor="contact-name" className="sr-only">
+                        {currentContent.form.name}
+                      </Label>
                       <Input
+                        id="contact-name"
                         placeholder={currentContent.form.name}
                         value={formData.name}
-                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         className="w-full"
                         maxLength={100}
                         required
                       />
                     </div>
                     <div className="w-full">
+                      <Label htmlFor="contact-email" className="sr-only">
+                        {currentContent.form.email}
+                      </Label>
                       <Input
+                        id="contact-email"
                         type="email"
                         placeholder={currentContent.form.email}
                         value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         className="w-full"
                         maxLength={320}
                         required
@@ -289,21 +298,29 @@ const EnhancedContact = () => {
                     </div>
                   </div>
                   
+                  <Label htmlFor="contact-service" className="sr-only">
+                    {currentContent.form.service}
+                  </Label>
                   <select
+                    id="contact-service"
                     className="w-full p-3 bg-background border border-border rounded-md focus:border-primary text-foreground text-sm sm:text-base"
                     value={formData.service}
-                    onChange={(e) => setFormData({...formData, service: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                   >
                     <option value="">{currentContent.form.service}</option>
                     {currentContent.services.map((service, index) => (
                       <option key={index} value={service}>{service}</option>
                     ))}
                   </select>
-                  
+
+                  <Label htmlFor="contact-message" className="sr-only">
+                    {currentContent.form.message}
+                  </Label>
                   <Textarea
+                    id="contact-message"
                     placeholder={currentContent.form.message}
                     value={formData.message}
-                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     rows={4}
                     className="w-full resize-none"
                     maxLength={5000}
