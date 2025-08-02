@@ -48,7 +48,10 @@ export const JobCard = ({ job, onApply, onViewDetails }: JobCardProps) => {
             </CardTitle>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Avatar className="h-6 w-6">
-                <AvatarImage src={job.employer.avatar_url || ''} />
+                <AvatarImage
+                  src={job.employer.avatar_url || ''}
+                  alt={job.employer.full_name || 'Employer avatar'}
+                />
                 <AvatarFallback>
                   {job.employer.full_name.charAt(0)}
                 </AvatarFallback>

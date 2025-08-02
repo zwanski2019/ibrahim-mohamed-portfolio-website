@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { User } from '@supabase/supabase-js';
+import { trackEvent } from '@/utils/analytics';
 
 interface ChatUser {
   id: string;
@@ -43,9 +44,11 @@ export const useAuth = () => {
             username: profile?.full_name || session.user.email?.split('@')[0] || 'User',
             avatar: ''
           };
-          
+
           setUser(enhancedUser);
-          
+
+          trackEvent('profile_fetch', { user_id: session.user.id, email: session.user.email });
+
           // Set chat user for compatibility
           setChatUser({
             id: session.user.id,
@@ -79,9 +82,11 @@ export const useAuth = () => {
             username: profile?.full_name || session.user.email?.split('@')[0] || 'User',
             avatar: ''
           };
-          
+
           setUser(enhancedUser);
-          
+
+          trackEvent('profile_fetch', { user_id: session.user.id, email: session.user.email });
+
           // Set chat user for compatibility
           setChatUser({
             id: session.user.id,

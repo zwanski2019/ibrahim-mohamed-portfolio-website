@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -64,12 +63,12 @@ const JobDetail = lazy(() => import("./pages/JobDetail"));
 const IMEICheck = lazy(() => import("./pages/IMEICheck"));
 const Infrastructure = lazy(() => import("./pages/Infrastructure"));
 const Tools = lazy(() => import("./pages/Tools"));
+const Gravatar = lazy(() => import("./pages/Gravatar"));
+const ThreatMap = lazy(() => import("./pages/ThreatMap"));
 const Blog = lazy(() => import("./pages/Blog"));
 const RSS = lazy(() => import("./pages/RSS"));
 const Search = lazy(() => import("./pages/Search"));
 const AIAssistantPage = lazy(() => import("./pages/ai"));
-  const ThreatMap = lazy(() => import("./pages/ThreatMap"));
-  const Gravatar = lazy(() => import("./pages/Gravatar"));
 
 // Admin pages - separate chunk
 const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
@@ -152,58 +151,57 @@ function App() {
                            <div className="app-content-ready homepage-content mobile-container">
                         <Suspense fallback={<MinimalLoader />}>
                           <Routes>
-                          <Route path="/" element={<Index />} />
-                          <Route path="/services" element={<Services />} />
-                          <Route path="/about" element={<About />} />
-                          <Route path="/computer-model" element={<ComputerModel />} />
-                          <Route path="/3d" element={<ComputerModel />} />
-                          <Route path="/chat" element={<Chat />} />
-                          <Route path="/newsletter" element={<Newsletter />} />
-                          <Route path="/academy" element={<AcademyHomePage />} />
-                          <Route path="/jobs" element={<Jobs />} />
-                          <Route path="/jobs/:id" element={<JobDetail />} />
-                          <Route path="/post-job" element={<PostJob />} />
-                           <Route path="/freelancers" element={<Freelancers />} />
-                           <Route path="/auth" element={<Auth />} />
-                           <Route path="/login" element={<Auth />} />
-                           <Route path="/register" element={<Auth />} />
-                           <Route path="/signup" element={<Auth />} />
-                           <Route path="/blog" element={<Blog />} />
-                          
-                          {/* Admin Routes */}
-                          <Route path="/admin" element={<AdminDashboard />} />
-                          <Route path="/admin/users" element={<AdminUsers />} />
-                          <Route path="/admin/posts" element={<AdminPosts />} />
-                          <Route path="/admin/jobs" element={<AdminJobs />} />
-                          <Route path="/admin/messages" element={<AdminMessages />} />
-                          <Route path="/admin/settings" element={<AdminSettings />} />
-                          
-                          {/* User Profile Routes */}
-                          <Route path="/profile" element={<Profile />} />
-                          <Route path="/settings" element={<Settings />} />
-                          
-                          {/* Privacy and Terms Routes */}
-                          <Route path="/privacy" element={<PrivacyPolicy />} />
-                          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                          <Route path="/terms" element={<TermsOfService />} />
-                          <Route path="/terms-of-service" element={<TermsOfService />} />
-                          
-                          <Route path="/support" element={<Support />} />
-                          <Route path="/faq" element={<FAQ />} />
-                          <Route path="/infrastructure" element={<Infrastructure />} />
-                          <Route path="/imei-check" element={<IMEICheck />} />
-                          <Route path="/tools" element={<Tools />} />
+                            <Route path="/" element={<Index />} />
+                            <Route path="/services" element={<Services />} />
+                            <Route path="/about" element={<About />} />
+                            <Route path="/computer-model" element={<ComputerModel />} />
+                            <Route path="/3d" element={<ComputerModel />} />
+                            <Route path="/chat" element={<Chat />} />
+                            <Route path="/newsletter" element={<Newsletter />} />
+                            <Route path="/academy" element={<AcademyHomePage />} />
+                            <Route path="/jobs" element={<Jobs />} />
+                            <Route path="/jobs/:id" element={<JobDetail />} />
+                            <Route path="/post-job" element={<PostJob />} />
+                            <Route path="/freelancers" element={<Freelancers />} />
+                            <Route path="/auth" element={<Auth />} />
+                            <Route path="/login" element={<Auth />} />
+                            <Route path="/register" element={<Auth />} />
+                            <Route path="/signup" element={<Auth />} />
+                            <Route path="/blog" element={<Blog />} />
+
+                            {/* Admin Routes */}
+                            <Route path="/admin" element={<AdminDashboard />} />
+                            <Route path="/admin/users" element={<AdminUsers />} />
+                            <Route path="/admin/posts" element={<AdminPosts />} />
+                            <Route path="/admin/jobs" element={<AdminJobs />} />
+                            <Route path="/admin/messages" element={<AdminMessages />} />
+                            <Route path="/admin/settings" element={<AdminSettings />} />
+
+                            {/* User Profile Routes */}
+                            <Route path="/profile" element={<Profile />} />
+                            <Route path="/settings" element={<Settings />} />
+
+                            {/* Privacy and Terms Routes */}
+                            <Route path="/privacy" element={<PrivacyPolicy />} />
+                            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                            <Route path="/terms" element={<TermsOfService />} />
+                            <Route path="/terms-of-service" element={<TermsOfService />} />
+
+                            <Route path="/support" element={<Support />} />
+                            <Route path="/faq" element={<FAQ />} />
+                            <Route path="/infrastructure" element={<Infrastructure />} />
+                            <Route path="/imei-check" element={<IMEICheck />} />
+                            <Route path="/tools" element={<Tools />} />
                             <Route path="/threat-map" element={<ThreatMap />} />
                             <Route path="/gravatar" element={<Gravatar />} />
                             <Route path="/ai" element={<AIAssistantPage />} />
-                          <Route path="/search" element={<Search />} />
-                          <Route path="/rss" element={<RSS />} />
-                          <Route path="/feed" element={<RSS />} />
-                          <Route path="*" element={<NotFound />} />
+                            <Route path="/search" element={<Search />} />
+                            <Route path="/rss" element={<RSS />} />
+                            <Route path="/feed" element={<RSS />} />
+                            <Route path="*" element={<NotFound />} />
                           </Routes>
-                           </Suspense>
+                        </Suspense>
                            </div>
-                           
                            <AccessibilityEnhancer />
                            <LanguageDetectionNotice />
                            <ScrollToTopButton />

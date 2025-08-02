@@ -18,7 +18,10 @@ export const FreelancerCard = ({ freelancer, onContact, onViewProfile }: Freelan
       <CardHeader className="pb-3">
         <div className="flex items-start gap-3">
           <Avatar className="h-12 w-12">
-            <AvatarImage src={freelancer.user.avatar_url || ''} />
+            <AvatarImage
+              src={freelancer.user.avatar_url || ''}
+              alt={freelancer.user.full_name || 'Freelancer avatar'}
+            />
             <AvatarFallback>
               {freelancer.user.full_name.charAt(0)}
             </AvatarFallback>

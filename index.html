@@ -1,17 +1,33 @@
+Here’s the fully resolved HTML with the merge conflict removed—keeping your original Hotjar snippet once and adding the fallback form CSS. You can copy & paste this directly:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Hotjar Tracking Code for Site 6482179 (name missing) -->
+    <script>
+      (function(h,o,t,j,a,r){
+          h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+          h._hjSettings={hjid:6482179,hjsv:6};
+          a=o.getElementsByTagName('head')[0];
+          r=o.createElement('script');r.async=1;
+          r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+          a.appendChild(r);
+      })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Zwanski Tech – IT Services, Web Development & Unlocking Solutions</title>
     <meta name="description" content="Zwanski Tech offers expert IT support, website design, computer repair, and iPhone/Android unlocking services. Trusted by individuals and businesses in Tunisia." />
     <meta name="author" content="Zwanski Tech" />
     <meta name="keywords" content="IT services Tunisia, web development, computer repair Tunis, unlocking solutions, cybersecurity, device repair, IMEI unlock, website design, tech support" />
+    <meta name="robots" content="noindex, nofollow" />
     <meta name='dmca-site-verification' content='R0hIYmlVMWFMSWQ3U2FsaWd5OHRrdz090' />
     <meta name="theme-color" content="#2563eb" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    
+
     <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Zwanski Tech – IT Services, Web Development & Unlocking Solutions" />
@@ -19,17 +35,22 @@
     <meta property="og:image" content="https://zwanski.org/og-image.png" />
     <meta property="og:url" content="https://zwanski.org/" />
     <meta property="og:site_name" content="Zwanski Tech" />
-    
+
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Zwanski Tech – IT Services, Web Development & Unlocking Solutions" />
     <meta name="twitter:description" content="Zwanski Tech offers expert IT support, website design, computer repair, and iPhone/Android unlocking services. Trusted by individuals and businesses in Tunisia." />
     <meta name="twitter:image" content="https://zwanski.org/og-image.png" />
+
     <link rel="icon" href="/favicon-professional.svg" type="image/svg+xml">
     <link rel="icon" href="/favicon.png" type="image/png">
-    
     <link rel="apple-touch-icon" href="/favicon-professional.svg">
-    
+    <link rel="manifest" href="/manifest.webmanifest">
+
+    <!-- Fallback basic form styles if Tailwind CSS fails -->
+    <link rel="stylesheet" href="/fallback.css">
+    <noscript><link rel="stylesheet" href="/fallback.css"></noscript>
+
     <!-- Security Headers -->
     <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://static.axept.io https://cdn.gpteng.co https://js.hcaptcha.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https: wss: https://hcaptcha.com; frame-src 'self' https: https://hcaptcha.com;">
@@ -38,16 +59,31 @@
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <link rel="alternate" type="application/atom+xml" title="Zwanski Tech Website Feed" href="https://zwanski2019.github.io/ZWANSKI-TECH/atom.xml" />
+
     <!-- Optimized critical font preload -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" fetchpriority="high">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
-    
+
     <!-- Critical CSS inline -->
     <style>
       /* Critical above-the-fold CSS for hero section */
-      .hero-container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;position:relative;overflow:hidden}.hero-content{max-width:1200px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}.hero-text{z-index:10}.hero-title{font-size:3.75rem;font-weight:700;line-height:1.1;margin-bottom:1.5rem}.hero-subtitle{font-size:1.25rem;line-height:1.6;margin-bottom:2rem;opacity:0.9}.hero-image-container{position:relative;height:500px;width:600px;border-radius:1rem;overflow:hidden}.hero-buttons{display:flex;gap:1rem;flex-wrap:wrap}.hero-button{padding:0.75rem 2rem;border-radius:0.5rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.2s ease-in-out}:root{--background:0 0% 100%;--foreground:222.2 84% 4.9%;--primary:221 83% 53%;--primary-foreground:210 40% 98%;--muted:210 40% 96%;--muted-foreground:215.4 16.3% 46.9%;--border:214.3 31.8% 91.4%}[data-theme="dark"]{--background:222.2 84% 4.9%;--foreground:210 40% 98%;--primary:221 83% 53%;--primary-foreground:222.2 84% 4.9%;--muted:217.2 32.6% 17.5%;--muted-foreground:215 20.2% 65.1%;--border:217.2 32.6% 17.5%}@media (max-width:768px){.hero-content{grid-template-columns:1fr;gap:2rem;text-align:center}.hero-title{font-size:2.5rem}.hero-image-container{height:300px;width:100%;max-width:400px;margin:0 auto}}
+      .hero-container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;position:relative;overflow:hidden}
+      .hero-content{max-width:1200px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+      .hero-text{z-index:10}
+      .hero-title{font-size:3.75rem;font-weight:700;line-height:1.1;margin-bottom:1.5rem}
+      .hero-subtitle{font-size:1.25rem;line-height:1.6;margin-bottom:2rem;opacity:0.9}
+      .hero-image-container{position:relative;height:500px;width:600px;border-radius:1rem;overflow:hidden}
+      .hero-buttons{display:flex;gap:1rem;flex-wrap:wrap}
+      .hero-button{padding:0.75rem 2rem;border-radius:0.5rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.2s ease-in-out}
+      :root{--background:0 0% 100%;--foreground:222.2 84% 4.9%;--primary:221 83% 53%;--primary-foreground:210 40% 98%;--muted:210 40% 96%;--muted-foreground:215.4 16.3% 46.9%;--border:214.3 31.8% 91.4%}
+      [data-theme="dark"]{--background:222.2 84% 4.9%;--foreground:210 40% 98%;--primary:221 83% 53%;--primary-foreground:222.2 84% 4.9%;--muted:217.2 32.6% 17.5%;--muted-foreground:215 20.2% 65.1%;--border:217.2 32.6% 17.5%}
+      @media (max-width:768px){
+        .hero-content{grid-template-columns:1fr;gap:2rem;text-align:center}
+        .hero-title{font-size:2.5rem}
+        .hero-image-container{height:300px;width:100%;max-width:400px;margin:0 auto}
+      }
     </style>
-    
+
     <!-- Axeptio Cookie Consent -->
     <script>
     window.axeptioSettings = {
@@ -71,11 +107,13 @@
     })(document, "script");
     </script>
     <!-- End Axeptio Cookie Consent -->
+
     <meta name="google-adsense-account" content="ca-pub-8775206393701040">
+
     <!-- Preconnect hints for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
+
     <!-- Performance and DNS prefetch hints -->
     <link rel="dns-prefetch" href="//www.googletagmanager.com">
     <link rel="dns-prefetch" href="//www.google-analytics.com">
@@ -109,13 +147,11 @@
     }
     </script>
     <!-- End Schema.org -->
-    
+
     <!-- hCaptcha -->
     <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-    
 
     <style>
-
       /* Ensure cookie banners always stay above other widgets */
       .axeptio_widget,
       [id*="axeptio"],
@@ -134,68 +170,51 @@
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         let scrollTimer;
-        let isScrolling = false;
-        let autoAcceptTimer;
         let bannerProcessed = false;
 
-        // Enhanced Axeptio banner behavior
         function enhanceAxeptioBanner() {
-          const banner = document.querySelector('.axeptio_widget') || 
-                        document.querySelector('[id*="axeptio"]') || 
-                        document.querySelector('[class*="axeptio"]');
-          
+          const banner = document.querySelector('.axeptio_widget') ||
+                         document.querySelector('[id*="axeptio"]') ||
+                         document.querySelector('[class*="axeptio"]');
+
           if (!banner || bannerProcessed) return;
           bannerProcessed = true;
 
-          // Add CSS for smooth transitions
           banner.style.transition = 'opacity 0.3s ease-in-out, transform 0.3s ease-in-out';
           banner.style.zIndex = '9999';
 
-          // Removed auto-accept timer to preserve default Axeptio behavior
-
-          // Scroll-based transparency
           let lastScrollY = window.scrollY;
-          
+
           function handleScroll() {
             if (!banner || banner.offsetParent === null) return;
-            
+
             const currentScrollY = window.scrollY;
-            const isScrollingDown = currentScrollY > lastScrollY;
-            
             if (Math.abs(currentScrollY - lastScrollY) > 10) {
-              isScrolling = true;
               banner.style.opacity = '0.7';
               banner.style.pointerEvents = 'none';
-              
               clearTimeout(scrollTimer);
               scrollTimer = setTimeout(() => {
-                isScrolling = false;
                 banner.style.opacity = '1';
                 banner.style.pointerEvents = 'auto';
               }, 1500);
             }
-            
             lastScrollY = currentScrollY;
           }
 
           window.addEventListener('scroll', handleScroll, { passive: true });
         }
 
-        // Try to enhance immediately or wait for Axeptio to load
         enhanceAxeptioBanner();
-        
-        // Also try after a short delay in case Axeptio loads later
         setTimeout(enhanceAxeptioBanner, 1000);
         setTimeout(enhanceAxeptioBanner, 3000);
 
-        // Listen for dynamic content changes
         const observer = new MutationObserver((mutations) => {
           mutations.forEach((mutation) => {
             mutation.addedNodes.forEach((node) => {
-              if (node.nodeType === 1 && 
-                  (node.classList?.contains('axeptio_widget') || 
-                   node.id?.includes('axeptio') || 
-                   (node.className && node.className.toString().includes('axeptio')))) {
+              if (node.nodeType === 1 &&
+                  (node.classList.contains('axeptio_widget') ||
+                   node.id.includes('axeptio') ||
+                   (node.className && node.className.includes('axeptio')))) {
                 setTimeout(enhanceAxeptioBanner, 100);
               }
             });
@@ -213,24 +232,23 @@
 
   <body>
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PM37NL7K"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PM37NL7K"
+              height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
     <!-- End Google Tag Manager (noscript) -->
-    
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx" fetchpriority="high"></script>
-    
+
     <!-- Load analytics after main app with reduced priority -->
     <script>
-      // Defer analytics loading until after critical resources
       if ('requestIdleCallback' in window) {
-        requestIdleCallback(function() {
-          loadAnalytics();
-        });
+        requestIdleCallback(loadAnalytics);
       } else {
         setTimeout(loadAnalytics, 2000);
       }
-      
+
       function loadAnalytics() {
         // Google Analytics - deferred
         var gtag = document.createElement('script');
@@ -244,7 +262,7 @@
           gtagFn('config', 'G-JCY70KNM0Y');
         };
         document.head.appendChild(gtag);
-        
+
         // Google Tag Manager - deferred
         setTimeout(function() {
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -255,8 +273,9 @@
         }, 1000);
       }
     </script>
-    
+
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
   </body>
 </html>
+```
