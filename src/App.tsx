@@ -64,6 +64,7 @@ const JobDetail = lazy(() => import("./pages/JobDetail"));
 const IMEICheck = lazy(() => import("./pages/IMEICheck"));
 const Infrastructure = lazy(() => import("./pages/Infrastructure"));
 const Tools = lazy(() => import("./pages/Tools"));
+const Gravatar = lazy(() => import("./pages/Gravatar"));
 const Blog = lazy(() => import("./pages/Blog"));
 const RSS = lazy(() => import("./pages/RSS"));
 const Search = lazy(() => import("./pages/Search"));

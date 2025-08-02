@@ -1,3 +1,6 @@
+Here’s the fully merged component—conflict markers removed, SEO tags and dynamic lookup logic combined into one complete file:
+
+```tsx
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
@@ -32,19 +35,46 @@ export default function Gravatar() {
   return (
     <>
       <Helmet>
-        <title>Gravatar Lookup - Zwanski Tech</title>
+        <title>Gravatar Profile Lookup - ZWANSKI TECH</title>
         <meta
           name="description"
-          content="Look up Gravatar avatars by email address."
+          content="Fetch and preview Gravatar images by entering an email address."
         />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:title"
+          content="Gravatar Profile Lookup - ZWANSKI TECH"
+        />
+        <meta
+          property="og:description"
+          content="Fetch and preview Gravatar images by entering an email address."
+        />
+        <meta property="og:image" content="https://zwanski.org/og-image.png" />
+        <meta property="og:url" content="https://zwanski.org/gravatar" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="Gravatar Profile Lookup - ZWANSKI TECH"
+        />
+        <meta
+          name="twitter:description"
+          content="Fetch and preview Gravatar images by entering an email address."
+        />
+        <meta name="twitter:image" content="https://zwanski.org/og-image.png" />
       </Helmet>
+
       <div className="flex flex-col min-h-screen bg-background">
         <Navbar />
-        <main className="flex-1 axeptio-section">
-          <div className="axeptio-container max-w-md">
-            <h1 className="axeptio-heading text-center mb-6">
+
+        <main className="flex-grow py-20 bg-gradient-to-b from-background to-muted/20">
+          <div className="container mx-auto px-4 max-w-md">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">
               Gravatar Lookup
             </h1>
+            <p className="text-xl text-muted-foreground mb-8 text-center">
+              Enter an email address to preview its Gravatar image.
+            </p>
+
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
                 type="email"
@@ -62,6 +92,7 @@ export default function Gravatar() {
                 {loading ? "Loading..." : "Get Gravatar"}
               </button>
             </form>
+
             {avatarUrl && (
               <div className="mt-6 flex justify-center">
                 <img
@@ -73,8 +104,10 @@ export default function Gravatar() {
             )}
           </div>
         </main>
+
         <Footer />
       </div>
     </>
   );
 }
+```
