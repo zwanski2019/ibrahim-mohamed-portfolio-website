@@ -97,7 +97,7 @@ const Hero = () => {
   ];
 
   return (
-    <section role="banner" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
+    <section role="banner" className="homepage-content relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
       {/* Clean background with subtle elements */}
       <div className="absolute inset-0">
         {/* Subtle gradient for depth */}
@@ -108,38 +108,38 @@ const Hero = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(15,20,25,0.02),transparent_60%)]" />
       </div>
       
-      {/* Minimal floating elements */}
-      <div className="absolute top-20 right-20 w-2 h-2 bg-primary/20 rounded-full" />
-      <div className="absolute bottom-32 left-20 w-1 h-1 bg-foreground/10 rounded-full" />
-      <div className="absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-primary/15 rounded-full" />
+      {/* Minimal floating elements - hidden on mobile */}
+      <div className="hidden md:block absolute top-20 right-20 w-2 h-2 bg-primary/20 rounded-full" />
+      <div className="hidden md:block absolute bottom-32 left-20 w-1 h-1 bg-foreground/10 rounded-full" />
+      <div className="hidden md:block absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-primary/15 rounded-full" />
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
-          {/* Split Layout: Content on Left, 3D Model on Right */}
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Responsive Layout: Stack on mobile, side-by-side on desktop */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             
             {/* Left Column - Content */}
-            <div className="text-center lg:text-left">
+            <div className="text-center lg:text-left order-2 lg:order-1">
               {/* Clean Telegram Notice Banner */}
-              <div className={`mb-8 transition-all duration-500 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+              <div className={`mb-6 lg:mb-8 transition-all duration-500 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                 <a
                   href="https://t.me/zwanski_tech"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 px-6 py-3 bg-secondary border border-border rounded-lg text-foreground hover:bg-accent transition-all duration-200 group shadow-sm hover:shadow-md"
+                  className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 bg-secondary border border-border rounded-lg text-foreground hover:bg-accent transition-all duration-200 group shadow-sm hover:shadow-md touch-feedback"
                   aria-label={t("hero.telegramNotice")}
                 >
                   <MessageSquare className="h-4 w-4 group-hover:scale-105 transition-transform" aria-hidden="true" />
-                  <span className="font-medium text-sm">{t("hero.telegramNotice")}</span>
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                  <span className="font-medium text-xs sm:text-sm">{t("hero.telegramNotice")}</span>
+                  <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                 </a>
               </div>
 
               {/* Enhanced Value Proposition */}
-              <div className={`mb-12 transition-all duration-500 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <div className={`mb-8 lg:mb-12 transition-all duration-500 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                 {/* Value Proposition Tagline */}
-                <div className="mb-6">
-                  <div className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
+                <div className="mb-4 lg:mb-6">
+                  <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 lg:mb-4">
                     <span className="bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-transparent">Fix.</span>{" "}
                     <span className="bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">Build.</span>{" "}
                     <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">Secure.</span>{" "}
@@ -147,10 +147,10 @@ const Hero = () => {
                   </div>
                 </div>
                 
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground leading-tight">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 lg:mb-6 text-foreground leading-tight">
                   Professional IT Services & Digital Education Platform in Tunisia
                 </h1>
-                <h2 className="text-xl md:text-2xl text-muted-foreground mb-8 font-medium">
+                <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground mb-6 lg:mb-8 font-medium">
                   From device repair to cybersecurity education — empowering your digital journey
                 </h2>
               </div>
@@ -163,15 +163,15 @@ const Hero = () => {
               </div>
 
               {/* Clean CTA Buttons */}
-              <div className={`flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12 transition-all duration-500 delay-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                <Link to="/services" aria-label={t("hero.cta1")}>
-                  <Button size="lg" className="group px-8 py-3 text-base">
+              <div className={`flex flex-col sm:flex-row gap-3 lg:gap-4 justify-center lg:justify-start mb-8 lg:mb-12 transition-all duration-500 delay-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                <Link to="/services" aria-label={t("hero.cta1")} className="w-full sm:w-auto">
+                  <Button size="lg" className="group w-full sm:w-auto px-6 lg:px-8 py-3 text-sm lg:text-base touch-feedback">
                     {t("hero.cta1")}
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                   </Button>
                 </Link>
-                <Link to="/infrastructure" aria-label="View Our Infrastructure">
-                  <Button variant="bordered" size="lg" className="group px-8 py-3 text-base">
+                <Link to="/infrastructure" aria-label="View Our Infrastructure" className="w-full sm:w-auto">
+                  <Button variant="bordered" size="lg" className="group w-full sm:w-auto px-6 lg:px-8 py-3 text-sm lg:text-base touch-feedback">
                     <Play className="mr-2 h-4 w-4" aria-hidden="true" />
                     View Infrastructure
                   </Button>
@@ -192,8 +192,8 @@ const Hero = () => {
             </div>
 
             {/* Right Column - Hero Image with Trust Signals */}
-            <div className={`relative h-[500px] lg:h-[600px] transition-all duration-500 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-              <div className="absolute inset-0 bg-gradient-to-br from-secondary/30 to-secondary/10 rounded-2xl border border-border overflow-hidden">
+            <div className={`relative h-[300px] sm:h-[400px] lg:h-[500px] xl:h-[600px] order-1 lg:order-2 transition-all duration-500 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <div className="absolute inset-0 bg-gradient-to-br from-secondary/30 to-secondary/10 rounded-xl lg:rounded-2xl border border-border overflow-hidden">
                 <img 
                   src={heroImage}
                   alt="Professional IT services in Tunisia - Computer repair, cybersecurity, web development"
@@ -210,25 +210,25 @@ const Hero = () => {
               </div>
               
               {/* Trust Signals Overlay */}
-              <div className="absolute bottom-6 left-6 right-6">
-                <div className="bg-background/95 backdrop-blur-sm rounded-xl p-4 border border-border shadow-lg">
-                  <div className="grid grid-cols-3 gap-4 text-center">
+              <div className="absolute bottom-3 sm:bottom-4 lg:bottom-6 left-3 sm:left-4 lg:left-6 right-3 sm:right-4 lg:right-6">
+                <div className="bg-background/95 backdrop-blur-sm rounded-lg lg:rounded-xl p-3 lg:p-4 border border-border shadow-lg">
+                  <div className="grid grid-cols-3 gap-2 lg:gap-4 text-center">
                     <div className="flex flex-col items-center">
-                      <Award className="h-5 w-5 text-yellow-500 mb-1" />
+                      <Award className="h-4 w-4 lg:h-5 lg:w-5 text-yellow-500 mb-1" />
                       <span className="text-xs font-medium text-foreground">5-Star Rated</span>
                     </div>
                     <div className="flex flex-col items-center">
-                      <Shield className="h-5 w-5 text-green-500 mb-1" />
+                      <Shield className="h-4 w-4 lg:h-5 lg:w-5 text-green-500 mb-1" />
                       <span className="text-xs font-medium text-foreground">Secure Solutions</span>
                     </div>
                     <div className="flex flex-col items-center">
-                      <Clock className="h-5 w-5 text-blue-500 mb-1" />
+                      <Clock className="h-4 w-4 lg:h-5 lg:w-5 text-blue-500 mb-1" />
                       <span className="text-xs font-medium text-foreground">24/7 Support</span>
                     </div>
                   </div>
-                  <div className="mt-3 text-center">
+                  <div className="mt-2 lg:mt-3 text-center">
                     <Link to="/computer-model">
-                      <Button variant="bordered" size="sm" className="text-xs">
+                      <Button variant="bordered" size="sm" className="text-xs touch-feedback">
                         <Monitor className="mr-1 h-3 w-3" />
                         View 3D Model
                       </Button>
@@ -240,11 +240,11 @@ const Hero = () => {
           </div>
 
           {/* Clean Stats Grid - Full Width Below */}
-          <div className={`grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto mt-20 transition-all duration-500 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <div className={`grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 max-w-5xl mx-auto mt-12 lg:mt-20 transition-all duration-500 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             {stats.map((stat, index) => (
               <div 
                 key={index} 
-                className="relative group p-6 rounded-xl bg-card border border-border hover:border-primary/20 transition-all duration-200 hover:shadow-md"
+                className="relative group p-4 lg:p-6 rounded-lg lg:rounded-xl bg-card border border-border hover:border-primary/20 transition-all duration-200 hover:shadow-md touch-feedback"
                 style={{
                   transitionDelay: `${index * 50}ms`
                 }}
@@ -255,14 +255,14 @@ const Hero = () => {
                    `${stat.value}%`}`}
               >
                 {/* Icon */}
-                <div className="mb-4 flex justify-center">
-                  <div className="p-3 rounded-lg bg-secondary">
-                    <stat.icon className="h-6 w-6 text-primary" aria-hidden="true" />
+                <div className="mb-3 lg:mb-4 flex justify-center">
+                  <div className="p-2 lg:p-3 rounded-lg bg-secondary">
+                    <stat.icon className="h-5 w-5 lg:h-6 lg:w-6 text-primary" aria-hidden="true" />
                   </div>
                 </div>
                 
                 {/* Animated Number */}
-                <div className="text-3xl font-bold text-foreground mb-2 font-mono tabular-nums text-center" aria-live="polite">
+                <div className="text-2xl lg:text-3xl font-bold text-foreground mb-2 font-mono tabular-nums text-center" aria-live="polite">
                   {index === 0 ? `${stat.value}+` :
                    index === 1 ? `${stat.value}%` :
                    index === 2 ? `${stat.value}+` :
@@ -270,7 +270,7 @@ const Hero = () => {
                 </div>
                 
                 {/* Label */}
-                <div className="text-sm text-muted-foreground font-medium leading-tight text-center">
+                <div className="text-xs lg:text-sm text-muted-foreground font-medium leading-tight text-center">
                   {stat.label}
                 </div>
               </div>
