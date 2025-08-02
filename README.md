@@ -66,6 +66,46 @@ verify_jwt = false
 verify_jwt = false
 ```
 
+### Gravatar Edge Function
+
+Set up and run the Gravatar lookup Edge Function with the following steps:
+
+1. **Store the API key in Supabase secrets**
+
+   ```bash
+   supabase secrets set GRAVATAR_API_KEY="your_gravatar_api_key"
+   ```
+
+2. **Run the function locally**
+
+   ```bash
+   # Start the local Supabase stack
+   supabase start
+
+   # In another terminal, serve the function
+   supabase functions serve gravatar
+   ```
+
+3. **Deploy the function**
+
+   ```bash
+   supabase functions deploy gravatar
+   ```
+
+4. **Front-end communication**
+
+   The front-end uses the Supabase client to call the Edge Function:
+
+   ```ts
+   import { supabase } from '@/integrations/supabase/client'
+
+   const { data, error } = await supabase.functions.invoke('gravatar', {
+     body: { email }
+   })
+   ```
+
+   This sends a POST request to the `/functions/v1/gravatar` endpoint and returns the avatar data.
+
 ## 🔐 Security Features
 
 ✅ **Row Level Security (RLS)** - All tables have proper RLS policies  
