@@ -173,3 +173,12 @@ If you encounter any issues:
 
 **Last Updated**: January 2025
 **Version**: 1.0.0
+## 🔐 Profile Update Auth Flow
+
+To write profile information, clients must provide a valid Supabase access token.
+
+1. Sign in using Supabase Auth to obtain an access token.
+2. Send a request to the `update-profile` Edge Function with the header `Authorization: Bearer <access_token>` and the desired profile fields in the JSON body.
+3. The function verifies the token and updates the signed-in user's row in the `profiles` table.
+4. Requests without a valid token receive a `401 Unauthorized` response and no data is written.
+
