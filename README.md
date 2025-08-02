@@ -66,6 +66,22 @@ verify_jwt = false
 verify_jwt = false
 ```
 
+#### Supabase Function URL
+
+Some features rely on a Supabase Edge Function. The front-end reads the
+function URL from an environment variable or a `window` configuration.
+
+- **Local development**: add `VITE_GRAVATAR_API_URL` to your `.env.local` file.
+- **Hosted platforms (Vercel, Netlify, etc.)**: define `VITE_GRAVATAR_API_URL`
+  in the platform's environment variable settings.
+- **Static deployments**: inject the value at runtime in `index.html`:
+
+  ```html
+  <script>
+    window.GRAVATAR_API_URL = "wss://your-project.supabase.co/functions/v1/websocket-chat";
+  </script>
+  ```
+
 ## 🔐 Security Features
 
 ✅ **Row Level Security (RLS)** - All tables have proper RLS policies  
