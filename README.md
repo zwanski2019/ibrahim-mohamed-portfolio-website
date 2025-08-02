@@ -66,7 +66,6 @@ verify_jwt = false
 verify_jwt = false
 ```
 
-
 ## 🔐 Security Features
 
 ✅ **Row Level Security (RLS)** - All tables have proper RLS policies  
