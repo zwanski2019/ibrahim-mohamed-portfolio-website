@@ -152,10 +152,12 @@ const CourseCard = ({ course, isEnrolled, viewMode, subscriptionStatus }: Course
       <Card className="flex flex-row p-4 hover:shadow-lg transition-shadow">
         <div className="w-32 h-20 bg-muted rounded-lg flex-shrink-0 mr-4 flex items-center justify-center">
           {course.thumbnail_url ? (
-            <img 
-              src={course.thumbnail_url} 
+            <img
+              src={course.thumbnail_url}
               alt={course.title}
               className="w-full h-full object-cover rounded-lg"
+              loading="lazy"
+              fetchPriority="low"
             />
           ) : (
             <BookOpen className="h-8 w-8 text-muted-foreground" />
@@ -237,10 +239,12 @@ const CourseCard = ({ course, isEnrolled, viewMode, subscriptionStatus }: Course
       <CardHeader className="p-0 relative">
         <div className="aspect-video bg-muted rounded-t-lg overflow-hidden">
           {course.thumbnail_url ? (
-            <img 
-              src={course.thumbnail_url} 
+            <img
+              src={course.thumbnail_url}
               alt={course.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+              fetchPriority="low"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
