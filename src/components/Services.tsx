@@ -38,43 +38,43 @@ const Services = () => {
   ];
 
   return (
-    <section className="axeptio-section">
-      <div className="axeptio-container">
-        <div className="text-center mb-16">
-          <h2 className="axeptio-heading mb-6">
+    <section className="min-h-screen py-12 lg:py-20 bg-background">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12 lg:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 lg:mb-6">
             Our <span className="text-primary">Services</span>
           </h2>
-          <p className="axeptio-subheading max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto">
             Professional IT solutions designed to help your business thrive in the digital age. 
             From development to security, we've got you covered.
           </p>
         </div>
         
         {/* Achievement Stats */}
-        <div className="axeptio-grid-4 mb-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-12 lg:mb-16">
           {achievements.map((achievement, index) => (
-            <div key={index} className="axeptio-stat">
-              <div className="axeptio-feature-icon mb-4">
-                <achievement.icon className="h-6 w-6 text-primary" />
+            <div key={index} className="bg-card border border-border rounded-lg lg:rounded-xl p-4 lg:p-6 text-center hover:shadow-md transition-all duration-200 touch-feedback">
+              <div className="inline-flex items-center justify-center w-12 h-12 lg:w-16 lg:h-16 bg-primary/10 rounded-lg lg:rounded-xl mb-3 lg:mb-4">
+                <achievement.icon className="h-5 w-5 lg:h-6 lg:w-6 text-primary" />
               </div>
-              <h4 className="axeptio-feature-title">{achievement.title}</h4>
-              <p className="axeptio-feature-description">{achievement.description}</p>
+              <h4 className="text-sm lg:text-base font-semibold mb-2">{achievement.title}</h4>
+              <p className="text-xs lg:text-sm text-muted-foreground">{achievement.description}</p>
             </div>
           ))}
         </div>
 
         {/* Services Grid */}
-        <div className="axeptio-grid-3 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12 lg:mb-16">
           {currentServices.map((service, index) => (
             <div
               key={index}
               onClick={() => setSelectedService(service)}
-              className="group cursor-pointer transform transition-all duration-300 hover:scale-105"
+              className="group cursor-pointer transform transition-all duration-300 hover:scale-105 touch-feedback"
             >
-              <div className="bg-card rounded-xl p-6 border border-border hover:border-primary/30 hover:shadow-xl h-full">
+              <div className="bg-card rounded-xl p-4 sm:p-6 border border-border hover:border-primary/30 hover:shadow-xl h-full">
                 <div className="relative overflow-hidden mb-4">
-                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${service.color} flex items-center justify-center mb-4`}>
-                    <service.icon className="h-6 w-6 text-white" />
+                  <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-r ${service.color} flex items-center justify-center mb-4`}>
+                    <service.icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                   </div>
                   {service.badge && (
                     <span className="absolute top-0 right-0 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full">
@@ -83,11 +83,11 @@ const Services = () => {
                   )}
                 </div>
                 
-                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
+                <h3 className="text-lg sm:text-xl font-bold mb-3 group-hover:text-primary transition-colors">
                   {service.title}
                 </h3>
                 
-                <p className="text-muted-foreground mb-4 line-clamp-2">
+                <p className="text-sm sm:text-base text-muted-foreground mb-4 line-clamp-2">
                   {service.description}
                 </p>
                 
@@ -245,25 +245,25 @@ const Services = () => {
         )}
 
         {/* CTA Section */}
-        <div className="text-center axeptio-card p-12">
-          <div className="max-w-2xl mx-auto mb-8">
-            <h3 className="text-heading-2 mb-4">
+        <div className="text-center bg-card border border-border rounded-xl p-8 lg:p-12">
+          <div className="max-w-2xl mx-auto mb-6 lg:mb-8">
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
               Ready to Transform Your Digital Future?
             </h3>
-            <p className="axeptio-body mb-8">
+            <p className="text-base sm:text-lg text-muted-foreground mb-6 lg:mb-8">
               Join hundreds of satisfied clients who trust Zwanski Tech for their digital transformation needs.
             </p>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="axeptio-button-primary" asChild>
+            <Button size="lg" className="w-full sm:w-auto touch-feedback" asChild>
               <Link to="/services">
                 {t("services.getStartedToday")}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
             
-            <Button variant="outline" size="lg" className="axeptio-button-secondary">
+            <Button variant="outline" size="lg" className="w-full sm:w-auto touch-feedback">
               View Portfolio
               <Star className="ml-2 h-5 w-5" />
             </Button>
