@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Home, Wrench, Shield, GraduationCap, Briefcase, Settings2, FileText, MessageSquare, Bot, Activity, Search, User } from "lucide-react";
 import ZwanskiLogo from "./ZwanskiLogo";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageSelector } from "./LanguageSelector";
@@ -94,8 +93,6 @@ const Navbar = () => {
     { label: "Blog", path: "/blog", icon: FileText },
     { label: "Chat", path: "/chat", icon: MessageSquare },
     { label: "AI", path: "/ai", icon: Bot },
-    { label: "Gravatar", path: "/gravatar", icon: User },
-    { label: "Threat Map", path: "/threat-map", icon: Activity }
   ];
 
   const serviceCategories = [

@@ -1,14 +1,21 @@
-Here’s the fully merged component—conflict markers removed, SEO tags and dynamic lookup logic combined into one complete file:
-
-```tsx
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
+interface GravatarProfile {
+  avatar?: string;
+  displayName?: string;
+  aboutMe?: string;
+  currentLocation?: string;
+  [key: string]: any;
+}
 
 // Utility to compute MD5 hash using Web Crypto API
 async function md5(message: string): Promise<string> {
-  const msgUint8 = new TextEncoder().encode(message);
+  const msgUint8 = new TextEncoder().encode(message.trim().toLowerCase());
   const hashBuffer = await crypto.subtle.digest("MD5", msgUint8);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
@@ -16,93 +23,98 @@ async function md5(message: string): Promise<string> {
 
 export default function Gravatar() {
   const [email, setEmail] = useState("");
-  const [hash, setHash] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [profile, setProfile] = useState<GravatarProfile | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const normalized = email.trim().toLowerCase();
-    const result = await md5(normalized);
-    setHash(result);
-    setLoading(false);
-  };
+    setError(null);
+    setProfile(null);
 
-  const avatarUrl = hash
-    ? `https://www.gravatar.com/avatar/${hash}?s=200&d=identicon`
-    : null;
+    try {
+      const hash = await md5(email);
+      const res = await fetch(`https://www.gravatar.com/${hash}.json`);
+      if (!res.ok) {
+        throw new Error("Profile not found");
+      }
+      const data = await res.json();
+      const entry = data.entry?.[0] || {};
+      setProfile({
+        ...entry,
+        avatar: `https://www.gravatar.com/avatar/${hash}?s=200&d=identicon`,
+      });
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
       <Helmet>
-        <title>Gravatar Profile Lookup - ZWANSKI TECH</title>
+        <title>Gravatar Lookup - ZWANSKI TECH</title>
         <meta
           name="description"
-          content="Fetch and preview Gravatar images by entering an email address."
+          content="Lookup Gravatar profiles by email address."
         />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:title"
-          content="Gravatar Profile Lookup - ZWANSKI TECH"
-        />
-        <meta
-          property="og:description"
-          content="Fetch and preview Gravatar images by entering an email address."
-        />
-        <meta property="og:image" content="https://zwanski.org/og-image.png" />
-        <meta property="og:url" content="https://zwanski.org/gravatar" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:title"
-          content="Gravatar Profile Lookup - ZWANSKI TECH"
-        />
-        <meta
-          name="twitter:description"
-          content="Fetch and preview Gravatar images by entering an email address."
-        />
-        <meta name="twitter:image" content="https://zwanski.org/og-image.png" />
       </Helmet>
 
       <div className="flex flex-col min-h-screen bg-background">
         <Navbar />
 
-        <main className="flex-grow py-20 bg-gradient-to-b from-background to-muted/20">
-          <div className="container mx-auto px-4 max-w-md">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">
-              Gravatar Lookup
-            </h1>
-            <p className="text-xl text-muted-foreground mb-8 text-center">
-              Enter an email address to preview its Gravatar image.
-            </p>
+        <main className="flex-grow container mx-auto px-4 py-16">
+          <h1 className="text-4xl md:text-5xl font-bold text-center mb-8">
+            Gravatar Lookup
+          </h1>
+          <form
+            onSubmit={handleSubmit}
+            className="max-w-md mx-auto space-y-4"
+          >
+            <Input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter email address"
+              required
+            />
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "Loading..." : "Fetch Avatar"}
+            </Button>
+          </form>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input
-                type="email"
-                required
-                placeholder="Enter email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full p-2 border rounded-md bg-background text-foreground"
-              />
-              <button
-                type="submit"
-                className="w-full px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-                disabled={loading}
-              >
-                {loading ? "Loading..." : "Get Gravatar"}
-              </button>
-            </form>
+          {error && (
+            <p className="text-center text-red-500 mt-4">{error}</p>
+          )}
 
-            {avatarUrl && (
-              <div className="mt-6 flex justify-center">
+          {profile && (
+            <div className="mt-8 text-center space-y-4">
+              {profile.avatar && (
                 <img
-                  src={avatarUrl}
-                  alt="Gravatar avatar"
-                  className="rounded-full shadow-md w-48 h-48"
+                  src={profile.avatar}
+                  alt={profile.displayName || "Gravatar"}
+                  className="w-32 h-32 rounded-full mx-auto shadow-lg"
                 />
-              </div>
-            )}
-          </div>
+              )}
+              {profile.displayName && (
+                <p className="text-xl font-semibold">
+                  {profile.displayName}
+                </p>
+              )}
+              {profile.currentLocation && (
+                <p className="text-sm text-muted-foreground">
+                  {profile.currentLocation}
+                </p>
+              )}
+              {profile.aboutMe && (
+                <p className="max-w-xl mx-auto text-center">
+                  {profile.aboutMe}
+                </p>
+              )}
+            </div>
+          )}
         </main>
 
         <Footer />
@@ -110,4 +122,3 @@ export default function Gravatar() {
     </>
   );
 }
-```
