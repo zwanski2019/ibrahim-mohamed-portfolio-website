@@ -22,6 +22,12 @@ export const frTranslations = {
   "nav.joinTelegram": "Rejoindre Telegram",
   "nav.liveChat": "Chat en Direct",
   "nav.threatMap": "Carte des Menaces",
+  "nav.blog": "Blog",
+  "nav.tools": "Outils",
+  "nav.model3d": "Modèle 3D",
+  "nav.privacy": "Confidentialité",
+  "nav.terms": "Conditions",
+  "nav.rss": "RSS",
 
   // Hero Section
   "hero.title": "Votre Partenaire pour Construire, Réparer et Sécuriser l'Avenir Numérique",
