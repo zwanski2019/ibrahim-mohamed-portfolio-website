@@ -27,7 +27,7 @@ Welcome to the Zwanski Tech platform! This project powers [zwanski.org](https://
 ## 🛠️ Tech Stack
 
 - **Frontend:** React, TypeScript, Tailwind CSS, shadcn/ui
-- **Backend/DB:** Supabase (Postgres, Auth, Edge Functions)
+- **Backend/DB:** Supabase (Postgres, Auth, Edge Functions). See the [Supabase Edge Functions docs](https://supabase.com/docs/guides/functions) for details.
 - **3D/Creative:** Three.js, React Three Fiber
 - **Other:** Vite, React Query, Lucide Icons, i18n
 
