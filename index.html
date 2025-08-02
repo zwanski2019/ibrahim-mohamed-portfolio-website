@@ -41,7 +41,11 @@
     <!-- Optimized critical font preload -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" fetchpriority="high">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
-    
+
+    <!-- Fallback basic form styles if Tailwind CSS fails -->
+    <link rel="stylesheet" href="/fallback.css">
+    <noscript><link rel="stylesheet" href="/fallback.css"></noscript>
+
     <!-- Critical CSS inline -->
     <style>
       /* Critical above-the-fold CSS for hero section */
