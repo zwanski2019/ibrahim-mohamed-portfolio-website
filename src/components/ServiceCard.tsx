@@ -59,7 +59,7 @@ const ServiceCard = ({ id, title, description, price, icon, onSelect }: ServiceC
         <Button 
           onClick={onSelect}
           className="w-full"
-          variant="default"
+          variant="solid"
         >
           Request Service
         </Button>

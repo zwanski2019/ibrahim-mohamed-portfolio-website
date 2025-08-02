@@ -7,7 +7,7 @@ import { Button, Form } from "@/components/heroui";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/heroui";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -241,7 +241,7 @@ export const UserProfile = ({ user, onSave, isEditing = false }: UserProfileProp
               {user && (
                 <Button 
                   type="button" 
-                  variant="outline" 
+                  variant="bordered"
                   onClick={() => setEditMode(false)}
                 >
                   Cancel

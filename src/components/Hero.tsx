@@ -171,7 +171,7 @@ const Hero = () => {
                   </Button>
                 </Link>
                 <Link to="/infrastructure" aria-label="View Our Infrastructure">
-                  <Button variant="outline" size="lg" className="group px-8 py-3 text-base">
+                  <Button variant="bordered" size="lg" className="group px-8 py-3 text-base">
                     <Play className="mr-2 h-4 w-4" aria-hidden="true" />
                     View Infrastructure
                   </Button>
@@ -228,7 +228,7 @@ const Hero = () => {
                   </div>
                   <div className="mt-3 text-center">
                     <Link to="/computer-model">
-                      <Button variant="outline" size="sm" className="text-xs">
+                      <Button variant="bordered" size="sm" className="text-xs">
                         <Monitor className="mr-1 h-3 w-3" />
                         View 3D Model
                       </Button>

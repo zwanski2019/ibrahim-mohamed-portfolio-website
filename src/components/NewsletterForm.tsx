@@ -6,7 +6,8 @@ import * as z from "zod";
 import { toast } from "sonner";
 import { Sparkles } from "lucide-react";
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Button } from "@/components/heroui";
+import { Form, Button } from "@/components/heroui";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
 // Form validation schema
