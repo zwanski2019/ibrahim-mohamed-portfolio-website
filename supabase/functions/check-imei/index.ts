@@ -1,15 +1,42 @@
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { serve, type ConnInfo } from "https://deno.land/std@0.168.0/http/server.ts"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-serve(async (req) => {
+// Rate limiting configuration. Adjust MAX_REQUESTS_PER_WINDOW or
+// RATE_LIMIT_WINDOW_MS to change the allowed request rate.
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 60; // requests per window
+const requestCounts = new Map<string, { count: number; start: number }>();
+
+serve(async (req: Request, conn: ConnInfo) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  const ip = req.headers.get("x-forwarded-for") ?? conn.remoteAddr.hostname;
+  const identifier =
+    req.headers.get("x-user-id") ?? req.headers.get("x-client-info") ?? ip;
+
+  const now = Date.now();
+  const record = requestCounts.get(identifier);
+  if (!record || now - record.start >= RATE_LIMIT_WINDOW_MS) {
+    requestCounts.set(identifier, { count: 1, start: now });
+  } else {
+    if (record.count >= MAX_REQUESTS_PER_WINDOW) {
+      return new Response(
+        JSON.stringify({ error: "Too Many Requests" }),
+        {
+          status: 429,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        },
+      );
+    }
+    record.count++;
   }
 
   try {
