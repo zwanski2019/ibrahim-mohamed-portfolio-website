@@ -1,6 +1,17 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 
+declare global {
+  interface Window {
+    GRAVATAR_API_URL?: string
+  }
+}
+
+const SUPABASE_FUNCTION_URL =
+  window.GRAVATAR_API_URL ||
+  import.meta.env.VITE_GRAVATAR_API_URL ||
+  'wss://ceihcnfngpmrtqunhaey.supabase.co/functions/v1/websocket-chat'
+
 interface ChatMessage {
   id: string
   username: string
@@ -38,7 +49,7 @@ export const useWebSocket = ({ username, avatar }: UseWebSocketProps) => {
     
     try {
       // Use the correct WebSocket URL
-      const ws = new WebSocket('wss://ceihcnfngpmrtqunhaey.supabase.co/functions/v1/websocket-chat')
+      const ws = new WebSocket(SUPABASE_FUNCTION_URL)
       wsRef.current = ws
 
       ws.onopen = () => {
