@@ -66,6 +66,16 @@ verify_jwt = false
 verify_jwt = false
 ```
 
+#### Gravatar Edge Function
+
+For the Gravatar edge function, copy the example environment file and add your API key:
+
+```bash
+cp supabase/functions/gravatar/.env.example supabase/functions/gravatar/.env
+```
+
+Then edit `GRAVATAR_API_KEY` in `supabase/functions/gravatar/.env` before testing locally.
+
 ## 🔐 Security Features
 
 ✅ **Row Level Security (RLS)** - All tables have proper RLS policies  
