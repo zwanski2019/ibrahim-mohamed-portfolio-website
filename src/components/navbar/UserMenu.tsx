@@ -32,9 +32,12 @@ export const UserMenu: React.FC<UserMenuProps> = ({ userProfile }) => {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-8 w-8 rounded-full p-0">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={userProfile?.avatar_url || ""} />
+            <AvatarImage
+              src={userProfile?.avatar_url || ""}
+              alt={userProfile?.full_name || user.email || 'User avatar'}
+            />
             <AvatarFallback>
-              {userProfile?.full_name?.split(" ").map((n: string) => n[0]).join("") || 
+              {userProfile?.full_name?.split(" ").map((n: string) => n[0]).join("") ||
                user.email?.charAt(0).toUpperCase() || "U"}
             </AvatarFallback>
           </Avatar>
@@ -43,9 +46,12 @@ export const UserMenu: React.FC<UserMenuProps> = ({ userProfile }) => {
       <DropdownMenuContent align="end" className="w-56">
         <div className="flex items-center justify-start gap-2 p-2">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={userProfile?.avatar_url || ""} />
+            <AvatarImage
+              src={userProfile?.avatar_url || ""}
+              alt={userProfile?.full_name || user.email || 'User avatar'}
+            />
             <AvatarFallback>
-              {userProfile?.full_name?.split(" ").map((n: string) => n[0]).join("") || 
+              {userProfile?.full_name?.split(" ").map((n: string) => n[0]).join("") ||
                user.email?.charAt(0).toUpperCase() || "U"}
             </AvatarFallback>
           </Avatar>

@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Sparkles, Send, LogOut, Wifi, WifiOff, AlertCircle } from "lucide-react";
 import ChatMessage from "@/components/ChatMessage";
 import LoginForm from "@/components/LoginForm";
@@ -258,16 +259,20 @@ const Chat = () => {
                 <div ref={messagesEndRef} />
               </div>
               
-              <form 
+              <form
                 onSubmit={handleSendMessage}
                 className="border-t border-primary/20 p-4 flex gap-2"
               >
+                <Label htmlFor="chat-message" className="sr-only">
+                  Message
+                </Label>
                 <Input
+                  id="chat-message"
                   placeholder={
-                    isConnecting 
-                      ? "Connecting..." 
-                      : isConnected 
-                        ? "Type your message..." 
+                    isConnecting
+                      ? "Connecting..."
+                      : isConnected
+                        ? "Type your message..."
                         : connectionError
                           ? "Connection error - check above"
                           : "Disconnected - check connection"

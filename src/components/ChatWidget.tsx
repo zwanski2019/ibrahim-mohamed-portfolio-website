@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { MessageCircle, Send, X, Users, Wifi, WifiOff, AlertCircle } from "lucide-react";
 import ChatMessage from "@/components/ChatMessage";
 import LoginForm from "@/components/LoginForm";
@@ -210,7 +211,17 @@ const ChatWidget = () => {
               
               {/* Input */}
               <form onSubmit={handleSendMessage} className="border-t border-primary/20 p-2 flex gap-2">
-                <Input placeholder="Type a message..." value={newMessage} onChange={e => setNewMessage(e.target.value)} className="flex-1 h-8 text-xs" disabled={isLoading} />
+                <Label htmlFor="widget-message" className="sr-only">
+                  Message
+                </Label>
+                <Input
+                  id="widget-message"
+                  placeholder="Type a message..."
+                  value={newMessage}
+                  onChange={e => setNewMessage(e.target.value)}
+                  className="flex-1 h-8 text-xs"
+                  disabled={isLoading}
+                />
                 <Button type="submit" disabled={isLoading || !newMessage.trim()} size="sm" className="h-8 w-8 p-0">
                   <Send className="h-3 w-3" />
                 </Button>
