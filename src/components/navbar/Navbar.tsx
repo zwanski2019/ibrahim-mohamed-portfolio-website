@@ -37,7 +37,10 @@ export default function Navbar() {
             <Button variant="ghost" size="sm">
               {isAuthenticated ? (
                 <Avatar>
-                  <AvatarImage src={user?.user_metadata?.avatar_url} />
+                  <AvatarImage
+                    src={user?.user_metadata?.avatar_url}
+                    alt={user?.user_metadata?.full_name || 'User avatar'}
+                  />
                   <AvatarFallback>U</AvatarFallback>
                 </Avatar>
               ) : (
