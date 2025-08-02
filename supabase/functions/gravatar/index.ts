@@ -1,57 +1,81 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createHash } from "node:crypto";
+import { createHash } from "https://deno.land/std@0.168.0/hash/md5.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-export async function gravatarHandler(req: Request): Promise<Response> {
+serve(async (req) => {
+  // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { email } = await req.json();
+    // Parse out the email from query params
+    const url = new URL(req.url);
+    const email = url.searchParams.get('email');
     if (!email) {
       return new Response(
         JSON.stringify({ error: 'Email is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+        {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
       );
     }
 
-    const hash = createHash('md5').update(email.trim().toLowerCase()).digest('hex');
-    const profileRes = await fetch(`https://www.gravatar.com/${hash}.json`);
-
-    if (!profileRes.ok) {
+    // Optional: require an API key (if you have one configured)
+    const apiKey = Deno.env.get('GRAVATAR_API_KEY');
+    if (!apiKey) {
+      console.error('GRAVATAR_API_KEY not found in environment variables');
       return new Response(
-        JSON.stringify({ error: 'Failed to fetch profile' }),
-        { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+        JSON.stringify({ error: 'Service configuration error' }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
       );
     }
 
-    let profile;
-    try {
-      profile = await profileRes.json();
-    } catch (_e) {
-      return new Response(
-        JSON.stringify({ error: 'Failed to fetch profile' }),
-        { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
-      );
-    }
+    // Compute MD5 hash of the trimmed, lowercased email
+    const hash = createHash('md5')
+      .update(email.trim().toLowerCase())
+      .toString();
 
-    return new Response(
-      JSON.stringify(profile),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+    // Fetch the Gravatar profile JSON
+    const profileRes = await fetch(
+      `https://www.gravatar.com/${hash}.json?apikey=${apiKey}`
     );
-  } catch (_e) {
+    if (!profileRes.ok) {
+      console.error(
+        'Gravatar API error:',
+        profileRes.status,
+        profileRes.statusText
+      );
+      return new Response(
+        JSON.stringify({ error: 'Gravatar service is currently unavailable' }),
+        {
+          status: 502,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    const profile = await profileRes.json();
+
+    return new Response(JSON.stringify(profile), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  } catch (err) {
+    console.error('Error in gravatar function:', err);
     return new Response(
-      JSON.stringify({ error: 'Invalid request' }),
-      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+      JSON.stringify({ error: 'Internal server error' }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
     );
   }
-}
-
-if (import.meta.main) {
-  serve(gravatarHandler);
-}
+});
