@@ -48,11 +48,31 @@ serve(async (req) => {
     formData.append('imei', imei);
     formData.append('key', apiKey);
 
-    // Make request to IMEI API
-    const response = await fetch('https://api.ifreeicloud.co.uk', {
-      method: 'POST',
-      body: formData,
-    });
+    // Make request to IMEI API with timeout
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+    let response;
+    try {
+      response = await fetch('https://api.ifreeicloud.co.uk', {
+        method: 'POST',
+        body: formData,
+        signal: controller.signal,
+      });
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        console.error('IMEI API request timed out');
+        return new Response(
+          JSON.stringify({ error: 'IMEI check service timed out' }),
+          {
+            status: 504,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          }
+        );
+      }
+      throw err;
+    } finally {
+      clearTimeout(timeout);
+    }
 
     if (!response.ok) {
       console.error('IMEI API error:', response.status, response.statusText);
