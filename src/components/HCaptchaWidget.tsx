@@ -62,6 +62,7 @@ const HCaptchaWidget: React.FC<HCaptchaWidgetProps> = ({
         script.src = 'https://js.hcaptcha.com/1/api.js?render=explicit';
         script.async = true;
         script.defer = true;
+        (script as HTMLScriptElement).fetchPriority = 'low';
         
         script.onload = () => {
           console.log('✅ hCaptcha script loaded successfully');

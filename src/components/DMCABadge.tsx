@@ -18,6 +18,7 @@ export default function DMCABadge({
     script.src = 'https://images.dmca.com/Badges/DMCABadgeHelper.min.js';
     script.async = true;
     script.defer = true;
+    (script as HTMLScriptElement).fetchPriority = 'low';
     document.head.appendChild(script);
 
     return () => {
