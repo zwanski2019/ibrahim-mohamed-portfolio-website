@@ -89,6 +89,16 @@ The following secrets should already be configured in your Supabase project:
 2. Test with invalid credentials (should show appropriate errors)
 3. Verify rate limiting works (multiple failed attempts)
 
+### CSRF Token Refresh and Validation
+
+The `/profile/update` endpoint uses a double-submit CSRF token. Clients must:
+
+1. Read the `csrf-token` cookie and send its value in the `X-CSRF-Token` header for each POST request.
+2. After a successful response, update the stored token with the new value set in the `csrf-token` cookie.
+3. If the token is missing or mismatched, the request will be rejected with a `403` status.
+
+Refreshing the token is automatic; simply capture the latest `csrf-token` cookie after each profile update.
+
 ## 🔧 Troubleshooting
 
 ### Common Issues
