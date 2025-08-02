@@ -321,7 +321,10 @@ const JobDetail = () => {
                 <CardContent>
                   <div className="flex items-center space-x-3 mb-4">
                     <Avatar>
-                      <AvatarImage src={job.employer?.avatar_url || undefined} />
+                      <AvatarImage
+                        src={job.employer?.avatar_url || undefined}
+                        alt={job.employer?.full_name || 'Employer avatar'}
+                      />
                       <AvatarFallback>
                         {job.employer?.full_name?.[0] || 'E'}
                       </AvatarFallback>

@@ -70,6 +70,7 @@ const RSS = lazy(() => import("./pages/RSS"));
 const Search = lazy(() => import("./pages/Search"));
 const AIAssistantPage = lazy(() => import("./pages/ai"));
 const ThreatMap = lazy(() => import("./pages/ThreatMap"));
+const Gravatar = lazy(() => import("./pages/Gravatar"));
 
 // Admin pages - separate chunk
 const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
