@@ -50,11 +50,12 @@ export default function DMCABadge({
         rel="noopener noreferrer"
         aria-label="DMCA Protection Status - Content is protected by DMCA.com"
       >
-        <img 
+        <img
           src={getBadgeImage()}
-          alt="DMCA.com Protection Status" 
+          alt="DMCA.com Protection Status"
           className="max-w-none"
           loading="lazy"
+          fetchPriority="low"
         />
       </a>
       {showText && (

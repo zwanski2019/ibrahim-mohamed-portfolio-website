@@ -39,7 +39,7 @@
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <link rel="alternate" type="application/atom+xml" title="Zwanski Tech Website Feed" href="https://zwanski2019.github.io/ZWANSKI-TECH/atom.xml" />
     <!-- Optimized critical font preload -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" fetchpriority="high">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
     
     <!-- Critical CSS inline -->
@@ -218,7 +218,7 @@
     <!-- End Google Tag Manager (noscript) -->
     
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/main.tsx" fetchpriority="high"></script>
     
     <!-- Load analytics after main app with reduced priority -->
     <script>

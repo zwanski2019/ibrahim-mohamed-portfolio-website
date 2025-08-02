@@ -43,10 +43,11 @@ const CourseDetails = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             <div className="relative mb-6">
-              <img 
-                src={course.image} 
+              <img
+                src={course.image}
                 alt={course.imageAlt}
                 className="w-full h-64 object-cover rounded-lg"
+                fetchPriority="high"
               />
               <Button 
                 size="lg"

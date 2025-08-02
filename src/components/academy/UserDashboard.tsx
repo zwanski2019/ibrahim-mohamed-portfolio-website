@@ -143,10 +143,12 @@ const UserDashboard = () => {
               <div key={enrollment.id} className="flex items-center space-x-4">
                 <div className="w-16 h-12 bg-muted rounded flex-shrink-0">
                   {enrollment.courses?.thumbnail_url ? (
-                    <img 
-                      src={enrollment.courses.thumbnail_url} 
+                    <img
+                      src={enrollment.courses.thumbnail_url}
                       alt={enrollment.courses.title}
                       className="w-full h-full object-cover rounded"
+                      loading="lazy"
+                      fetchPriority="low"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
@@ -188,10 +190,12 @@ const UserDashboard = () => {
                 <div key={bookmark.id} className="flex items-center space-x-3 p-3 rounded-lg border">
                   <div className="w-12 h-8 bg-muted rounded flex-shrink-0">
                     {bookmark.courses?.thumbnail_url ? (
-                      <img 
-                        src={bookmark.courses.thumbnail_url} 
+                      <img
+                        src={bookmark.courses.thumbnail_url}
                         alt={bookmark.courses.title}
                         className="w-full h-full object-cover rounded"
+                        loading="lazy"
+                        fetchPriority="low"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">

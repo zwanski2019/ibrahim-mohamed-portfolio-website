@@ -15,11 +15,12 @@ export default function VideoCard({ video, onVideoClick }: VideoCardProps) {
       onClick={() => onVideoClick(video)}
     >
       <div className="aspect-video relative overflow-hidden">
-        <img 
-          src={video.thumbnail} 
-          alt={video.title} 
+        <img
+          src={video.thumbnail}
+          alt={video.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
+          fetchPriority="low"
         />
         
         <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">

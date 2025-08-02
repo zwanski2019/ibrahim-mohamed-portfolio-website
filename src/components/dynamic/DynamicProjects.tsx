@@ -78,10 +78,12 @@ const DynamicProjects = () => {
             <Card key={project.id} className="overflow-hidden group hover:shadow-lg transition-all duration-300 animate-on-scroll">
               {project.featured_image_url && (
                 <div className="relative overflow-hidden">
-                  <img 
-                    src={project.featured_image_url} 
+                  <img
+                    src={project.featured_image_url}
                     alt={project.title}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                    fetchPriority="low"
                   />
                   {project.featured && (
                     <Badge className="absolute top-3 right-3 bg-yellow-500 text-black">
