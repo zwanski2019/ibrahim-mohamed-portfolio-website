@@ -41,8 +41,6 @@
     <!-- Optimized critical font preload -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
-
-    <link rel="stylesheet" href="/src/index.css" fetchpriority="high">
     
     <!-- Critical CSS inline -->
     <style>
@@ -68,9 +66,7 @@
      
     (function(d, s) {
       var t = d.getElementsByTagName(s)[0], e = d.createElement(s);
-      e.async = true;
-      e.src = "//static.axept.io/sdk.js";
-      e.fetchPriority = "low";
+      e.async = true; e.src = "//static.axept.io/sdk.js";
       t.parentNode.insertBefore(e, t);
     })(document, "script");
     </script>
@@ -115,7 +111,7 @@
     <!-- End Schema.org -->
     
     <!-- hCaptcha -->
-    <script src="https://js.hcaptcha.com/1/api.js" async defer fetchpriority="low"></script>
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     
 
     <style>
@@ -215,7 +211,7 @@
     <!-- End Axeptio Enhancements -->
   </head>
 
-  <body class="pt-[4.5rem]">
+  <body>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PM37NL7K"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -240,7 +236,6 @@
         var gtag = document.createElement('script');
         gtag.async = true;
         gtag.src = 'https://www.googletagmanager.com/gtag/js?id=G-JCY70KNM0Y';
-        gtag.fetchPriority = 'low';
         gtag.onload = function() {
           window.dataLayer = window.dataLayer || [];
           function gtagFn(){dataLayer.push(arguments);}
@@ -255,13 +250,13 @@
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.fetchPriority='low';f.parentNode.insertBefore(j,f);
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer','GTM-PM37NL7K');
         }, 1000);
       }
     </script>
     
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module" fetchpriority="low"></script>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
   </body>
 </html>

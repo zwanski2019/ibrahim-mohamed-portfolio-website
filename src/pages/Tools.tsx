@@ -3,7 +3,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import IMEIChecker from "@/components/IMEIChecker";
 import GPTAssistant from "@/components/GPTAssistant";
-import ApiExplorer from "@/components/api-explorer/ApiExplorer";
 import { useLanguage } from "@/context/LanguageContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -38,14 +37,6 @@ const Tools = () => {
       description: "Get help with tasks using AI-powered tools including chatbot, resume enhancer, blog generator, and code explainer",
       icon: Bot,
       component: <GPTAssistant />,
-      featured: true
-    },
-    {
-      id: "public-api-explorer",
-      title: "Public API Explorer",
-      description: "Search and explore free public APIs",
-      icon: Globe,
-      component: <ApiExplorer />,
       featured: true
     }
   ];

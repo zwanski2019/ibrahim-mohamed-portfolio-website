@@ -53,17 +53,6 @@ HCAPTCHA_SITE_KEY=your-public-site-key-here
 HCAPTCHA_SECRET_KEY=your-secret-key-here
 ```
 
-Optional variables for **Google reCAPTCHA v3**:
-
-```bash
-RECAPTCHA_SITE_KEY=6LcKP5UrAAAAAPckgYOCbzV1MbvHMe9zCborYWtN
-RECAPTCHA_SECRET_KEY=6LcKP5UrAAAAAPcX_eYQelEPAia9N3zpL7fdrWtG
-```
-
-These keys are registered for `zwanski.org` and enable reCAPTCHA verification across the site.
-
-Add `RECAPTCHA_SECRET_KEY` to your server or Supabase secrets for server-side validation.
-
 If `HCAPTCHA_SITE_KEY` is not set, security verification is skipped and users can sign in or sign up without completing hCaptcha.
 
 Set these in your Supabase project secrets so the `get-hcaptcha-config` and `verify-hcaptcha` edge functions can work properly.

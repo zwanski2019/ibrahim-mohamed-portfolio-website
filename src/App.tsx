@@ -69,7 +69,6 @@ const RSS = lazy(() => import("./pages/RSS"));
 const Search = lazy(() => import("./pages/Search"));
 const AIAssistantPage = lazy(() => import("./pages/ai"));
 const ThreatMap = lazy(() => import("./pages/ThreatMap"));
-const PublicAPIExplorer = lazy(() => import("./pages/PublicAPIExplorer"));
 
 // Admin pages - separate chunk
 const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
@@ -83,7 +82,6 @@ import ScrollToTop from "./components/ScrollToTop";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import ChatWidget from "./components/ChatWidget";
 import { AccessibilityEnhancer } from "./components/AccessibilityEnhancer";
-import NewsTicker from "./components/NewsTicker";
 import { MobileTouchOptimizer } from "./components/mobile/MobileTouchOptimizer";
 import { MobilePerformanceWrapper } from "./components/mobile/MobilePerformanceWrapper";
 import { usePerformanceMonitoring, useMemoryMonitoring } from "./hooks/usePerformanceMonitoring";
@@ -150,7 +148,6 @@ function App() {
                              <title>Zwanski Tech - Professional IT Services & Digital Education Platform</title>
                              <meta name="description" content="Expert IT services in Tunisia: computer repair, cybersecurity, web development, and digital education. Professional solutions for businesses and individuals." />
                            </Helmet>
-                           <NewsTicker />
                            <div className="app-content-ready homepage-content mobile-container">
                         <Suspense fallback={<MinimalLoader />}>
                           <Routes>
@@ -195,7 +192,6 @@ function App() {
                           <Route path="/infrastructure" element={<Infrastructure />} />
                           <Route path="/imei-check" element={<IMEICheck />} />
                           <Route path="/tools" element={<Tools />} />
-                          <Route path="/api-explorer" element={<PublicAPIExplorer />} />
                           <Route path="/threat-map" element={<ThreatMap />} />
                           <Route path="/ai" element={<AIAssistantPage />} />
                           <Route path="/search" element={<Search />} />

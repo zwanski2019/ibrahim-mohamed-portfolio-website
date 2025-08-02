@@ -3,11 +3,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Button, Form } from "@/components/heroui";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -173,7 +173,7 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" aria-label="post-job-form">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
               name="title"
@@ -422,7 +422,7 @@ export const JobPostForm = ({ onSuccess, onCancel }: JobPostFormProps) => {
                 {createJobPost.isPending ? t("jobs.posting") : t("jobs.postJob")}
               </Button>
               {onCancel && (
-                <Button type="button" variant="bordered" onClick={onCancel}>
+                <Button type="button" variant="outline" onClick={onCancel}>
                   {t("jobs.cancel")}
                 </Button>
               )}

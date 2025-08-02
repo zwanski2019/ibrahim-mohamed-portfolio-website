@@ -3,11 +3,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Button, Form } from "@/components/heroui";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -143,7 +143,7 @@ export const UserProfile = ({ user, onSave, isEditing = false }: UserProfileProp
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" aria-label="user-profile-form">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
               name="full_name"
@@ -241,7 +241,7 @@ export const UserProfile = ({ user, onSave, isEditing = false }: UserProfileProp
               {user && (
                 <Button 
                   type="button" 
-                  variant="bordered"
+                  variant="outline" 
                   onClick={() => setEditMode(false)}
                 >
                   Cancel
