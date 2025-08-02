@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@4.0.0";
+import { logflare } from "../_shared/logflare.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -17,10 +18,23 @@ interface CustomerEmailRequest {
   from?: string;
 }
 
-
 const SUPPORT_EMAIL = "support@zwanski.org";
 const CONTACT_EMAIL = "contact@zwanski.org";
 
+const maskEmail = (email: string): string => {
+  const [local, domain] = email.split("@");
+  if (!local || !domain) return email;
+  return `${local[0]}***@${domain}`;
+};
+
+/**
+ * Handles customer email requests.
+ *
+ * Logging best practices:
+ * - Avoid logging personally identifiable information (PII) such as full email addresses.
+ * - Mask or redact sensitive data before logging.
+ * - Log only what is necessary for debugging and monitoring.
+ */
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -30,12 +44,13 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const { to, subject, html, type, customerName, from }: CustomerEmailRequest = await req.json();
 
-    console.log(`Sending ${type} email to ${to}`);
+    // Log intent to send, mask the email for privacy
+    console.log(`Sending ${type} email to ${maskEmail(to)}`);
+    logflare({ message: 'Sending customer email', type, to: maskEmail(to) });
 
     // Determine sender email based on type or provided from address
     const getSenderEmail = (emailType: string, providedFrom?: string): string => {
       if (providedFrom) return providedFrom;
-      
       switch (emailType) {
         case 'general-inquiry':
         case 'business-contact':
@@ -50,8 +65,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const senderEmail = getSenderEmail(type, from);
 
-    
-    const emailConfig: any = {
+    const emailConfig = {
       from: senderEmail,
       to: [to],
       subject,
@@ -60,10 +74,11 @@ const handler = async (req: Request): Promise<Response> => {
 
     const emailResponse = await resend.emails.send(emailConfig);
 
-    console.log("Email sent successfully:", emailResponse);
+    console.log("Email sent successfully with ID:", emailResponse.data?.id);
+    logflare({ message: 'Email sent successfully', emailId: emailResponse.data?.id });
 
-    return new Response(JSON.stringify({ 
-      success: true, 
+    return new Response(JSON.stringify({
+      success: true,
       emailId: emailResponse.data?.id
     }), {
       status: 200,
@@ -72,10 +87,13 @@ const handler = async (req: Request): Promise<Response> => {
         ...corsHeaders,
       },
     });
-  } catch (error: any) {
-    console.error("Error in send-customer-email function:", error);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error("Error in send-customer-email function:", message);
+    logflare({ message: 'Error in send-customer-email', error: message, level: 'error' });
+
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: message }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },
