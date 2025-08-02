@@ -3,6 +3,7 @@ import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
@@ -162,7 +163,11 @@ export default function AdminMessages() {
         {/* Search */}
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Label htmlFor="message-search" className="sr-only">
+            Search messages
+          </Label>
           <Input
+            id="message-search"
             placeholder="Search messages by name, email, or content..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}

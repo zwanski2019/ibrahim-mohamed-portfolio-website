@@ -11,7 +11,6 @@
     "build:admin": "vite build --config admin/vite.config.ts --root admin",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "jest"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
