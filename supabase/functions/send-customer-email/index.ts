@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@4.0.0";
+import { logflare } from "../_shared/logflare.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -31,6 +32,7 @@ const handler = async (req: Request): Promise<Response> => {
     const { to, subject, html, type, customerName, from }: CustomerEmailRequest = await req.json();
 
     console.log(`Sending ${type} email to ${to}`);
+    logflare({ message: 'Sending customer email', type, to });
 
     // Determine sender email based on type or provided from address
     const getSenderEmail = (emailType: string, providedFrom?: string): string => {
@@ -61,6 +63,7 @@ const handler = async (req: Request): Promise<Response> => {
     const emailResponse = await resend.emails.send(emailConfig);
 
     console.log("Email sent successfully:", emailResponse);
+    logflare({ message: 'Email sent successfully', emailId: emailResponse.data?.id });
 
     return new Response(JSON.stringify({ 
       success: true, 
@@ -74,6 +77,7 @@ const handler = async (req: Request): Promise<Response> => {
     });
   } catch (error: any) {
     console.error("Error in send-customer-email function:", error);
+    logflare({ message: 'Error in send-customer-email', error: String(error), level: 'error' });
     return new Response(
       JSON.stringify({ error: error.message }),
       {
