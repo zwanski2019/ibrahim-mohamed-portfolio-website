@@ -10,6 +10,7 @@ import { GlobalSearchBar } from "./search/GlobalSearchBar";
 import { UserMenu } from "./navbar/UserMenu";
 import { NotificationButton } from "./navbar/NotificationButton";
 import { supabase } from "@/integrations/supabase/client";
+import { trackEvent } from "@/utils/analytics";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ const Navbar = () => {
         return;
       }
       setUserProfile(data);
+      trackEvent('profile_fetch', { user_id: user.id, email: user.email });
     } catch (error) {
       if (process.env.NODE_ENV === 'development') {
         console.error("Error fetching user profile:", error);

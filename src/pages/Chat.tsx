@@ -13,6 +13,7 @@ import { useWebSocket } from "@/hooks/useWebSocket";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Profile } from "@/types/profile";
+import { trackEvent } from "@/utils/analytics";
 
 const Chat = () => {
   const { user, isAuthenticated, signOut } = useAuth();
@@ -46,6 +47,7 @@ const Chat = () => {
       }
 
       setUserProfile(data);
+      trackEvent('profile_fetch', { user_id: user.id, email: user.email });
     } catch (error) {
       console.error("Error fetching user profile:", error);
     }

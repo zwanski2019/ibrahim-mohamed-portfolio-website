@@ -8,6 +8,7 @@ import LoginForm from "@/components/LoginForm";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
+import { trackEvent } from "@/utils/analytics";
 interface ChatMessageType {
   id: number;
   message: string;
@@ -52,6 +53,7 @@ const ChatWidget = () => {
         return;
       }
       setUserProfile(data);
+      trackEvent('profile_fetch', { user_id: user.id, email: user.email });
     } catch (error) {
       console.error("Error fetching user profile:", error);
     }
