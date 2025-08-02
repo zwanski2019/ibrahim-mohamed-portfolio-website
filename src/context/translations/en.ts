@@ -22,6 +22,12 @@ export const enTranslations = {
   "nav.joinTelegram": "Join Telegram",
   "nav.liveChat": "Live Chat",
   "nav.threatMap": "Threat Map",
+  "nav.blog": "Blog",
+  "nav.tools": "Tools",
+  "nav.model3d": "3D Model",
+  "nav.privacy": "Privacy",
+  "nav.terms": "Terms",
+  "nav.rss": "RSS",
 
   // Hero Section
   "hero.title": "Your Partner in Building, Repairing & Securing Digital Futures",

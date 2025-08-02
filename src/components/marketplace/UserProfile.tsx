@@ -69,7 +69,7 @@ export const UserProfile = ({ user, onSave, isEditing = false }: UserProfileProp
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
             <Avatar className="h-24 w-24">
-              <AvatarImage src={user.avatar_url} />
+              <AvatarImage src={user.avatar_url} alt={user.full_name || 'User avatar'} />
               <AvatarFallback className="text-2xl">
                 {user.full_name.charAt(0)}
               </AvatarFallback>

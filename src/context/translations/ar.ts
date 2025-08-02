@@ -22,6 +22,12 @@ export const arTranslations = {
   "nav.joinTelegram": "انضم إلى تلغرام",
   "nav.liveChat": "دردشة مباشرة",
   "nav.threatMap": "خريطة التهديدات",
+  "nav.blog": "مدونة",
+  "nav.tools": "أدوات",
+  "nav.model3d": "نموذج ثلاثي الأبعاد",
+  "nav.privacy": "الخصوصية",
+  "nav.terms": "الشروط",
+  "nav.rss": "RSS",
 
   // Hero Section
   "hero.title": "شريكك في بناء وإصلاح وتأمين المستقبل الرقمي",
