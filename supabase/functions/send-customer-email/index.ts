@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@4.0.0";
+import { logflare } from "../_shared/logflare.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -17,7 +18,6 @@ interface CustomerEmailRequest {
   from?: string;
 }
 
-
 const SUPPORT_EMAIL = "support@zwanski.org";
 const CONTACT_EMAIL = "contact@zwanski.org";
 
@@ -26,6 +26,7 @@ const maskEmail = (email: string): string => {
   if (!local || !domain) return email;
   return `${local[0]}***@${domain}`;
 };
+
 /**
  * Handles customer email requests.
  *
@@ -43,12 +44,13 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const { to, subject, html, type, customerName, from }: CustomerEmailRequest = await req.json();
 
+    // Log intent to send, mask the email for privacy
     console.log(`Sending ${type} email to ${maskEmail(to)}`);
+    logflare({ message: 'Sending customer email', type, to: maskEmail(to) });
 
     // Determine sender email based on type or provided from address
     const getSenderEmail = (emailType: string, providedFrom?: string): string => {
       if (providedFrom) return providedFrom;
-
       switch (emailType) {
         case 'general-inquiry':
         case 'business-contact':
@@ -63,7 +65,6 @@ const handler = async (req: Request): Promise<Response> => {
 
     const senderEmail = getSenderEmail(type, from);
 
-
     const emailConfig = {
       from: senderEmail,
       to: [to],
@@ -74,6 +75,7 @@ const handler = async (req: Request): Promise<Response> => {
     const emailResponse = await resend.emails.send(emailConfig);
 
     console.log("Email sent successfully with ID:", emailResponse.data?.id);
+    logflare({ message: 'Email sent successfully', emailId: emailResponse.data?.id });
 
     return new Response(JSON.stringify({
       success: true,
@@ -86,8 +88,10 @@ const handler = async (req: Request): Promise<Response> => {
       },
     });
   } catch (error: unknown) {
-    console.error("Error in send-customer-email function:", error);
     const message = error instanceof Error ? error.message : String(error);
+    console.error("Error in send-customer-email function:", message);
+    logflare({ message: 'Error in send-customer-email', error: message, level: 'error' });
+
     return new Response(
       JSON.stringify({ error: message }),
       {

@@ -1,5 +1,6 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { logflare } from "../_shared/logflare.ts"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -39,6 +40,7 @@ serve(async (req) => {
     }
 
     console.log('Checking IMEI:', imei, 'with service:', service);
+    logflare({ message: 'Checking IMEI', imei, service });
 
     // Prepare form data for the API request
     const formData = new FormData();
@@ -74,6 +76,12 @@ serve(async (req) => {
 
     if (!response.ok) {
       console.error('IMEI API error:', response.status, response.statusText);
+      logflare({
+        message: 'IMEI API error',
+        status: response.status,
+        statusText: response.statusText,
+        level: 'error',
+      });
       return new Response(
         JSON.stringify({ error: 'IMEI check service is currently unavailable' }),
         { 
@@ -85,6 +93,7 @@ serve(async (req) => {
 
     const result = await response.text();
     console.log('IMEI API response:', result);
+    logflare({ message: 'IMEI API response', result });
 
     return new Response(
       JSON.stringify({ result }),
@@ -95,6 +104,7 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('Error in check-imei function:', error);
+    logflare({ message: 'Error in check-imei function', error: String(error), level: 'error' });
     return new Response(
       JSON.stringify({ error: 'Internal server error' }),
       { 
