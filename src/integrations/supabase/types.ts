@@ -2039,7 +2039,6 @@ export type Database = {
           user_type: Database["public"]["Enums"]["user_type"]
           verified: boolean | null
           website: string | null
-          subscription_status: string | null
           subscription_start_date: string | null
           subscription_end_date: string | null
           years_experience: number | null
@@ -2082,7 +2081,6 @@ export type Database = {
           user_type: Database["public"]["Enums"]["user_type"]
           verified?: boolean | null
           website?: string | null
-          subscription_status?: string | null
           subscription_start_date?: string | null
           subscription_end_date?: string | null
           years_experience?: number | null
@@ -2125,7 +2123,6 @@ export type Database = {
           user_type?: Database["public"]["Enums"]["user_type"]
           verified?: boolean | null
           website?: string | null
-          subscription_status?: string | null
           subscription_start_date?: string | null
           subscription_end_date?: string | null
           years_experience?: number | null
