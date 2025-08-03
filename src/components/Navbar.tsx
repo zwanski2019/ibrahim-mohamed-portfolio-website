@@ -10,6 +10,20 @@ import { UserMenu } from "./navbar/UserMenu";
 import { NotificationButton } from "./navbar/NotificationButton";
 import { supabase } from "@/integrations/supabase/client";
 import { trackEvent } from "@/utils/analytics";
+import { 
+  Home, 
+  Wrench, 
+  GraduationCap, 
+  Settings2, 
+  Briefcase, 
+  FileText, 
+  MessageSquare, 
+  Bot, 
+  Shield, 
+  Search, 
+  X, 
+  Menu 
+} from "lucide-react";
 
 const Navbar = () => {
   const navigate = useNavigate();

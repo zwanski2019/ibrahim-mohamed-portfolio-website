@@ -15,7 +15,7 @@ export async function logFetchError(log: ErrorLog) {
       method: log.method,
       status_code: log.status_code,
       error_message: log.error_message,
-      client_info: log.client_info ?? { userAgent: navigator.userAgent },
+      client_info: log.client_info ?? { userAgent: navigator.userAgent } as any,
     });
   } catch (e) {
     // eslint-disable-next-line no-console
