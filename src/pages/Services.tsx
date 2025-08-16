@@ -150,9 +150,9 @@ const Services = () => {
             </div>
             
             {/* Services Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 lg:mb-12">
+            <div className="responsive-grid responsive-grid-3 mb-8 lg:mb-12">
               {filteredServices.map((service) => (
-                <div key={service.id} className="w-full">
+                <div key={service.id} className="card-safe">
                   <ServiceCard 
                     id={service.id}
                     title={service.title}

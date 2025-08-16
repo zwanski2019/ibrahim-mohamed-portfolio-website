@@ -1,0 +1,36 @@
+/* DEBUG CSS - Remove before production */
+/* Use temporarily to identify overflow sources */
+
+* { 
+  box-sizing: border-box !important; 
+}
+
+img, video, iframe { 
+  max-width: 100% !important; 
+  height: auto !important; 
+}
+
+html, body { 
+  overflow-x: auto !important; /* Allow horizontal scroll during debugging */
+}
+
+.overflow-scan * {
+  outline: 1px solid rgba(0,0,0,.05) !important;
+}
+
+/* Check for elements wider than viewport */
+.width-check {
+  background: rgba(255, 0, 0, 0.1) !important;
+}
+
+/* Add this class to body to enable overflow scanning */
+.debug-mode * {
+  outline: 1px solid rgba(255, 0, 0, 0.1) !important;
+}
+
+.debug-mode .potential-overflow {
+  background: rgba(255, 255, 0, 0.2) !important;
+  outline: 2px solid orange !important;
+}
+
+/* Console logging helper - check document.documentElement.scrollWidth vs clientWidth */

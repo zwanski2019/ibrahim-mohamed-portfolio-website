@@ -1,5 +1,17 @@
 /* Mobile Performance Optimizations */
 
+/* Global Overflow Prevention */
+html {
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
 /* Touch target optimization */
 @media (max-width: 768px) {
   /* Ensure minimum touch target size */
@@ -9,8 +21,8 @@
   input[type="button"], 
   input[type="submit"],
   .touch-target {
-    min-height: 44px !important;
-    min-width: 44px !important;
+    min-height: 48px !important;
+    min-width: 48px !important;
     padding: 12px 16px !important;
     touch-action: manipulation;
   }
@@ -80,23 +92,38 @@
   }
 }
 
-/* Mobile scrolling optimizations */
+/* Mobile scrolling optimizations & overflow prevention */
 @media (max-width: 768px) {
   * {
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
+    max-width: 100%;
   }
 
-  /* Optimize scroll containers */
+  /* Safe scroll containers */
   .scroll-container {
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    max-width: 100vw;
+    width: 100%;
   }
 
   .scroll-container > * {
     scroll-snap-align: start;
+    flex-shrink: 0;
+    max-width: calc(100vw - 32px);
+  }
+
+  /* Prevent layout overflow */
+  .container,
+  .axeptio-container,
+  .section-container {
+    max-width: 100%;
+    overflow-x: hidden;
+    padding-left: clamp(16px, 4vw, 24px);
+    padding-right: clamp(16px, 4vw, 24px);
   }
 }
 

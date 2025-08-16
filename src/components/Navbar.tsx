@@ -102,8 +102,8 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-lg border-b border-border/30 shadow-sm">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-lg border-b border-border/30 shadow-sm overflow-safe">
+      <div className="responsive-container">
         {/* Main header row */}
         <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Left section - Logo */}
@@ -125,7 +125,7 @@ const Navbar = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="lg:hidden touch-feedback"
+              className="lg:hidden touch-optimized"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
             >
               <Search className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -149,14 +149,14 @@ const Navbar = () => {
                   variant="ghost" 
                   size="sm" 
                   onClick={() => navigate("/auth?tab=signin")}
-                  className="text-sm touch-feedback"
+                  className="text-sm touch-optimized"
                 >
                   Sign In
                 </Button>
                 <Button 
                   size="sm" 
                   onClick={() => navigate("/auth?tab=signup")}
-                  className="text-sm touch-feedback"
+                  className="text-sm touch-optimized"
                 >
                   Sign Up
                 </Button>
@@ -167,7 +167,7 @@ const Navbar = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="nav-toggle lg:hidden touch-feedback"
+              className="nav-toggle lg:hidden touch-optimized"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-4 w-4 sm:h-5 sm:w-5" /> : <Menu className="h-4 w-4 sm:h-5 sm:w-5" />}

@@ -1,0 +1,206 @@
+/* Responsive System - Core Layout & Container Management */
+
+/* Container System with Consistent Gutters */
+.responsive-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding-left: clamp(16px, 4vw, 32px);
+  padding-right: clamp(16px, 4vw, 32px);
+  box-sizing: border-box;
+}
+
+/* Fluid Typography System */
+.fluid-text-display-1 {
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.fluid-text-display-2 {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.fluid-text-heading-1 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+.fluid-text-heading-2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.fluid-text-body {
+  font-size: clamp(0.875rem, 2vw, 1.125rem);
+  line-height: 1.6;
+}
+
+/* Responsive Grid System */
+.responsive-grid {
+  display: grid;
+  gap: clamp(1rem, 3vw, 2rem);
+  width: 100%;
+}
+
+.responsive-grid-1 {
+  grid-template-columns: 1fr;
+}
+
+.responsive-grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.responsive-grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.responsive-grid-4 {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* Enhanced Breakpoint System */
+@media (min-width: 640px) {
+  .responsive-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .responsive-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .responsive-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .responsive-grid-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .responsive-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Overflow Prevention System */
+.overflow-safe {
+  overflow-x: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.overflow-safe * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.overflow-safe img,
+.overflow-safe video,
+.overflow-safe iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Flexible Layout Helpers */
+.flex-safe {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: clamp(0.5rem, 2vw, 1rem);
+}
+
+.flex-safe > * {
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+/* Text Wrapping & Overflow */
+.text-safe {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+  max-width: 100%;
+}
+
+/* Card & Component Constraints */
+.card-safe {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+}
+
+.card-safe::before,
+.card-safe::after {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Mobile-First Spacing System */
+.space-y-responsive > * + * {
+  margin-top: clamp(1rem, 3vw, 2rem);
+}
+
+.space-x-responsive > * + * {
+  margin-left: clamp(0.5rem, 2vw, 1rem);
+}
+
+/* Responsive Sections */
+.section-responsive {
+  padding-top: clamp(2rem, 8vw, 6rem);
+  padding-bottom: clamp(2rem, 8vw, 6rem);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Touch Target Optimization */
+.touch-optimized {
+  min-height: 44px;
+  min-width: 44px;
+  padding: clamp(8px, 2vw, 16px);
+  touch-action: manipulation;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .touch-optimized {
+    min-height: 48px;
+    min-width: 48px;
+  }
+}
+
+/* Stable Layout Helpers */
+.layout-stable {
+  contain: layout style paint;
+  content-visibility: auto;
+}
+
+.layout-stable img {
+  contain-intrinsic-size: 0 200px;
+}
+
+/* Debug Mode (Remove before production) */
+.debug-overflow * {
+  outline: 1px solid rgba(255, 0, 0, 0.1) !important;
+}
+
+.debug-overflow .overflow-issue {
+  background: rgba(255, 0, 0, 0.1) !important;
+  outline: 2px solid red !important;
+}
