@@ -3,7 +3,6 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Search as SearchIcon, Filter, Grid, List, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -150,11 +149,7 @@ export default function Search() {
           {/* Search Bar */}
           <div className="relative max-w-2xl">
             <SearchIcon className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-            <Label htmlFor="global-search" className="sr-only">
-              Search
-            </Label>
             <Input
-              id="global-search"
               type="text"
               value={query}
               onChange={(e) => handleSearch(e.target.value)}

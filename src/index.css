@@ -7,6 +7,8 @@
 @import './styles/axeptio.css';
 @import './styles/performance.css';
 @import './styles/preloader.css';
+@import './styles/mobile-optimizations.css';
+@import './styles/homepage-stability.css';
 
 /* Import Tailwind CSS directives */
 @tailwind base;

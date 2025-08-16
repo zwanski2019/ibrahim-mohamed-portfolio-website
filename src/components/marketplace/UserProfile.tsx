@@ -3,11 +3,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Button } from "@/components/ui/button";
+import { Button, Form } from "@/components/heroui";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -69,7 +69,7 @@ export const UserProfile = ({ user, onSave, isEditing = false }: UserProfileProp
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
             <Avatar className="h-24 w-24">
-              <AvatarImage src={user.avatar_url} alt={user.full_name || 'User avatar'} />
+              <AvatarImage src={user.avatar_url} />
               <AvatarFallback className="text-2xl">
                 {user.full_name.charAt(0)}
               </AvatarFallback>
@@ -143,7 +143,7 @@ export const UserProfile = ({ user, onSave, isEditing = false }: UserProfileProp
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" aria-label="user-profile-form">
             <FormField
               control={form.control}
               name="full_name"
@@ -241,7 +241,7 @@ export const UserProfile = ({ user, onSave, isEditing = false }: UserProfileProp
               {user && (
                 <Button 
                   type="button" 
-                  variant="outline" 
+                  variant="bordered"
                   onClick={() => setEditMode(false)}
                 >
                   Cancel

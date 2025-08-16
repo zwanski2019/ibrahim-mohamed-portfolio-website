@@ -1,8 +1,44 @@
 User-agent: *
-Disallow: /
+Allow: /
 
 # Algolia-Crawler-Verif: AFF487B5095E3753
 
 # Sitemap
 Sitemap: https://zwanski.org/sitemap.xml
 
+# Crawl delay for better server performance
+Crawl-delay: 1
+
+# Allow access to important pages for SEO
+Allow: /services
+Allow: /about
+Allow: /academy
+Allow: /jobs
+Allow: /freelancers
+Allow: /blog
+Allow: /support
+Allow: /faq
+Allow: /infrastructure
+Allow: /imei-check
+Allow: /computer-model
+
+# Encourage crawling of key service pages
+Allow: /services/*
+Allow: /academy/*
+Allow: /jobs/*
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /settings/
+Disallow: /auth/
+Disallow: /profile/
+Disallow: /chat/
+
+# Disallow utility pages (keeping 3D model accessible via dedicated page)
+Disallow: /newsletter/
+
+# Cache and temporary files
+Disallow: /*?*
+Disallow: /*.json$
+Disallow: /*.xml$
+Disallow: /*.txt$

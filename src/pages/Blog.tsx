@@ -6,7 +6,6 @@ import { BlogCard } from '@/components/blog/BlogCard';
 import { useBlogger } from '@/hooks/useBlogger';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Search, RefreshCw, BookOpen, AlertCircle } from 'lucide-react';
@@ -64,11 +63,7 @@ export default function Blog() {
             <form onSubmit={handleSearch} className="flex-1 flex gap-2">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Label htmlFor="blog-search" className="sr-only">
-                  Search blog posts
-                </Label>
                 <Input
-                  id="blog-search"
                   placeholder="Search blog posts..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}

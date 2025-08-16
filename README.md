@@ -27,7 +27,7 @@ Welcome to the Zwanski Tech platform! This project powers [zwanski.org](https://
 ## 🛠️ Tech Stack
 
 - **Frontend:** React, TypeScript, Tailwind CSS, shadcn/ui
-- **Backend/DB:** Supabase (Postgres, Auth, Edge Functions). See the [Supabase Edge Functions docs](https://supabase.com/docs/guides/functions) for details.
+- **Backend/DB:** Supabase (Postgres, Auth, Edge Functions)
 - **3D/Creative:** Three.js, React Three Fiber
 - **Other:** Vite, React Query, Lucide Icons, i18n
 
@@ -53,6 +53,17 @@ HCAPTCHA_SITE_KEY=your-public-site-key-here
 HCAPTCHA_SECRET_KEY=your-secret-key-here
 ```
 
+Optional variables for **Google reCAPTCHA v3**:
+
+```bash
+RECAPTCHA_SITE_KEY=6LcKP5UrAAAAAPckgYOCbzV1MbvHMe9zCborYWtN
+RECAPTCHA_SECRET_KEY=6LcKP5UrAAAAAPcX_eYQelEPAia9N3zpL7fdrWtG
+```
+
+These keys are registered for `zwanski.org` and enable reCAPTCHA verification across the site.
+
+Add `RECAPTCHA_SECRET_KEY` to your server or Supabase secrets for server-side validation.
+
 If `HCAPTCHA_SITE_KEY` is not set, security verification is skipped and users can sign in or sign up without completing hCaptcha.
 
 Set these in your Supabase project secrets so the `get-hcaptcha-config` and `verify-hcaptcha` edge functions can work properly.
@@ -74,13 +85,9 @@ verify_jwt = false
 ✅ **Rate Limiting** - Contact forms and API endpoints protected from abuse  
 ✅ **Secure CAPTCHA** - Turnstile verification through secure edge functions  
 ✅ **Enhanced Admin System** - Multi-layer admin validation with audit logging  
-✅ **Security Event Logging** - Comprehensive security monitoring and alerts
-✅ **Password Protection** - Leaked password detection enabled
+✅ **Security Event Logging** - Comprehensive security monitoring and alerts  
+✅ **Password Protection** - Leaked password detection enabled  
 ✅ **Safe Secret Management** - No secrets exposed in frontend code
-
-### Gravatar API Rate Limits
-
-The Gravatar function uses the shared rate limiting system and allows up to **10 requests per hour per IP address**. Exceeding this limit returns a `429 Too Many Requests` response, so clients should cache results or stagger requests accordingly.
 
 ## 🔐 Authentication Test
 

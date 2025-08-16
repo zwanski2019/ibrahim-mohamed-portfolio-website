@@ -1,7 +1,6 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { updateProfile } from '@/services/profile';
 
 export interface FreelancerProfile {
   id: string;
@@ -118,12 +117,18 @@ export const useUpdateFreelancerProfile = () => {
       availability?: string;
       experience_years?: number;
     }) => {
-      try {
-        return await updateProfile({ id, ...profileData });
-      } catch (error) {
+      const { data, error } = await supabase
+        .from('freelancer_profiles')
+        .update(profileData)
+        .eq('id', id)
+        .select()
+        .single();
+      
+      if (error) {
         console.error('Error updating freelancer profile:', error);
         throw error;
       }
+      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['freelancer-profiles'] });

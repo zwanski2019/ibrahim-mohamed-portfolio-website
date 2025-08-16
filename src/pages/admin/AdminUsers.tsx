@@ -3,7 +3,6 @@ import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -152,11 +151,7 @@ export default function AdminUsers() {
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Label htmlFor="user-search" className="sr-only">
-              Search users
-            </Label>
             <Input
-              id="user-search"
               placeholder="Search users by name or email..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -184,7 +179,7 @@ export default function AdminUsers() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <Avatar className="h-12 w-12">
-                      <AvatarImage src={user.avatar_url || ""} alt={user.full_name || "User avatar"} />
+                      <AvatarImage src={user.avatar_url || ""} />
                       <AvatarFallback>
                         {user.full_name?.split(" ").map(n => n[0]).join("") || "U"}
                       </AvatarFallback>

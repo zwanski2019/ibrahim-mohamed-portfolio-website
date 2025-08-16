@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
+import { Menu, X, Home, Wrench, Shield, GraduationCap, Briefcase, Settings2, FileText, MessageSquare, Bot, Activity, Search } from "lucide-react";
 import ZwanskiLogo from "./ZwanskiLogo";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageSelector } from "./LanguageSelector";
@@ -9,21 +10,6 @@ import { GlobalSearchBar } from "./search/GlobalSearchBar";
 import { UserMenu } from "./navbar/UserMenu";
 import { NotificationButton } from "./navbar/NotificationButton";
 import { supabase } from "@/integrations/supabase/client";
-import { trackEvent } from "@/utils/analytics";
-import { 
-  Home, 
-  Wrench, 
-  GraduationCap, 
-  Settings2, 
-  Briefcase, 
-  FileText, 
-  MessageSquare, 
-  Bot, 
-  Shield, 
-  Search, 
-  X, 
-  Menu 
-} from "lucide-react";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -58,7 +44,6 @@ const Navbar = () => {
         return;
       }
       setUserProfile(data);
-      trackEvent('profile_fetch', { user_id: user.id, email: user.email });
     } catch (error) {
       if (process.env.NODE_ENV === 'development') {
         console.error("Error fetching user profile:", error);
@@ -107,6 +92,7 @@ const Navbar = () => {
     { label: "Blog", path: "/blog", icon: FileText },
     { label: "Chat", path: "/chat", icon: MessageSquare },
     { label: "AI", path: "/ai", icon: Bot },
+    { label: "Threat Map", path: "/threat-map", icon: Activity }
   ];
 
   const serviceCategories = [
@@ -117,16 +103,16 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-lg border-b border-border/30 shadow-sm">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main header row */}
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Left section - Logo */}
           <div className="flex items-center flex-shrink-0">
             <ZwanskiLogo onClick={handleLogoClick} />
           </div>
 
           {/* Center section - Search Bar (Desktop) */}
-          <div className="hidden md:flex flex-1 max-w-2xl mx-4">
+          <div className="hidden lg:flex flex-1 max-w-2xl mx-4">
             <GlobalSearchBar 
               placeholder="Search services, tools, courses..." 
               className="w-full"
@@ -134,43 +120,43 @@ const Navbar = () => {
           </div>
 
           {/* Right section - User actions */}
-          <div className="flex items-center space-x-2">
-            {/* Search icon for mobile */}
+          <div className="flex items-center space-x-1 sm:space-x-2">
+            {/* Search icon for mobile/tablet */}
             <Button
               variant="ghost"
               size="sm"
-              className="md:hidden"
+              className="lg:hidden touch-feedback"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
             >
-              <Search className="h-5 w-5" />
+              <Search className="h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
 
             {/* Theme & Language - Hidden on small screens */}
-            <div className="hidden sm:flex items-center space-x-1">
+            <div className="hidden md:flex items-center space-x-1">
               <ThemeToggle />
               <LanguageSelector />
             </div>
             
             {/* Authentication Section */}
             {isAuthenticated && user ? (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1 sm:space-x-2">
                 <NotificationButton unreadCount={unreadNotifications} />
                 <UserMenu userProfile={userProfile} />
               </div>
             ) : (
-              <div className="hidden sm:flex items-center space-x-2">
+              <div className="hidden md:flex items-center space-x-2">
                 <Button 
                   variant="ghost" 
                   size="sm" 
                   onClick={() => navigate("/auth?tab=signin")}
-                  className="text-sm"
+                  className="text-sm touch-feedback"
                 >
                   Sign In
                 </Button>
                 <Button 
                   size="sm" 
                   onClick={() => navigate("/auth?tab=signup")}
-                  className="text-sm"
+                  className="text-sm touch-feedback"
                 >
                   Sign Up
                 </Button>
@@ -178,20 +164,20 @@ const Navbar = () => {
             )}
 
             {/* Mobile Menu Button */}
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="lg:hidden"
+            <Button
+              variant="ghost"
+              size="sm"
+              className="nav-toggle lg:hidden touch-feedback"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {isMenuOpen ? <X className="h-4 w-4 sm:h-5 sm:w-5" /> : <Menu className="h-4 w-4 sm:h-5 sm:w-5" />}
             </Button>
           </div>
         </div>
 
-        {/* Mobile Search Bar */}
+        {/* Mobile/Tablet Search Bar */}
         {isSearchOpen && (
-          <div className="md:hidden py-3 border-t border-border/30">
+          <div className="lg:hidden py-3 border-t border-border/30">
             <GlobalSearchBar 
               placeholder="Search services, tools, courses..." 
               className="w-full"
@@ -200,7 +186,7 @@ const Navbar = () => {
         )}
 
         {/* Desktop Navigation Bar */}
-        <div className="hidden lg:block border-t border-border/30 py-2">
+        <div className="nav-menu hidden lg:block border-t border-border/30 py-2">
           <div className="flex items-center justify-between">
             {/* Main navigation */}
             <div className="flex items-center space-x-1">
@@ -252,14 +238,14 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden border-t border-border/30 py-4 bg-background/95 backdrop-blur-sm">
+          <div className="nav-menu lg:hidden border-t border-border/30 py-4 bg-background/95 backdrop-blur-sm">
             <div className="space-y-4">
               {/* Mobile auth buttons for non-authenticated users */}
               {!isAuthenticated && (
-                <div className="flex gap-2 sm:hidden mb-4">
+                <div className="flex gap-2 md:hidden mb-4">
                   <Button 
                     variant="outline" 
-                    className="flex-1" 
+                    className="flex-1 touch-feedback" 
                     onClick={() => {
                       navigate("/auth?tab=signin");
                       setIsMenuOpen(false);
@@ -268,7 +254,7 @@ const Navbar = () => {
                     Sign In
                   </Button>
                   <Button 
-                    className="flex-1" 
+                    className="flex-1 touch-feedback" 
                     onClick={() => {
                       navigate("/auth?tab=signup");
                       setIsMenuOpen(false);
@@ -291,7 +277,7 @@ const Navbar = () => {
                       <Button
                         key={item.path}
                         variant={isActivePath(item.path) ? "secondary" : "ghost"}
-                        className="w-full justify-start h-12"
+                        className="w-full justify-start h-12 touch-feedback"
                         onClick={() => {
                           navigate(item.path);
                           setIsMenuOpen(false);
@@ -317,7 +303,7 @@ const Navbar = () => {
                       <Button
                         key={item.path}
                         variant="ghost"
-                        className="h-auto p-4 flex-col items-start text-left"
+                        className="h-auto p-4 flex-col items-start text-left touch-feedback"
                         onClick={() => {
                           navigate(item.path);
                           setIsMenuOpen(false);
@@ -337,7 +323,7 @@ const Navbar = () => {
               </div>
 
               {/* Mobile Settings */}
-              <div className="pt-4 border-t border-border/30 sm:hidden">
+              <div className="pt-4 border-t border-border/30 md:hidden">
                 <h3 className="text-sm font-semibold text-muted-foreground mb-3 px-2">
                   SETTINGS
                 </h3>

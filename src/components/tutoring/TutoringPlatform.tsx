@@ -198,12 +198,10 @@ const TutoringPlatform = () => {
             {featuredCourses.map((course) => (
               <Card key={course.id} className="group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden border-0 shadow-lg">
                 <div className="relative">
-                  <img
-                    src={course.image}
+                  <img 
+                    src={course.image} 
                     alt={course.title}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                    loading="lazy"
-                    fetchPriority="low"
                   />
                   <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                     BESTSELLER
@@ -255,12 +253,10 @@ const TutoringPlatform = () => {
             {filteredCourses.map((course) => (
               <Card key={course.id} className="group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden">
                 <div className="relative">
-                  <img
-                    src={course.image}
+                  <img 
+                    src={course.image} 
                     alt={course.title}
                     className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
-                    loading="lazy"
-                    fetchPriority="low"
                   />
                   {course.bestseller && (
                     <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">

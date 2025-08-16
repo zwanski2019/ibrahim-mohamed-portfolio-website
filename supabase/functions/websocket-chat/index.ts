@@ -1,6 +1,5 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { logflare } from "../_shared/logflare.ts"
 
 interface ChatMessage {
   id: string
@@ -38,7 +37,6 @@ serve(async (req) => {
 
   socket.onopen = () => {
     console.log("New WebSocket connection established")
-    logflare({ message: 'WebSocket connection established' })
   }
 
   socket.onmessage = (event) => {
@@ -50,7 +48,6 @@ serve(async (req) => {
         // User joining the chat
         clients.set(socket, { username: data.username, avatar: data.avatar })
         console.log(`User ${data.username} joined. Total clients: ${clients.size}`)
-        logflare({ message: 'User joined chat', username: data.username, clients: clients.size })
         
         // Broadcast user joined message
         const joinMessage: ChatMessage = {
@@ -74,11 +71,9 @@ serve(async (req) => {
           }
           
           console.log("Broadcasting message:", chatMessage)
-          logflare({ message: 'Broadcasting message', username: clientInfo.username })
           broadcastMessage(chatMessage)
         } else {
           console.log("Message from unknown client")
-          logflare({ message: 'Message from unknown client', level: 'warn' })
         }
       }
     } catch (error) {
@@ -89,7 +84,6 @@ serve(async (req) => {
   socket.onclose = (event) => {
     const clientInfo = clients.get(socket)
     console.log(`WebSocket closed. Code: ${event.code}, Reason: ${event.reason}`)
-    logflare({ message: 'WebSocket closed', code: event.code, reason: event.reason })
     
     if (clientInfo) {
       // Broadcast user left message
@@ -107,8 +101,7 @@ serve(async (req) => {
   }
 
   socket.onerror = (error) => {
-      console.error("WebSocket error:", error)
-      logflare({ message: 'WebSocket error', error: String(error), level: 'error' })
+    console.error("WebSocket error:", error)
     const clientInfo = clients.get(socket)
     if (clientInfo) {
       console.log(`Removing client ${clientInfo.username} due to error`)

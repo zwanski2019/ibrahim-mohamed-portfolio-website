@@ -3,7 +3,6 @@ import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { supabase } from "@/integrations/supabase/client";
@@ -158,11 +157,7 @@ export default function AdminPosts() {
         {/* Search */}
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Label htmlFor="post-search" className="sr-only">
-            Search posts
-          </Label>
           <Input
-            id="post-search"
             placeholder="Search posts by title, content, or author..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -180,7 +175,7 @@ export default function AdminPosts() {
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
                       <Avatar className="h-8 w-8">
-                        <AvatarImage src={post.author.avatar_url || ""} alt={post.author.full_name || "Author avatar"} />
+                        <AvatarImage src={post.author.avatar_url || ""} />
                         <AvatarFallback>
                           {post.author.full_name?.split(" ").map(n => n[0]).join("") || "U"}
                         </AvatarFallback>

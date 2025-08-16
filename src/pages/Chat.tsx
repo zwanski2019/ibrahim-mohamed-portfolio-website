@@ -6,7 +6,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Sparkles, Send, LogOut, Wifi, WifiOff, AlertCircle } from "lucide-react";
 import ChatMessage from "@/components/ChatMessage";
 import LoginForm from "@/components/LoginForm";
@@ -14,7 +13,6 @@ import { useWebSocket } from "@/hooks/useWebSocket";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Profile } from "@/types/profile";
-import { trackEvent } from "@/utils/analytics";
 
 const Chat = () => {
   const { user, isAuthenticated, signOut } = useAuth();
@@ -48,7 +46,6 @@ const Chat = () => {
       }
 
       setUserProfile(data);
-      trackEvent('profile_fetch', { user_id: user.id, email: user.email });
     } catch (error) {
       console.error("Error fetching user profile:", error);
     }
@@ -261,20 +258,16 @@ const Chat = () => {
                 <div ref={messagesEndRef} />
               </div>
               
-              <form
+              <form 
                 onSubmit={handleSendMessage}
                 className="border-t border-primary/20 p-4 flex gap-2"
               >
-                <Label htmlFor="chat-message" className="sr-only">
-                  Message
-                </Label>
                 <Input
-                  id="chat-message"
                   placeholder={
-                    isConnecting
-                      ? "Connecting..."
-                      : isConnected
-                        ? "Type your message..."
+                    isConnecting 
+                      ? "Connecting..." 
+                      : isConnected 
+                        ? "Type your message..." 
                         : connectionError
                           ? "Connection error - check above"
                           : "Disconnected - check connection"
