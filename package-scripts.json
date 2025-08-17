@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "audit:routes": "node scripts/route-audit.js",
+    "audit:full": "npm run build && npm run preview & sleep 3 && npm run audit:routes; kill %1"
+  }
+}

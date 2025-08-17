@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Home, Wrench, Shield, GraduationCap, Briefcase, Settings2, FileText, MessageSquare, Bot, Activity, Search } from "lucide-react";
-import ZwanskiLogo from "./ZwanskiLogo";
-import { ThemeToggle } from "./ThemeToggle";
-import { LanguageSelector } from "./LanguageSelector";
-import { GlobalSearchBar } from "./search/GlobalSearchBar";
+import ZwanskiLogo from "../ZwanskiLogo";
+import { ThemeToggle } from "../ThemeToggle";
+import { LanguageSelector } from "../LanguageSelector";
+import { GlobalSearchBar } from "../search/GlobalSearchBar";
 
-const Navbar = () => {
+const NavbarSimple = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-
 
   const handleLogoClick = () => {
     navigate("/");
@@ -59,7 +58,7 @@ const Navbar = () => {
             />
           </div>
 
-          {/* Right section - User actions */}
+          {/* Right section - Controls */}
           <div className="flex items-center space-x-1 sm:space-x-2">
             {/* Search icon for mobile/tablet */}
             <Button
@@ -154,7 +153,6 @@ const Navbar = () => {
         {isMenuOpen && (
           <div className="nav-menu lg:hidden border-t border-border/30 py-4 bg-background/95 backdrop-blur-sm">
             <div className="space-y-4">
-
               {/* Main Navigation */}
               <div>
                 <h3 className="text-sm font-semibold text-muted-foreground mb-3 px-2">
@@ -233,4 +231,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavbarSimple;

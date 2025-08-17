@@ -9,7 +9,6 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { CookiePreferencesProvider } from "@/context/CookiePreferencesContext";
-import { AuthProvider } from "@/context/AuthContext";
 
 // Lazy load components for better performance with error handling
 import { lazy, Suspense, startTransition } from "react";
@@ -46,7 +45,7 @@ const Index = lazy(() =>
 const Services = lazy(() => import("./pages/Services"));
 const About = lazy(() => import("./pages/About"));
 const Chat = lazy(() => import("./pages/Chat"));
-const Profile = lazy(() => import("./pages/Profile"));
+
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ComputerModel = lazy(() => import("./pages/ComputerModel"));
 const Newsletter = lazy(() => import("./pages/Newsletter"));
@@ -54,8 +53,6 @@ const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
 const FAQ = lazy(() => import("./pages/FAQ"));
 const Support = lazy(() => import("./pages/Support"));
-const Auth = lazy(() => import("./pages/Auth"));
-const Settings = lazy(() => import("./pages/Settings"));
 const AcademyHomePage = lazy(() => import("./pages/Academy/AcademyHomePage"));
 const Freelancers = lazy(() => import("./pages/Freelancers"));
 const Jobs = lazy(() => import("./pages/Jobs"));
@@ -71,13 +68,6 @@ const AIAssistantPage = lazy(() => import("./pages/ai"));
 const ThreatMap = lazy(() => import("./pages/ThreatMap"));
 const PublicAPIExplorer = lazy(() => import("./pages/PublicAPIExplorer"));
 
-// Admin pages - separate chunk
-const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
-const AdminJobs = lazy(() => import("./pages/admin/AdminJobs"));
-const AdminUsers = lazy(() => import("./pages/admin/AdminUsers"));
-const AdminMessages = lazy(() => import("./pages/admin/AdminMessages"));
-const AdminPosts = lazy(() => import("./pages/admin/AdminPosts"));
-const AdminSettings = lazy(() => import("./pages/admin/AdminSettings"));
 import { LanguageDetectionNotice } from "./components/LanguageDetectionNotice";
 import ScrollToTop from "./components/ScrollToTop";
 import ScrollToTopButton from "./components/ScrollToTopButton";
@@ -136,10 +126,9 @@ function App() {
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <ThemeProvider>
-            <LanguageProvider>
-              <CookiePreferencesProvider>
-                <AuthProvider>
+            <ThemeProvider>
+              <LanguageProvider>
+                <CookiePreferencesProvider>
                    <BrowserRouter>
                      {/* <MobileTouchOptimizer>
                        <MobilePerformanceWrapper> */}
@@ -165,24 +154,8 @@ function App() {
                           <Route path="/jobs" element={<Jobs />} />
                           <Route path="/jobs/:id" element={<JobDetail />} />
                           <Route path="/post-job" element={<PostJob />} />
-                           <Route path="/freelancers" element={<Freelancers />} />
-                           <Route path="/auth" element={<Auth />} />
-                           <Route path="/login" element={<Auth />} />
-                           <Route path="/register" element={<Auth />} />
-                           <Route path="/signup" element={<Auth />} />
-                           <Route path="/blog" element={<Blog />} />
-                          
-                          {/* Admin Routes */}
-                          <Route path="/admin" element={<AdminDashboard />} />
-                          <Route path="/admin/users" element={<AdminUsers />} />
-                          <Route path="/admin/posts" element={<AdminPosts />} />
-                          <Route path="/admin/jobs" element={<AdminJobs />} />
-                          <Route path="/admin/messages" element={<AdminMessages />} />
-                          <Route path="/admin/settings" element={<AdminSettings />} />
-                          
-                          {/* User Profile Routes */}
-                          <Route path="/profile" element={<Profile />} />
-                          <Route path="/settings" element={<Settings />} />
+                            <Route path="/freelancers" element={<Freelancers />} />
+                            <Route path="/blog" element={<Blog />} />
                           
                           {/* Privacy and Terms Routes */}
                           <Route path="/privacy" element={<PrivacyPolicy />} />
@@ -215,8 +188,7 @@ function App() {
                        {/* </MobilePerformanceWrapper>
                      </MobileTouchOptimizer> */}
                    </BrowserRouter>
-                </AuthProvider>
-              </CookiePreferencesProvider>
+                </CookiePreferencesProvider>
             </LanguageProvider>
           </ThemeProvider>
         </TooltipProvider>
