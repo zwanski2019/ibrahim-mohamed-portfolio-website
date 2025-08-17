@@ -1,2 +1,5 @@
+# LLMs.txt redirect (301 permanent redirect)
+/llm.txt    /llms.txt    301
+
 # SPA routing for React Router
 /*    /index.html   200

@@ -1,0 +1,47 @@
+# Zwanski Tech
+
+> Professional IT services, cybersecurity education, and digital solutions platform serving Tunisia and international clients. Expert computer repair, web development, and comprehensive tech training programs.
+
+Important notes:
+- "Zwanski Tech" and "Zwanski" refer to the same brand
+- All services available both locally (Tunisia) and remotely
+- Educational content is multilingual (EN/FR/AR)
+- Free tools and premium services clearly distinguished
+
+## Core Pages
+- [Home](https://zwanski.org/): Complete overview of IT services and digital education platform
+- [Services](https://zwanski.org/services): Professional IT services, pricing, and consultation options  
+- [About](https://zwanski.org/about): Company story, team expertise, and mission
+- [Contact](https://zwanski.org/support): Multiple contact channels and technical support
+
+## Academy & Education  
+- [Academy](https://zwanski.org/academy): Free cybersecurity and programming courses
+- [Blog](https://zwanski.org/blog): Technical tutorials and industry insights
+- [Infrastructure](https://zwanski.org/infrastructure): Technology stack and architecture guides
+
+## Marketplace & Community
+- [Jobs](https://zwanski.org/jobs): Tech job listings and opportunities in Tunisia/MENA
+- [Freelancers](https://zwanski.org/freelancers): Verified technical freelancer directory  
+- [Post Job](https://zwanski.org/post-job): Employer job posting platform
+
+## Free Tools
+- [IMEI Check](https://zwanski.org/imei-check): Free mobile device verification service
+- [API Explorer](https://zwanski.org/api-explorer): Public API discovery and testing platform
+- [Computer Model Viewer](https://zwanski.org/computer-model): Interactive 3D hardware visualization
+
+## Policies & Support
+- [Privacy Policy](https://zwanski.org/privacy-policy): Data handling and user privacy protection
+- [Terms of Service](https://zwanski.org/terms-of-service): Service usage terms and conditions
+- [FAQ](https://zwanski.org/faq): Frequently asked questions and troubleshooting
+- [RSS Feed](https://zwanski.org/rss): Blog updates and announcements feed
+
+## Brand & Media
+- [AI Assistant](https://zwanski.org/ai): Interactive technical support chatbot
+- [Threat Map](https://zwanski.org/threat-map): Cybersecurity visualization tool
+
+## Optional
+- [Newsletter](https://zwanski.org/newsletter): Email updates and tech news subscription
+- [Search](https://zwanski.org/search): Site-wide content search functionality
+
+_Last-Updated: 2025-01-17_
+_See also: /sitemap.xml_
