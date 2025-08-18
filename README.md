@@ -1,80 +1,62 @@
-# 🌟 Zwanski Tech – Free Tech Academy, IT Services & Community
+# Zwanski Tech - Professional IT Services & Digital Platform
 
-Welcome to the Zwanski Tech platform! This project powers [zwanski.org](https://zwanski.org), a modern, multilingual platform offering:
+A modern, responsive website showcasing IT services, educational content, and digital tools. No authentication required - all content is publicly accessible.
 
-- **Free programming courses and tech education**
-- **Professional web development & IT support services**
-- **A job marketplace for freelancers and employers**
-- **Community forums, live chat, and resources**
-- **Free tools like IMEI checker and 3D computer model lookup**
+## Features
 
----
-
-## 🚀 Features
-
-- 🌐 Multilingual support (English, Arabic, Hausa, Berber, French)
-- 🎓 Free interactive academy with certificates
-- 💼 Job marketplace for freelancers & employers
-- 🛠️ IT services: web/mobile development, device repair, cybersecurity
-- 🧑‍💻 Community: forums, live chat, Telegram integration
-- 📱 Free IMEI checker & device tools
+- 🌐 Multilingual support (English, Arabic, Hausa, Berber, French)  
+- 🎓 Free educational resources and tech academy content
+- 💼 Public job board and freelancer directory
+- 🛠️ IT services showcase: web development, device repair, cybersecurity
+- 📱 Free tools: IMEI checker, 3D computer models  
 - 🖥️ Interactive 3D computer model (React Three Fiber)
 - 🌙 Dark & light mode, responsive design
-- 🔒 GDPR-ready, privacy-focused
+- 🔒 Cloudflare Turnstile security for contact forms
 
----
-
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend:** React, TypeScript, Tailwind CSS, shadcn/ui
-- **Backend/DB:** Supabase (Postgres, Auth, Edge Functions)
-- **3D/Creative:** Three.js, React Three Fiber
-- **Other:** Vite, React Query, Lucide Icons, i18n
+- **Backend:** Supabase (Database, Edge Functions)
+- **3D Graphics:** Three.js, React Three Fiber  
+- **Security:** Cloudflare Turnstile verification
+- **Build:** Vite, React Query, Lucide Icons
 
----
-
-## 🏁 Getting Started
+## Getting Started
 
 ```bash
-git clone https://https://github.com/zwanski2019/ZWANSKI-TECH.git
+git clone https://github.com/zwanski2019/ZWANSKI-TECH.git
 cd ZWANSKI-TECH
 npm install
 npm run dev
 ```
 
-Visit [http://localhost:3000](http://localhost:3000) to view the app.
+Visit [http://localhost:5173](http://localhost:5173) to view the app.
 
 ### Environment Variables
 
-Optional variables for hCaptcha security verification:
+Required for Cloudflare Turnstile security verification:
 
 ```bash
-HCAPTCHA_SITE_KEY=your-public-site-key-here
-HCAPTCHA_SECRET_KEY=your-secret-key-here
+# Create .env.local file (never commit to git)
+VITE_TURNSTILE_SITE_KEY=your_turnstile_site_key
+TURNSTILE_SECRET_KEY=your_turnstile_secret_key
+
+# Supabase (for backend functionality)
+VITE_SUPABASE_URL=your_supabase_url  
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-Optional variables for **Google reCAPTCHA v3**:
+**Security Note**: Turnstile keys are also configured via Supabase secrets for edge functions.
+
+### Development Commands
 
 ```bash
-RECAPTCHA_SITE_KEY=6LcKP5UrAAAAAPckgYOCbzV1MbvHMe9zCborYWtN
-RECAPTCHA_SECRET_KEY=6LcKP5UrAAAAAPcX_eYQelEPAia9N3zpL7fdrWtG
-```
-
-These keys are registered for `zwanski.org` and enable reCAPTCHA verification across the site.
-
-Add `RECAPTCHA_SECRET_KEY` to your server or Supabase secrets for server-side validation.
-
-If `HCAPTCHA_SITE_KEY` is not set, security verification is skipped and users can sign in or sign up without completing hCaptcha.
-
-Set these in your Supabase project secrets so the `get-hcaptcha-config` and `verify-hcaptcha` edge functions can work properly.
-Additionally, update `supabase/config.toml` to allow unauthenticated access to these functions:
-
-```toml
-[functions.verify-hcaptcha]
-verify_jwt = false
-
-[functions.get-hcaptcha-config]
-verify_jwt = false
+npm run dev          # Start development server
+npm run build        # Build for production  
+npm run preview      # Preview production build
+npm run audit:routes # Validate all routes and links
+npm run type-check   # TypeScript validation
+npm run lint         # ESLint check
 ```
 
 ## 🔐 Security Features

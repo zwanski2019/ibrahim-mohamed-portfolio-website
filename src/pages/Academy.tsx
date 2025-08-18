@@ -88,12 +88,12 @@ const Academy = () => {
 
       const { data, error } = await supabase
         .from('profiles')
-        .select('subscription_status')
+        .select('user_type')
         .eq('id', user.id)
         .single();
 
       if (error) throw error;
-      return data?.subscription_status as string | null;
+      return 'free'; // Always return free since no subscriptions
     },
     enabled: !!user
   });

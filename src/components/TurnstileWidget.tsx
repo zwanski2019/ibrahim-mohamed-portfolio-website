@@ -12,7 +12,7 @@ export const TurnstileWidget: React.FC<TurnstileWidgetProps> = ({
   onError,
   className = ''
 }) => {
-  const siteKey = process.env.VITE_TURNSTILE_SITE_KEY;
+  const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
 
   if (!siteKey) {
     console.error('Turnstile site key not configured');

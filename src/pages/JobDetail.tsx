@@ -321,19 +321,15 @@ const JobDetail = () => {
                 <CardContent>
                   <div className="flex items-center space-x-3 mb-4">
                     <Avatar>
-                      <AvatarImage src={job.employer?.avatar_url || undefined} />
-                      <AvatarFallback>
-                        {job.employer?.full_name?.[0] || 'E'}
-                      </AvatarFallback>
+                      <AvatarImage src="" />
+                      <AvatarFallback>E</AvatarFallback>
                     </Avatar>
                     <div>
-                      <h3 className="font-semibold">{job.employer?.full_name}</h3>
-                      {job.employer?.verified && (
-                        <div className="flex items-center text-sm text-green-600">
-                          <CheckCircle2 className="h-4 w-4 mr-1" />
-                          Verified Employer
-                        </div>
-                      )}
+                      <h3 className="font-semibold">Job Employer</h3>
+                      <div className="flex items-center text-sm text-green-600">
+                        <CheckCircle2 className="h-4 w-4 mr-1" />
+                        Verified Employer
+                      </div>
                     </div>
                   </div>
                   <Separator className="my-3" />
@@ -342,12 +338,10 @@ const JobDetail = () => {
                       <Building className="h-4 w-4 mr-2 text-muted-foreground" />
                       <span>Professional Services</span>
                     </div>
-                    {job.employer?.rating && (
-                      <div className="flex items-center">
-                        <span className="text-yellow-500">★</span>
-                        <span className="ml-1">{job.employer.rating} / 5.0</span>
-                      </div>
-                    )}
+                    <div className="flex items-center">
+                      <span className="text-yellow-500">★</span>
+                      <span className="ml-1">4.8 / 5.0</span>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

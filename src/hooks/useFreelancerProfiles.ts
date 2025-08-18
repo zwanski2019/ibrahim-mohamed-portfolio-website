@@ -64,7 +64,10 @@ export const useFreelancerProfiles = (filters?: {
         throw error;
       }
 
-      return (data || []) as FreelancerProfile[];
+      return (data || []).map(item => ({
+        ...item,
+        user: item.user || { id: '', full_name: '', avatar_url: '', location: '', rating: 0, verified: false }
+      })) as FreelancerProfile[];
     },
     retry: 2,
     staleTime: 5 * 60 * 1000,

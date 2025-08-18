@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.3 (519615d)"
@@ -158,13 +158,6 @@ export type Database = {
             referencedRelation: "job_posts"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "applications_worker_id_fkey"
-            columns: ["worker_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
         ]
       }
       blog_posts: {
@@ -297,15 +290,7 @@ export type Database = {
           rules?: string | null
           tags?: string[] | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "channels_created_by_fkey"
-            columns: ["created_by"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       chat_messages: {
         Row: {
@@ -370,13 +355,6 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "comments_author_id_fkey"
-            columns: ["author_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "comments_parent_id_fkey"
             columns: ["parent_id"]
             isOneToOne: false
@@ -432,15 +410,7 @@ export type Database = {
           updated_at?: string | null
           user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "community_user_stats_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       contact_messages: {
         Row: {
@@ -508,13 +478,6 @@ export type Database = {
             referencedRelation: "conversations"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "conversation_messages_sender_id_fkey"
-            columns: ["sender_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
         ]
       }
       conversations: {
@@ -550,20 +513,6 @@ export type Database = {
             referencedRelation: "job_posts"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "conversations_participant_1_id_fkey"
-            columns: ["participant_1_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "conversations_participant_2_id_fkey"
-            columns: ["participant_2_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
         ]
       }
       course_bookmarks: {
@@ -591,13 +540,6 @@ export type Database = {
             columns: ["course_id"]
             isOneToOne: false
             referencedRelation: "courses"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "course_bookmarks_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -667,13 +609,6 @@ export type Database = {
             referencedRelation: "course_discussions"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "course_discussions_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
         ]
       }
       course_enrollments: {
@@ -709,13 +644,6 @@ export type Database = {
             referencedRelation: "courses"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "course_enrollments_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
         ]
       }
       courses: {
@@ -732,10 +660,6 @@ export type Database = {
           instructor_name: string | null
           is_active: boolean | null
           is_featured: boolean | null
-          price_basic: number | null
-          price_premium: number | null
-          content_url: string | null
-          premium_content_url: string | null
           language: string | null
           platform: string | null
           rating: number | null
@@ -759,10 +683,6 @@ export type Database = {
           instructor_name?: string | null
           is_active?: boolean | null
           is_featured?: boolean | null
-          price_basic?: number | null
-          price_premium?: number | null
-          content_url?: string | null
-          premium_content_url?: string | null
           language?: string | null
           platform?: string | null
           rating?: number | null
@@ -786,10 +706,6 @@ export type Database = {
           instructor_name?: string | null
           is_active?: boolean | null
           is_featured?: boolean | null
-          price_basic?: number | null
-          price_premium?: number | null
-          content_url?: string | null
-          premium_content_url?: string | null
           language?: string | null
           platform?: string | null
           rating?: number | null
@@ -806,13 +722,6 @@ export type Database = {
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "categories"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "courses_instructor_id_fkey"
-            columns: ["instructor_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -857,15 +766,7 @@ export type Database = {
           type?: string
           user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "enhanced_notifications_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       experience: {
         Row: {
@@ -1007,13 +908,6 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "forum_moderation_logs_moderator_id_fkey"
-            columns: ["moderator_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "forum_moderation_logs_target_reply_id_fkey"
             columns: ["target_reply_id"]
             isOneToOne: false
@@ -1025,13 +919,6 @@ export type Database = {
             columns: ["target_thread_id"]
             isOneToOne: false
             referencedRelation: "forum_threads"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "forum_moderation_logs_target_user_id_fkey"
-            columns: ["target_user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -1075,13 +962,6 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "forum_replies_author_id_fkey"
-            columns: ["author_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "forum_replies_parent_id_fkey"
             columns: ["parent_id"]
             isOneToOne: false
@@ -1124,13 +1004,6 @@ export type Database = {
             referencedRelation: "forum_replies"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "forum_reply_likes_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
         ]
       }
       forum_thread_bookmarks: {
@@ -1163,13 +1036,6 @@ export type Database = {
             referencedRelation: "forum_threads"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "forum_thread_bookmarks_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
         ]
       }
       forum_thread_likes: {
@@ -1197,13 +1063,6 @@ export type Database = {
             columns: ["thread_id"]
             isOneToOne: false
             referencedRelation: "forum_threads"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "forum_thread_likes_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -1265,13 +1124,6 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "forum_threads_author_id_fkey"
-            columns: ["author_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "forum_threads_category_id_fkey"
             columns: ["category_id"]
             isOneToOne: false
@@ -1311,15 +1163,7 @@ export type Database = {
           updated_at?: string | null
           user_id?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "forum_user_preferences_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: true
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       freelancer_profiles: {
         Row: {
@@ -1364,15 +1208,7 @@ export type Database = {
           updated_at?: string | null
           user_id?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "freelancer_profiles_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: true
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       job_posts: {
         Row: {
@@ -1438,15 +1274,7 @@ export type Database = {
           updated_at?: string | null
           urgency?: Database["public"]["Enums"]["urgency_level"] | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "job_posts_employer_id_fkey"
-            columns: ["employer_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       learning_path_courses: {
         Row: {
@@ -1521,15 +1349,7 @@ export type Database = {
           title?: string
           updated_at?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "learning_paths_creator_id_fkey"
-            columns: ["creator_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       lesson_notes: {
         Row: {
@@ -1575,13 +1395,6 @@ export type Database = {
             columns: ["lesson_id"]
             isOneToOne: false
             referencedRelation: "lessons"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "lesson_notes_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -1676,13 +1489,6 @@ export type Database = {
             referencedRelation: "posts"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "likes_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
         ]
       }
       media: {
@@ -1749,22 +1555,7 @@ export type Database = {
           receiver_id?: string
           sender_id?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "messages_receiver_id_fkey"
-            columns: ["receiver_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "messages_sender_id_fkey"
-            columns: ["sender_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       notifications: {
         Row: {
@@ -1797,15 +1588,7 @@ export type Database = {
           type?: string
           user_id?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "notifications_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       password_failed_verification_attempts: {
         Row: {
@@ -1858,24 +1641,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "payments_employer_id_fkey"
-            columns: ["employer_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "payments_job_id_fkey"
             columns: ["job_id"]
             isOneToOne: false
             referencedRelation: "job_posts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "payments_worker_id_fkey"
-            columns: ["worker_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -1908,13 +1677,6 @@ export type Database = {
             columns: ["post_id"]
             isOneToOne: false
             referencedRelation: "posts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "post_reactions_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -1985,13 +1747,6 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "posts_author_id_fkey"
-            columns: ["author_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "posts_channel_id_fkey"
             columns: ["channel_id"]
             isOneToOne: false
@@ -2002,133 +1757,37 @@ export type Database = {
       }
       profiles: {
         Row: {
-          academy_level: string | null
-          availability_status: string | null
           avatar_url: string | null
-          bio: string | null
-          company: string | null
-          company_name: string | null
-          company_size: string | null
           created_at: string | null
-          email: string
-          full_name: string
-          github_url: string | null
-          hiring_budget_range: string | null
-          hourly_rate_max: number | null
-          hourly_rate_min: number | null
+          full_name: string | null
           id: string
-          industry: string | null
-          is_verified: boolean | null
-          job_preferences: Json | null
-          learning_goals: string[] | null
-          linkedin_url: string | null
-          location: string | null
-          onboarding_completed: boolean | null
-          phone: string | null
-          portfolio_items: Json | null
-          preferred_learning_style: string | null
-          profile_completion_percentage: number | null
           rating: number | null
-          reputation_points: number | null
-          subscription_status: "free" | "basic" | "premium" | null
-          resume_url: string | null
-          service_categories: string[] | null
-          skills: string[] | null
           updated_at: string | null
-          user_roles: Database["public"]["Enums"]["user_role"][] | null
-          user_type: Database["public"]["Enums"]["user_type"]
+          user_id: string | null
+          user_type: string | null
           verified: boolean | null
-          website: string | null
-          subscription_status: string | null
-          subscription_start_date: string | null
-          subscription_end_date: string | null
-          years_experience: number | null
         }
         Insert: {
-          academy_level?: string | null
-          availability_status?: string | null
           avatar_url?: string | null
-          bio?: string | null
-          company?: string | null
-          company_name?: string | null
-          company_size?: string | null
           created_at?: string | null
-          email: string
-          full_name: string
-          github_url?: string | null
-          hiring_budget_range?: string | null
-          hourly_rate_max?: number | null
-          hourly_rate_min?: number | null
-          id: string
-          industry?: string | null
-          is_verified?: boolean | null
-          job_preferences?: Json | null
-          learning_goals?: string[] | null
-          linkedin_url?: string | null
-          location?: string | null
-          onboarding_completed?: boolean | null
-          phone?: string | null
-          portfolio_items?: Json | null
-          preferred_learning_style?: string | null
-          profile_completion_percentage?: number | null
+          full_name?: string | null
+          id?: string
           rating?: number | null
-          reputation_points?: number | null
-          subscription_status?: "free" | "basic" | "premium" | null
-          resume_url?: string | null
-          service_categories?: string[] | null
-          skills?: string[] | null
           updated_at?: string | null
-          user_roles?: Database["public"]["Enums"]["user_role"][] | null
-          user_type: Database["public"]["Enums"]["user_type"]
+          user_id?: string | null
+          user_type?: string | null
           verified?: boolean | null
-          website?: string | null
-          subscription_status?: string | null
-          subscription_start_date?: string | null
-          subscription_end_date?: string | null
-          years_experience?: number | null
         }
         Update: {
-          academy_level?: string | null
-          availability_status?: string | null
           avatar_url?: string | null
-          bio?: string | null
-          company?: string | null
-          company_name?: string | null
-          company_size?: string | null
           created_at?: string | null
-          email?: string
-          full_name?: string
-          github_url?: string | null
-          hiring_budget_range?: string | null
-          hourly_rate_max?: number | null
-          hourly_rate_min?: number | null
+          full_name?: string | null
           id?: string
-          industry?: string | null
-          is_verified?: boolean | null
-          job_preferences?: Json | null
-          learning_goals?: string[] | null
-          linkedin_url?: string | null
-          location?: string | null
-          onboarding_completed?: boolean | null
-          phone?: string | null
-          portfolio_items?: Json | null
-          preferred_learning_style?: string | null
-          profile_completion_percentage?: number | null
           rating?: number | null
-          reputation_points?: number | null
-          subscription_status?: "free" | "basic" | "premium" | null
-          resume_url?: string | null
-          service_categories?: string[] | null
-          skills?: string[] | null
           updated_at?: string | null
-          user_roles?: Database["public"]["Enums"]["user_role"][] | null
-          user_type?: Database["public"]["Enums"]["user_type"]
+          user_id?: string | null
+          user_type?: string | null
           verified?: boolean | null
-          website?: string | null
-          subscription_status?: string | null
-          subscription_start_date?: string | null
-          subscription_end_date?: string | null
-          years_experience?: number | null
         }
         Relationships: []
       }
@@ -2256,20 +1915,6 @@ export type Database = {
             columns: ["job_id"]
             isOneToOne: false
             referencedRelation: "job_posts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "reviews_reviewee_id_fkey"
-            columns: ["reviewee_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "reviews_reviewer_id_fkey"
-            columns: ["reviewer_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -2413,15 +2058,7 @@ export type Database = {
           title?: string
           user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "user_achievements_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       user_activity_log: {
         Row: {
@@ -2451,15 +2088,7 @@ export type Database = {
           user_agent?: string | null
           user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "user_activity_log_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       user_channel_subscriptions: {
         Row: {
@@ -2491,13 +2120,6 @@ export type Database = {
             referencedRelation: "channels"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "user_channel_subscriptions_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
         ]
       }
       user_connections: {
@@ -2522,22 +2144,7 @@ export type Database = {
           following_id?: string | null
           id?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "user_connections_follower_id_fkey"
-            columns: ["follower_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_connections_following_id_fkey"
-            columns: ["following_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       user_progress: {
         Row: {
@@ -2591,13 +2198,6 @@ export type Database = {
             referencedRelation: "lessons"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "user_progress_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
         ]
       }
     }
@@ -2607,8 +2207,8 @@ export type Database = {
     Functions: {
       check_rate_limit: {
         Args: {
-          p_identifier: string
           p_action: string
+          p_identifier: string
           p_max_requests?: number
           p_window_minutes?: number
         }
@@ -2635,7 +2235,7 @@ export type Database = {
         Returns: Json
       }
       validate_contact_input: {
-        Args: { p_name: string; p_email: string; p_message: string }
+        Args: { p_email: string; p_message: string; p_name: string }
         Returns: Json
       }
     }
