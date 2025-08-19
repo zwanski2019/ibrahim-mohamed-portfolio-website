@@ -28,9 +28,9 @@ export default function Footer() {
       
       <footer className="py-12 bg-secondary/30 border-t border-border">
         <Container className="px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-7 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
             {/* Company Info */}
-            <div className="sm:col-span-2 md:col-span-3 lg:col-span-2">
+            <div className="sm:col-span-2 md:col-span-2 lg:col-span-2">
               <Link to="/" className="text-xl font-bold text-gradient">
                 ZWANSKI TECH
               </Link>
@@ -233,23 +233,6 @@ export default function Footer() {
                 <li>
                   <Link to="/support" className="text-muted-foreground hover:text-primary transition-colors">
                     Support
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Access */}
-            <div>
-              <h3 className="font-semibold mb-3">Access</h3>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <Link to="/signin" className="text-muted-foreground hover:text-primary transition-colors">
-                    Sign In
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/signup" className="text-muted-foreground hover:text-primary transition-colors">
-                    Sign Up
                   </Link>
                 </li>
               </ul>
